@@ -1,0 +1,25 @@
+\section*{How to use this walkthrough}
+\addcontentsline{toc}{section}{How to use this walkthrough}
+This companion covers \textbf{every subpart of all thirteen common/STA 431 Homework 4--5 questions}, plus the three separately marked STA 631 extensions. Each problem has its app route, actual inputs, output targets, mathematical write-up, and an explanation of what the app saves you from calculating manually.
+
+\textbf{Use the updated ten-program package.} Transfer all ten \texttt{.8xp} files together; the update adds \texttt{M2RUN} and \texttt{M2SLICE} and replaces the matching earlier solver files. Start with \texttt{PRGM > STAM2 > ENTER > ENTER}. The shortest route is
+\[
+\texttt{HOMEWORK MAP > LOAD + SOLVE > homework group > question}.
+\]
+The loader supplies the model's inputs to the general solver; it does not store final answers. For a problem with changed numbers, use the manual route in its section. Double-integral presets ask for an even resolution $N$; enter 4 for the polynomial homework models and compare the $N=4$ and $N=8$ outputs.
+
+\begin{tabularx}{\linewidth}{@{}p{0.28\linewidth}X@{}}
+\toprule Homework group & Questions\\\midrule
+\texttt{HW4 COMMON +431} & Q1 joint PMF; Q2 joint PDF; Q3 device lifetime; Q4 PMF events; Q5 $X<Y$.\\
+\texttt{HW5 Q1 TO Q4} & PMF moments; continuous square; exponential MGF; affine MGF.\\
+\texttt{HW5 Q5 TO Q8} & Insurance variance; three-variable variance; conditional moments; joint moments.\\
+\texttt{OPTIONAL 631} & HW4 triangular density and reimbursement; HW5 zero covariance with dependence.\\\bottomrule
+\end{tabularx}
+
+\textbf{Reading calculator displays.} Press \texttt{ENTER} to advance through pages. Use \texttt{BACK} to return through menus. The actual $\le$ comparison is one token under \texttt{[2nd][MATH] > TEST}; enter negative numbers with the unary \texttt{(-)} key. In displayed formulas and input fields, uppercase calculator $X,Y$ represent the lowercase mathematical variables $x,y$. In MGF tools, calculator $X$ represents the transform argument $t$.
+
+\textbf{What to submit as mathematical work.} Copy the variable definition or event, support, relevant sum/integral or moment formula, and the exact conclusion. Numerical integrals and suggested fractions support a calculation; the short derivations below establish exact forms and convergence conditions. A marginal density such as $f_Y(1/2)$ is a density value, not the probability $P(Y=1/2)$.
+
+\textbf{Meaning of the double-integral result.} \texttt{RAW I} is the integral of the supplied $q$ over the entered region. For an already normalized joint PDF restricted to an event, it is the event probability. \texttt{NORMALIZE FULL S} applies to the full support of a model you intend to normalize. Do not renormalize the survival or $X<Y$ event regions to one.
+
+\textbf{Verification.} The actual tokenized programs were exercised through all sixteen homework presets, the new slice calculations, marginal tables, and launcher returns. These are simulator checks; physical CE execution remains to be checked using the package's device examples.

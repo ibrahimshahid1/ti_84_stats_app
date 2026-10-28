@@ -1,0 +1,165 @@
+// Numerical marginal density and conditional law from a fixed joint slice.
+// f(X,Y)=L*q(X,Y), with known positive global multiplier L.
+// D=unscaled slice mass. A=given value; B,C=remaining-variable support.
+// Direction G=1 means X|Y, G=2 means Y|X. M2FMT clobbers Q..V only.
+Lbl M
+Menu("JOINT SLICE","X GIVEN Y",A1,"Y GIVEN X",A2,"BACK",Z)
+Lbl A1
+1→G
+Goto A0
+Lbl A2
+2→G
+Lbl A0
+ClrHome
+Disp "JOINT f(X,Y)=c*q(X,Y)","ENTER q THEN KNOWN c","IF q IS FULL PDF USE c=1","NUMERICAL VALUES ONLY"
+Input "q(X,Y)?",Str1
+Input "KNOWN c>0?",L
+If L≤0:Goto BC
+Lbl V
+ClrHome
+If G=1
+Disp "HOLD Y FIXED; INTEGRATE X"
+If G=2
+Disp "HOLD X FIXED; INTEGRATE Y"
+Input "GIVEN VALUE?",A
+If G=1
+A→Y
+If G=2
+A→X
+Disp "BOUNDS OF REMAINING VAR","USE ITS CONDITIONAL SLICE"
+Input "LOWER BOUND?",B
+Input "UPPER BOUND?",C
+If C≤B:Goto BB
+0→K
+For(I,0,20)
+B+(C-B)*(I+.5)/21→J
+If G=1
+Then
+J→X
+A→Y
+Else
+A→X
+J→Y
+End
+If expr(Str1)<0
+1→K
+End
+If K:Goto BQ
+If G=1
+Then
+A→Y
+fnInt(expr(Str1),X,B,C)→D
+Else
+A→X
+fnInt(expr(Str1),Y,B,C)→D
+End
+If D≤0:Goto BD
+L*D→M
+Lbl R
+If G=1
+Then
+A→Y
+fnInt(X*expr(Str1),X,B,C)/D→E
+fnInt(X²*expr(Str1),X,B,C)/D→F
+fnInt((X-E)²*expr(Str1),X,B,C)/D→H
+Else
+A→X
+fnInt(Y*expr(Str1),Y,B,C)/D→E
+fnInt(Y²*expr(Str1),Y,B,C)/D→F
+fnInt((Y-E)²*expr(Str1),Y,B,C)/D→H
+End
+ClrHome
+Output(1,1,"NUMERIC JOINT SLICE")
+Output(2,1,"MARGINAL DENSITY")
+M→W
+prgmM2FMT
+Output(3,1,Str9)
+Output(4,1,"CONDITIONAL MEAN")
+E→W
+prgmM2FMT
+Output(5,1,Str9)
+Output(6,1,"SECOND CONDITIONAL MOMENT")
+F→W
+prgmM2FMT
+Output(7,1,Str9)
+Output(8,1,"CONDITIONAL VARIANCE")
+H→W
+prgmM2FMT
+Output(9,1,Str9)
+Output(10,1,"ENTER=OPTIONS")
+Pause
+Lbl O
+Menu("SLICE OPTIONS","PDF AT POINT",P0,"INTERVAL PROB",I0,"MOMENTS AGAIN",R,"NEW GIVEN VALUE",V,"NEW MODEL",M,"BACK",Z)
+Lbl P0
+Input "REMAINING VALUE?",J
+0→O
+0→P
+If J≥B and J≤C
+Then
+If G=1
+Then
+J→X
+A→Y
+Else
+A→X
+J→Y
+End
+expr(Str1)/D→O
+L*expr(Str1)→P
+End
+ClrHome
+Disp "NUMERIC DENSITY VALUES","CONDITIONAL PDF="
+O→W
+prgmM2FMT
+Disp Str9,"JOINT PDF="
+P→W
+prgmM2FMT
+Disp Str9,"DENSITY IS NOT POINT PROB"
+Pause
+Goto O
+Lbl I0
+Input "EVENT LOWER?",I
+Input "EVENT UPPER?",J
+max(B,I)→K
+min(C,J)→N
+0→O
+If K<N
+Then
+If G=1
+Then
+A→Y
+fnInt(expr(Str1),X,K,N)/D→O
+Else
+A→X
+fnInt(expr(Str1),Y,K,N)/D→O
+End
+End
+ClrHome
+Disp "P(INTERVAL | GIVEN)"
+O→W
+prgmM2FMT
+Disp Str9,"CLIPPED TO SLICE SUPPORT"
+Pause
+Goto O
+Lbl BC
+ClrHome
+Disp "KNOWN c MUST BE POSITIVE"
+Pause
+Goto A0
+Lbl BB
+ClrHome
+Disp "UPPER MUST EXCEED LOWER"
+Pause
+Goto V
+Lbl BQ
+ClrHome
+Disp "NEGATIVE SAMPLED DENSITY","CHECK q AND SLICE SUPPORT"
+Pause
+Goto M
+Lbl BD
+ClrHome
+Disp "CONDITION DENSITY IS ZERO","CONDITIONAL UNDEFINED"
+Pause
+Goto M
+Lbl Z
+Return

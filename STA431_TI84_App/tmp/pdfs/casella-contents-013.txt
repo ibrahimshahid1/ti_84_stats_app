@@ -1,0 +1,154 @@
+3.6
+
+3.7
+3.8
+
+CONTENTS
+
+Inequalities and Identities
+3.6.1 Probability Inequalities
+3.6.2 Identities
+
+Exercises
+
+Miscellanea
+
+Multiple Random Variables
+
+4.1
+4.2
+4.3
+44
+4.5
+46
+47
+
+4.8
+4g
+
+Joint and Marginal Distributions
+Conditional Distributions and Independence
+Bivariate Transformations
+
+Hierarchical Models and Mixture Distributions
+Covariance and Correlation
+
+Multivariate Distributions
+
+Inequalities
+
+4.7.1 Numerical Inequalities
+
+4.7.2 Functional Inequalities
+
+Exercises
+
+Miscellanea
+
+Properties of a Random Sample
+
+5.1
+5.2
+5.3
+
+5.4
+5.5
+
+5.6
+
+5.7
+5.8
+
+Basic Concepts of Random Samples
+
+Sums of Random Variables from a Random Sample
+Sampling from the Normal Distribution
+
+5.3.1 Properties of the Sample Mean and Variance
+5.3.2 The Derived Distributions: Student’s t and Snedecor’s F
+Order Statistics
+
+Convergence Concepts
+
+5.5.1 Convergence in Probability
+
+5.5.2 Almost Sure Convergence
+
+5.5.3 Convergence in Distribution
+
+5.5.4 The Delta Method
+
+Generating a Random Sample
+
+5.6.1 Direct Methods
+
+5.6.2 Indirect Methods
+
+5.6.3 The Accept/Reject Algorithm
+
+Exercises
+
+Miscellanea
+
+Principles of Data Reduction
+
+6.1
+6.2
+
+Introduction
+
+The Sufficiency Principle
+
+6.2.1 Sufficient Statistics
+
+6.2.2 Minimal Sufficient Statistics
+
+6.2.3 Ancillary Statistics
+
+6.2.4 Sufficient, Ancillary, and Complete Statistics
+
+121
+122
+123
+127
+135
+
+139
+139
+147
+156
+162
+169
+177
+186
+186
+189
+192
+203
+
+207
+207
+211
+218
+218
+222
+226
+232
+232
+234
+235
+240
+245
+247
+251
+253
+255
+267
+
+271
+271
+272
+272
+279
+282
+284

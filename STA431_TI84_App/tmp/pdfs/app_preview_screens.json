@@ -1,0 +1,177 @@
+[
+  {
+    "caption": "Main menu",
+    "screen": {
+      "event": "menu",
+      "rows": [
+        "STA431 MIDTERM II         ",
+        "1:DISCRETE + JOINT        ",
+        "2:DENSITY + INTEGRAL      ",
+        "3:MGF TOOLS               ",
+        "4:LINEAR COMBOS           ",
+        "5:ENCYCLOPEDIA            ",
+        "6:HOMEWORK MAP            ",
+        "7:QUIT                    ",
+        "                          ",
+        "                          "
+      ],
+      "program": "STAM2",
+      "line": 3,
+      "step": 2,
+      "menu": {
+        "title": "STA431 MIDTERM II",
+        "items": [
+          "DISCRETE + JOINT",
+          "DENSITY + INTEGRAL",
+          "MGF TOOLS",
+          "LINEAR COMBOS",
+          "ENCYCLOPEDIA",
+          "HOMEWORK MAP",
+          "QUIT"
+        ],
+        "labels": [
+          "D",
+          "C",
+          "G",
+          "V",
+          "E",
+          "H",
+          "Q"
+        ]
+      },
+      "response": "(no more actions: stopped here)"
+    }
+  },
+  {
+    "caption": "Expectation and moments",
+    "screen": {
+      "event": "menu",
+      "rows": [
+        "EXPECT AND MOMENTS        ",
+        "1:EXPECTATION             ",
+        "2:LOTUS g(X,Y)            ",
+        "3:LINEARITY               ",
+        "4:RAW MOMENTS             ",
+        "5:CENTRAL MOMENTS         ",
+        "6:SHIFT SCALE             ",
+        "7:BACK                    ",
+        "                          ",
+        "                          "
+      ],
+      "program": "M2ENC",
+      "line": 212,
+      "step": 4,
+      "menu": {
+        "title": "EXPECT AND MOMENTS",
+        "items": [
+          "EXPECTATION",
+          "LOTUS g(X,Y)",
+          "LINEARITY",
+          "RAW MOMENTS",
+          "CENTRAL MOMENTS",
+          "SHIFT SCALE",
+          "BACK"
+        ],
+        "labels": [
+          "AO",
+          "AQ",
+          "AS",
+          "AU",
+          "AW",
+          "AY",
+          "M"
+        ]
+      },
+      "response": "(no more actions: stopped here)"
+    }
+  },
+  {
+    "caption": "Homework-specific walkthrough",
+    "screen": {
+      "event": "getkey",
+      "rows": [
+        "Q7 COND MOMENTS        1/2",
+        "f=X+Y on unit square.     ",
+        "fY(y)=1/2+y. Given Y=1/2  ",
+        "use1D slice q=X+A, A1/2,  ",
+        "lower0,upper1.            ",
+        "DENSITY/SLICE gives       ",
+        "E[X|y]=7/12, E[X²|y]=5/12,",
+        "Var=11/144.               ",
+        "The slice total=1 here.   ",
+        "General conditional       "
+      ],
+      "program": "M2HW",
+      "line": 326,
+      "step": 18,
+      "key": null,
+      "response": "(no more actions: stopped here)"
+    }
+  },
+  {
+    "caption": "HW5 Q6: variance 56",
+    "screen": {
+      "event": "pause",
+      "rows": [
+        "COMBINATION U             ",
+        "E(U)                      ",
+        "MEAN NOT PROVIDED         ",
+        "VAR(U)                    ",
+        "56                        ",
+        "SD(U)                     ",
+        "7.483315                  ",
+        "                          ",
+        "OFFSETS HAVE NO VARIANCE  ",
+        "ENTER=CONTINUE            "
+      ],
+      "program": "M2COV",
+      "line": 122,
+      "step": 336,
+      "response": "ENTER"
+    }
+  },
+  {
+    "caption": "HW5 Q4: transformed MGF",
+    "screen": {
+      "event": "pause",
+      "rows": [
+        "TRANSFORMED MGF           ",
+        "Mz(t)=e^(F*t+H*t²)        ",
+        "                          ",
+        "F=0                       ",
+        "H=1/2                     ",
+        "                          ",
+        "                          ",
+        "DOMAIN ALL REAL t         ",
+        "                          ",
+        "ENTER=OPTIONS             "
+      ],
+      "program": "M2MGF",
+      "line": 202,
+      "step": 383,
+      "response": "ENTER"
+    }
+  },
+  {
+    "caption": "HW5 Q7: conditional moments",
+    "screen": {
+      "event": "pause",
+      "rows": [
+        "NUMERIC APPROXIMATIONS    ",
+        "MEAN APPROX=              ",
+        "7/12                      ",
+        "E[X^2] APPROX=            ",
+        "5/12                      ",
+        "VAR(X) APPROX=            ",
+        "11/144                    ",
+        "                          ",
+        "                          ",
+        "                          "
+      ],
+      "program": "M2CONT",
+      "line": 47,
+      "step": 347,
+      "response": "ENTER"
+    }
+  }
+]

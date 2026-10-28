@@ -1,0 +1,41 @@
+Preface to the First Edition
+
+When someone discovers that you are writing a textbook, one (or both) of two ques-
+tions will be asked. The first is “Why are you writing a book?” and the second is
+“How is your book different from what’s out there?” The first question is fairly easy
+to answer. You are writing a book because you are not entirely satisfied with the
+available texts. The second question is harder to answer. The answer can’t be put
+in a few sentences so, in order not to bore your audience (who may be asking the
+question only out of politeness), you try to say something quick and witty. It usually
+doesn’t work.
+
+The purpose of this book is to build theoretical statistics (as different from mathe-
+matical statistics) from the first principles of probability theory. Logical development,
+proofs, ideas, themes, etc., evolve through statistical arguments. Thus, starting from
+the basics of probability, we develop the theory of statistical inference using tech-
+niques, definitions, and concepts that are statistical and are natural extensions and
+consequences of previous concepts. When this endeavor was started, we were not sure
+how well it would work. The final judgment of our success is, of course, left to the
+reader.
+
+The book is intended for first-year graduate students majoring in statistics or in
+a field where a statistics concentration is desirable. The prerequisite is one year of
+calculus. (Some familiarity with matrix manipulations would be useful, but is not
+essential.) The book can be used for a two-semester, or three-quarter, introductory
+course in statistics.
+
+The first four chapters cover basics of probability theory and introduce many fun-
+damentals that are later necessary. Chapters 5 and 6 are the first statistical chapters.
+Chapter 5 is transitional (between probability and statistics) and can be the starting
+Point for a course in statistical theory for students with some probability background.
+Chapter 6 is somewhat unique, detailing three statistical principles (sufficiency, like-
+lihood, and invariance) and showing how these principles are important in modeling
+data. Not all instructors will cover this chapter in detail, although we strongly recom-
+Mend spending some time here. In particular, the likelihood and invariance principles
+are treated in detail. Along with the sufficiency principle, these principles, and the
+thinking behind them, are fundamental to total statistical understanding.
+
+Chapters 7-9 represent the central core of statistical inference, estimation (point
+and interval) and hypothesis testing. A major feature of these chapters is the division
+into methods of finding appropriate statistical techniques and methods of evaluating
+these techniques, Finding and evaluating are of interest to both the theorist and the

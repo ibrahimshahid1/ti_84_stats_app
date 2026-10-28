@@ -1,0 +1,41 @@
+Preface to the Second Edition
+
+Although Sir Arthur Conan Doyle is responsible for most of the quotes in this book,
+perhaps the best description of the life of this book can be attributed to the Grateful
+Dead sentiment, “What a long, strange trip it’s been.”
+
+Plans for the second edition started about six years ago, and for a long time we
+struggled with questions about what to edd and what to delete. Thankfully, as time
+passed, the answers became clearer as the flow of the discipline of statistics became
+clearer, We see the trend moving away from elegant proofs of special cases to algo-
+rithmic solutions of more complex and practical cases. This does not undermine the
+importance of mathematics and rigor; indeed, we have found that these have become
+more important. But the manner in which they are applied is changing.
+
+For those familiar with the first edition, we can summarize the changes succinctly
+as follows. Discussion of asymptotic methods has been greatly expanded into its own
+chapter. There is more emphasis on computing and simulation (see Section 5.5 and
+the computer algebra Appendix); coverage of the more applicable techniques has
+been expanded or added (for example, bootstrapping, the EM algorithm, p-values,
+logistic and robust regression); and there are many new Miscellanea and Exercises.
+We have de-emphasized the more specialized theoretical topics, such as equivariance
+and decision theory, and have restructured some material in Chapters 3-11 for clarity.
+
+There are two things that we want to note. First, with respect to computer algebra
+programs, although we believe that they are becoming increasingly valuable tools,
+we did not want to force them on the instructor who does not share that. belief.
+Thus, the treatment is “unobtrusive” in that it appears only in an appendix, with
+some hints throughout the book where it may be useful. Second, we have changed
+the numbering system to one that facilitates finding things. Now theorems, lemmas,
+examples, and definitions are numbered together; for example, Definition 7.2.4 is
+followed by Example 7.2.5 and Theorem 10.1.3 precedes Example 10.1.4.
+
+The first four chapters have received only minor changes. We reordered some ma-
+terial (in particular, the inequalities and identities have been split}, added some new
+examples and exercises, and did some general updating. Chapter 5 has also been re-
+ordered, with the convergence section being moved further back, and a new section on
+generating random variables added. The previous coverage of invariance, which was
+in Chapters 7-9 of the first edition, has been greatly reduced and incorporated into
+Chapter 6, which otherwise has received only minor editing (mostly the addition of
+new exercises). Chapter 7 has been expanded and updated, and includes a new section
+on the EM algorithm. Chapter 8 has also received minor editing and updating, and

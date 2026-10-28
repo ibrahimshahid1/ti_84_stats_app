@@ -1,0 +1,816 @@
+{
+ "program": "STAHNT",
+ "title": "WHICH TOOL?",
+ "sections": [
+  {
+   "menu": "HOW MANY WAYS?",
+   "title": "HOW MANY WAYS?",
+   "topics": [
+    {
+     "menu": "ORDER MATTERS?",
+     "title": "ORDER MATTERS?",
+     "pages": [
+      [
+       "SWAP 2 PICKS => NEW ONE?",
+       " YES = ORDER MATTERS",
+       "ALL n IN A ROW      n!",
+       "r OF n, ORDERED     nPr",
+       "r OF n, UNORDERED   nCr",
+       "REPEATS, ORDERED    n^r",
+       "REPEATS, UNORDERED",
+       "          C(n+r-1,r)",
+       "TOOL CALC>COUNT>1"
+      ]
+     ]
+    },
+    {
+     "menu": "REPEATED ITEMS",
+     "title": "REPEATED ITEMS",
+     "pages": [
+      [
+       "CUE LETTERS OF A WORD",
+       " n!/(k1!k2!…) k=COPIES",
+       "Ex PROBABILITY 11!/(2!2!)",
+       " = 9979200 (B×2, I×2)",
+       "ADJACENT/TOGETHER => GLUE",
+       " COPIES INTO 1 BLOCK",
+       " BB => 10!/2! = 1814400",
+       "NOT TOGETHER=TOTAL-BLOCK",
+       "TOOL CALC>COUNT>2"
+      ]
+     ]
+    },
+    {
+     "menu": "SPLIT INTO GROUPS",
+     "title": "SPLIT INTO GROUPS",
+     "pages": [
+      [
+       "CUE DIVIDE n INTO GROUPS",
+       " OF SIZES n1,…,nk, EACH",
+       " IN EXACTLY ONE",
+       "NAMED/DISTINCT GROUPS",
+       " n!/(n1!n2!…nk!)",
+       "Ex 12 INTO 3,4,5 => 27720",
+       "UNNAMED EQUAL-SIZE GROUPS",
+       " DIVIDE BY m! (m SAME)",
+       " 6 INTO 3 PAIRS 90/3! = 15"
+      ],
+      [
+       "EXACT COUNTS, REST FREE",
+       "Ex 10 STUDENTS, EXACTLY",
+       " 3 GET A, 1 GETS F, REST",
+       " B/C/D => 10!/(3!1!6!)×3^6",
+       " = 840×729 = 612360",
+       "TOOL CALC>COUNT>3 THEN",
+       " 1 SPLIT, 2 EXACT+FREE",
+       "SEE ENC>CH1>COUNTING RULES"
+      ]
+     ]
+    },
+    {
+     "menu": "AT LEAST/EXACTLY",
+     "title": "AT LEAST/EXACTLY",
+     "pages": [
+      [
+       "CUE PICK K FROM 2 TYPES",
+       " WITH AT LEAST/AT MOST/",
+       " EXACTLY OF EACH TYPE",
+       "SUM CASES ΣC(A,i)C(B,K-i)",
+       " i = # FROM TYPE 1",
+       "Ex 5 OF 8 MATH+6 STAT,",
+       " ≥2 EACH => i=2,3",
+       " 28×20+56×15=560+840=1400",
+       "TOOL CALC>COUNT>4"
+      ],
+      [
+       "T/F EXAM 20 Q, 5 HARD,",
+       " EXACTLY 15 RIGHT, 2 HARD",
+       " = CHOOSE WHICH ARE RIGHT",
+       " C(5,2)C(15,13)=10×105",
+       " = 1050 (A=5,B=15,K=15,",
+       " G1 MIN=MAX=2, G2 0..99)",
+       "AT LEAST 1 => TOTAL-NONE",
+       "TRAP C(8,2)C(6,2)C(10,1)",
+       " = 4200 OVERCOUNTS"
+      ]
+     ]
+    },
+    {
+     "menu": "IDENTICAL ITEMS",
+     "title": "IDENTICAL ITEMS",
+     "pages": [
+      [
+       "CUE IDENTICAL ITEMS INTO",
+       " DISTINCT BINS/x1+…+xk=n",
+       "xi≥0  C(n+k-1,k-1)",
+       "xi≥mi n'=n-Σmi, THEN",
+       "      C(n'+k-1,k-1)",
+       "Ex 15 TO 4 LABS, EACH ≥1",
+       " C(14,3)=364; LAB1≥3 =>",
+       " n'=9, C(12,3)=220",
+       "TOOL CALC>COUNT>5"
+      ]
+     ]
+    },
+    {
+     "menu": "COEFF IN EXPANSION",
+     "title": "COEFF IN EXPANSION",
+     "pages": [
+      [
+       "COEFF OF x^e1 y^e2 … IN",
+       " (a1x+a2y+…)^n, Σei=n",
+       " n!/(e1!e2!…)×a1^e1a2^e2…",
+       "KEEP SIGNS; Σei≠n => 0",
+       "Ex (2x-y+3z)^7, x³y²z²",
+       " 7!/(3!2!2!)=210, 2³(-1)²",
+       " 3²=72 => 210×72 = 15120",
+       "Ex (x+2)^5, x³ => 10×4=40",
+       "TOOL CALC>COUNT>6"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "PROBABILITY Qs",
+   "title": "PROBABILITY Qs",
+   "topics": [
+    {
+     "menu": "AND/OR/NOT",
+     "title": "AND/OR/NOT",
+     "pages": [
+      [
+       "CUE P(A),P(B) + ONE MORE",
+       " (AuB, AnB, A|B…) GIVEN",
+       "P(AnB)=P(A)+P(B)-P(AuB)",
+       "P(B|A')=[P(B)-P(AnB)]",
+       "        /[1-P(A)]",
+       "Ex .55,.35,UNION .7 =>",
+       " P(XnY)=.2, P(X|Y)=4/7,",
+       " P(Y|X')=.15/.45=1/3",
+       "TOOL CALC>PROB>1"
+      ],
+      [
+       "3 EVENTS, WORDS ► SETS",
+       " ONLY A     AnB'nC'",
+       " A,B NOT C  AnBnC'",
+       " AT LEAST 1 AuBuC",
+       " NONE       A'nB'nC'",
+       " EXACTLY 1  (AnB'nC')u",
+       "  (A'nBnC')u(A'nB'nC)",
+       "SEE ENC>CH2>SETS & EVENTS"
+      ]
+     ]
+    },
+    {
+     "menu": "GIVEN/IF/AMONG",
+     "title": "GIVEN/IF/AMONG",
+     "pages": [
+      [
+       "CUE GIVEN, IF, AMONG, OF",
+       " THOSE, KNOWING THAT",
+       "P(A|B) = P(AnB)/P(B)",
+       " CONDITION B => DENOM.",
+       "MULT P(AnB)=P(B)P(A|B)",
+       "W/O REPL (3/7)(2/6)=1/7",
+       " = P(2 RED FROM 3R+4B)",
+       "TRAP P(A|B) ≠ P(B|A)",
+       "TOOL CALC>PROB>1 OR >2"
+      ]
+     ]
+    },
+    {
+     "menu": "TWO-STAGE SOURCE",
+     "title": "TWO-STAGE SOURCE",
+     "pages": [
+      [
+       "CUE STAGE 1 PICKS THE",
+       " SOURCE (DIE=>URN, FIELD,",
+       " SPAM?), THEN ASKS",
+       " P(RESULT) OVERALL",
+       "TOTAL PROBABILITY",
+       " P(A) = Σ P(A|Bi)P(Bi)",
+       " P(Bi)=PRIORS (SUM TO 1)",
+       " P(A|Bi)=RATE IN SOURCE i",
+       "TOOL CALC>PROB>3"
+      ],
+      [
+       "Ex FIELDS .5,.3,.2; ACC.",
+       " .15,.25,.10 => .17",
+       "Ex DIE 1-2 => URN A 3R/7,",
+       " 3-6 => URN B 5R/7",
+       " (1/3)(3/7)+(2/3)(5/7)",
+       " = 13/21 (PRIORS 2,4 OK)",
+       "Ex SPAM .6; URGENT .4 vs",
+       " .05 => .24+.02 = .26",
+       "ENC>CH2>TOTAL PROB & BAYES"
+      ]
+     ]
+    },
+    {
+     "menu": "REVERSE(WHICH ONE)",
+     "title": "REVERSE = BAYES",
+     "pages": [
+      [
+       "CUE RESULT SEEN; ASKS",
+       " WHICH SOURCE (IF",
+       " ACCEPTED, P(METHOD)?)",
+       "BAYES P(Bi|A) =",
+       " P(A|Bi)P(Bi) / P(A)",
+       " P(A) = TOTAL PROB",
+       "Ex .075/.17=15/34; RED",
+       " => (1/7)/(13/21)=3/13",
+       "TOOL CALC>PROB>3"
+      ],
+      [
+       "TEST CUES PREVALENCE p,",
+       " SENS=P(+|D),SPEC=P(-|D')",
+       "PPV=P(D|+)=sens×p/P(+)",
+       "P(+)=sens×p+(1-spec)(1-p)",
+       "Ex p=.005,.95,.99 => PPV",
+       " =.00475/.0147=95/294",
+       "2ND TEST 90/95 => PRIOR",
+       " 95/294 => 1710/1909",
+       "TOOL CALC>PROB>4"
+      ]
+     ]
+    },
+    {
+     "menu": "TABLE OF COUNTS",
+     "title": "TABLE OF COUNTS",
+     "pages": [
+      [
+       "CUE 2 TRAITS, COUNTS +",
+       " TOTALS; FILL A 2x2 TABLE",
+       "      F    M   TOT",
+       " GRAD 40   30   70",
+       " FAC  25   25   50",
+       " TOT  65   55  120",
+       "P(MALE FAC)=25/120=5/24",
+       "P(GRAD | F)=40/65=8/13",
+       "TOOL CALC>PROB>2"
+      ]
+     ]
+    },
+    {
+     "menu": "OVERLAPPING GROUPS",
+     "title": "OVERLAPPING GROUPS",
+     "pages": [
+      [
+       "CUE A,B,C COUNTS + PAIRS",
+       " + ALL 3; ONLY/NONE?",
+       "UNION=ΣSINGLE-ΣPAIR+ALL3",
+       "C ONLY=C-AnC-BnC+ALL3",
+       "NONE = N - UNION",
+       "Ex W ONLY=600-150-250+100",
+       " =300; UNION=1500-600+100",
+       " =1000 => NONE 0",
+       "TOOL CALC>PROB>5 (3 SETS)"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "RANDOM VAR Qs",
+   "title": "RANDOM VAR Qs",
+   "topics": [
+    {
+     "menu": "PMF OF MAX/MIN/SUM",
+     "title": "PMF OF MAX/MIN/SUM",
+     "pages": [
+      [
+       "CUE BALLS 1..N, DRAW k,",
+       " Z = MAX/MIN/SUM; FIND",
+       " PMF, CDF, SKETCH",
+       "MAX W/O C(z-1,k-1)/C(N,k)",
+       "MAX WITH (z^k-(z-1)^k)/N^k",
+       "MIN W/O C(N-z,k-1)/C(N,k)",
+       "SUM LIST ALL OUTCOMES",
+       "TOOL CALC>RV>2",
+       " (ANY TABLE CALC>RV>1)"
+      ],
+      [
+       "Ex N=5, k=2 W/O, Z=MAX",
+       " z    2    3    4    5",
+       " p  1/10 2/10 3/10 4/10",
+       " F  1/10 3/10 6/10  1",
+       "SKETCH PMF = SPIKES",
+       " CDF = RIGHT-CONT. STEPS,",
+       " JUMP p(z) AT z, SOLID",
+       " DOT AT LEFT END OF STEP",
+       "SEE ENC>CH3>DISCRETE RVs"
+      ]
+     ]
+    },
+    {
+     "menu": "FIND CONSTANT c",
+     "title": "FIND CONSTANT c",
+     "pages": [
+      [
+       "CUE f(y)=c×g(y) ON (a,b);",
+       " FIND c, THEN F, PROBS",
+       "TOTAL AREA = 1 =>",
+       " c = 1/∫g OVER SUPPORT",
+       " (DISCRETE c = 1/Σg(x))",
+       "Ex cy², 0<y<3 => 9c=1",
+       " c=1/9, F=y³/27 ON (0,3)",
+       " P(Y>2) = 1-8/27 = 19/27",
+       "TOOL CALC>RV>3 c UNKNOWN"
+      ]
+     ]
+    },
+    {
+     "menu": "PDF ► CDF",
+     "title": "PDF ► CDF",
+     "pages": [
+      [
+       "CUE CDF FROM PIECEWISE f",
+       "F(x)=AREA OF f LEFT OF x,",
+       " PIECE BY PIECE; FLAT IN",
+       " GAPS; 0 BEFORE, 1 AFTER",
+       "Ex f=1/4 ON (0,2),(4,6)",
+       " F=0 (x≤0), x/4 (0<x<2),",
+       " 1/2 (2≤x<4), x/4-1/2",
+       " (4≤x<6), 1 (x≥6)",
+       "TOOL CALC>RV>3 (PDF)"
+      ]
+     ]
+    },
+    {
+     "menu": "CDF ► PROBS",
+     "title": "CDF ► PROBS",
+     "pages": [
+      [
+       "CUE F(x) GIVEN => PROBS",
+       "P(a<X≤b) = F(b)-F(a)",
+       "P(X>a) = 1-F(a)",
+       "CONTINUOUS => < SAME AS ≤",
+       "Ex F=(x+2)/4 ON [-2,2)",
+       " P(-1<X<1)=3/4-1/4=1/2",
+       " P(X>.5)=1-5/8=3/8",
+       "TOOL CALC>RV>3 CDF MODE",
+       " (x+2)/4 => C0=1/2,C1=1/4"
+      ],
+      [
+       "FROM A PDF => INTEGRATE f",
+       "Ex f=3(16-x²)/256, -4..4",
+       " ≥2 MIN EARLY=P(X≤-2)",
+       " = 5/32 = .15625",
+       " 1-3 MIN LATE=P(1≤X≤3)",
+       " = 35/128 = .2734375",
+       "TOOL CALC>RV>3 PDF, ENTER",
+       " C0=3/16, C2=-3/256",
+       " (e^, ln ETC => CALC>RV>4)"
+      ]
+     ]
+    },
+    {
+     "menu": "CDF ► PDF",
+     "title": "CDF ► PDF",
+     "pages": [
+      [
+       "CUE F(x) GIVEN; DERIVE f",
+       "f(x) = F'(x) WHERE F IS",
+       " SMOOTH; 0 OFF SUPPORT",
+       "Ex F=1-e^(-2x), x>0 =>",
+       " f=2e^(-2x) (x>0), ELSE 0",
+       " P(X>1)=e^(-2) (.135335)",
+       "DISCRETE p(x) = JUMP OF F",
+       "TOOL CALC>RV>4 CDF MODE",
+       " (POLY F => CALC>RV>3)"
+      ]
+     ]
+    },
+    {
+     "menu": "EXACTLY x (CONT.)",
+     "title": "EXACTLY x (CONT.)",
+     "pages": [
+      [
+       "CUE EXACTLY 1 MIN EARLY,",
+       " P(X=a), X CONTINUOUS",
+       "ANSWER 0 (NO AREA OVER",
+       " ONE POINT)",
+       "SO P(a<X<b)=P(a≤X≤b)",
+       "DISCRETE X => P(X=a)",
+       " = JUMP F(a)-F(a-)",
+       "TOOL CALC>RV>3 QUERY 4",
+       "SEE ENC>CH3>CONTINUOUS RVs"
+      ],
+      [
+       "CUE CDF HAS JUMP AT a",
+       "MIXED/DISCRETE => P(X=a)",
+       "=F(a)-F(a-)",
+       "Ex F=(z+4)/8 -2≤z<2,",
+       "F=0 LEFT, 1 RIGHT",
+       "JUMPS 1/4 AT -2 AND 2",
+       "DERIVATIVE 1/8 ON (-2,2)",
+       " DOES NOT COUNT THE ATOMS",
+       "SEE ENC>CH3>CONTINUOUS RVs"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "PROOF Qs",
+   "title": "PROOF Qs",
+   "topics": [
+    {
+     "menu": "PASCAL",
+     "title": "PASCAL IDENTITY",
+     "pages": [
+      [
+       "C(n,r)=C(n-1,r-1)+C(n-1,r)",
+       "ALGEBRA RHS =",
+       " (n-1)!/((r-1)!(n-r)!)",
+       " +(n-1)!/(r!(n-1-r)!)",
+       "COMMON DENOM r!(n-r)!",
+       " ×r/r AND ×(n-r)/(n-r)",
+       "=(n-1)!(r+n-r)/(r!(n-r)!)",
+       "=n!/(r!(n-r)!) = C(n,r)",
+       "(FOR 1≤r≤n-1)"
+      ],
+      [
+       "STORY r-PERSON COMMITTEES",
+       " FROM n PEOPLE = C(n,r)",
+       "FIX ONE PERSON, PAT",
+       " WITH PAT, OTHER r-1 FROM",
+       "  n-1 => C(n-1,r-1)",
+       " WITHOUT PAT, ALL r FROM",
+       "  n-1 => C(n-1,r)",
+       " DISJOINT + COVER ALL => +",
+       "ENC>CH1>BINOMIAL COEFFS"
+      ]
+     ]
+    },
+    {
+     "menu": "BINOMIAL SUMS",
+     "title": "BINOMIAL SUMS",
+     "pages": [
+      [
+       "(1+x)^n=Σ(r=0..n)C(n,r)x^r",
+       "x=1   ΣC(n,r) = 2^n",
+       "x=-1  Σ(-1)^r C(n,r) = 0",
+       "d/dx  n(1+x)^(n-1) =",
+       "      Σ rC(n,r)x^(r-1)",
+       " x=1 => ΣrC(n,r)=n2^(n-1)",
+       "d/dx AGAIN, x=1 => Σr(r-1)",
+       " C(n,r) = n(n-1)2^(n-2)"
+      ],
+      [
+       "∫ 0 TO 1 OF BOTH SIDES",
+       "LHS [(1+x)^(n+1)/(n+1)]",
+       "    = (2^(n+1)-1)/(n+1)",
+       "RHS ΣC(n,r)∫x^r dx",
+       "    = ΣC(n,r)/(r+1)",
+       "CHECK n=4 ΣrC(4,r)=32,",
+       " ΣC(4,r)/(r+1)=31/5",
+       "ENC>CH1>BINOMIAL COEFFS"
+      ]
+     ]
+    },
+    {
+     "menu": "VANDERMONDE",
+     "title": "VANDERMONDE",
+     "pages": [
+      [
+       "ΣC(m,k)C(n,r-k)=C(m+n,r)",
+       "STORY m MEN, n WOMEN;",
+       " COUNT r-PERSON COMMITTEES",
+       "RHS PICK r OF ALL m+n",
+       "LHS BY k = # OF MEN,",
+       " C(m,k) MEN × C(n,r-k)",
+       " WOMEN, k=0..r DISJOINT",
+       " + EXHAUSTIVE => EQUAL",
+       "ENC>CH1>BINOMIAL COEFFS"
+      ]
+     ]
+    },
+    {
+     "menu": "MULT RULE (n)",
+     "title": "MULT RULE (n)",
+     "pages": [
+      [
+       "P(A1n…nAn)=P(A1)P(A2|A1)",
+       " ×…×P(An|A1n…nA(n-1))",
+       "NEED P(A1n…nA(n-1))>0 =>",
+       " ALL CONDITIONS HAVE P>0",
+       "n=2 DEFINITION OF P(A2|A1)",
+       "STEP B=A1n…nA(n-1)",
+       " P(BnAn)=P(B)×P(An|B)",
+       " P(B) = n-1 FACTORS (HYP.)",
+       " => n FACTORS  QED"
+      ]
+     ]
+    },
+    {
+     "menu": "P(A|B)>P(A)",
+     "title": "P(A|B)>P(A) PROOF",
+     "pages": [
+      [
+       "GIVEN P(A)>0, P(B)>0",
+       "P(A|B) > P(A)",
+       "IFF P(AnB)/P(B) > P(A)",
+       "IFF P(AnB) > P(A)P(B)",
+       "    (MULTIPLY BY P(B)>0)",
+       "IFF P(AnB)/P(A) > P(B)",
+       "    (DIVIDE BY P(A)>0)",
+       "IFF P(B|A) > P(B)   QED",
+       "SEE ENC>CH2>STA 631 PROOFS"
+      ]
+     ]
+    },
+    {
+     "menu": "TRANSFORM/PIT",
+     "title": "TRANSFORM/PIT",
+     "pages": [
+      [
+       "CDF METHOD Y=g(X)",
+       "1 SUPPORT OF Y",
+       "2 F_Y(y) = P(g(X)≤y)",
+       "3 SOLVE FOR X (FLIP ≤ IF",
+       "  g DECREASING)",
+       "4 WRITE AS F_X(…) OR",
+       "  1-F_X(…)",
+       "5 f_Y = d/dy F_Y(y)",
+       "6 STATE 0/1 OUTSIDE"
+      ],
+      [
+       "Ex f_X=2x ON (0,1),",
+       " Y=-lnX, SUPPORT y>0",
+       "F_Y(y)=P(-lnX≤y)",
+       " =P(X≥e^(-y))",
+       " =1-F_X(e^(-y))=1-e^(-2y)",
+       "f_Y(y)=2e^(-2y), y>0",
+       "CHECK f_X(h(y))|h'(y)|",
+       " =2e^(-y)×e^(-y), h=e^(-y)",
+       "TOOL CALC>RV>5"
+      ],
+      [
+       "PIT U=F_X(X), F_X CONT.,",
+       " STRICTLY INCREASING",
+       "0<u<1 F_U(u)=P(F_X(X)≤u)",
+       " =P(X≤F_X^-1(u))",
+       " =F_X(F_X^-1(u)) = u",
+       "u≤0 => 0, u≥1 => 1",
+       "f_U(u)=1 ON (0,1) =>",
+       " U IS UNIFORM(0,1)  QED",
+       "SEE ENC>CH3>STA 631 EXTRAS"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "KEYWORD ► TOOL",
+   "title": "KEYWORD ► TOOL",
+   "topics": [
+    {
+     "menu": "COUNTING WORDS",
+     "title": "COUNTING WORDS",
+     "pages": [
+      [
+       "CUE WORD      CALC>COUNT>",
+       "ARRANGE,RANK,PIN     1",
+       "CHOOSE,COMMITTEE     1",
+       "LETTERS,ADJACENT     2",
+       "GROUPS OF SIZES      3>1",
+       "EXACTLY 3 A,REST FREE 3>2",
+       "≥2 OF EACH,T/F RIGHT 4",
+       "IDENTICAL,SOLUTIONS  5",
+       "COEFFICIENT OF       6"
+      ]
+     ]
+    },
+    {
+     "menu": "PROBABILITY WORDS",
+     "title": "PROBABILITY WORDS",
+     "pages": [
+      [
+       "CUE WORD       CALC>PROB>",
+       "GIVEN P(A),P(B),UNION  1",
+       "COUNT TABLE, 2 TRAITS  2",
+       "OVERALL / WHICH SOURCE 3",
+       "PREVALENCE,SENS,SPEC   4",
+       "A,B,C + PAIRS + ALL 3  5",
+       "DRAW n, EXACTLY k RED  6",
+       "GIVEN/IF/AMONG => P(A|B)",
+       "AND n, OR u, NOT '"
+      ],
+      [
+       "NEITHER = A'nB' = (AuB)'",
+       "INDEP P(AnB)=P(A)P(B)",
+       "EXCLUSIVE P(AnB)=0",
+       "SENS=P(+|D) SPEC=P(-|D')",
+       "FALSE POS=1-SPEC=P(+|D')",
+       "PPV=P(D|+)",
+       "INCIDENCE = PREVALENCE",
+       "% => DIVIDE BY 100",
+       "SEE ENC>CH2>SETS & EVENTS"
+      ]
+     ]
+    },
+    {
+     "menu": "RV WORDS",
+     "title": "RV WORDS",
+     "pages": [
+      [
+       "CUE WORD         CALC>RV>",
+       "PMF/CDF TABLE        1",
+       "MAX/MIN/SUM OF DRAWS 2",
+       "POLY f OR F, FIND c  3",
+       "e^, ln, ANY f OR F   4",
+       "Y=g(X), DERIVE f_Y   5",
+       "AT LEAST a => X≥a",
+       "2+ MIN EARLY => X≤-2",
+       "EXACTLY a (CONT.) => 0"
+      ],
+      [
+       "JOINT TABLE/MARG => RV>6",
+       "x COLS => COL SUM=pX",
+       "y ROWS => ROW SUM=pY",
+       "GIVEN Y=y => CELL/ROW SUM",
+       "INDEP? CHECK ALL CELLS",
+       "JOINT PDF => ∫∫ REGION",
+       "MARG PDF => INTEGRATE OUT",
+       "COND PDF => JOINT/MARG",
+       "ENC>CH3>JOINT / MARGINAL"
+      ]
+     ]
+    },
+    {
+     "menu": "JOINT / MARGINAL",
+     "title": "JOINT / MARGINAL",
+     "pages": [
+      [
+       "CUE TWO RVs OR p(x,y)",
+       "JOINT PMF p(x,y)≥0, ΣΣ=1",
+       "EVENT => SUM VALID CELLS",
+       "CDF F(a,b)=Σx≤a,y≤b p",
+       "MARG pX(x)=SUM COLUMN",
+       "pY(y)=SUM ROW",
+       "TOOL CALC>RV>6",
+       "Freund Ch3 Sec 5-6"
+      ],
+      [
+       "CONDITION ON Y=y",
+       "pX|Y(x|y)=p(x,y)/pY(y)",
+       "Divide row y by its total",
+       "INDEPENDENCE",
+       "p(x,y)=pX(x)pY(y) ALL",
+       " CELLS; CHECK ZEROS TOO",
+       "TOOL CALC>RV>6",
+       "Freund Ch3 Sec 7"
+      ],
+      [
+       "JOINT PDF f(x,y)",
+       "P(region)=∫∫region f",
+       "fX(x)=∫ f(x,y)dy",
+       "fY(y)=∫ f(x,y)dx",
+       "fX|Y(x|y)=f(x,y)/fY(y)",
+       "SUPPORT CONTROLS LIMITS",
+       "CALC>RV>6>CONTINUOUS PDF",
+       "ENC>CH3>JOINT / MARGINAL"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "FORMULAS+STRATEGY",
+   "title": "FORMULAS+STRATEGY",
+   "topics": [
+    {
+     "menu": "FORMULAS COUNT",
+     "title": "FORMULAS COUNT",
+     "pages": [
+      [
+       "n!    nPr=n!/(n-r)!",
+       "C(n,r)=n!/(r!(n-r)!)",
+       " =C(n,n-r); =0 IF r>n",
+       "ORDERED+REPEATS    n^r",
+       "UNORDERED+REPEATS",
+       "          C(n+r-1,r)",
+       "CIRCLE        (n-1)!",
+       "WORD n!/(k1!k2!…kj!)",
+       "STEPS => ×, CASES => +"
+      ],
+      [
+       "GROUPS n!/(n1!…nk!),",
+       " /m! PER m SAME-SIZE",
+       " UNNAMED GROUPS",
+       "STARS C(n+k-1,k-1),",
+       " EACH ≥1 C(n-1,k-1)",
+       "(x+y)^n=ΣC(n,r)x^(n-r)y^r",
+       "MULTINOMIAL COEFF OF",
+       " x1^r1…xk^rk=n!/(r1!…rk!)",
+       "Freund Ch1 Thm 1-12"
+      ]
+     ]
+    },
+    {
+     "menu": "FORMULAS PROB",
+     "title": "FORMULAS PROB",
+     "pages": [
+      [
+       "P(A')=1-P(A)",
+       "P(AuB)=P(A)+P(B)-P(AnB)",
+       "P(AuBuC)=ΣP(A)-ΣP(AnB)",
+       "         +P(AnBnC)",
+       "P(AnB')=P(A)-P(AnB)",
+       "EXACTLY 1 OF A,B =",
+       " P(A)+P(B)-2P(AnB)",
+       "(AuB)'=A'nB'",
+       "(AnB)'=A'uB'"
+      ],
+      [
+       "P(A|B)=P(AnB)/P(B)",
+       "P(AnB)=P(B)P(A|B)",
+       "INDEP P(AnB)=P(A)P(B)",
+       "TOTAL P(A)=ΣP(A|Bi)P(Bi)",
+       "BAYES P(Bk|A)=",
+       " P(A|Bk)P(Bk)/P(A)",
+       "EQUALLY LIKELY P=n(A)/N",
+       "URN P(X=k)=C(K,k)×",
+       " C(N-K,n-k)/C(N,n)"
+      ]
+     ]
+    },
+    {
+     "menu": "FORMULAS RV",
+     "title": "FORMULAS RV",
+     "pages": [
+      [
+       "DISCRETE p(x)≥0, Σp=1",
+       " F(x)=Σ p(t), t≤x",
+       " p(xi)=F(xi)-F(x(i-1))",
+       " E[X]=Σx p(x)",
+       " Var=E[X²]-(E[X])²",
+       "CONTINUOUS f≥0, ∫f=1",
+       " F(x)=∫f(t)dt UP TO x",
+       " f=F', P(X=a)=0",
+       " P(a<X<b)=F(b)-F(a)"
+      ],
+      [
+       "UNIFORM(a,b) f=1/(b-a),",
+       " F=(x-a)/(b-a)",
+       "EXPON(λ) f=λe^(-λx), x>0",
+       " F=1-e^(-λx)",
+       "CDF METH F_Y=P(g(X)≤y)",
+       "MONOTONE f_Y(y)=",
+       " f_X(h(y))|h'(y)|",
+       "PIT F_X(X) IS UNIF(0,1)",
+       "Freund Ch3; Ch7 Thm 1"
+      ],
+      [
+       "JOINT PMF p(x,y)≥0, ΣΣ=1",
+       "MARG pX=Σy p; pY=Σx p",
+       "COND pX|Y=p(x,y)/pY(y)",
+       "JOINT PDF ∫∫ f=1",
+       "MARG fX=∫ fdy; fY=∫ fdx",
+       "COND fX|Y=f/fY",
+       "INDEP joint=product marg",
+       "Freund Ch3 Def 6-14",
+       "TOOL CALC>RV>6 (PMF)"
+      ]
+     ]
+    },
+    {
+     "menu": "CHECKLIST",
+     "title": "CHECKLIST",
+     "pages": [
+      [
+       "1 COUNT, PROB OR RV Q?",
+       "2 NAME EVENTS/RV; WRITE",
+       "  GIVENS AS P(..) OR #S",
+       "3 MATCH CUE WORDS (THIS",
+       "  PROGRAM), PICK TOOL",
+       "4 RUN TOOL; COPY FORMULA",
+       "  + NUMBERS AS WORK",
+       "5 CHECK 0≤P≤1, Σp=1, CDF",
+       "  UP FROM 0 TO 1; WHOLE #S"
+      ]
+     ]
+    },
+    {
+     "menu": "COMMON TRAPS",
+     "title": "COMMON TRAPS",
+     "pages": [
+      [
+       "nPr vs nCr => SWAP TEST",
+       "AT LEAST => CASES, NOT",
+       " PICK MIN THEN ANY REST",
+       "DISTINCT ITEMS => k^n,",
+       " IDENTICAL => STARS/BARS",
+       "P(A|B)≠P(B|A); INDEP ≠",
+       " DISJOINT; PRIORS SUM 1",
+       "P(X=a)=0 ONLY CONTINUOUS",
+       "EARLY<0; g DECR => FLIP ≤"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

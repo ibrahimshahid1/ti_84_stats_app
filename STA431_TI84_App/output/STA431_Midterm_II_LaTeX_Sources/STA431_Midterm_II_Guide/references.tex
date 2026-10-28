@@ -1,0 +1,68 @@
+\section{Textbook reading map and further practice}
+\label{sec:references}
+Page numbers below are \textbf{printed page numbers}, unless explicitly called PDF pages. These references are keyed to the actual supplied files, rather than assumed editions. Explanations and the 70-question bank in this guide are newly written; exercise references point you back to your own textbooks.
+
+\subsection{Primary text: Freund, eighth edition}
+Irwin Miller and Marylees Miller, \emph{John E. Freund's Mathematical Statistics with Applications}, eighth edition, Pearson Education Limited, 2014, supplied custom-library PDF. Its printed page 82 is PDF page 87; in the relevant chapters, add five to a printed page to find the PDF page.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.45\linewidth}@{}}
+\toprule Topic & Read & Focus while reading\\\midrule\endhead
+Joint laws & Ch3 \S5, pp.82--91 & Normalization, events in the plane, full CDFs.\\
+Marginals & Ch3 \S6, pp.92--95 & Sum or integrate out the other variable.\\
+Conditionals; independence & Ch3 \S7, pp.95--101 & Divide by the conditioning marginal; compare with a product of marginals.\\
+Expectation; LOTUS & Ch4 \S2, pp.113--121 & Expectations of functions and linearity.\\
+Moments; variance & Ch4 \S3, pp.121--125 & Raw versus central moments; affine variance.\\
+MGFs & Ch4 \S5, pp.127--131 & Definition, derivatives, scale/shift rules.\\
+Product moments & Ch4 \S6, pp.131--135 & $\E XY$, covariance, independence versus uncorrelatedness.\\
+Linear combinations & Ch4 \S7, pp.136--138 & Full variance expansion and covariance of two combinations.\\
+Conditional moments & Ch4 \S8, pp.138--140 & Conditional mean and variance; p.140 has exercises.\\\bottomrule
+\end{longtable}
+Freund Ch4 \S4 (Chebyshev's theorem) lies between moments and MGFs but is outside your supplied topic list. It is not required to complete this guide. Correlation appears later in Freund Ch6 \S7, p.196, in a bivariate-normal discussion; the general treatment here is supported by Bertsekas--Tsitsiklis \S4.5 and Casella--Berger \S4.5.
+
+\textbf{Freund practice to pair with this guide.} The multivariate section includes a source-checked Chapter 3 exercise list. For Chapter 4, try these selected exercises after the corresponding practice set:
+\begin{itemize}
+\item \textbf{Expectation:} Exercises 9 and 10, p.121. Compute raw moments and expectations of polynomial functions.
+\item \textbf{Moments:} Exercises 19, 21, 23--25, p.130. Practice continuous moments, affine variance, standardization, moment existence, and raw-to-central expansions.
+\item \textbf{MGFs:} Exercises 33, 35--40, p.131. Uniform MGF, log-MGF derivatives, invalid proposed MGF, two-sided exponential density, and transformations. Exercise 40 closely parallels HW5 Problem 4 with a different centering constant.
+\item \textbf{Covariance and dependence:} Exercises 42, 46--47, p.140. Use a table and test the false converse of independence implying zero covariance.
+\item \textbf{Linear combinations:} Exercises 49--55, p.140. These cover means, variances, covariance of two combinations, and sum/difference identities.
+\item \textbf{Conditional expectation:} Worked Example 20, p.139, then Exercise 60, p.140. Distinguish conditioning at a value from conditioning on an interval event.
+\end{itemize}
+
+\subsection{Bertsekas and Tsitsiklis: intuition and derivations}
+The supplied file is \emph{Introduction to Probability}, MIT 6.041--6.431 \textbf{Fall 2000 lecture notes}. Its page numbering restarts in each chapter; it is not the pagination of a later published edition. Use the section title or the following PDF-page ranges:
+\begin{itemize}
+\item \textbf{Expectation and variance:} Ch2 \S2.4, chapter-local pp.11--22, PDF pp.66--77. Rework the examples with their solutions covered.
+\item \textbf{Discrete joint laws, conditioning, independence:} Ch2 \S\S2.5--2.7, chapter-local pp.22--42, PDF pp.77--97. Build and normalize conditional slices of tables.
+\item \textbf{Continuous joint laws:} Ch3 \S3.5, chapter-local pp.26--39, PDF pp.125--138. Draw the support before reading each integral's limits.
+\item \textbf{MGFs:} Ch4 \S4.1, chapter-local pp.2--13, PDF pp.153--164. Pay attention to the sign convention $\E[e^{sX}]$ and domain of the transform.
+\item \textbf{Conditional expectation as a random variable:} Ch4 \S4.3, chapter-local pp.17--24, PDF pp.168--175. This supplies the tower rule and total variance as supplementary tools.
+\item \textbf{Covariance and correlation:} Ch4 \S4.5, chapter-local pp.29--31, PDF pp.180--182. Read the geometric and linear-dependence meaning of correlation.
+\end{itemize}
+
+\subsection{Casella and Berger: a more formal second pass}
+George Casella and Roger L. Berger, \emph{Statistical Inference}, second edition, supplied scanned PDF. Use these verified section titles and their printed starting pages; the scan's text layer is not searchable, so navigate with page thumbnails if necessary.
+\begin{itemize}
+\item \S2.2, \emph{Expected Values}, p.55: formal properties of expectation.
+\item \S2.3, \emph{Moments and Moment Generating Functions}, p.59: moments, uniqueness, and why existence hypotheses matter.
+\item \S4.1, \emph{Joint and Marginal Distributions}, p.139, and \S4.2, \emph{Conditional Distributions and Independence}, p.147: a rigorous reinforcement of Topic A.
+\item \S4.4, \emph{Hierarchical Models and Mixture Distributions}, p.162: optional deeper conditional-expectation tools.
+\item \S4.5, \emph{Covariance and Correlation}, p.169: reinforce Topics E--F.
+\end{itemize}
+Read the definitions and one worked example in each selected section first; the more advanced statistical material elsewhere in the book is unnecessary for these homework methods.
+
+\subsection{Wasserman: a concise review}
+Larry Wasserman, \emph{All of Statistics}, 2004, supplied PDF. Use \S\S2.5--2.8 for joint laws, marginals, independence, and conditional distributions; Chapter 3, \S\S3.1--3.3 for expectation, properties, variance and covariance; \S3.5 for conditional expectation; and \S3.6 for MGFs. These sections start on printed pp.31, 33, 34, and 36, respectively; Chapter 3 begins on p.47, conditional expectation on p.54, and MGFs on p.56. This is most useful for a brief second explanation after Freund, not for replacing the homework calculations.
+
+\subsection{Feller: discrete reasoning and conceptual depth}
+William Feller, \emph{An Introduction to Probability Theory and Its Applications}, Volume I, second edition (1957), supplied scan. Read ChV \S1, \emph{Conditional Probability}, p.114, and \S3, \emph{Stochastic Independence}, p.125. For this midterm's expectation topics, read ChIX \S2, \emph{Expectations}, p.220; \S4, \emph{The Variance}, p.227; \S5, \emph{Covariance; Variance of a Sum}, p.229; and \S8, \emph{The Correlation Coefficient}, p.236.
+
+Feller ChXI begins on p.264 and studies generating functions for integer-valued variables. Its probability generating function $G(s)=\E(s^X)$ differs from an MGF: when both are defined, $M_X(t)=G(e^t)$. Read this as optional context; do not substitute $G'(0)$ for $M'(0)$ in your MGF work.
+
+\subsection{Course documents used for alignment}
+\begin{itemize}
+\item \emph{STA 431/631 Homework 4}, two-page supplied assignment: all common and STA 431 problems drive the joint-distribution models and region calculations.
+\item \emph{STA 431/631 Homework 5}, two-page supplied assignment: all common and STA 431 problems drive the moment, MGF, covariance, and conditional-moment models.
+\item \emph{STA431 Study Guide}, supplied 129-page whole-course PDF: Units 4--6, printed pp.32--61, supplied the initial reading structure. Its recommendations were checked against the owning textbooks where used; its calculations were not treated as an answer key for this guide.
+\end{itemize}
+The common and STA 431 problems are the main homework keys. Separately labeled STA 631 extensions are included for extra practice with a nonrectangular support and zero covariance without independence; they do not change the stated STA 431 scope.

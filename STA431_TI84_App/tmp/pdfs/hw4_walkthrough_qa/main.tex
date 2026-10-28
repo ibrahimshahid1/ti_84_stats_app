@@ -1,0 +1,35 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=0.78in,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools,booktabs,array,longtable,tabularx}
+\usepackage{enumitem,tikz,xcolor,titlesec,fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\definecolor{navy}{HTML}{16334B}
+\definecolor{teal}{HTML}{087E8B}
+\definecolor{pale}{HTML}{EDF6F7}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=teal,pdftitle={STA 431 Midterm II: Study Guide and Practice},pdfauthor={Prepared for Ibrahim Shahid}}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{teal}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\setlist{itemsep=3pt,topsep=4pt,leftmargin=*}
+\setlist[enumerate,1]{itemsep=8pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{navy}{STA 431\quad MIDTERM II}}
+\fancyhead[R]{\small Study guide and practice}
+\fancyfoot[L]{\small Freund, Chapters 3--4}\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\newcommand{\E}{\mathbb E}\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}\DeclareMathOperator{\Corr}{Corr}
+\newcommand{\R}{\mathbb R}\newcommand{\dd}{\,\mathrm d}\newcommand{\given}{\mid}
+\newtcolorbox{insight}[1][]{breakable,colback=pale,colframe=teal,boxrule=0.5pt,arc=1mm,title={#1},fonttitle=\bfseries}
+\newtcolorbox{example}[1][]{breakable,colback=white,colframe=navy,boxrule=0.5pt,arc=1mm,title={#1},fonttitle=\bfseries}
+\newtcolorbox{pitfall}[1][]{breakable,colback=orange!5,colframe=orange!60!black,boxrule=0.5pt,arc=1mm,title={#1},fonttitle=\bfseries}
+\newcommand{\checkpoint}[2]{\paragraph{Practice checkpoint.}#1\par\textit{Check:} #2}
+\allowdisplaybreaks[2]
+\begin{document}
+\input{/Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/tmp/pdfs/hw4_app_walkthrough.tex}
+\end{document}

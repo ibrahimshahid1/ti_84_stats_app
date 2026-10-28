@@ -1,0 +1,79 @@
+
+=== PAGE 1 ===
+STA 431/631 Introduction to Probability
+Homework 3
+Due: Friday, September 25, 2026
+Instructions: Complete the problems below. Show all your work for full credit.
+Common Problems (Required for both STA 431 and STA 631)
+1. An urn contains five balls numbered 1, 2, 3, 4, and 5. Two balls are drawn from the urn at
+random without replacement. Let Z be the maximum of the numbers on the two drawn balls.
+(a) Find the probability mass function (PMF) of Z and sketch its graph.
+(b) Find the cumulative distribution function (CDF) of Z and sketch its graph.
+2. Find the cumulative distribution function of the random variable X whose probability density
+function is given by:
+f(x) =
+
+
+
+
+
+1
+4
+for 0 < x < 2
+1
+4
+for 4 < x < 6
+0
+elsewhere
+Also sketch the graphs of the probability density and cumulative distribution functions.
+3. The distribution function of the random variable X is given by:
+F(x) =
+
+
+
+
+
+0
+for x < −2
+x+2
+4
+for −2 ≤x < 2
+1
+for x ≥2
+Find P(−1 < X < 1) and P(X > 0.5).
+4. The deviation in minutes that a commuter train arrives early or late is a continuous random
+variable whose probability density is given by:
+f(x) =
+(
+3
+256(16 −x2)
+for −4 < x < 4
+0
+elsewhere
+where negative values indicate early arrivals and positive values indicate late arrivals. Find
+the probabilities that a train will be:
+(a) at least 2 minutes early;
+(b) anywhere from 1 to 3 minutes late;
+1
+
+=== PAGE 2 ===
+(c) exactly 1 minute early.
+Undergraduate Only Problems (STA 431)
+5. Let the random variable Y have the probability density function f(y) = cy2 for 0 < y < 3,
+and 0 elsewhere.
+(a) Find the value of the constant c.
+(b) Find the cumulative distribution function F(y).
+(c) Calculate P(Y > 2).
+6. A continuous random variable X has the cumulative distribution function F(x) = 1 −e−2x
+for x > 0, and 0 otherwise.
+(a) Derive the probability density function f(x).
+(b) Calculate P(X > 1).
+Graduate Only Problems (STA 631)
+5. Let X be a continuous random variable with PDF f(x) = 2x for 0 < x < 1, and 0 elsewhere.
+Let Y = −ln(X).
+(a) Derive the cumulative distribution function FY (y) for Y .
+(b) Derive the probability density function fY (y) for Y .
+6. Suppose X is a continuous random variable with a strictly increasing CDF FX(x). Define
+a new random variable U = FX(X). Prove that U has a flat probability density function
+defined by fU(u) = 1 on the interval (0, 1) by first deriving its CDF, FU(u).
+2

@@ -1,0 +1,119 @@
+\section{Product moments, covariance, and correlation}
+\label{sec:product}
+\noindent\textbf{Reading.} Freund, Chapter~4, \S6, pp.~131--135, defines product moments and covariance and proves the independence implication. For the general correlation coefficient, use Bertsekas--Tsitsiklis, \S4.5, chapter-local pp.~29--31. Freund also discusses correlation in Chapter~6, \S7, p.~196, in the bivariate-normal setting.
+
+\subsection{Raw and central product moments}
+Product moments describe two variables together. The $(r,s)$ product moment about the origin is
+\[
+ \mu'_{r,s}=\E[X^rY^s]
+ =\sum_x\sum_y x^ry^s p(x,y)
+ \quad\text{or}\quad
+ \iint x^ry^s f(x,y)\,\dd x\,\dd y.
+\]
+Here $r,s$ are nonnegative integers and the sum or integral is over the joint support. The corresponding central product moment is
+\[
+ \mu_{r,s}=\E[(X-\mu_X)^r(Y-\mu_Y)^s].
+\]
+Special cases connect this notation with familiar quantities:
+\[
+ \mu'_{1,0}=\E[X],\quad\mu'_{0,1}=\E[Y],\quad
+ \mu_{2,0}=\Var(X),\quad\mu_{0,2}=\Var(Y),\quad
+ \mu_{1,1}=\Cov(X,Y).
+\]
+In particular, $\E[XY]$ is a \emph{raw} product moment; it is not usually the covariance. Existence matters: finite second moments of both variables guarantee that $\E|XY|$ is finite by Cauchy--Schwarz, so covariance is well defined.
+
+\paragraph{Checkpoint.} What are $\mu'_{2,1}$ and $\mu_{1,0}$? \emph{Answer:} $\E[X^2Y]$ and $\E[X-\mu_X]=0$, respectively, when the expectations exist.
+
+\subsection{Covariance: definition, calculation, and properties}
+Covariance measures signed linear association:
+\[
+\boxed{\Cov(X,Y)=\E[(X-\mu_X)(Y-\mu_Y)]
+ =\E[XY]-\E[X]\E[Y].}
+\]
+To derive the computational formula, expand the centered product and use linearity:
+\[
+\begin{aligned}
+\E[(X-\mu_X)(Y-\mu_Y)]
+ &=\E[XY]-\mu_X\E[Y]-\mu_Y\E[X]+\mu_X\mu_Y\\
+ &=\E[XY]-\mu_X\mu_Y.
+\end{aligned}
+\]
+For hand calculations, find $\E[X]$, $\E[Y]$, and $\E[XY]$ before subtracting. Compute $\E[XY]$ from the joint law, not by multiplying marginal expectations unless independence has been established.
+
+\subsubsection*{Worked example: a small probability table}
+Suppose the joint probabilities are
+\[
+\begin{array}{c|cc|c}
+ &Y=0&Y=1&p_X(x)\\\hline
+X=0&1/10&2/10&3/10\\
+X=1&3/10&4/10&7/10\\\hline
+p_Y(y)&4/10&6/10&1
+\end{array}
+\]
+Because both variables take only values zero and one,
+\[
+ \E[X]=\frac7{10},\qquad \E[Y]=\frac35,\qquad
+ \E[XY]=1\cdot1\cdot\frac4{10}=\frac25.
+\]
+Thus $\Cov(X,Y)=2/5-(7/10)(3/5)=-1/50$. Also,
+$\Var(X)=21/100$ and $\Var(Y)=6/25$.
+
+\paragraph{Algebra to use freely.} For finite second moments,
+\[
+\begin{aligned}
+\Cov(X,Y)&=\Cov(Y,X),&\Cov(X,X)&=\Var(X),\\
+\Cov(X,c)&=0,&
+\Cov(aX+b,cY+d)&=ac\Cov(X,Y),\\
+\Cov(X,Y+Z)&=\Cov(X,Y)+\Cov(X,Z).
+\end{aligned}
+\]
+Shifts disappear because they disappear after centering. Scaling multiplies covariance by one factor from each variable; covariance need not be nonnegative.
+
+\paragraph{Checkpoint.} If $\Cov(X,Y)=-2$, find $\Cov(3X+7,-2Y+5)$. \emph{Answer:} $3(-2)(-2)=12$.
+
+\subsection{Correlation: normalized linear association}
+When $0<\Var(X),\Var(Y)<\infty$, define
+\[
+\boxed{\rho_{X,Y}=\Corr(X,Y)=\frac{\Cov(X,Y)}{\sigma_X\sigma_Y},
+ \qquad -1\leq\rho_{X,Y}\leq1.}
+\]
+Dividing by standard deviations removes the units. Cauchy--Schwarz gives
+$|\Cov(X,Y)|\leq\sigma_X\sigma_Y$, which proves the bound. Correlation is undefined if either variance is zero; a constant variable has zero covariance with every finite-variance variable, but it does not have a defined correlation coefficient.
+
+For the preceding table,
+\[
+ \rho=\frac{-1/50}{\sqrt{(21/100)(6/25)}}
+ =-\frac1{3\sqrt{14}}\approx-0.0891.
+\]
+The small value indicates weak linear association, not independence. If $Y=aX+b$ almost surely with $a\ne0$ and $\Var(X)>0$, then $\rho=\operatorname{sgn}(a)$. Conversely, $|\rho|=1$ implies such an affine relation almost surely. For nonzero $a,c$,
+\[
+ \Corr(aX+b,cY+d)=\operatorname{sgn}(ac)\Corr(X,Y).
+\]
+Changing units by positive scale factors leaves correlation unchanged; reversing one scale reverses its sign.
+
+\paragraph{Checkpoint.} If $Y=8-3X$ and $\Var(X)>0$, find $\Cov(X,Y)$ and $\Corr(X,Y)$. \emph{Answer:} $-3\Var(X)$ and $-1$.
+
+\subsection{Independence implies zero covariance; the converse fails}
+If $X,Y$ are independent and have finite second moments, factorization yields
+\[
+ \E[XY]=\iint xy f_X(x)f_Y(y)\,\dd x\,\dd y
+ =\E[X]\E[Y],\qquad \Cov(X,Y)=0.
+\]
+The discrete proof uses two sums. More generally, $\E[g(X)h(Y)]=\E[g(X)]\E[h(Y)]$ under suitable integrability. Therefore, nonzero covariance disproves independence. Zero covariance only says that this one centered product has mean zero; other forms of dependence may remain.
+
+\subsubsection*{Worked example: zero covariance with exact dependence}
+Let $X$ be uniform on $(-1,1)$ and let $Y=X^2$. Symmetry gives
+\[
+ \E[X]=\E[X^3]=0,\quad \E[Y]=\E[X^2]=\frac13,
+ \quad \Cov(X,Y)=\E[X^3]-\E[X]\E[X^2]=0.
+\]
+They are nevertheless dependent. Set $A=\{|X|<1/2\}$ and $B=\{Y<1/4\}$. Since $Y=X^2$, these are the same event, and
+\[
+ P(A\cap B)=\frac12\ne\frac14=P(A)P(B).
+\]
+Both variables have positive variance ($1/3$ and $4/45$), so their correlation is defined and equals zero. This pair lies on a curve and has no joint density with respect to planar area; compute its expectations from the given univariate law.
+
+\paragraph{Checkpoint.} Which conclusion is justified: (i) $\rho=0$ implies independence; (ii) independence with positive finite variances implies $\rho=0$? \emph{Answer:} Only (ii). A jointly normal pair has the additional special property that zero correlation does imply independence, but that conclusion requires the joint-normal assumption.
+
+\paragraph{Textbook practice.} Freund Chapter~4, Exercise~42 (p.~140): covariance from a four-point joint law; Exercises~46--47 (p.~140): zero covariance with dependence. Exercise~47 uses the same form as the optional STA~631 part of Homework~5.
+

@@ -1,0 +1,90 @@
+           STA 431/631 Introduction to Probability
+                       Homework 4
+                             Due: Saturday, October 10, 2026
+
+
+Instructions: Complete the problems below. Show all your work for full credit.
+
+Common Problems (Required for both STA 431 and STA 631)
+
+  1. Let the joint probability mass function (PMF) of X and Y be given by:
+
+                      f (x, y) = c(x + y 2 ) for x ∈ {1, 2} and y ∈ {1, 2, 3}
+
+      (a) Find the value of the constant c.
+      (b) Find the marginal PMFs of X and Y .
+      (c) Find the conditional PMF fX|Y (x|2).
+      (d) Are X and Y independent? Justify your answer.
+
+  2. A joint probability density function (PDF) is defined by:
+                                  (
+                                   c(2x + y) for 0 < x < 1 and 0 < y < 2
+                       f (x, y) =
+                                   0         otherwise
+
+      (a) Find the value of c.
+      (b) Find the marginal PDF of Y .
+      (c) Find the conditional PDF fX|Y (x|y).
+
+  3. A device contains two components. The device fails if either component fails. The
+     joint PDF of the lifetimes of the components X and Y , measured in hours, is given by:
+                                     (
+                                       x+y
+                                        8
+                                           for 0 < x < 2 and 0 < y < 2
+                          f (x, y) =
+                                      0    otherwise
+
+     What is the probability that the device fails during its first hour of operation?
+
+
+STA 431 Only Problems
+
+  4. Let the joint PMF of X and Y be defined by:
+                               (
+                                 x+y
+                                     for x ∈ {1, 2} and y ∈ {1, 2, 3, 4}
+                     f (x, y) = 32
+                                0    otherwise
+
+      (a) Find P (X > Y ).
+
+                                              1
+     (b) Find P (X + Y ≤ 3).
+
+  5. Using the continuous joint PDF from Problem 2, f (x, y) = 41 (2x + y) for 0 < x < 1
+     and 0 < y < 2, find the probability P (X < Y ).
+
+
+STA 631 Only Problems
+
+  4. If the joint PDF of X and Y is given by:
+                              (
+                               24x(1 − x − y) for x > 0, y > 0, and x + y < 1
+                   f (x, y) =
+                               0              otherwise
+
+     (a) Find the marginal PDFs of X and Y .
+     (b) Determine whether X and Y are independent.
+
+  5. If X is the amount of money (in dollars) that a salesperson spends on gasoline during
+     a day and Y is the corresponding amount of money (in dollars) for which they are
+     reimbursed, the joint PDF is given by:
+                              (
+                                    20−x
+                                1
+                                            for 10 < x < 20 and x2 < y < x
+                                         
+                    f (x, y) = 25 x
+                               0            otherwise
+
+     (a) Find the marginal density of X.
+     (b) Find the conditional density of Y given X = x.
+     (c) Find the probability that the salesperson will be reimbursed at least $8 when
+         spending $12.
+
+
+
+
+                                            2
+

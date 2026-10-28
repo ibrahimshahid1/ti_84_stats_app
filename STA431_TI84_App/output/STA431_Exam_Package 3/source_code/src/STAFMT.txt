@@ -1,0 +1,43 @@
+// STAFMT - shared number formatter (subroutine, called as prgmSTAFMT)
+// IN : W  = value to format (NOT modified)
+// OUT: Str9 = integer when W equals that integer, or candidate "N/D" when
+//             |W|<1000, D<=9999, and error<1E-10; otherwise same as Str8
+//      Str8 = decimal form, rounded to 6 places (full precision if |W|<1E-4 or >=1E10)
+// SCRATCH (clobbered): Q R S T U V
+// Method: continued-fraction convergents h/k of |W|; Q=h(n) R=h(n-1) S=k(n) T=k(n-1)
+If abs(W)≥1ᴇ⁻4 and abs(W)<1ᴇ10
+Then
+toString(round(W,6))→Str8
+Else
+toString(W)→Str8
+End
+abs(W)→U
+1→Q
+0→R
+0→S
+1→T
+Repeat S>9999 or U<1ᴇ⁻9 or abs(Q/S-abs(W))<1ᴇ⁻10
+int(U)→V
+// new h = V*Q+R ; then swap so Q=new, R=old Q
+V*Q+R→R
+Q+R→Q
+Q-R→R
+Q-R→Q
+// new k = V*S+T ; then swap so S=new, T=old S
+V*S+T→T
+S+T→S
+S-T→T
+S-T→S
+U-V→U
+If U≥1ᴇ⁻9
+1/U→U
+End
+Str8→Str9
+If S≤9999 and (Q≠0 or W=0) and ((S=1 and Q=abs(W)) or (S>1 and abs(W)<1000 and abs(Q/S-abs(W))<1ᴇ⁻10))
+Then
+If W<0
+⁻Q→Q
+toString(Q)→Str9
+If S≠1
+Str9+"/"+toString(S)→Str9
+End

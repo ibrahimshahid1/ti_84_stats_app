@@ -1,0 +1,137 @@
+\section{Homework 5: worked solutions}
+\label{sec:hw5}
+The following key covers all seven common problems and the STA 431 Problem 8 from the supplied assignment. The final subsection is the separately labeled STA 631 extension. The calculations are given here for study; the homework document's submission directions are not instructions to this guide.
+
+\subsection{Common Problem 1: a discrete PMF}
+For $p(x)=c(x^2+x)$ on $x=1,2,3,4$,
+\[
+1=c(2+6+12+20)=40c\quad\Longrightarrow\quad c=\frac1{40}.
+\]
+The probability weights are $1/20,3/20,3/10,1/2$. The moments are
+\begin{align*}
+\E X&=\frac{1(2)+2(6)+3(12)+4(20)}{40}=\frac{130}{40}=\frac{13}{4},\\
+\E X^2&=\frac{1(2)+4(6)+9(12)+16(20)}{40}=\frac{454}{40}=\frac{227}{20}.
+\end{align*}
+Hence
+\[
+\boxed{\Var X=\frac{227}{20}-\left(\frac{13}{4}\right)^2=\frac{63}{80}.}
+\]
+\textit{Transfer skill:} normalize first, compute two raw moments, then subtract the squared mean.
+
+\subsection{Common Problem 2: a symmetric PDF and its square}
+Here $f(x)=\frac34(1-x^2)$ on $(-1,1)$. The integrand $xf(x)$ is odd on a symmetric interval, so $\E X=0$. Its even moments satisfy
+\[
+\E X^{2r}=\frac32\int_0^1(x^{2r}-x^{2r+2})\dd x
+=\frac32\left(\frac1{2r+1}-\frac1{2r+3}\right)
+=\frac3{(2r+1)(2r+3)}.
+\]
+Thus $\E X^2=1/5$, $\E X^4=3/35$, and
+\[
+\boxed{\E X=0,\quad\Var X=\frac15.}
+\]
+For $Y=X^2$, LOTUS gives $\E Y=\E X^2=1/5$, $\E Y^2=\E X^4=3/35$, and
+\[
+\boxed{\E Y=\frac15,\quad\Var Y=\frac3{35}-\frac1{25}=\frac8{175}.}
+\]
+\textit{Transfer skill:} $\Var(X^2)$ requires a fourth raw moment of $X$.
+
+\subsection{Common Problem 3: an exponential MGF}
+For $f(x)=3e^{-3x}$, $x>0$,
+\[
+M_X(t)=\int_0^\infty e^{tx}3e^{-3x}\dd x
+=3\int_0^\infty e^{-(3-t)x}\dd x
+=\boxed{\frac3{3-t},\quad t<3.}
+\]
+At $t=3$ the integrand is constant and its integral diverges; for $t>3$ it grows. Therefore the convergence condition is essential. Differentiation gives
+\[
+M'_X(t)=\frac3{(3-t)^2},\qquad M''_X(t)=\frac6{(3-t)^3}.
+\]
+Consequently $\boxed{\E X=1/3,\quad\E X^2=2/9}$. As a check, $\Var X=2/9-1/9=1/9$.
+
+\subsection{Common Problem 4: transforming a given MGF}
+Given $M_X(t)=e^{4t+8t^2}$ and $Z=(X-4)/4$, use the affine rule:
+\[
+M_Z(t)=e^{-t}M_X(t/4)
+=e^{-t}\exp\left(4\frac t4+8\frac{t^2}{16}\right)
+=\boxed{e^{t^2/2}}.
+\]
+It exists for all real $t$. Then $M'_Z(t)=te^{t^2/2}$ and $M''_Z(t)=(1+t^2)e^{t^2/2}$. Hence $\E Z=0$, $\E Z^2=1$, and $\boxed{\Var Z=1}$. Equivalently read the first two derivatives of $\log M_Z(t)=t^2/2$.
+
+\subsection{Common Problem 5: updated insurance payouts}
+The new total is $W+V=2X+1.1Y+100$. With $\Var X=300$, $\Var Y=500$, $\Cov(X,Y)=150$,
+\begin{align*}
+\Var(W+V)&=2^2(300)+(1.1)^2(500)+2(2)(1.1)(150)\\
+&=1200+605+660=\boxed{2465}.
+\end{align*}
+The constant 100 does not affect variance. Alternatively $\Cov(W,V)=2(1.1)(150)=330$, and the total uses twice this covariance.
+
+\subsection{Common Problem 6: three variables and signed coefficients}
+For $W=3X-2Y+Z$,
+\begin{align*}
+\Var W={}&9\Var X+4\Var Y+\Var Z
+-12\Cov(X,Y)+6\Cov(X,Z)-4\Cov(Y,Z)\\
+={}&9(4)+4(9)+2-12(1)+6(-1)-4(0)\\
+={}&\boxed{56}.
+\end{align*}
+Write the symbolic expansion before inserting values: the coefficient pair $3,-2$ produces a negative cross term, and the covariance $-1$ makes the $3,1$ cross term negative as well.
+
+\subsection{Common Problem 7: a conditional mean and variance}
+For $f(x,y)=x+y$ on the unit square,
+\[
+f_Y(y)=\int_0^1(x+y)\dd x=\frac12+y,\qquad0<y<1.
+\]
+Therefore
+\[
+f_{X\mid Y}(x\mid y)=\frac{x+y}{1/2+y},\quad0<x<1,
+\]
+and it is zero otherwise, for each $y\in(0,1)$. At $y=1/2$, the denominator is one, so
+\[
+f_{X\mid Y}(x\mid1/2)=x+\frac12,\qquad0<x<1.
+\]
+Integrating the conditional moments gives
+\begin{align*}
+\E(X\mid Y=1/2)&=\int_0^1x(x+1/2)\dd x=\frac13+\frac14=\boxed{\frac7{12}},\\
+\E(X^2\mid Y=1/2)&=\int_0^1x^2(x+1/2)\dd x=\frac14+\frac16=\frac5{12}.
+\end{align*}
+Hence $\boxed{\Var(X\mid Y=1/2)=5/12-(7/12)^2=11/144}$.
+
+\subsection{STA 431 Problem 8: a joint PMF}
+For $p(x,y)=(x+y)/36$ on $\{1,2,3\}^2$,
+\[
+p_X(x)=\frac{3x+6}{36}=\frac{x+2}{12},\qquad
+p_Y(y)=\frac{y+2}{12},\qquad x,y\in\{1,2,3\}.
+\]
+Thus both marginal expectations equal
+\[
+\E X=\E Y=\frac{1(3)+2(4)+3(5)}{12}=\boxed{\frac{13}{6}}.
+\]
+For the product moment, separate the finite sums algebraically, without assuming independence:
+\begin{align*}
+\E(XY)&=\frac1{36}\sum_x\sum_yxy(x+y)\\
+&=\frac1{36}\left[\left(\sum_xx^2\right)\left(\sum_yy\right)
++\left(\sum_xx\right)\left(\sum_yy^2\right)\right]\\
+&=\frac{14(6)+6(14)}{36}=\boxed{\frac{14}{3}}.
+\end{align*}
+The covariance is $\boxed{14/3-(13/6)^2=-1/36}$. A negative covariance is allowed; its magnitude here is small.
+
+Since $p_X(1)=1/4$,
+\[
+p_{Y\mid X}(y\mid1)=\frac{(1+y)/36}{1/4}=\frac{1+y}{9},\qquad y=1,2,3.
+\]
+These weights $2/9,3/9,4/9$ sum to one, and
+\[
+\boxed{\E(Y\mid X=1)=\frac{1(2)+2(3)+3(4)}9=\frac{20}{9}.}
+\]
+
+\subsection{Optional STA 631 extension: uncorrelated but dependent}
+For $f_X(x)=1-|x|$ on $(-1,1)$ and $Y=X^2$, symmetry gives $\E X=\E X^3=0$. Hence $\Cov(X,Y)=\E X^3-\E X\E X^2=0$.
+
+To prove dependence with positive-probability intervals, take
+\[
+A=\{-1/2<X<1/2\},\qquad B=\{0\le Y<1/4\}.
+\]
+These events agree up to zero-probability endpoints, and
+\[
+P(A)=P(B)=2\int_0^{1/2}(1-x)\dd x=\frac34.
+\]
+But $P(A\cap B)=3/4\ne(3/4)^2=9/16$. Independence fails even though covariance is zero. This counterexample supports a concept explicitly on your STA 431 topic list.

@@ -1,0 +1,133 @@
+\contentsline {section}{Scope, reading plan, and notation}{4}{Doc-Start}%
+\contentsline {section}{\numberline {1}Multivariate random variables}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Joint laws, support, and normalization}{5}{subsection.1.1}%
+\contentsline {paragraph}{Finding an unknown constant.}{5}{paragraph*.1}%
+\contentsline {paragraph}{Checkpoint.}{6}{paragraph*.2}%
+\contentsline {subsection}{\numberline {1.2}Joint CDFs and recovering probabilities}{6}{subsection.1.2}%
+\contentsline {paragraph}{Rectangle probabilities from a CDF.}{6}{paragraph*.3}%
+\contentsline {paragraph}{Checkpoint.}{7}{paragraph*.4}%
+\contentsline {subsection}{\numberline {1.3}Marginals: integrate or sum out the other variable}{7}{subsection.1.3}%
+\contentsline {paragraph}{Checkpoint.}{8}{paragraph*.5}%
+\contentsline {subsection}{\numberline {1.4}Conditional laws and reconstructing a joint law}{8}{subsection.1.4}%
+\contentsline {paragraph}{Conditional CDF.}{8}{paragraph*.6}%
+\contentsline {paragraph}{Which directions of conversion are possible?}{9}{paragraph*.7}%
+\contentsline {paragraph}{Checkpoint.}{9}{paragraph*.8}%
+\contentsline {subsection}{\numberline {1.5}Independence: what must be proved}{9}{subsection.1.5}%
+\contentsline {paragraph}{Factorization and support.}{10}{paragraph*.9}%
+\contentsline {paragraph}{Consequences worth knowing.}{10}{paragraph*.10}%
+\contentsline {paragraph}{Checkpoint.}{10}{paragraph*.11}%
+\contentsline {subsection}{\numberline {1.6}Region probabilities and integration limits}{10}{subsection.1.6}%
+\contentsline {paragraph}{A rectangle can still require a split.}{11}{paragraph*.12}%
+\contentsline {paragraph}{Checkpoint.}{11}{paragraph*.13}%
+\contentsline {subsection}{\numberline {1.7}Translating word problems into events}{11}{subsection.1.7}%
+\contentsline {paragraph}{Series and parallel lifetimes.}{12}{paragraph*.14}%
+\contentsline {paragraph}{Checkpoint.}{12}{paragraph*.15}%
+\contentsline {paragraph}{Exam habits.}{12}{paragraph*.16}%
+\contentsline {section}{\numberline {2}Expectation: definitions, functions, and properties}{14}{section.2}%
+\contentsline {subsection}{\numberline {2.1}The definition and its meaning}{14}{subsection.2.1}%
+\contentsline {paragraph}{Practice checkpoint.}{14}{paragraph*.17}%
+\contentsline {subsection}{\numberline {2.2}The generalized definition: LOTUS}{14}{subsection.2.2}%
+\contentsline {paragraph}{Practice checkpoint.}{15}{paragraph*.18}%
+\contentsline {subsection}{\numberline {2.3}Properties and how to use them}{15}{subsection.2.3}%
+\contentsline {paragraph}{Practice checkpoint.}{15}{paragraph*.19}%
+\contentsline {section}{\numberline {3}Moments about the origin and the mean}{16}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Raw moments}{16}{subsection.3.1}%
+\contentsline {paragraph}{Practice checkpoint.}{16}{paragraph*.20}%
+\contentsline {subsection}{\numberline {3.2}Central moments and variance}{16}{subsection.3.2}%
+\contentsline {paragraph}{Practice checkpoint.}{17}{paragraph*.21}%
+\contentsline {subsection}{\numberline {3.3}Shifts, scales, and standardization}{17}{subsection.3.3}%
+\contentsline {paragraph}{Practice checkpoint.}{17}{paragraph*.22}%
+\contentsline {section}{\numberline {4}Moment generating functions}{18}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Definition, existence, and convergence}{18}{subsection.4.1}%
+\contentsline {paragraph}{Practice checkpoint.}{18}{paragraph*.23}%
+\contentsline {subsection}{\numberline {4.2}Moments from derivatives or coefficients}{18}{subsection.4.2}%
+\contentsline {paragraph}{Practice checkpoint.}{18}{paragraph*.24}%
+\contentsline {subsection}{\numberline {4.3}Affine transformations and independent sums}{19}{subsection.4.3}%
+\contentsline {paragraph}{Practice checkpoint.}{19}{paragraph*.25}%
+\contentsline {subsection}{\numberline {4.4}Uniqueness and recognition}{19}{subsection.4.4}%
+\contentsline {paragraph}{Practice checkpoint.}{19}{paragraph*.26}%
+\contentsline {section}{\numberline {5}Product moments, covariance, and correlation}{20}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Raw and central product moments}{20}{subsection.5.1}%
+\contentsline {paragraph}{Checkpoint.}{20}{paragraph*.27}%
+\contentsline {subsection}{\numberline {5.2}Covariance: definition, calculation, and properties}{20}{subsection.5.2}%
+\contentsline {paragraph}{Algebra to use freely.}{21}{paragraph*.28}%
+\contentsline {paragraph}{Checkpoint.}{21}{paragraph*.29}%
+\contentsline {subsection}{\numberline {5.3}Correlation: normalized linear association}{21}{subsection.5.3}%
+\contentsline {paragraph}{Checkpoint.}{21}{paragraph*.30}%
+\contentsline {subsection}{\numberline {5.4}Independence implies zero covariance; the converse fails}{21}{subsection.5.4}%
+\contentsline {paragraph}{Checkpoint.}{22}{paragraph*.31}%
+\contentsline {paragraph}{Textbook practice.}{22}{paragraph*.32}%
+\contentsline {section}{\numberline {6}Moments of linear combinations}{23}{section.6}%
+\contentsline {subsection}{\numberline {6.1}One linear combination: mean and variance}{23}{subsection.6.1}%
+\contentsline {paragraph}{Checkpoint.}{23}{paragraph*.33}%
+\contentsline {subsection}{\numberline {6.2}Three or more variables: count each pair once}{24}{subsection.6.2}%
+\contentsline {paragraph}{Checkpoint.}{24}{paragraph*.34}%
+\contentsline {subsection}{\numberline {6.3}Two linear combinations: covariance}{24}{subsection.6.3}%
+\contentsline {paragraph}{Checkpoint.}{25}{paragraph*.35}%
+\contentsline {paragraph}{Textbook practice.}{25}{paragraph*.36}%
+\contentsline {section}{\numberline {7}Conditional expectation and conditional variance}{26}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Definition: take an expectation under the conditional law}{26}{subsection.7.1}%
+\contentsline {paragraph}{Checkpoint.}{26}{paragraph*.37}%
+\contentsline {subsection}{\numberline {7.2}Conditional variance and support-dependent calculations}{27}{subsection.7.2}%
+\contentsline {paragraph}{Checkpoint.}{27}{paragraph*.38}%
+\contentsline {subsection}{\numberline {7.3}A function of a value versus a random variable}{27}{subsection.7.3}%
+\contentsline {paragraph}{Checkpoint.}{28}{paragraph*.39}%
+\contentsline {subsection}{\numberline {7.4}Supplement: averaging conditional means and variances}{28}{subsection.7.4}%
+\contentsline {paragraph}{Checkpoint.}{28}{paragraph*.40}%
+\contentsline {paragraph}{Textbook practice.}{28}{paragraph*.41}%
+\contentsline {section}{\numberline {8}Homework 4: every problem with STAM2}{29}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Common Question 1: joint PMF, marginals, conditioning, independence}{29}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Common Question 2: a joint PDF and conditional-density formula}{31}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Common Question 3: a device that fails when either component fails}{32}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}STA 431 Question 4: two discrete event probabilities}{33}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}STA 431 Question 5: $P(X<Y)$ from a joint PDF}{34}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Optional STA 631 Question 4: triangular support}{35}{subsection.8.6}%
+\contentsline {subsection}{\numberline {8.7}Optional STA 631 Question 5: conditional reimbursement}{36}{subsection.8.7}%
+\contentsline {section}{\numberline {9}Homework 5: solve every problem with STAM2}{37}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Problem 1: normalize a PMF, then find its mean and variance}{37}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Problem 2: a symmetric continuous variable and its square}{37}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Problem 3: derive an exponential MGF and obtain two moments}{38}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Problem 4: center and scale a given MGF}{39}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Problem 5: variance of the updated insurance benefit}{40}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Problem 6: a signed combination of three variables}{40}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Problem 7: marginal and conditional densities, then conditional moments}{41}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.8}STA 431 Problem 8: four tasks from one joint table}{42}{subsection.9.8}%
+\contentsline {subsection}{\numberline {9.9}Optional STA 631 Problem 8: zero covariance without independence}{42}{subsection.9.9}%
+\contentsline {section}{\numberline {10}Homework-style practice: 70 questions}{44}{section.10}%
+\contentsline {subsection}{\numberline {10.1}A. Multivariate distributions}{44}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}B. Expectation, LOTUS, and properties}{44}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}C. Raw moments, central moments, and variance}{45}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}D. Moment generating functions}{46}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}E. Product moments, covariance, and correlation}{46}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}F. Moments of one and two linear combinations}{47}{subsection.10.6}%
+\contentsline {subsection}{\numberline {10.7}G. Conditional expectation and conditional variance}{48}{subsection.10.7}%
+\contentsline {section}{\numberline {11}Worked solutions to the 70 practice questions}{49}{section.11}%
+\contentsline {subsection}{\numberline {11.1}A. Multivariate distributions}{49}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}B. Expectation, LOTUS, and properties}{50}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}C. Raw moments, central moments, and variance}{51}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}D. Moment generating functions}{52}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}E. Product moments, covariance, and correlation}{53}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}F. Moments of one and two linear combinations}{54}{subsection.11.6}%
+\contentsline {subsection}{\numberline {11.7}G. Conditional expectation and conditional variance}{55}{subsection.11.7}%
+\contentsline {section}{\numberline {12}TI-84 Plus CE: a calculator-first workflow}{58}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Start with the Midterm II suite}{58}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Key entry that makes every recipe faster}{59}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}The fastest finite-PMF trick: unnormalized weighted Stats}{59}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}A universal joint-table setup}{60}{subsection.12.4}%
+\contentsline {subsection}{\numberline {12.5}Masks turn events and conditionals into list calculations}{60}{subsection.12.5}%
+\contentsline {subsection}{\numberline {12.6}Two-variable Stats gives covariance with little typing}{61}{subsection.12.6}%
+\contentsline {subsection}{\numberline {12.7}One reusable continuous-density engine}{61}{subsection.12.7}%
+\contentsline {subsection}{\numberline {12.8}Joint slices: numerical marginals and conditional laws}{62}{subsection.12.8}%
+\contentsline {subsection}{\numberline {12.9}Double integrals: let the app handle the second numerical layer}{62}{subsection.12.9}%
+\contentsline {subsection}{\numberline {12.10}Covariance matrices automate all cross terms}{63}{subsection.12.10}%
+\contentsline {subsection}{\numberline {12.11}MGFs: exact templates first, numerical derivatives when needed}{64}{subsection.12.11}%
+\contentsline {subsection}{\numberline {12.12}A useful extra: minimize a linear-combination variance}{64}{subsection.12.12}%
+\contentsline {subsection}{\numberline {12.13}Official references and validation limits}{64}{subsection.12.13}%
+\contentsline {section}{\numberline {13}Improvements made while walking through the homework}{66}{section.13}%
+\contentsline {section}{\numberline {14}Textbook reading map and further practice}{67}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Primary text: Freund, eighth edition}{67}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Bertsekas and Tsitsiklis: intuition and derivations}{68}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Casella and Berger: a more formal second pass}{68}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Wasserman: a concise review}{68}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Feller: discrete reasoning and conceptual depth}{69}{subsection.14.5}%
+\contentsline {subsection}{\numberline {14.6}Course documents used for alignment}{69}{subsection.14.6}%

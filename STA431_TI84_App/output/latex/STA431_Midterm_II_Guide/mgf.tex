@@ -1,0 +1,68 @@
+\section{Moment generating functions}
+\textbf{Read:} Freund Ch4 \S5, pp.127--131; Bertsekas--Tsitsiklis \S4.1; Wasserman \S3.6. Practice set D.
+\subsection{Definition, existence, and convergence}
+The MGF is $M_X(t)=\E(e^{tX})$, computed as
+\[
+M_X(t)=\sum_xe^{tx}p_X(x)\quad\text{or}\quad M_X(t)=\int_{-\infty}^{\infty}e^{tx}f_X(x)\dd x.
+\]
+The variable is $t$; $x$ is summed or integrated out. Always $M_X(0)=1$. The standard moment and uniqueness theorems apply when the MGF is finite on an open interval containing zero. Being finite only at zero does not meet this hypothesis. Some distributions have moments but no MGF in such a neighborhood.
+\begin{example}[An exponential MGF and its domain]
+For $f_X(x)=\lambda e^{-\lambda x}$, $x>0$, $\lambda>0$,
+\[
+M_X(t)=\lambda\int_0^\infty e^{-(\lambda-t)x}\dd x=\frac{\lambda}{\lambda-t},\qquad t<\lambda.
+\]
+The original integral converges precisely when $\lambda-t>0$. State this condition as part of the derivation.
+\end{example}
+\checkpoint{For $P(X=0)=1/3$, $P(X=2)=2/3$, find the MGF and domain.}{$M(t)=1/3+(2/3)e^{2t}$, for all real $t$.}
+\subsection{Moments from derivatives or coefficients}
+Differentiating $e^{tX}$ introduces powers of $X$:
+\[
+M_X^{(r)}(0)=\E X^r,\qquad\Var X=M_X''(0)-[M_X'(0)]^2.
+\]
+Equivalently,
+\[
+M_X(t)=1+\mu t+\frac{\E X^2}{2!}t^2+\frac{\E X^3}{3!}t^3+\cdots.
+\]
+Multiply the coefficient of $t^r$ by $r!$ to obtain the raw moment. For the exponential example $M'(t)=\lambda/(\lambda-t)^2$ and $M''(t)=2\lambda/(\lambda-t)^3$. The mean is $1/\lambda$, second moment $2/\lambda^2$, and variance $1/\lambda^2$.
+
+The log-MGF $K(t)=\log M(t)$ is a useful shortcut:
+\[
+K'(0)=\E X,\qquad K''(0)=\Var X.
+\]
+This follows from $K'=M'/M$, $K''=M''/M-(M'/M)^2$, and $M(0)=1$.
+\checkpoint{If $M(t)=1+3t+7t^2+10t^3+O(t^4)$, find the mean, variance, and third raw moment.}{$3$, $2(7)-9=5$, and $3!\,10=60$.}
+\subsection{Affine transformations and independent sums}
+For constants $a,b$,
+\[
+M_{aX+b}(t)=\E[e^{t(aX+b)}]=e^{bt}M_X(at).
+\]
+For $Z=(X-c)/d$, $d\ne0$, this becomes
+\[
+M_Z(t)=e^{-ct/d}M_X(t/d).
+\]
+Substitute into every occurrence of the old argument. The transformed domain consists of $t$ for which $at$ belongs to the original domain. A negative scale reverses inequalities when solving for $t$.
+
+For mutually independent $X_1,\ldots,X_n$,
+\[
+M_{\sum_i a_iX_i+b}(t)=e^{bt}\prod_iM_{X_i}(a_it).
+\]
+This product rule needs independence of the exponential factors.
+\begin{example}[Centering and scaling]
+If $M_X(t)=e^{6t+18t^2}$ and $Z=(X-6)/6$, then
+\[
+M_Z(t)=e^{-t}e^{6(t/6)+18(t/6)^2}=e^{t^2/2}.
+\]
+Thus $K_Z(t)=t^2/2$, $\E Z=0$, and $\Var Z=1$.
+\end{example}
+\checkpoint{If $M_X(t)=2/(2-t)$ for $t<2$ and $Z=-3X+1$, give its MGF and domain.}{$M_Z(t)=2e^t/(2+3t)$ for $t>-2/3$.}
+\subsection{Uniqueness and recognition}
+If two MGFs are finite and agree on an open interval containing zero, the variables have the same distribution. Matching only the first two moments does not identify a law.
+\begin{center}\begin{tabular}{lll}
+\toprule Law & MGF & Mean; variance\\\midrule
+Bernoulli$(p)$ & $1-p+pe^t$ & $p$; $p(1-p)$\\
+Binomial$(n,p)$ & $(1-p+pe^t)^n$ & $np$; $np(1-p)$\\
+Exponential, rate $\lambda$ & $\lambda/(\lambda-t)$, $t<\lambda$ & $1/\lambda$; $1/\lambda^2$\\
+Normal$(\mu,\sigma^2)$ & $e^{\mu t+\sigma^2t^2/2}$ & $\mu$; $\sigma^2$\\\bottomrule
+\end{tabular}\end{center}
+Recognition is secondary here; derivatives give the required moments directly. In the normal form the coefficient of $t^2$ is half the variance. Freund's exponential distribution elsewhere uses a scale; here $\lambda$ is explicitly a rate.
+\checkpoint{Two variables have MGF $(1/4+3e^t/4)^4$ near zero. What follows? What if only their means and variances match?}{The MGFs identify the same binomial$(4,3/4)$ law. Equal means and variances alone do not identify a law.}

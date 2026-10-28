@@ -1,0 +1,68 @@
+// STAM2 - exam recognition first; general solvers always use the current problem's data.
+0→Z
+Lbl M
+Menu("STA431 MIDTERM II","EXAM ASSISTANT",A,"GENERAL SOLVERS",S,"ENCYCLOPEDIA",E,"PRACTICE + HW",H,"HELP + LIMITS",L,"QUIT",Q)
+Lbl A
+0→Z
+prgmM2EXAM
+Goto M
+Lbl S
+Menu("GENERAL SOLVERS","DISCRETE + JOINT",D,"DENSITY + INTEGRAL",C,"MGF TOOLS",G,"LINEAR COMBOS",V,"BACK",M)
+Lbl D
+0→Z
+prgmM2DISC
+Goto S
+Lbl C
+0→Z
+prgmM2CONT
+Goto S
+Lbl G
+0→Z
+prgmM2MGF
+Goto S
+Lbl V
+0→Z
+prgmM2COV
+Goto S
+Lbl E
+prgmM2ENC
+Goto M
+Lbl H
+Menu("HOMEWORK PRACTICE","READ WALKTHROUGH",H1,"LOAD PRACTICE DATA",H2,"BACK",M)
+Lbl H1
+prgmM2HW
+Goto H
+Lbl H2
+ClrHome
+Disp "PRACTICE EXAMPLES ONLY","FOR EXAM USE GENERAL TOOLS","ENTER YOUR PROBLEM'S DATA"
+Pause
+prgmM2RUN
+Goto H
+Lbl L
+ClrHome
+Output(1,1,"UNFAMILIAR PROBLEM")
+Output(2,1,"1 GIVEN data type")
+Output(3,1,"2 ASKED quantity")
+Output(4,1,"3 SUPPORT + EVENT")
+Output(5,1,"4 CHOOSE general solver")
+Output(6,1,"5 ENTER current formula")
+Output(7,1,"6 WRITE setup + reason")
+Output(9,1,"HOMEWORK IS PRACTICE DATA")
+Output(10,1,"ENTER=LIMITS")
+Pause
+ClrHome
+Output(1,1,"WHAT STILL NEEDS REASONING")
+Output(2,1,"Support and event bounds")
+Output(3,1,"Symbolic pdf/cdf formulas")
+Output(4,1,"MGF convergence/domain")
+Output(5,1,"Independence proofs")
+Output(6,1,"Numeric evidence not proof")
+Output(8,1,"Finite rows <=30; combos<=3")
+Output(9,1,"Integrals finite bounds")
+Output(10,1,"ENTER=MAIN MENU")
+Pause
+Goto M
+Lbl Q
+ClrHome
+Disp "MIDTERM II DONE"
+Return

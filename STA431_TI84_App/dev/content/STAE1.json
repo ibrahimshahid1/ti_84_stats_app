@@ -1,0 +1,553 @@
+{
+ "program": "STAE1",
+ "title": "CH1 COUNTING",
+ "sections": [
+  {
+   "menu": "COUNTING RULES",
+   "title": "COUNTING RULES",
+   "topics": [
+    {
+     "menu": "MULT PRINCIPLE",
+     "title": "MULT PRINCIPLE",
+     "pages": [
+      [
+       "k steps in a row; step i",
+       " has n_i ways no matter",
+       " how earlier steps went",
+       " => n1*n2*…*nk ways",
+       "CUES and then, each of,",
+       " codes, T/F or MC sheets,",
+       " draws WITH replacement",
+       "EITHER/OR disjoint cases",
+       " => ADD the case counts"
+      ],
+      [
+       "Ex 20 T/F questions =>",
+       " 2^20 = 1048576 sheets",
+       "Ex 15 MC Qs, 3 choices",
+       " each => 3^15 = 14348907",
+       "Ex 10 paintings, 3 heirs",
+       " => 3^10 = 59049",
+       "Ex subsets of n items =>",
+       " 2^n (each in or out)",
+       "TOOL CALC>COUNT>1 (n^r)"
+      ],
+      [
+       "WHY 2 steps give pairs",
+       " (x_i,y_j) = a grid, n1",
+       " rows by n2 cols; k steps",
+       " by induction.",
+       "TRAP if the count at a",
+       " step depends on WHICH",
+       " earlier pick, add cases",
+       "Freund Ch1 Thm 1,2, Ex 4",
+       " Bert 1.6"
+      ]
+     ]
+    },
+    {
+     "menu": "PERMUTATIONS",
+     "title": "PERMUTATIONS",
+     "pages": [
+      [
+       "ORDER MATTERS, no repeats",
+       " n! = arrange all n",
+       " nPr = n!/(n-r)!",
+       "  = n(n-1)…(n-r+1)",
+       "  (r of n in order, r≤n)",
+       "Circle of n => (n-1)!",
+       "Repeats allowed => n^r",
+       "CUES rank, line up, seat,",
+       " officers, 1st/2nd/3rd"
+      ],
+      [
+       "Ex pres,VP,treas,sec of",
+       " 24 => 24P4",
+       " = 24*23*22*21 = 255024",
+       "Ex 5 in a line, A and B",
+       " NOT adjacent. Glue AB as",
+       " 1 unit (AB/BA) => 4!*2!",
+       " = 48 adjacent; 120-48=72",
+       "Ex 8 people in a circle",
+       " => 7! = 5040"
+      ],
+      [
+       "0! = 1, nPn = n!, nP0 = 1",
+       "nPr = C(n,r)*r! (choose,",
+       " then order)",
+       "ORDER MATTERS iff swapping",
+       " two picks gives a NEW",
+       " outcome",
+       "Freund Ch1 Thm 3,4,5, Ex 8",
+       " Bert 1.6; Feller II.2",
+       "TOOL CALC>COUNT>1"
+      ]
+     ]
+    },
+    {
+     "menu": "COMBINATIONS",
+     "title": "COMBINATIONS",
+     "pages": [
+      [
+       "ORDER DOES NOT MATTER",
+       "C(n,r) = n!/(r!(n-r)!)",
+       " = nPr/r!  (r-subsets)",
+       " C(n,r) = 0 if r>n",
+       "CUES committee, choose,",
+       " select, hand, sample,",
+       " delegation, subset",
+       "AT LEAST/AT MOST => cases",
+       " or complement (next)"
+      ],
+      [
+       "HW1 Q7(431) pick 5 from",
+       " 8 math+6 stat, ≥2 each",
+       "Cases (M,S)=(2,3),(3,2)",
+       " C(8,2)C(6,3)=28*20=560",
+       " C(8,3)C(6,2)=56*15=840",
+       " total = 1400",
+       "Or complement C(14,5)-bad",
+       " = 2002-602 = 1400",
+       "TOOL CALC>COUNT>4"
+      ],
+      [
+       "HW1 Q6 20 T/F, 5 hard,",
+       " exactly 15 right, with",
+       " exactly 2 hard right",
+       "Choose WHICH Qs are right",
+       " (answers then forced)",
+       " hard  C(5,2) = 10",
+       " easy  C(15,13) = 105",
+       " total 10*105 = 1050",
+       "TOOL CALC>COUNT>4"
+      ],
+      [
+       "TRAP pick the required",
+       " ones, then fill the rest",
+       " = OVERCOUNT. Q7 wrong",
+       " C(8,2)C(6,2)*10 = 4200",
+       "COMPLEMENT 4 of 10 TVs",
+       " (3 bad), at least 1 bad",
+       " C(10,4)-C(7,4)=210-35=175",
+       "Freund Ch1 Thm 7, Ex 16",
+       " Bert 1.6; Feller II.4"
+      ]
+     ]
+    },
+    {
+     "menu": "REPEATED LETTERS",
+     "title": "REPEATED LETTERS",
+     "pages": [
+      [
+       "n objects, k kinds with",
+       " counts n1,…,nk (Σ=n)",
+       " => n!/(n1!n2!…nk!)",
+       "(divide out swaps of the",
+       " identical copies)",
+       "CUES letters of a WORD,",
+       " identical copies, flags,",
+       " H/T strings, bookshelf",
+       "TOOL CALC>COUNT>2"
+      ],
+      [
+       "HW1 Q4 PROBABILITY n=11",
+       " B x2, I x2",
+       "(a) 11!/(2!2!) = 9979200",
+       "(b) BB adjacent => glue BB",
+       " into 1 tile. 10 units,",
+       " I x2 => 10!/2! = 1814400",
+       "BB NOT adjacent =",
+       " 9979200-1814400=8164800",
+       "TOOL CALC>COUNT>2"
+      ],
+      [
+       "k≥3 copies, 2 meanings",
+       "NOT ALL TOGETHER =",
+       " total - (all k glued)",
+       "NO TWO ADJACENT => gaps",
+       " arrange the other n-k,",
+       " pick k of the n-k+1 gaps",
+       "Ex MISSISSIPPI, no SS",
+       " 7!/(4!2!)*C(8,4)",
+       " = 105*70 = 7350"
+      ],
+      [
+       "MISSISSIPPI (I4 S4 P2)",
+       " 11!/(4!4!2!) = 34650",
+       " all 4 S together = 840",
+       "STATISTICS = 50400, start",
+       " and end with S = 3360",
+       "Glued block = 1 unit; if",
+       " its inside can reorder,",
+       " multiply by those ways",
+       "Freund Ch1 Thm 6, Exer 43"
+      ]
+     ]
+    },
+    {
+     "menu": "PARTITIONS/MULTI",
+     "title": "PARTITIONS/MULTI",
+     "pages": [
+      [
+       "n DISTINCT items into",
+       " LABELED groups of sizes",
+       " n1,…,nk (Σ=n)",
+       " n!/(n1!n2!…nk!)",
+       " = C(n,n1)C(n-n1,n2)…",
+       "UNLABELED groups => for",
+       " each set of m groups of",
+       " the SAME size divide m!",
+       "TOOL CALC>COUNT>3"
+      ],
+      [
+       "HW1 Q5 12 faculty into",
+       " committees of 3,4,5",
+       " 12!/(3!4!5!) = 27720",
+       " (sizes all differ => no",
+       " division needed)",
+       "6 people into 3 pairs",
+       " labeled 6!/(2!2!2!)=90",
+       " unlabeled 90/3! = 15",
+       "10 in 4,4,2 3150/2! = 1575"
+      ],
+      [
+       "HW1 Q8(431) grades A-F,",
+       " 10 students, exactly 3",
+       " A, exactly 1 F, other 6",
+       " get B/C/D freely (3^6)",
+       " 10!/(3!1!6!) * 3^6",
+       " = 840*729 = 612360",
+       "Same C(10,3)C(7,1)*3^6",
+       " = 120*7*729",
+       "TOOL CALC>COUNT>3>2"
+      ],
+      [
+       "All counts fixed => pure",
+       " multinomial. 1 A,3 B,2 C,",
+       " 1 F to 7 students",
+       " 7!/(1!3!2!1!) = 420",
+       "No fixed counts, each of",
+       " n items free among k",
+       " labels => k^n",
+       "Freund Ch1 Thm 8, Ex 18,",
+       " Exer 51; Bert 1.6"
+      ]
+     ]
+    },
+    {
+     "menu": "STARS AND BARS",
+     "title": "STARS AND BARS",
+     "pages": [
+      [
+       "n IDENTICAL items into k",
+       " DISTINCT bins (STA 631)",
+       "x1+…+xk = n, xi≥0",
+       " => C(n+k-1, k-1)",
+       "each xi≥1 => C(n-1, k-1)",
+       "CUES identical, how many",
+       " per lab/day/box, integer",
+       " solutions, multisets",
+       "TOOL CALC>COUNT>5"
+      ],
+      [
+       "WHY n stars and k-1 bars",
+       " in a row; choose the bar",
+       " spots => C(n+k-1, k-1)",
+       " **|*|***  = (2,1,3)",
+       "LOWER BOUNDS xi≥mi",
+       " give bin i its mi first,",
+       " n' = n - Σmi left, free",
+       " => C(n'+k-1, k-1)",
+       " (0 if n'<0)"
+      ],
+      [
+       "HW1 Q8(631) 15 clusters,",
+       " 4 labs, each ≥1",
+       "(a) n'=15-4=11",
+       "  => C(14,3) = 364",
+       "(b) lab 1 ≥3, others ≥1",
+       "  n'=15-6=9",
+       "  => C(12,3) = 220",
+       "  (144 fewer ways)",
+       "Ex n=10,k=3,≥0 C(12,2)=66"
+      ],
+      [
+       "TRAPS DISTINCT items into",
+       " k bins => k^n instead",
+       "Upper limit xi≤u => take",
+       " away xi≥u+1 (incl-excl)",
+       "Ex 12 pies, 6 food banks",
+       " C(17,5) = 6188; each ≥1",
+       " C(11,5) = 462",
+       "Freund Ch1 Exer 9,10,55",
+       " Feller II.5"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "BINOMIAL COEFFS",
+   "title": "BINOMIAL COEFFS",
+   "topics": [
+    {
+     "menu": "BINOMIAL COEFF",
+     "title": "BINOMIAL COEFF",
+     "pages": [
+      [
+       "C(n,r) = n!/(r!(n-r)!)",
+       " = n(n-1)…(n-r+1)/r!",
+       " for 0≤r≤n; 0 if r>n",
+       "= # r-subsets of n items",
+       "= coeff of x^(n-r)y^r in",
+       " (x+y)^n",
+       "SYMMETRY C(n,r)=C(n,n-r)",
+       " choose r = leave n-r",
+       "C(n,0)=C(n,n)=1, C(n,1)=n"
+      ],
+      [
+       "PASCAL'S TRIANGLE n=0..6",
+       "            1",
+       "           1 1",
+       "          1 2 1",
+       "         1 3 3 1",
+       "        1 4 6 4 1",
+       "      1 5 10 10 5 1",
+       "     1 6 15 20 15 6 1",
+       "each = sum of 2 above it"
+      ],
+      [
+       "Σ C(n,r) over r = 2^n",
+       "C(n,2) = n(n-1)/2",
+       "C(n,r)=C(n,r-1)(n-r+1)/r",
+       "TI keys n MATH PRB nCr r",
+       " e.g. 12 nCr 3 = 220",
+       "Freund Ch1 Thm 7,10, Def 3",
+       "Feller II.4, II.8",
+       "TOOL CALC>COUNT>1"
+      ]
+     ]
+    },
+    {
+     "menu": "PASCAL IDENTITY",
+     "title": "PASCAL IDENTITY",
+     "pages": [
+      [
+       "C(n,r)=C(n-1,r-1)+C(n-1,r)",
+       " n≥2, 1≤r≤n-1  (HW1 Q1)",
+       "ALGEBRA. RHS =",
+       " (n-1)!/[(r-1)!(n-r)!]",
+       " + (n-1)!/[r!(n-r-1)!]",
+       "Multiply top+bottom of",
+       " 1st by r, 2nd by (n-r)",
+       " r(r-1)! = r!",
+       " (n-r)(n-r-1)! = (n-r)!"
+      ],
+      [
+       "RHS = (n-1)!*r/[r!(n-r)!]",
+       " + (n-1)!(n-r)/[r!(n-r)!]",
+       " = (n-1)![r+(n-r)]",
+       "   / [r!(n-r)!]",
+       " = n*(n-1)!/[r!(n-r)!]",
+       " = n!/[r!(n-r)!]",
+       " = C(n,r)   QED"
+      ],
+      [
+       "STORY PROOF. Count r-size",
+       " committees from n people",
+       " = C(n,r). Fix person P.",
+       " P in => other r-1 from",
+       "  n-1 => C(n-1,r-1)",
+       " P out => all r from n-1",
+       "  => C(n-1,r)",
+       "Cases disjoint, cover all",
+       " => sum = C(n,r).  QED"
+      ],
+      [
+       "POLY coeff of y^r in",
+       " (1+y)^n=(1+y)^(n-1)(1+y)",
+       " (Freund's own proof)",
+       "Builds Pascal's triangle",
+       "Check C(5,2)=C(4,1)+C(4,2)",
+       " 10 = 4 + 6",
+       "Freund Ch1 Thm 11,Exer 12",
+       " Feller II.8"
+      ]
+     ]
+    },
+    {
+     "menu": "BINOMIAL THEOREM",
+     "title": "BINOMIAL THEOREM",
+     "pages": [
+      [
+       "(x+y)^n = Σ C(n,r) *",
+       " x^(n-r) * y^r, r=0..n",
+       " (n a positive integer)",
+       "WHY each term picks x or",
+       " y from each of n factors",
+       " C(n,r) ways to pick the",
+       " r factors giving y",
+       "CUES expand, coefficient",
+       " of x^k in (a+b)^n"
+      ],
+      [
+       "Ex x³ in (x+2)^5",
+       " term C(5,3)*x³*2²",
+       " coeff = 10*4 = 40",
+       "Ex x²y² in (3x-2y)^4",
+       " C(4,2)*(3x)²*(-2y)²",
+       " coeff = 6*9*4 = 216",
+       "KEEP SIGNS (-2y)^r",
+       "TOOL CALC>COUNT>6"
+      ],
+      [
+       "SPECIAL CASES",
+       " x=y=1 => Σ C(n,r) = 2^n",
+       " x=1,y=-1 (n≥1) =>",
+       "  Σ (-1)^r C(n,r) = 0",
+       " (1+x)^n = Σ C(n,r)x^r",
+       "  (start of SUM IDs)",
+       "Freund Ch1 Thm 9, Exer 14",
+       " Feller II.8"
+      ]
+     ]
+    },
+    {
+     "menu": "SUM IDENTITIES",
+     "title": "SUM IDENTITIES",
+     "pages": [
+      [
+       "BASE (1+x)^n=Σ C(n,r)x^r",
+       " sum r=0..n, n≥1. Then",
+       "x=1  => Σ C(n,r) = 2^n",
+       "x=-1 => Σ(-1)^r C(n,r)=0",
+       " so even-r sum = odd-r",
+       " sum = 2^(n-1)",
+       "d/dx => sums of r*C(n,r)",
+       "∫ 0 to 1 => C(n,r)/(r+1)",
+       " sums  (HW1 Q2)"
+      ],
+      [
+       "Q2a Σ r*C(n,r) = n2^(n-1)",
+       "1. (1+x)^n = Σ C(n,r)x^r",
+       "2. d/dx both sides",
+       " n(1+x)^(n-1)",
+       "  = Σ r*C(n,r)x^(r-1)",
+       " (r=0 term is 0, drop)",
+       "3. put x=1",
+       " n2^(n-1) = Σ r*C(n,r),",
+       " r=1..n        QED"
+      ],
+      [
+       "Q2b Σ C(n,r)/(r+1)",
+       "   = (2^(n+1)-1)/(n+1)",
+       "1. Integrate (1+x)^n =",
+       " Σ C(n,r)x^r, x=0 to 1",
+       "2. LEFT (1+x)^(n+1)/(n+1)",
+       " at x=1 minus at x=0",
+       " = (2^(n+1)-1)/(n+1)",
+       "3. RIGHT ∫x^r dx = 1/(r+1)",
+       " => Σ C(n,r)/(r+1)  QED"
+      ],
+      [
+       "NO-CALCULUS versions",
+       " r*C(n,r) = n*C(n-1,r-1)",
+       "  sum => n*2^(n-1)",
+       " C(n,r)/(r+1)",
+       "  = C(n+1,r+1)/(n+1)",
+       "  sum => (2^(n+1)-1)/(n+1)",
+       " (uses Σ C(n+1,j) over",
+       "  j=1..n+1 = 2^(n+1)-1)"
+      ],
+      [
+       "STORY Q2a teams+captain",
+       " LHS team of size r, then",
+       " r captain choices",
+       " RHS captain n ways, rest",
+       " any subset => 2^(n-1)",
+       "CHECK n=3 Q2a 3+6+3=12",
+       " Q2b 1+3/2+1+1/4 = 15/4",
+       "Freund Ch1 Exer 14,17,18",
+       " Feller II.12"
+      ]
+     ]
+    },
+    {
+     "menu": "MULTINOMIAL THM",
+     "title": "MULTINOMIAL THM",
+     "pages": [
+      [
+       "(x1+…+xk)^n = Σ over",
+       " r1+…+rk = n, ri≥0, of",
+       " n!/(r1!…rk!) *",
+       " x1^r1 *…* xk^rk",
+       "COEFF with constants =",
+       " multinomial * product",
+       " of each (const)^ri",
+       "CUES coefficient, 3+ terms",
+       "TOOL CALC>COUNT>6"
+      ],
+      [
+       "HW1 Q3 x³y²z² in",
+       " (2x-y+3z)^7",
+       "Check 3+2+2 = 7 = n",
+       "Multinomial",
+       " 7!/(3!2!2!) = 210",
+       "Constants 2³(-1)²3²",
+       " = 8*1*9 = 72",
+       "Coeff = 210*72 = 15120"
+      ],
+      [
+       "TRAPS powers must sum to",
+       " n, else coeff = 0",
+       " (-y)² = +y², (-y)³ = -y³",
+       " raise the CONSTANT to the",
+       " same power as its var",
+       "Freund Ch1 Ex 23 x1³x2x3²",
+       " in (x1+x2+x3)^6 => 60",
+       "Freund Exer 21 => 560",
+       "Bert 1.6; Feller II.4"
+      ]
+     ]
+    },
+    {
+     "menu": "VANDERMONDE",
+     "title": "VANDERMONDE",
+     "pages": [
+      [
+       "ΣC(m,k)C(n,r-k)=C(m+n,r)",
+       " sum k=0..r, C(a,b)=0 if",
+       " b>a (Freund Ch1 Thm 12)",
+       "STORY PROOF HW1 Q7(631)",
+       "Group of m men, n women.",
+       " Count r-person teams.",
+       "RHS pick r of all m+n",
+       " => C(m+n,r)"
+      ],
+      [
+       "LHS split by k = # men",
+       " k men C(m,k) ways, then",
+       " r-k women C(n,r-k) ways",
+       " (mult rule)",
+       "Cases k=0..r disjoint and",
+       " cover every team => add",
+       "Both sides count the same",
+       " set => equal.  QED"
+      ],
+      [
+       "ALGEBRA coeff of y^r in",
+       "(1+y)^(m+n)=(1+y)^m(1+y)^n",
+       "Check m=2,n=3,r=4 (Ex 22)",
+       " 2*1 + 1*3 = 5 = C(5,4)",
+       "m=n=r => ΣC(n,k)²=C(2n,n)",
+       " (Freund Exer 16)",
+       "TOOL CALC>COUNT>4 lists",
+       " each term (min 0,max 99)",
+       "Feller II.12"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

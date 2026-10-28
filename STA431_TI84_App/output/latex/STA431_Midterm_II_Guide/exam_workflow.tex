@@ -1,0 +1,35 @@
+\section{Choose the question type, then enter your values}
+The exam can use the same structures as the homework with different numbers, formulas, or support limits. The calculator workflow should therefore begin with the mathematical task, not a homework number. Use
+\[
+\texttt{PRGM > STAM2 > EXAM ASSISTANT}.
+\]
+The assistant asks what information you have and what you need to find, gives the setup cues, and opens the appropriate general calculator. \texttt{GENERAL SOLVERS} lets you open a known tool directly. Enter the numbers and formula from the problem in front of you. Homework input presets are kept under \texttt{PRACTICE + HW} as learning examples.
+
+\subsection{The input map}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.41\linewidth}@{}}
+\toprule Overall question & General tool & What you enter\\\midrule\endhead
+Normalize a finite PMF; find probabilities or moments & \texttt{DISCRETE + JOINT} & Your possible values/pairs and their weights, or coordinate lists plus your weight formula. Omit an unknown normalizing constant.\\
+Joint PMF marginals, conditionals, or covariance & \texttt{DISCRETE + JOINT} & The joint table/model once; then the given value, event expression, or requested powers/transformation.\\
+Mean, variance, or $\E[g(X)]$ from a finite-interval PDF & \texttt{DENSITY + INTEGRAL > 1D PDF OR SLICE} & Your density/shape, fixed parameter if any, lower/upper bounds, and transformation $g$.\\
+A probability or normalization integral from a joint PDF & \texttt{DENSITY + INTEGRAL > DOUBLE INTEGRAL} & Your $q(X,Y)$, outer limits, inner limits as functions of the outer variable, and multiplier $g=1$ for a raw probability/normalization integral.\\
+A numerical marginal density or conditional mean/variance at a given value & \texttt{DENSITY + INTEGRAL > JOINT SLICE} & Which variable is given, your joint shape and known multiplier, the given value, and bounds for the other variable.\\
+Given MGF; find moments or transform the variable & \texttt{MGF TOOLS} & Your rate or quadratic coefficients when a template matches; otherwise your MGF expression. Enter your scale $a$ and shift $b$ for $aX+b$.\\
+One or two linear combinations from given moments & \texttt{LINEAR COMBOS} & Your number of variables (up to three), variances, distinct covariances, coefficients, and offsets; means only if supplied and needed.\\
+Prove independence; derive a symbolic density/CDF; justify MGF convergence & \texttt{ENCYCLOPEDIA} and written work & Identify the relevant factorization, integration/differentiation, or convergence condition. Numerical values can check calculations, not establish a general formula or proof.\\\bottomrule
+\end{longtable}
+
+\subsection{What changes when the numbers change?}
+\textbf{Finite PMF.} If the paper gives $p(x,y)=c(2x+3y^2)$ for $x\in\{0,1,2\}$ and $y\in\{1,2\}$, choose \texttt{FORMULA/GRID}, enter those two lists and \texttt{2X+3Y\^{}2}. The app forms your new table and normalizes it. It is not tied to $X+Y^2$ or six pairs. With a nonrectangular finite support, list only the allowed pairs manually, or use a support mask where the shape is defined.
+
+\textbf{Continuous conditional question.} If a new question gives $Y=y_0$, enter that new value and the slice limits valid at $y_0$. The denominator and conditional moments are recomputed. If the condition is instead $Y>a$, it is an event involving many values, not a point slice: restrict the joint region and divide its requested moment integral by its probability.
+
+\textbf{Linear combination.} If the new total is $U=3X-\frac12Y+20$, enter coefficients $3,-1/2$ and offset 20 with the new variance/covariance data. The program handles squared coefficients and signed cross terms. There is no need for a matching homework preset.
+
+\textbf{MGF.} For a new $M(t)=e^{\alpha t+\beta t^2}$, enter the actual $\alpha,\beta$. For $Z=(X-c)/d$, enter scale $1/d$ and shift $-c/d$. Do not enter $-c$ as the shift unless $d=1$.
+
+\subsection{A short recognition routine}
+Before entering anything, identify four things: \textbf{given information}, \textbf{requested quantity}, \textbf{support}, and \textbf{event/conditioning}. Then choose the tool and enter your current model. Write the formula or integral with limits; use the calculator to carry out the arithmetic. Finally check normalization, probability range, nonnegative variance, and the meaning of the result.
+
+The support matters even if the wording resembles a homework question. For example, $P(X<Y)$ on $0<Y<X<2$ is zero immediately. Reusing the homework's bounds $y=x$ to $2$ would integrate outside this new support. The following mixed practice asks you to make the selection before showing the tool route.
+
+\textbf{Practical scope.} These tools cover finite tables up to 30 pairs, finite-bound numerical integrals, and linear combinations of up to three variables. Split a region where its boundary changes. Enter only valid expressions on the integration domain; a zero mask does not repair division by zero. For conditional expectations of a nonlinear function after a finite-table condition, load the restricted/masked weights before using \texttt{FUNCTION g}; that operation otherwise uses the original loaded distribution.

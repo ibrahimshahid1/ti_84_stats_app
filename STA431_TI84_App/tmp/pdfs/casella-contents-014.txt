@@ -1,0 +1,96 @@
+CONTENTS
+
+6.3 The Likelihood Principle
+6.3.1 The Likelihood Function
+6.3.2 The Formal Likelihood Principle
+6.4 The Equivariance Principle
+6.5 Exercises
+6.6 Miscellanea
+
+Point Estimation
+
+7.1 Introduction
+
+7.2 Methods of Finding Estimators
+7.2.1 Method of Moments
+7.2.2 Maximum Likelihood Estimators
+7.2.3 Bayes Estimators
+7.2.4 The EM Algorithm
+
+7.3 Methods of Evaluating Estimators
+7.3.1 Mean Squared Error
+7.3.2 Best Unbiased Estimators
+7.3.3 Sufficiency and Unbiasedness
+7.3.4 Loss Function Optimality
+
+7.4 Exercises
+
+7.5 Miscellanea
+
+Hypothesis Testing
+8.1 Introduction
+8.2 Methods of Finding Tests
+8.2.1 Likelihood Ratio Tests
+8.2.2 Bayesian Tests
+8.2.3 Union-Intersection and Intersection—Union Tests
+8.3 Methods of Evaluating Tests
+8.3.1 Error Probabilities and the Power Function
+8.3.2 Most Powerful Tests
+8.3.3 Sizes of Union-Intersection and Intersection—Union Tests
+8.3.4 p-Values
+8.3.5 Loss Function Optimality
+8.4 Exercises
+8.5 Miscellanea
+
+Interval Estimation
+9.1 Introduction
+9.2 Methods of Finding Interval Estimators
+9.2.1 Inverting a Test Statistic
+9.2.2 Pivotal Quantities
+9.2.3 Pivoting the CDF
+9.2.4 Bayesian Intervals
+
+290
+290
+292
+296
+300
+307
+
+311
+311
+312
+312
+315
+324
+326
+330
+330
+334
+342
+348
+355
+367
+
+373
+373
+374
+374
+379
+380
+382
+382
+387
+394
+397
+400
+402
+413
+
+417
+417
+420
+420
+427
+430
+435

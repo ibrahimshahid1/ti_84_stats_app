@@ -1,0 +1,773 @@
+{
+  "program": "STAE2",
+  "title": "CH2 PROBABILITY",
+  "sections": [
+    {
+      "menu": "SETS & EVENTS",
+      "title": "SETS & EVENTS",
+      "topics": [
+        {
+          "menu": "SAMPLE SPACE/EVENT",
+          "title": "SAMPLE SPACE, EVENT",
+          "pages": [
+            [
+              "S = set of ALL outcomes",
+              " of an experiment (Def 1)",
+              "Event = subset of S (Def2)",
+              "Outcome = sample point",
+              "Ex die S={1,2,3,4,5,6}",
+              " A=div by 3={3,6}",
+              "2 dice 36 pairs (x,y)",
+              "Discrete=finite/countable",
+              "Continuous = an interval"
+            ],
+            [
+              "Mutually exclusive",
+              " (disjoint) AnB={}",
+              " no common outcomes (Def3)",
+              "{} = empty set",
+              "A inside B = every point",
+              " of A is also in B",
+              "Ex 3 shots, 1=hit 0=miss",
+              " S has 2^3=8 points; one",
+              " hit = {100,010,001}"
+            ],
+            [
+              "Choose S with finest",
+              " outcomes; if equally",
+              " likely, P = count/N",
+              "2 dice use 36 ordered",
+              " pairs, not sums 2..12",
+              "Infinite discrete ex",
+              " toss to 1st H {H,TH,TTH…}",
+              "Freund Ch2 Def 1-3, Ex 5",
+              "Bert 1.1; Ross 2.2"
+            ]
+          ]
+        },
+        {
+          "menu": "SET OPERATIONS",
+          "title": "SET OPERATIONS",
+          "pages": [
+            [
+              "AuB   A or B (or both)",
+              "AnB   A and B (both)",
+              "A'    not A (complement)",
+              "AnB'  A but not B",
+              "Laws commutative,",
+              " associative, distributive",
+              "An(BuC)=(AnB)u(AnC)",
+              "Au(BnC)=(AuB)n(AuC)",
+              "AuA'=S  AnA'={}  S'={}"
+            ],
+            [
+              "Disjoint splits (Exer 3)",
+              "A=(AnB)u(AnB')",
+              "AuB=Au(A'nB)",
+              "AuB=(AnB')u(AnB)u(A'nB)",
+              "If A inside B then",
+              " AnB=A, AuB=B, AnB'={}",
+              "Venn 2 sets 4 regions,",
+              " 3 sets 8 regions",
+              "Freund Ch2 Exer 1,3,4"
+            ]
+          ]
+        },
+        {
+          "menu": "ENGLISH ► SETS",
+          "title": "ENGLISH ► SETS",
+          "pages": [
+            [
+              "or/at least one  u",
+              "and/both         n",
+              "not/fails        '",
+              "A but not B      AnB'",
+              "neither A nor B  A'nB'",
+              " = (AuB)'",
+              "only A (of 3)    AnB'nC'",
+              "none of 3        A'nB'nC'",
+              "all three        AnBnC"
+            ],
+            [
+              "HW2 Q1 (3 events)",
+              "(a) only A = AnB'nC'",
+              "(b) exactly one =",
+              " (AnB'nC')u(A'nBnC')",
+              " u(A'nB'nC)",
+              "(c) at least one = AuBuC",
+              " = (A'nB'nC')'",
+              "(d) A and B, not C",
+              " = AnBnC'"
+            ],
+            [
+              "exactly two =",
+              " (AnBnC')u(AnB'nC)",
+              " u(A'nBnC)",
+              "at least two =",
+              " (AnB)u(AnC)u(BnC)",
+              "at most one =",
+              " (at least two)'",
+              "at most two = (AnBnC)'"
+            ],
+            [
+              "TRAP only A ≠ A",
+              " (A includes overlaps)",
+              "TRAP or = inclusive",
+              " (A or B includes both)",
+              "Check with a Venn diagram",
+              " region by region",
+              "Freund Ch2 Sec 3; Ross 2.2"
+            ]
+          ]
+        },
+        {
+          "menu": "DE MORGAN LAWS",
+          "title": "DE MORGAN LAWS",
+          "pages": [
+            [
+              "(AuB)' = A'nB'",
+              "(AnB)' = A'uB'",
+              "n sets (A1u…uAn)'",
+              "  = A1'n…nAn'",
+              " (A1n…nAn)'=A1'u…uAn'",
+              "not (A or B) = neither",
+              " = A'nB'",
+              "not both = at least one",
+              " fails = A'uB'"
+            ],
+            [
+              "USE P(at least one)",
+              " = 1-P(none)",
+              " = 1-P(A'nB'nC')",
+              "P(neither)=1-P(AuB)",
+              "Ex P(AuB)=.7 => P(A'nB')",
+              " = .3",
+              "Proof x in (AuB)' iff",
+              " x not in A and not in B",
+              " iff x in A'nB'"
+            ],
+            [
+              "2nd law - apply the 1st",
+              " to A',B' and take the",
+              " complement of both sides",
+              "(at least one)' = none",
+              "(all)' = at least 1 fails",
+              "Freund Ch2 Exer 2",
+              "Bert 1.1; Ross 2.2"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "menu": "PROBABILITY RULES",
+      "title": "PROBABILITY RULES",
+      "topics": [
+        {
+          "menu": "AXIOMS",
+          "title": "AXIOMS (POSTULATES)",
+          "pages": [
+            [
+              "1. P(A) ≥ 0 for every A",
+              "2. P(S) = 1",
+              "3. A1,A2,… mutually",
+              " exclusive =>",
+              " P(A1uA2u…)",
+              "  = P(A1)+P(A2)+…",
+              "Thm 1 P(A) = sum of the",
+              " probabilities of the",
+              " outcomes in A"
+            ],
+            [
+              "Valid assignment? check",
+              " each p ≥ 0 and Σp = 1",
+              "Ex loaded die, each odd",
+              " twice as likely as each",
+              " even. even=w, odd=2w",
+              " 3(2w)+3w=9w=1, w=1/9",
+              " P(>3)=P(4)+P(5)+P(6)",
+              " =1/9+2/9+1/9=4/9",
+              "Freund Ch2 Post 1-3, Ex 9"
+            ],
+            [
+              "Invalid ex (Freund Ex 7)",
+              " 9/120,45/120,27/120,",
+              " 46/120 sum 127/120 ≠ 1",
+              "All other rules (compl.,",
+              " incl-excl, conditional)",
+              " follow from these 3",
+              "Bert 1.2; Wass 1.3",
+              "Ross 2.3"
+            ]
+          ]
+        },
+        {
+          "menu": "BASIC RULES",
+          "title": "BASIC RULES",
+          "pages": [
+            [
+              "P(A') = 1-P(A)    Thm 3",
+              "P({}) = 0         Thm 4",
+              "A inside B =>",
+              " P(A) ≤ P(B)      Thm 5",
+              "0 ≤ P(A) ≤ 1      Thm 6",
+              "P(AnB')=P(A)-P(AnB)",
+              "P(A'nB')=1-P(AuB)",
+              "P(AnB) ≤ min(P(A),P(B))",
+              "P(AnB) ≥ P(A)+P(B)-1"
+            ],
+            [
+              "exactly one of A,B",
+              " = P(A)+P(B)-2P(AnB)",
+              "Ex P(A)=.55, P(B)=.35,",
+              " P(AnB)=.20",
+              " A only=.55-.20=.35",
+              " B only=.35-.20=.15",
+              " neither=1-.70=.30",
+              " exactly one=.50",
+              "TOOL CALC>PROB>1"
+            ],
+            [
+              "TIP at least one",
+              " = 1-P(none)",
+              "TIP A only, B only,",
+              " both, neither are",
+              " disjoint and sum to 1",
+              "TRAP P(A)=0 does not",
+              " mean A is impossible",
+              "Freund Ch2 Thm 3-6,",
+              " Exer 6-9; Bert 1.2"
+            ]
+          ]
+        },
+        {
+          "menu": "INCL-EXCL 2 SETS",
+          "title": "INCL-EXCL 2 SETS",
+          "pages": [
+            [
+              "P(AuB)=P(A)+P(B)-P(AnB)",
+              " (Freund Ch2 Thm 7)",
+              "CUE or, either, at",
+              " least one of the two",
+              "Disjoint P(AuB)=P(A)+P(B)",
+              "Any 1 unknown => solve",
+              " P(AnB)=P(A)+P(B)-P(AuB)",
+              "Counts n(AuB)=n(A)+n(B)",
+              " -n(AnB)"
+            ],
+            [
+              "HW2 Q2 P(X)=.55",
+              " P(Y)=.35, P(XuY)=.70",
+              "(a) P(XnY)=.55+.35-.70",
+              " = .20",
+              "(b) P(X|Y)=.20/.35=4/7",
+              "(c) P(Y|X')=P(X'nY)/P(X')",
+              " =(.35-.20)/(1-.55)",
+              " =.15/.45=1/3",
+              "TOOL CALC>PROB>1"
+            ]
+          ]
+        },
+        {
+          "menu": "INCL-EXCL 3 SETS",
+          "title": "INCL-EXCL 3 SETS",
+          "pages": [
+            [
+              "P(AuBuC)=P(A)+P(B)+P(C)",
+              " -P(AnB)-P(AnC)-P(BnC)",
+              " +P(AnBnC)  (Thm 8)",
+              "Regions (counts/probs)",
+              " all3 = n(AnBnC)",
+              " AnB only = n(AnB)-all3",
+              " A only = n(A)-n(AnB)",
+              "  -n(AnC)+all3",
+              " none = N-n(AuBuC)"
+            ],
+            [
+              "HW2 Q7 N=1000 D=400",
+              " P=500 W=600 DnP=200",
+              " PnW=250 DnW=150 all=100",
+              "W only=600-250-150+100",
+              " = 300",
+              "Union=400+500+600-200",
+              " -250-150+100 = 1000",
+              "None = 1000-1000 = 0",
+              "TOOL CALC>PROB>5 (3 SETS)"
+            ],
+            [
+              "S1=n(A)+n(B)+n(C)",
+              "S2=n(AnB)+n(AnC)+n(BnC)",
+              "S3=n(AnBnC)",
+              "exactly 1 = S1-2S2+3S3",
+              "exactly 2 = S2-3S3",
+              "at least 2 = S2-2S3",
+              "HW2 Q7 S1=1500 S2=600",
+              " S3=100 => 600, 300, 400",
+              "Freund Ch2 Thm 8; Ross 2.4"
+            ]
+          ]
+        },
+        {
+          "menu": "CLASSICAL/COUNTING",
+          "title": "CLASSICAL/COUNTING",
+          "pages": [
+            [
+              "Equally likely outcomes",
+              " P(A) = n(A)/N  (Thm 2)",
+              "N = # outcomes in S",
+              "n(A) = # favorable",
+              "Count both the SAME way",
+              " (both ordered or both",
+              " unordered)",
+              "CUE at random, fair,",
+              " balanced, well shuffled"
+            ],
+            [
+              "Urn N balls, K red, draw",
+              " n w/o replacement",
+              "P(k red)=C(K,k)C(N-K,n-k)",
+              " / C(N,n)",
+              "Ex 5 cards, exactly 2 aces",
+              " C(4,2)C(48,3)/C(52,5)",
+              " =2162/54145=.03993",
+              "With replacement, p=K/N",
+              " C(n,k)p^k(1-p)^(n-k)"
+            ],
+            [
+              "Full house (Freund Ex 11)",
+              " 13*12*C(4,3)C(4,2)",
+              " /C(52,5)=3744/2598960",
+              " =.00144",
+              "At least one = 1-P(none)",
+              "TOOL CALC>PROB>6 (URN)",
+              "TOOL CALC>COUNT>1 (nCr)",
+              "Freund Ch2 Thm 2, Ex 11",
+              "Ross 2.5"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "menu": "CONDITIONAL PROB",
+      "title": "CONDITIONAL PROB",
+      "topics": [
+        {
+          "menu": "DEFINITION",
+          "title": "CONDITIONAL DEF",
+          "pages": [
+            [
+              "P(A|B) = P(AnB)/P(B)",
+              " defined only if P(B)>0",
+              " (Freund Ch2 Def 4)",
+              "CUE given, if, among",
+              " those, of the …, it is",
+              " known that",
+              "Counts n(AnB)/n(B)",
+              " = reduced sample space B"
+            ],
+            [
+              "P( |B) obeys all rules",
+              " P(A'|B)=1-P(A|B)",
+              " P(AuC|B)=P(A|B)+P(C|B)",
+              "  -P(AnC|B)",
+              "TRAP P(A|B) ≠ P(B|A)",
+              "TRAP P(A|B)+P(A|B') ≠ 1",
+              " in general",
+              "Freund Ex 18 P(R)=.80",
+              " P(RnD)=.72 => P(D|R)=.90"
+            ],
+            [
+              "Ex fair die, P(>3|even)",
+              " A={4,5,6}, B={2,4,6}",
+              " P(AnB)=2/6, P(B)=3/6",
+              " P(A|B)=2/3",
+              "TOOL CALC>PROB>1 or 2",
+              "Freund Ch2 Def 4, Ex 15-18",
+              "Bert 1.3; Wass 1.6",
+              "Ross 3.2"
+            ]
+          ]
+        },
+        {
+          "menu": "MULT RULE",
+          "title": "MULTIPLICATION RULE",
+          "pages": [
+            [
+              "P(AnB)=P(A)P(B|A) P(A)>0",
+              "      =P(B)P(A|B) P(B)>0",
+              "3 events (Thm 10)",
+              " P(AnBnC)=P(A)P(B|A)",
+              " *P(C|AnB), P(AnB)>0",
+              "n events - multiply along",
+              " the tree path",
+              "CUE in succession, one",
+              " after another, w/o repl."
+            ],
+            [
+              "Freund Ex 21 - 20 fuses,",
+              " 5 bad; draw 3 w/o repl.",
+              "P(all 3 bad)",
+              " =5/20*4/19*3/18=1/114",
+              "Check C(5,3)/C(20,3)",
+              " =10/1140=1/114",
+              "With replacement",
+              " (5/20)^3=1/64",
+              "Freund Ch2 Thm 9,10"
+            ],
+            [
+              "Order of events is free,",
+              " P(1st ace|2nd ace) is",
+              " also 3/51",
+              "Proof (n events)",
+              " SEE ENC>CH2>631 PROOFS",
+              "Bert 1.3; Wass 1.6",
+              "Ross 3.2"
+            ]
+          ]
+        },
+        {
+          "menu": "INDEPENDENCE",
+          "title": "INDEPENDENCE",
+          "pages": [
+            [
+              "A,B independent iff",
+              " P(AnB)=P(A)P(B)  Def 5",
+              "Same as P(A|B)=P(A)",
+              " (when P(B)>0)",
+              "Then A,B'  A',B  A',B'",
+              " are indep too (Thm 11)",
+              "CUE independently, with",
+              " replacement, separate",
+              " tosses/devices/tests"
+            ],
+            [
+              "Disjoint ≠ independent!",
+              "If AnB={}, P(A),P(B)>0",
+              " P(AnB)=0 < P(A)P(B)",
+              " => DEPENDENT",
+              "Ex P(A)=.55,P(B)=.35,",
+              " P(AnB)=.20 ≠ .55*.35",
+              " =.1925 => dependent",
+              "Given indep, .3 and .4",
+              " P(AnB)=.12 P(AuB)=.58"
+            ],
+            [
+              "Mutual indep A,B,C",
+              " all 3 pairs AND",
+              " P(AnBnC)=P(A)P(B)P(C)",
+              "Pairwise does NOT imply",
+              " mutual (Freund Ex 23)",
+              "Indep => P(at least one)",
+              " =1-(1-p1)(1-p2)…(1-pn)",
+              "Freund Ch2 Def 5,6 Thm 11",
+              "Bert 1.5; Wass 1.5"
+            ]
+          ]
+        },
+        {
+          "menu": "2x2 TABLES",
+          "title": "2x2 TABLES",
+          "pages": [
+            [
+              "     B     B'     total",
+              "A    AnB   AnB'   P(A)",
+              "A'   A'nB  A'nB'  P(A')",
+              "tot  P(B)  P(B')  1",
+              "Rows/cols add up; fill a",
+              " line with 1 unknown",
+              "Joint = cell/N",
+              "Conditional = cell/(its",
+              " row or column total)"
+            ],
+            [
+              "HW2 Q3 (N=120)",
+              "       F    M    tot",
+              "Grad  40   30    70",
+              "Fac   25   25    50",
+              "tot   65   55   120",
+              "(a) P(M n Fac)=25/120",
+              " = 5/24",
+              "(b) P(Grad | F)=40/65=8/13",
+              "TOOL CALC>PROB>2"
+            ],
+            [
+              "Indep check (any cell)",
+              " P(GradnF)=40/120=.3333",
+              " P(Grad)P(F)=(70/120)",
+              "  *(65/120)=.3160",
+              " not equal => dependent",
+              "Freund Ex 15 good svc",
+              " 16/20=.80 if 10+ yrs,",
+              " 10/30=1/3 if under 10",
+              "Freund Ch2 Ex 15,16"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "menu": "TOTAL PROB & BAYES",
+      "title": "TOTAL PROB & BAYES",
+      "topics": [
+        {
+          "menu": "TOTAL PROBABILITY",
+          "title": "TOTAL PROBABILITY",
+          "pages": [
+            [
+              "B1..Bk partition S",
+              " (disjoint, union = S)",
+              "P(A)=ΣP(Bi)P(A|Bi)",
+              " (Freund Ch2 Thm 12)",
+              "k=2 P(A)=P(B)P(A|B)",
+              " +P(B')P(A|B')",
+              "CUE 2 stages - pick a",
+              " source/type/urn, then an",
+              " outcome; overall"
+            ],
+            [
+              "HW2 Q4 M,A,P=.5,.3,.2",
+              " accept .15,.25,.10",
+              "P(acc)=.5*.15+.3*.25",
+              " +.2*.10",
+              " =.075+.075+.020=.17",
+              "Tree branch = prior *",
+              " likelihood; add the",
+              " branches ending in A",
+              "TOOL CALC>PROB>3"
+            ],
+            [
+              "HW2 Q5 die 1-2 => urn A",
+              " (3R,4B); 3-6 => urn B",
+              " (5R,2B)",
+              "P(R)=(1/3)(3/7)",
+              " +(2/3)(5/7)",
+              " =3/21+10/21=13/21",
+              "Freund Ch2 Thm 12, Ex 26",
+              "Bert 1.4; Wass 1.7",
+              "Ross 3.3"
+            ]
+          ]
+        },
+        {
+          "menu": "BAYES THEOREM",
+          "title": "BAYES THEOREM",
+          "pages": [
+            [
+              "P(Br|A)=P(Br)P(A|Br)",
+              "  / ΣP(Bi)P(A|Bi)",
+              " Bi partition, P(A)>0",
+              " (Freund Ch2 Thm 13)",
+              "= (one branch)/(all",
+              " branches ending in A)",
+              "CUE REVERSE question -",
+              " given the result, which",
+              " source/cause?"
+            ],
+            [
+              "Steps",
+              "1 partition B1..Bk and",
+              " the evidence A",
+              "2 priors P(Bi) and",
+              " likelihoods P(A|Bi)",
+              "3 P(A) = Σ products",
+              "4 P(Bi|A)=product/P(A)",
+              "Check posteriors sum 1",
+              "TOOL CALC>PROB>3"
+            ],
+            [
+              "k=2 short form",
+              " P(B|A)=P(A|B)P(B)/P(A)",
+              "Traps",
+              "- priors must sum to 1",
+              "- likelihoods need NOT",
+              " sum to 1",
+              "- for A' use 1-P(A|Bi)",
+              "Freund Ch2 Thm 13",
+              "Bert 1.4; Wass 1.7"
+            ]
+          ]
+        },
+        {
+          "menu": "BAYES EXAMPLES",
+          "title": "BAYES EXAMPLES",
+          "pages": [
+            [
+              "HW2 Q4b P(Meth|acc)",
+              " =.075/.17=15/34=.4412",
+              "HW2 Q5b P(die 1-2|red)",
+              " =(3/21)/(13/21)=3/13",
+              " =.2308",
+              "Freund Ex 27 agencies",
+              " .6,.3,.1 oil .09,.20,.06",
+              " P(A)=.12",
+              " P(B2|A)=.06/.12=.5"
+            ],
+            [
+              "HW2 Q6 (431) P(S)=.6",
+              " P(U|S)=.40 P(U|S')=.05",
+              "(a) P(U)=.6*.4+.4*.05",
+              " =.24+.02=.26",
+              "(b) P(S|U)=.24/.26",
+              " =12/13=.9231",
+              "Not urgent P(S|U')",
+              " =.6*.6/.74=18/37",
+              "TOOL CALC>PROB>3"
+            ]
+          ]
+        },
+        {
+          "menu": "SENS/SPEC TESTS",
+          "title": "SENS/SPEC TESTS",
+          "pages": [
+            [
+              "p = P(D) prevalence",
+              "sens=P(+|D) true pos rate",
+              "spec=P(-|D') true neg",
+              "P(+)=sens*p+(1-spec)(1-p)",
+              "PPV=P(D|+)=sens*p/P(+)",
+              "NPV=P(D' | -)",
+              " =spec(1-p)/P(-)",
+              "false pos rate = 1-spec",
+              "false neg rate = 1-sens"
+            ],
+            [
+              "HW2 631 Q7 p=.005",
+              " sens=.95 spec=.99",
+              "P(+)=.95(.005)+.01(.995)",
+              " =.00475+.00995=.0147",
+              "(a) P(D|+)=.00475/.0147",
+              " =95/294=.3231",
+              "Rare D => PPV small",
+              " (Freund Ex 28)",
+              "TOOL CALC>PROB>4"
+            ],
+            [
+              "(b) 2nd test, indep given",
+              " D and given D'. New prior",
+              " = old posterior 95/294",
+              " sens .90, spec .95, +",
+              "P(D|++)=.9p/(.9p+.05(1-p))",
+              " with p=95/294",
+              " =1710/1909=.8958",
+              "TOOL CALC>PROB>4, then",
+              " choose ANOTHER TEST"
+            ],
+            [
+              "Odds shortcut",
+              " odds = p/(1-p)",
+              " post odds = odds*LR+,",
+              " LR+ = sens/(1-spec)",
+              " P = odds/(1+odds)",
+              "HW LR+ 95, 18. odds 1/199",
+              " *95*18=1710/199",
+              " => P=1710/1909",
+              "Freund Ex 28; Wass 1.6"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "menu": "STA 631 PROOFS",
+      "title": "STA 631 PROOFS",
+      "topics": [
+        {
+          "menu": "P(A|B)>P(A) PROOF",
+          "title": "P(A|B)>P(A) PROOF",
+          "pages": [
+            [
+              "Show P(A|B)>P(A) =>",
+              " P(B|A)>P(B), P(A),P(B)>0",
+              "P(A|B)>P(A)",
+              "=> P(AnB)/P(B)>P(A) Def4",
+              "=> P(AnB) > P(A)P(B)",
+              "   (times P(B)>0)",
+              "=> P(AnB)/P(A) > P(B)",
+              "   (divide by P(A)>0)",
+              "=> P(B|A) > P(B)    QED"
+            ],
+            [
+              "IDEA both statements",
+              " say P(AnB) > P(A)P(B)",
+              " (symmetric in A,B)",
+              "Multiplying/dividing by",
+              " a positive number keeps",
+              " the inequality sign",
+              "Same with < (Exer 28);",
+              " with = it is indep.",
+              "Freund Ch2 Def 4, Exer 28"
+            ]
+          ]
+        },
+        {
+          "menu": "MULT RULE PROOF",
+          "title": "MULT RULE PROOF",
+          "pages": [
+            [
+              "Claim, n≥2 and",
+              " P(A1n…nA(n-1))>0",
+              "P(A1n…nAn)=P(A1)",
+              " *P(A2|A1)P(A3|A1nA2)",
+              " *…*P(An|A1n..nA(n-1))",
+              "Each condition A1n..nAk",
+              " (k<n) contains",
+              " A1n..nA(n-1) so its P>0",
+              " and every | is defined"
+            ],
+            [
+              "Base n=2 (Def 4)",
+              " P(A1nA2)=P(A1)P(A2|A1)",
+              "Step n => n+1. Let",
+              " B=A1n…nAn, given P(B)>0",
+              "P(BnA(n+1))",
+              " =P(B)P(A(n+1)|B) (n=2)",
+              "Expand P(B) by the n case",
+              " (P(A1n..nA(n-1))≥P(B)>0)",
+              "=> n+1 formula. QED"
+            ],
+            [
+              "Direct (telescoping)",
+              "RHS=P(A1)*P(A1nA2)/P(A1)",
+              " *P(A1nA2nA3)/P(A1nA2)",
+              " *…*P(A1..An)",
+              "  /P(A1..A(n-1))",
+              " middle terms cancel",
+              " = P(A1n…nAn) = LHS",
+              "Freund Ch2 Thm 10,Exer 19",
+              "Bert 1.3; Ross 3.2"
+            ]
+          ]
+        },
+        {
+          "menu": "INDEP COMPLEMENTS",
+          "title": "INDEP COMPLEMENTS",
+          "pages": [
+            [
+              "Thm 11 A,B indep =>",
+              " A,B' indep",
+              "A=(AnB)u(AnB') disjoint",
+              "P(AnB')=P(A)-P(AnB)",
+              " =P(A)-P(A)P(B)",
+              " =P(A)[1-P(B)]",
+              " =P(A)P(B')   QED",
+              "Swap roles => A',B indep",
+              "Twice => A',B' indep"
+            ],
+            [
+              "A',B' directly",
+              "P(A'nB')=1-P(AuB)",
+              " =1-P(A)-P(B)+P(A)P(B)",
+              " =(1-P(A))(1-P(B))",
+              " =P(A')P(B')",
+              "n indep (Exer 29)",
+              " P(A1u…uAn)=",
+              " 1-(1-p1)(1-p2)…(1-pn)",
+              "Freund Ch2 Thm 11, Exer 22"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+\section{Mixed exam practice: recognize the method before calculating}
+\label{sec:transfer-practice}
+These twelve mixed variations practice matching new data and unfamiliar wording to the same general tools. The questions do not name their textbook topic or calculator tool. Work through T1--T10 first; T11--T12 are optional conceptual extensions. Use your problem's own inputs in the general solvers.
+
+Before opening a solver, write four short lines: \textbf{Given} (PMF, PDF, CDF, MGF, or moments); \textbf{Asked} (the precise probability, function, expectation, or claim); \textbf{Support/event} (including conditioning); \textbf{Method} (the required sum, integral, derivative, or covariance identity). Then use the app to carry out or check that setup.
+
+\subsection*{Questions}
+\begin{enumerate}[label=\textbf{T\arabic*.},leftmargin=*,itemsep=0.65em]
+\item A pair has probabilities proportional to $1+x+2y$ on $x,y\in\{0,1,2\}$ with $x+y\le3$. Find the normalizing constant, $P(Y>X\mid X+Y\ge2)$, and $\E[X-2Y]$.
+\item A pair has density $cy$ on $0<x<2$, $0<y<x/2$. Find $c$ and $P(X+Y<1)$. Give an integration setup that never evaluates the density outside its support.
+\item The density is $6x$ on $0<x<y<1$. Compare $\E[X\mid Y=1/2]$ with $\E[X\mid Y>1/2]$. Explain why the two calculations use different probability laws.
+\item Let $u=\min(1,\max(0,x))$, $v=\min(1,\max(0,y))$. The joint CDF is $F(x,y)=(u^2v+2uv^2)/3$. Recover the density and both marginal densities, calculate $P(1/4<X\le3/4,\ 1/3<Y\le2/3)$, and decide independence.
+\item A normalized density is $f_X(x)=1-|x-1|$ on $(0,2)$. An insurer pays $R=40\min(X,1)-5$. Find the mean and variance of the payout without first deriving its distribution.
+\item A variable has MGF $M_X(t)=(1-3t)^{-2}$ for $t<1/3$. For $Z=2-X/3$, find the MGF, its domain, the mean, and the variance.
+\item Independent $X,Y$ have means $1,-1$ and variances $4,9$. Define $U=3X+2Y$ and $V=6X-Y$. Find both means, both variances, their covariance and correlation. Are $U,V$ independent?
+\item Let $X$ be uniform on $\{-2,0,2\}$ and let $Y=1$ when $X\ne0$, otherwise $Y=0$. Show that $\E[X\mid Y]=0$ and $\Cov(X,Y)=0$. Does either fact establish independence? Give a mathematical justification.
+\item A device works while at least one of two components remains alive. Their lifetimes have joint density $\frac3{10}(x^2+y^2)$ on $0<x<1$, $0<y<2$. Find the probability the device is still operating at time $3/2$.
+\item Suppose $f_X(x)=2x/9$ on $(0,3)$ and, given $X=x$, $Y$ is uniform on $(x/3,x)$. Recover the joint PDF and the complete marginal PDF of $Y$, then find $P(Y>1)$.
+\item A proposed MGF is $M(t)=e^{t^4}$ for every real $t$. It is positive, satisfies $M(0)=1$, and has no finite singularity. Can it be the MGF of any real random variable? Justify your answer.
+\item A variable has density $f_X(x)=1/(2\sqrt{x})$ on $(0,1)$. Find its mean and variance, decide whether $\E[1/X]$ is finite, and determine the set of real $t$ for which its MGF is finite. Suggest a change of variable that makes numerical moment calculations easier.
+\end{enumerate}
+
+\clearpage
+\subsection{Worked decisions and general-solver workflows}
+The exact answers below come from the displayed mathematics. Finite numerical integrals and generic MGF derivatives are checks; a fraction suggested by a numerical solver is not itself an exact derivation. Every route begins at \texttt{GENERAL SOLVERS}.
+
+\paragraph{T1. A finite model with a missing corner.}
+\textbf{Recognize:} this is a joint PMF with nonrectangular support, and the probability is conditioned on an \emph{event}. In \texttt{DISCRETE + JOINT > FORMULA/GRID}, enter both coordinate lists as \texttt{\{0,1,2\}} and weight
+\texttt{(1+X+2Y)*(X+Y}\,$\le$\texttt{3)} using the actual $\le$ token. The extra corner receives zero weight. The eight nonzero weights total 29, so $c=1/29$.
+
+Choose \texttt{EVENT PROB > P(EVENT|GIVEN)} with event \texttt{Y>X} and given event \texttt{X+Y}\,$\ge$\texttt{2}. The given event's raw weight is 23; the numerator's pairs $(0,2),(1,2)$ have weights 5 and 6:
+\[
+P(Y>X\mid X+Y\ge2)=\boxed{\frac{11}{23}}.
+\]
+Choose \texttt{FUNCTION g(X,Y)} with \texttt{X-2Y}; its mean is $\boxed{-40/29}$. The written calculation is $\sum_{x+y\le3}(x-2y)(1+x+2y)/29$. \emph{Transfer point:} do not use a rectangular weight formula outside the support, and do not condition on a single value when the question gives an event.
+
+\paragraph{T2. An event clipped by a sloping support.}
+\textbf{Recognize:} normalize over the full support first; the event adds a second upper boundary. For normalization, use \texttt{DENSITY + INTEGRAL > DOUBLE INTEGRAL}: $q=Y$, fixed $A=0$, outer $X:0\to2$, inner $Y:0\to X/2$, multiplier $g=1$. Its raw integral is $1/3$, so $c=3$.
+
+For the probability, $y<\min(x/2,1-x)$, and the boundaries cross at $x=2/3$. Run two integrals with normalized density \texttt{3Y}:
+\[
+\begin{aligned}
+P(X+Y<1)
+&=\int_0^{2/3}\int_0^{x/2}3y\,\dd y\,\dd x
+ +\int_{2/3}^{1}\int_0^{1-x}3y\,\dd y\,\dd x\\
+&=\frac1{27}+\frac1{54}=\boxed{\frac1{18}}.
+\end{aligned}
+\]
+For each run enter the displayed outer and inner bounds, $g=1$, and even $N=4$; add the two \texttt{RAW I} results. \emph{Transfer point:} reusing the original support limits without intersecting them with the event would compute total probability one.
+
+\paragraph{T3. A value condition is not an event condition.}
+For a fixed $Y=y$, the slice gives $f_Y(y)=\int_0^y6x\,\dd x=3y^2$ and
+\[
+f_{X\mid Y}(x\mid y)=\frac{2x}{y^2},\quad0<x<y,
+\qquad \E[X\mid Y=y]=\frac{2y}{3}.
+\]
+Thus $\boxed{\E[X\mid Y=1/2]=1/3}$. Use \texttt{JOINT SLICE > X GIVEN Y}, shape \texttt{6X}, known $c=1$, given $1/2$, and free-variable bounds $0,Y$ to check it.
+
+For $Y>1/2$, use a region ratio instead. Split at $x=1/2$: first $x:0\to1/2$, $y:1/2\to1$; second $x:1/2\to1$, $y:x\to1$. In \texttt{DOUBLE INTEGRAL}, use $q=6X$ and $g=X$. The two raw probability integrals are $3/8,1/2$ and their raw first-moment integrals are $1/8,11/32$. Therefore
+\[
+\E[X\mid Y>1/2]
+=\frac{1/8+11/32}{3/8+1/2}=\boxed{\frac{15}{28}}\ne\frac13.
+\]
+\emph{Transfer point:} a slice at $y=1/2$ does not represent all outcomes with $Y>1/2$.
+
+\paragraph{T4. The input is a CDF, not a density.}
+\textbf{Recognize:} differentiate the interior branch before entering a PDF solver. On the unit square,
+\[
+f(x,y)=\frac{\partial^2F}{\partial x\partial y}
+=\frac23(x+2y),\quad
+f_X(x)=\frac{2x+2}{3},\quad f_Y(y)=\frac{1+4y}{3}.
+\]
+All three densities are zero off their supports. The requested rectangle probability follows directly from four CDF values:
+\[
+F(3/4,2/3)-F(1/4,2/3)-F(3/4,1/3)+F(1/4,1/3)
+=\boxed{\frac16}.
+\]
+A \texttt{DOUBLE INTEGRAL} check uses $q=\texttt{(2/3)*(X+2Y)}$, $x:1/4\to3/4$, $y:1/3\to2/3$, $g=1$. Do not enter the CDF itself as its integrand. Independence fails because
+\[
+f-f_Xf_Y=-\frac29(2x-1)(2y-1)
+\]
+is nonzero on positive-area subsets of the unit square. Numerical agreement along $x=1/2$ or $y=1/2$ would not prove independence.
+
+\paragraph{T5. A capped payoff requires a function, not an affine shortcut.}
+\textbf{Recognize:} the cap makes the payout nonlinear. In \texttt{DENSITY + INTEGRAL > 1D PDF OR SLICE}, enter \texttt{1-abs(X-1)}, parameter 0, limits 0 and 2. Use the actual \texttt{abs(} token. Choose \texttt{FUNCTION g(X)} and enter \texttt{40*min(X,1)-5} using the \texttt{min(} token.
+
+To establish the exact result, let $H=\min(X,1)$ and split at the cap:
+\[
+\E H=\int_0^1x^2\,\dd x+\int_1^2(2-x)\,\dd x=\frac56,
+\qquad
+\E H^2=\int_0^1x^3\,\dd x+\frac12=\frac34.
+\]
+Consequently
+\[
+\boxed{\E R=40(5/6)-5=85/3},\qquad
+\boxed{\Var R=1600\{3/4-(5/6)^2\}=800/9}.
+\]
+\emph{Transfer point:} $40\E X-5$ is the wrong mean because it ignores the cap; calculate the moments of the actual payoff.
+
+\paragraph{T6. A negative scale reverses an MGF-domain inequality.}
+The input is an MGF and $Z=-X/3+2$. Apply the affine rule to the entire function:
+\[
+M_Z(t)=e^{2t}M_X(-t/3)=\boxed{e^{2t}(1+t)^{-2}}.
+\]
+The old argument must satisfy $-t/3<1/3$, so the new domain is $\boxed{t>-1}$. Let $K_Z(t)=\log M_Z(t)=2t-2\log(1+t)$. Then
+\[
+\boxed{\E Z=K_Z'(0)=0},\qquad
+\boxed{\Var Z=K_Z''(0)=2}.
+\]
+A check in \texttt{MGF TOOLS > TYPE MGF NUMERIC} uses \texttt{1/(1-3X)\^{}2}, scale \texttt{(-)1/3}, and shift \texttt{2}. It estimates derivatives at two step sizes; use the exact derivatives above for the reported zero and variance. \emph{Transfer point:} this rational MGF is not the quadratic-log template, and the generic numerical tool does not prove its domain.
+
+\paragraph{T7. Independent inputs do not make their combinations independent.}
+Choose \texttt{LINEAR COMBOS > TWO COMBINATIONS > MEAN+VAR/COV}. Enter $n=2$, means/variances $(1,4)$ and $(-1,9)$, covariance 0, coefficient pairs $(a_1,b_1)=(3,6)$ and $(a_2,b_2)=(2,-1)$, then offsets 0 and 0. The results are
+\[
+\boxed{\E U=1,\quad\E V=7,\quad\Var U=72,\quad\Var V=153},
+\]
+\[
+\boxed{\Cov(U,V)=3(6)(4)+2(-1)(9)=54},\qquad
+\boxed{\Corr(U,V)=\frac3{\sqrt{34}}}.
+\]
+Nonzero covariance proves that $U,V$ are dependent. \emph{Transfer point:} the two combinations share both original random variables, so independence of $X,Y$ does not let you delete those diagonal covariance contributions.
+
+\paragraph{T8. A constant conditional mean is weaker than independence.}
+Use \texttt{DISCRETE + JOINT > JOINT X,Y}, with three manual rows $(x,y,w)=(-2,1,1),(0,0,1),(2,1,1)$. The normalized weights are all $1/3$. \texttt{MOMENTS} gives $\E X=\E XY=0$, hence covariance zero. In \texttt{MARG/CONDITIONAL > X GIVEN Y}, both given values 0 and 1 give conditional mean zero. Their conditional variances differ: 0 and 4.
+
+An exact independence test is
+\[
+p(0,0)=\frac13\ne\frac19=p_X(0)p_Y(0).
+\]
+Thus neither zero covariance nor the constant conditional mean establishes independence. \emph{Transfer point:} independence concerns the entire conditional distribution, not just one of its moments.
+
+\paragraph{T9. A different word changes the lifetime event.}
+``At least one remains alive'' means $T=\max(X,Y)$, not the minimum. Failure by $3/2$ requires both $X\le3/2$ and $Y\le3/2$. Intersect with the support: since $X<1$ already, the rectangle is $x:0\to1$, $y:0\to3/2$.
+
+Use \texttt{DOUBLE INTEGRAL}, normalized $q=\texttt{(3/10)*(X\^{}2+Y\^{}2)}$, these bounds, and $g=1$. It checks
+\[
+P(T\le3/2)=\frac3{10}\int_0^1\int_0^{3/2}(x^2+y^2)\,\dd y\,\dd x=\frac{39}{80}.
+\]
+The requested operating probability is therefore $\boxed{41/80}$. \emph{Transfer point:} identify the min/max event from the words and clip the limits to the actual support before calculating.
+
+\paragraph{T10. Recovering the joint law can force a piecewise marginal.}
+The conditional density is $3/(2x)$ on $x/3<y<x$. Multiply it by its matching marginal:
+\[
+f_{X,Y}(x,y)=\frac{2x}{9}\frac3{2x}=\boxed{\frac13},
+\qquad0<x<3,\quad x/3<y<x.
+\]
+For fixed $y$, the inequalities become $y<x<\min(3,3y)$. Therefore
+\[
+f_Y(y)=\begin{cases}
+2y/3,&0<y<1,\\
+(3-y)/3,&1\le y<3,\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+To find $P(Y>1)$, use \texttt{DOUBLE INTEGRAL} with normalized $q=1/3$, outer $x:1\to3$, inner $y:1\to X$, and $g=1$:
+\[
+P(Y>1)=\frac13\int_1^3(x-1)\,\dd x=\boxed{\frac23}.
+\]
+\emph{Transfer point:} a conditional law plus its conditioning marginal determines the joint; reversing a strip's inequalities can introduce a new split point.
+
+\paragraph{T11. Optional extension: a plausible-looking function need not be an MGF.}
+If this were an MGF near zero, its exact derivatives would give $\E X=M'(0)=0$ and $\E X^2=M''(0)=0$. Thus $\Var X=0$, which forces $X=0$ almost surely. Such a variable has $M_X(t)=1$ for every $t$, contradicting $e^{t^4}\ne1$ when $t\ne0$. Hence the proposed function is \textbf{not an MGF}.
+
+The numerical MGF tool is not the proof: centered differences produce small positive approximate second moments for this function. \emph{Transfer point:} positivity, $M(0)=1$, and a numerical check are necessary-looking features, not sufficient conditions for MGF validity. Use the exact moment implications.
+
+\paragraph{T12. Optional extension: bounded support and negative moments.}
+Let $U=\sqrt X$. The change of variables $x=u^2$, $\dd x=2u\,\dd u$ turns $f_X(x)\dd x$ into $\dd u$ on $(0,1)$. Thus $U$ is uniform and
+\[
+\E X=\int_0^1u^2\,\dd u=\boxed{\frac13},\quad
+\E X^2=\frac15,\quad \Var X=\boxed{\frac4{45}}.
+\]
+For a numerical check, use the 1D shape 1 on $(0,1)$ and \texttt{FUNCTION g(X)} with \texttt{X\^{}2}; calculator $X$ now represents $U$, and $g(X)$ represents the original variable. This avoids directly evaluating the original singular density at zero.
+
+But $\E[1/X]=\int_0^1u^{-2}\,\dd u=+\infty$. Do not replace the lower limit by a small positive number and call the finite output the expectation. Finally, $e^{tX}\le e^{\max(t,0)}$ because $0<X<1$, so $M_X(t)$ is finite for \textbf{every real $t$}. \emph{Transfer point:} an MGF controls nonnegative raw moments near zero; it does not promise that an inverse moment exists.

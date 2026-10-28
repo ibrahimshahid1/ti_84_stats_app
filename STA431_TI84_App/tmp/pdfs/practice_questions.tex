@@ -1,0 +1,117 @@
+\clearpage
+\section{Homework-style practice: 70 questions}
+These are original practice problems modeled on the skills in Homeworks 4 and 5, not predictions of the examination. Each subsection contains ten questions. Unless specified otherwise, a density or mass function is zero outside its stated support. Give exact answers and show the probability model, support, sum or integral, and final calculation. Solutions are collected after the complete question bank.
+
+\subsection{A. Multivariate distributions}
+\begin{enumerate}[label=\textbf{A\arabic*.},leftmargin=*,itemsep=0.75em]
+\item Let $p(x,y)=c(x+2y)$ for $x\in\{1,2\}$ and $y\in\{0,1,2\}$. Find $c$, both marginal PMFs, and $p_{X\mid Y}(x\mid1)$. Determine whether $X$ and $Y$ are independent.
+\item Let $f(x,y)=c(x+2y)$ for $0<x<2$, $0<y<1$. Find $c$, $f_X$, $f_Y$, and $f_{X\mid Y}(x\mid y)$, including each support.
+\item The joint density is $f(x,y)=2$ on $0<y<x<1$. Sketch the support, derive both marginals, and calculate $P(Y<X/2)$. Are the variables independent?
+\item A system works only while both components work. Their lifetimes have density $f(x,y)=(x+y)/27$ for $0<x<3$, $0<y<3$. Translate ``the system fails during the first hour'' into an event and find its probability. Do not assume independent lifetimes.
+\item Let $p(x,y)=(x+y)/21$ for $x\in\{1,2\}$, $y\in\{1,2,3\}$. List the contributing pairs and find (a) $P(X>Y)$ and (b) $P(X+Y\leq4)$.
+\item Let $f(x,y)=\frac23(2x+y)$ on the unit square. Find $P(X<Y)$ using a single iterated integral. Give a second setup with the integration order reversed.
+\item Define $A(x)=0$ for $x\leq0$, $A(x)=x^2$ for $0<x<1$, and $A(x)=1$ for $x\geq1$. Define $B(y)=0$ for $y\leq0$, $B(y)=y/2$ for $0<y<2$, and $B(y)=1$ for $y\geq2$. A joint CDF is $F(x,y)=A(x)B(y)$. Find the joint density, both marginals, independence, and $P(1/2<X\leq1,\ 1/2<Y\leq3/2)$.
+\item Suppose $f_X(x)=2x$ for $0<x<1$, and $Y\mid X=x$ is uniform on $(0,x)$. Reconstruct $f_{X,Y}$ and derive $f_Y$. Explain why the conditional support matters.
+\item Both $X$ and $Y$ are Bernoulli with $P(X=1)=P(Y=1)=1/2$. Construct two different joint PMF tables with these same marginals: one independent and one dependent. Find $P(X=Y)$ in each case. Can the joint distribution be recovered from the marginals alone?
+\item \textit{Bounds challenge.} Let $f(x,y)=c$ for $0<x<1$ and $x^2<y<1$. Find $c$, $f_Y$, and $P(Y<1/4)$. Write the probability integral in both orders.
+\end{enumerate}
+
+\subsection{B. Expectation, LOTUS, and properties}
+\begin{enumerate}[label=\textbf{B\arabic*.},leftmargin=*,itemsep=0.75em]
+\item Let $p_X(x)=c(x^2+1)$ for $x\in\{0,1,2,3\}$. Find $c$, $\E[X]$, and $\E[2X+3]$.
+\item Let $f_X(x)=3x^2$ for $0<x<1$. Calculate $\E[X]$ and $\E[1/X]$ directly from the density. Explain why $\E[1/X]$ is not generally $1/\E[X]$.
+\item Let $f_X(x)=1-|x|$ for $-1<x<1$. Use symmetry and integration to obtain $\E[X]$, $\E[|X|]$, and $\E[X^2]$.
+\item A variable $X$ takes values $0,1,2$ with probabilities $1/4,1/2,1/4$. For $Y=X^2$, find $\E[Y]$ and $\Var(Y)$ without first deriving a distribution formula for $Y$.
+\item If $f_X(x)=2x$ on $(0,1)$, calculate $\E[(1-X)^2]$ and $\E[\log X]$. State the version of LOTUS being used.
+\item A company receives a payment of \$100 and pays \$20 per service call. The number $X$ of calls is $0,1,3$ with probabilities $1/2,3/10,1/5$. Express profit as a random variable and find expected profit.
+\item The joint PMF table is
+\[
+\begin{array}{c|cc}
+ &Y=0&Y=2\\\hline
+X=0&1/10&2/10\\
+X=1&3/10&4/10
+\end{array}
+\]
+Calculate $\E[3X-2Y+5]$ in two ways: directly from the joint table and by linearity.
+\item You know only that $\E[X]=-2$ and $\E[Y]=4$, with finite expectations. Find $\E[3X-\tfrac12Y+7]$. Is independence necessary? Is there enough information to find $\E[XY]$?
+\item \textit{Existence check.} Let $f_X(x)=x^{-2}$ for $x\geq1$. Verify normalization, determine whether $\E[X]$ is finite, and calculate $\E[1/X]$.
+\item For $f_X(x)=2x$, $0<x<1$, let $I=\mathbf1_{\{X>1/2\}}$. Calculate $\E[I]$ and $\E[XI]$. Interpret the first expectation as a probability.
+\end{enumerate}
+
+\subsection{C. Raw moments, central moments, and variance}
+\begin{enumerate}[label=\textbf{C\arabic*.},leftmargin=*,itemsep=0.75em]
+\item Let $p_X(x)=x/6$ for $x=1,2,3$. Find the first three moments about the origin, the variance, and the third moment about the mean.
+\item Let $f_X(x)=4x^3$ for $0<x<1$. Derive a formula for $\E[X^r]$ for nonnegative integers $r$, then find the mean, variance, and third central moment.
+\item Suppose the first four raw moments are $2,7,26,107$, respectively. Find the variance and the third and fourth central moments by expanding powers of $X-\mu$.
+\item If $\E[X]=2$ and $\Var(X)=5$, let $Y=3X-4$. Find $\E[X^2]$, $\E[Y]$, $\Var(Y)$, and $\E[Y^2]$.
+\item Let $X$ be uniform on $(-2,2)$ and $Y=X^2$. Find $\E[Y]$ and $\Var(Y)$ by integrating powers of $X$.
+\item Let $\E[X]=\mu$ and $\Var(X)=\sigma^2>0$. Prove that $Z=(X-\mu)/\sigma$ has mean zero and variance one. Express $\E[X^2]$ in terms of $\mu$ and $\sigma$.
+\item \textit{Existence check.} Let $f_X(x)=2x^{-3}$ for $x\geq1$. Find $\E[X]$ and determine whether the variance is finite. Identify the integral responsible for your conclusion.
+\item Let $X$ be uniform on $\{-2,-1,0,1,2\}$. Find its mean, variance, fourth central moment, and standardized fourth moment $\E[(X-\mu)^4]/\sigma^4$.
+\item A random variable has mean $3$ and variance $4$. Find $\E[(X-5)^2]$. Explain why this is not the variance of $X$.
+\item Let $f_X(x)=\tfrac32x^2$ for $-1<x<1$ and $Y=X^2$. Find $\E[X]$, $\Var(X)$, $\E[Y]$, and $\Var(Y)$. Which moments of $X$ are needed for the last calculation?
+\end{enumerate}
+
+\subsection{D. Moment generating functions}
+\begin{enumerate}[label=\textbf{D\arabic*.},leftmargin=*,itemsep=0.75em]
+\item For $f_X(x)=5e^{-5x}$, $x>0$, derive $M_X(t)$ and its domain. Use derivatives at zero to find $\E[X]$, $\E[X^2]$, and $\Var(X)$.
+\item A variable takes values $-1,0,2$ with probabilities $1/4,1/2,1/4$. Write its MGF and use it to calculate the mean and variance.
+\item Given $M_X(t)=\exp(6t+9t^2/2)$, let $Z=(X-6)/3$. Derive $M_Z(t)$ and find its mean and variance.
+\item Suppose $M_X(t)=(1-2t)^{-3}$, $t<1/2$. Find $\E[X]$, $\E[X^2]$, and $\Var(X)$ by differentiation. Then find the MGF of $X+4$.
+\item Derive the MGF of a variable uniform on $(0,2)$. Define its value at $t=0$ and use its expansion near zero to obtain the first two raw moments.
+\item Independent variables $X$ and $Y$ have exponential densities with rates $2$ and $4$. Find the MGF, domain, mean, and variance of $S=2X+Y$.
+\item Two variables have MGFs equal to $2/(2-t)$ for all $t$ in an open interval containing zero. What can be concluded about their distributions? Find $P(X>1)$ for either variable. Must the two variables be independent?
+\item If $M_X(t)=1/(1-t)$ for $t<1$, find the MGF and its domain for $W=3-2X$. Find $\E[W]$ and $\Var(W)$.
+\item A proposed MGF is $M(t)=\exp(2t-t^2)$. Can it be an MGF on a neighborhood of zero? Use the variance identity to justify your answer.
+\item \textit{Existence challenge.} If $f_X(x)=x^{-2}$ for $x\geq1$, show that $\E[e^{tX}]$ is infinite for every $t>0$. Is finiteness at $t=0$ alone enough for the usual MGF existence and uniqueness theorem?
+\end{enumerate}
+
+\subsection{E. Product moments, covariance, and correlation}
+\begin{enumerate}[label=\textbf{E\arabic*.},leftmargin=*,itemsep=0.75em]
+\item The joint PMF is
+\[
+\begin{array}{c|cc}
+ &Y=0&Y=1\\\hline
+X=0&2/10&3/10\\
+X=1&1/10&4/10
+\end{array}
+\]
+Find $\E[X]$, $\E[Y]$, $\E[XY]$, $\Cov(X,Y)$, and $\Corr(X,Y)$. Check independence separately.
+\item For $f(x,y)=4xy$ on the unit square, find both marginals, prove independence, and calculate $\E[XY]$, covariance, and correlation.
+\item For $f(x,y)=2$ on $0<y<x<1$, calculate $\E[X]$, $\E[Y]$, $\E[XY]$, covariance, and correlation.
+\item Let $X$ be uniform on $(-1,1)$ and $Y=X^2$. Prove that covariance is zero. Then disprove independence using the events $A=\{|X|<1/2\}$ and $B=\{Y<1/4\}$.
+\item You are given $\E[X]=2$, $\E[Y]=-1$, $\E[XY]=-5$, $\Var(X)=4$, and $\Var(Y)=9$. Find covariance and correlation.
+\item Let $Y=5-3X$, where $\Var(X)=2$. Find $\Cov(X,Y)$, $\Var(Y)$, and correlation. Explain the sign.
+\item If $\Cov(X,Y)=-2$, find $\Cov(2X+7,-4Y+1)$. Explain what happens to the added constants.
+\item Independent variables satisfy $P(X=1)=2/5$, $P(X=0)=3/5$, and $f_Y(y)=2e^{-2y}$ for $y>0$. Calculate the product moments $\E[X^2Y]$ and $\E[XY^2]$.
+\item Can $\Var(X)=1$, $\Var(Y)=4$, and $\Cov(X,Y)=3$ hold simultaneously? State the allowable covariance interval and justify it.
+\item Suppose $\Corr(X,Y)=-2/5$ and both variances are positive. Find $\Corr(-2X+3,-5Y+4)$ and $\Corr(2X+3,-5Y+4)$. Derive the rule rather than assuming that correlation is unchanged under every transformation.
+\end{enumerate}
+
+\subsection{F. Moments of one and two linear combinations}
+\begin{enumerate}[label=\textbf{F\arabic*.},leftmargin=*,itemsep=0.75em]
+\item Let $\E[X]=3$, $\E[Y]=-2$, $\Var(X)=4$, $\Var(Y)=9$, and $\Cov(X,Y)=1$. For $U=2X-3Y+5$, calculate mean and variance.
+\item An updated claim pays $W=1.5X+40$ and $V=2Y-10$. Given $\Var(X)=100$, $\Var(Y)=64$, and $\Cov(X,Y)=20$, find $\Var(W+V)$.
+\item Let $\Var(X)=1$, $\Var(Y)=4$, $\Var(Z)=9$, $\Cov(X,Y)=1/2$, $\Cov(X,Z)=-1$, and $\Cov(Y,Z)=1$. Find $\Var(2X-Y+3Z)$, displaying all three covariance terms.
+\item Given $\Var(X)=2$, $\Var(Y)=5$, and $\Cov(X,Y)=-1$, define $U=X+2Y$, $V=3X-Y$. Find $\Var(U)$, $\Var(V)$, $\Cov(U,V)$, and $\Corr(U,V)$.
+\item Five independent variables each have mean $4$ and variance $3$. Find the mean and variance of their sum and of their average. Which answers would still hold if independence were replaced by pairwise zero covariance?
+\item Let $X$ be uniform on $(-1,1)$ and $Y=X^2$. Find $\Var(2X+Y)$. Explain why the covariance term vanishes even though the variables are dependent.
+\item You know $\Var(X)=4$, $\Var(Y)=9$, and $\Var(X+Y)=20$. Find $\Cov(X,Y)$ and $\Var(X-Y)$.
+\item Let $\Var(X)=9$, $\Var(Y)=4$, and $\Cov(X,Y)=2$. Find the real number $a$ that minimizes $\Var(X-aY)$ and find that minimum variance.
+\item A combined cost is $T=0.4X+0.6Y$, where the means are $100$ and $80$, variances are $25$ and $16$, and correlation is $1/2$. Find $\E[T]$ and $\Var(T)$. Convert correlation into covariance before substituting.
+\item Use the variance and covariance data in F3. Define $U=X+Y$ and $V=Y-Z$. Find the two variances, covariance, and correlation.
+\end{enumerate}
+
+\subsection{G. Conditional expectation and conditional variance}
+\begin{enumerate}[label=\textbf{G\arabic*.},leftmargin=*,itemsep=0.75em]
+\item Let $p(x,y)=(x+y)/15$ for $x\in\{1,2\}$ and $y\in\{0,1,2\}$. Find $p_{Y\mid X}(y\mid1)$, $\E[Y\mid X=1]$, and $\Var(Y\mid X=1)$.
+\item Let $f(x,y)=\tfrac23(2x+y)$ on the unit square. Derive $f_Y$ and $f_{X\mid Y}$. Calculate $\E[X\mid Y=1/2]$ and $\Var(X\mid Y=1/2)$.
+\item Let $f(x,y)=2$ on $0<y<x<1$. Find $\E[Y\mid X=x]$ and $\Var(Y\mid X=x)$ as functions of $x$. Evaluate them at $x=4/5$.
+\item If $X$ and $Y$ are independent and $f_X(x)=2x$, $0<x<1$, find $\E[X\mid Y=y]$ and $\Var(X\mid Y=y)$ for conditioning values where the conditional law is defined.
+\item Let $X$ be uniform on $(0,1)$ and let $Y\mid X=x$ be Bernoulli with success probability $x$. Find $\E[Y\mid X]$, $\Var(Y\mid X)$, $\E[Y]$, and $\Var(Y)$ using total expectation and total variance.
+\item For $f(x,y)=2$ on $0<y<x<1$, derive $\E[X\mid Y=y]$. Then use $f_Y(y)=2(1-y)$ and total expectation to recover $\E[X]$.
+\item Let $Y$ be uniform on $(0,2)$ and let $X\mid Y=y$ be uniform on $(0,y)$. Find $\E[X]$ and $\Var(X)$ using conditional moments rather than a joint-density calculation.
+\item Let $f(x,y)=c$ on $0<x<1$, $0<y<x^2$. Find $c$ and the conditional density of $Y$ given $X=x$. Compute $P(Y>1/8\mid X=1/2)$.
+\item For $f(x,y)=2$ on $0<y<x<1$, find $\E[Y\mid X>1/2]$ and compare it with $\E[Y\mid X=1/2]$. Explain the difference between conditioning on an event and conditioning at a value.
+\item A variable $Y$ takes the values $1,2$ with equal probability. Suppose $\E[X\mid Y]=1+2Y$ and $\Var(X\mid Y)=3Y$. Find $\E[X]$, $\Var(X)$, and $\E[X^2]$.
+\end{enumerate}

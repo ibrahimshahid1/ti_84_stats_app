@@ -1,0 +1,50 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=0.78in,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools,booktabs,array,longtable,tabularx}
+\usepackage{enumitem,tikz,xcolor,titlesec,fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\definecolor{navy}{HTML}{16334B}
+\definecolor{teal}{HTML}{087E8B}
+\definecolor{pale}{HTML}{EDF6F7}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=teal,pdftitle={STA 431 Homework 4--5: STAM2 App Walkthrough},pdfauthor={Prepared for Ibrahim Shahid}}
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\large\bfseries\color{teal}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\setlist{itemsep=3pt,topsep=4pt,leftmargin=*}
+\setlist[enumerate,1]{itemsep=8pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{navy}{STA 431\quad MIDTERM II}}
+\fancyhead[R]{\small App walkthrough}
+\fancyfoot[L]{\small Freund, Chapters 3--4}\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\newcommand{\E}{\mathbb E}\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}\DeclareMathOperator{\Corr}{Corr}
+\newcommand{\R}{\mathbb R}\newcommand{\dd}{\,\mathrm d}\newcommand{\given}{\mid}
+\newtcolorbox{insight}[1][]{breakable,colback=pale,colframe=teal,boxrule=0.5pt,arc=1mm,title={#1},fonttitle=\bfseries}
+\newtcolorbox{example}[1][]{breakable,colback=white,colframe=navy,boxrule=0.5pt,arc=1mm,title={#1},fonttitle=\bfseries}
+\newtcolorbox{pitfall}[1][]{breakable,colback=orange!5,colframe=orange!60!black,boxrule=0.5pt,arc=1mm,title={#1},fonttitle=\bfseries}
+\newcommand{\checkpoint}[2]{\paragraph{Practice checkpoint.}#1\par\textit{Check:} #2}
+\allowdisplaybreaks[2]
+\begin{document}
+\begin{titlepage}
+\vspace*{0.65in}{\color{teal}\large STA 431\quad MIDTERM II\par}
+\vspace{0.35in}{\color{navy}\Huge\bfseries Homework 4--5\par\vspace{0.15in}with STAM2\par}
+\vspace{0.3in}{\Large Every problem, every subpart\par App inputs, results, and written mathematics\par}
+\vspace{0.45in}
+\begin{insight}[A complete calculator walkthrough]
+All thirteen common/STA 431 questions and all three optional STA 631 extensions. Includes the new homework input loader, full marginal tables, joint-slice solver, and an explanation of the improvements made during testing.
+\end{insight}
+\vfill
+Prepared for Ibrahim Shahid\hfill October 27, 2026
+\end{titlepage}
+\tableofcontents\clearpage
+\input{walkthrough_orientation}
+\clearpage\input{hw4_app_walkthrough}
+\clearpage\input{hw5_app_walkthrough}
+\clearpage\input{app_improvements}
+\end{document}

@@ -1,0 +1,21 @@
+\section{Improvements made while walking through the homework}
+The walkthrough was also a usability test. The following changes were implemented in the calculator package, rather than left as suggestions.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.21\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}@{}}
+\toprule Friction found & Change made & Concrete benefit\\\midrule\endhead
+Repeated model entry & \texttt{LOAD + SOLVE} provides input presets for all sixteen questions, using the same general calculators. & HW5 Q6 needs eleven numeric entries manually and zero through quick load; both produce variance 56.\\
+Individual marginal queries & \texttt{MARGINAL TABLES} aggregates and prints both complete finite marginal distributions. & HW4 Q1's five marginal values appear in one command instead of five separate queries.\\
+An unhelpful independence-failure message & The app now displays a violating pair, its joint probability, and its marginal product. & The displayed counterexample gives a concrete starting point for the exact written non-independence proof.\\
+No direct continuous marginal/conditional workflow & The new \texttt{JOINT SLICE} tool keeps the original variable names, accounts for a known global multiplier, and reports marginal values and conditional results. & HW4 Q2 and the reimbursement problem can be checked without manually rewriting every conditional density as a one-variable model.\\
+Repeated joint-model entry at a new conditioning value & \texttt{NEW GIVEN VALUE} reuses the shape and multiplier, then recomputes the slice with the bounds you enter. & HW5 Q7 can be checked at $y=1/2$ and another $y$ without retyping $X+Y$.\\
+Dummy-variable output on a one-variable grid & A single $y$ coordinate equal to zero is recognized as a univariate model. & HW5 Q1 no longer shows irrelevant $Y$ moments and undefined-correlation pages.\\
+A stored-function tokenization defect in an optional preset & The triangular density preset stores $1-\sqrt{X^2}$ using executable calculator tokens. & The optional zero-covariance question loads correctly; this equals $1-|X|$ for real $X$.\\\bottomrule
+\end{longtable}
+
+\subsection*{Where the app saves the most work}
+Finite-table arithmetic is highly automatable: normalization, all marginal masses, conditional probabilities, first/second moments, covariance, and transformed moments come from one loaded model. Given-moment questions such as HW5 Q5--Q6 are also ideal: the app expands the covariance terms and preserves their signs. The exact MGF templates handle the two assigned MGF models with minimal entry.
+
+For joint continuous problems, the app removes most numerical integration and conditional-normalization arithmetic after the support and region have been selected. It still needs you to identify whether the region is the full support, an event, or a conditional slice. The homework's symbolic marginal formulas and independence proofs are short enough to write from the displayed setups; a numerical value cannot replace those functions or logical arguments.
+
+\subsection*{Useful next improvements}
+Useful next additions would be a probability/complement shortcut for the device question and an optional support sketch. The current tools provide numerical results and analytical templates; symbolic density formulas and proofs remain in the written solution.

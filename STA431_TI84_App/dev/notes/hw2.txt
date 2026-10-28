@@ -1,0 +1,70 @@
+
+=== PAGE 1 ===
+STA 431/631 Introduction to Probability
+Homework 2
+Due: Friday, September 11, 2026
+Instructions: Complete the problems below. Show all your work for full credit.
+Common Problems (Required for both STA 431 and STA 631)
+1. Let A, B, and C be three events in a sample space. Write set-theoretic expressions (using
+unions, intersections, and complements) for the events that:
+(a) only A occurs,
+(b) exactly one of the three events occurs,
+(c) at least one event occurs,
+(d) A and B occur, but not C.
+2. Given P(X) = 0.55, P(Y ) = 0.35, and P(X ∪Y ) = 0.70. Find:
+(a) P(X ∩Y )
+(b) P(X | Y )
+(c) P(Y | Xc)
+3. In a university department of 120 individuals, there are 70 graduate students and 50 faculty
+members. Among the graduate students, 40 identify as female. In total, there are 65 females
+in the department. If an individual is selected at random:
+(a) What is the probability the selected individual is a male faculty member?
+(b) If the selected individual is female, what is the probability she is a graduate student?
+(Hint: Construct a 2 × 2 contingency table to organize the joint probabilities).
+4. A classical statistical journal receives paper submissions from three main fields: Methodology
+(50% of submissions), Applied Statistics (30%), and Probability Theory (20%). Historically,
+the acceptance rates for these fields after peer review are 15%, 25%, and 10%, respectively.
+(a) What is the overall probability that a randomly selected submission will be accepted?
+(b) If a paper is accepted for publication, what is the probability that it was a Methodology
+paper?
+5. Urn A contains 3 red balls and 4 black balls. Urn B contains 5 red balls and 2 black balls.
+A fair six-sided die is rolled. If the die shows a 1 or 2, a ball is drawn from Urn A. If the die
+shows a 3, 4, 5, or 6, a ball is drawn from Urn B.
+1
+
+=== PAGE 2 ===
+(a) What is the probability that a red ball is drawn?
+(b) Given that a red ball was drawn, what is the probability that the die showed a 1 or 2?
+STA 431 Only Problems
+6. An email server’s spam filter is being evaluated. It is known that 60% of all incoming emails
+are spam. The word “urgent” appears in 40% of all spam emails, but it also appears in 5%
+of all non-spam emails.
+(a) What is the probability that an incoming email contains the word “urgent”?
+(b) If an email contains the word “urgent”, what is the probability that it is actually spam?
+7. A consumer survey of 1,000 households found that they subscribe to three major media
+formats: Digital, Print, and Weekend.
+• 400 subscribe to Digital.
+• 500 subscribe to Print.
+• 600 subscribe to Weekend.
+• 200 subscribe to both Digital and Print.
+• 250 subscribe to both Print and Weekend.
+• 150 subscribe to both Digital and Weekend.
+• 100 subscribe to all three.
+How many households subscribe to Weekend only? How many households subscribe to none
+of the three formats?
+STA 631 Only Problems
+6. Let A and B be two events with P(A) > 0 and P(B) > 0.
+(a) Prove that if P(A | B) > P(A), then it must strictly follow that P(B | A) > P(B).
+(b) State and prove the general Multiplication Rule for n events:
+P(A1 ∩A2 ∩· · · ∩An) = P(A1)P(A2 | A1)P(A3 | A1 ∩A2) . . . P(An | A1 ∩· · · ∩An−1)
+7. A public health tracking system monitors a specific adverse event following a medical treat-
+ment. The true incidence rate of the adverse event in the monitored population is 0.5%. The
+tracking system’s automated reporting algorithm has a 95% sensitivity (true positive rate)
+and a 99% specificity (true negative rate).
+(a) If a patient’s case is flagged by the system as having the adverse event, what is the exact
+probability the adverse event actually occurred?
+(b) Because the system produces false positives, every flagged case undergoes an indepen-
+dent physician review. The physician review process has a 90% sensitivity and a 95%
+specificity. If the physician also concludes that the adverse event occurred, what is the
+updated posterior probability of the event?
+2

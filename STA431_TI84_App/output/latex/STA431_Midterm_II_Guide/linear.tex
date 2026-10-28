@@ -1,0 +1,119 @@
+\section{Moments of linear combinations}
+\label{sec:linear}
+\noindent\textbf{Reading.} Freund, Chapter~4, \S7, pp.~136--138; Theorem~14 treats one linear combination, and Theorem~15 treats the covariance of two linear combinations. The examples below use original numerical data. Assume finite second moments whenever a variance or covariance is used.
+
+\subsection{One linear combination: mean and variance}
+For $W=c+\sum_{i=1}^n a_iX_i$, linearity gives
+\[
+ \boxed{\E[W]=c+\sum_{i=1}^n a_i\E[X_i].}
+\]
+This formula does not require independence. To calculate variance, center $W$:
+\[
+ W-\E[W]=\sum_i a_i(X_i-\mu_i).
+\]
+Squaring creates one square term per variable and two identical cross terms per pair. Taking expectations therefore gives
+\[
+\boxed{\Var(W)=\sum_{i=1}^n a_i^2\Var(X_i)
+ +2\sum_{i<j}a_i a_j\Cov(X_i,X_j).}
+\]
+The constant $c$ has vanished. The coefficients in the variance terms are squared, but the coefficients in the covariance terms retain their signs.
+
+For two variables,
+\[
+ \Var(aX+bY+c)=a^2\sigma_X^2+b^2\sigma_Y^2+2ab\sigma_{XY}.
+\]
+In particular,
+\[
+\begin{aligned}
+ \Var(X+Y)&=\sigma_X^2+\sigma_Y^2+2\sigma_{XY},\\
+ \Var(X-Y)&=\sigma_X^2+\sigma_Y^2-2\sigma_{XY}.
+\end{aligned}
+\]
+The variance of a difference still contains the \emph{sum} of the two individual variances. Only the covariance term changes sign. If the variables are independent, or merely pairwise uncorrelated, all cross-covariance terms vanish. Do not remove these terms without such information.
+
+\subsubsection*{Worked example: a changed total}
+Suppose $\E[X]=1$, $\E[Y]=2$, $\Var(X)=4$, $\Var(Y)=9$, and $\Cov(X,Y)=-1$. For $W=3X-2Y+7$,
+\[
+ \E[W]=3(1)-2(2)+7=6,
+\]
+\[
+ \Var(W)=3^2(4)+(-2)^2(9)+2(3)(-2)(-1)=84.
+\]
+The negative coefficient and negative covariance combine to make the cross term positive. The fixed payment $7$ affects the mean but not the variance.
+
+\paragraph{Checkpoint.} If $X,Y$ are independent with variances $2$ and $5$, find $\Var(4X-Y+100)$. \emph{Answer:} $16(2)+5=37$.
+
+\subsection{Three or more variables: count each pair once}
+For $W=aX+bY+cZ+d$, write all six terms before substituting:
+\[
+\begin{aligned}
+\Var(W)={}&a^2\Var(X)+b^2\Var(Y)+c^2\Var(Z)\\
+&+2ab\Cov(X,Y)+2ac\Cov(X,Z)+2bc\Cov(Y,Z).
+\end{aligned}
+\]
+For $n$ variables there are $n(n-1)/2$ distinct pairs. This is why the notation $\sum_{i<j}$ is useful: it counts each pair once and supplies the factor two outside. The equivalent full double sum
+$\sum_i\sum_j a_i a_j\Cov(X_i,X_j)$ already counts both orders; do not add another factor two to it.
+
+\subsubsection*{Worked example: track the signs systematically}
+Suppose
+\[
+\begin{gathered}
+ \Var(X)=4,\quad\Var(Y)=9,\quad\Var(Z)=1,\\
+ \Cov(X,Y)=1,\quad\Cov(X,Z)=0,\quad\Cov(Y,Z)=-1.
+\end{gathered}
+\]
+For $W=2X-Y+3Z+5$,
+\[
+\begin{aligned}
+\Var(W)
+&=4(4)+1(9)+9(1)\\
+&\quad+2(2)(-1)(1)+2(2)(3)(0)+2(-1)(3)(-1)\\
+&=16+9+9-4+0+6=36.
+\end{aligned}
+\]
+If the means are $1,2,-1$, respectively, then $\E[W]=2(1)-2+3(-1)+5=2$.
+
+\paragraph{Checkpoint.} For independent identically distributed $X_1,\ldots,X_n$ with mean $\mu$ and variance $\sigma^2$, find the mean and variance of $\bar X=n^{-1}\sum_iX_i$. \emph{Answer:} $\E[\bar X]=\mu$ and $\Var(\bar X)=\sigma^2/n$. The same variance formula holds if the variables have the common variance and are pairwise uncorrelated.
+
+\subsection{Two linear combinations: covariance}
+Let
+$U=c+\sum_i a_iX_i$ and $V=d+\sum_i b_iX_i$. Bilinearity of covariance gives the universal formula
+\[
+\boxed{\Cov(U,V)=\sum_i\sum_j a_i b_j\Cov(X_i,X_j).}
+\]
+Separating diagonal terms from off-diagonal terms gives Freund's equivalent form:
+\[
+\Cov(U,V)=\sum_i a_i b_i\Var(X_i)
+ +\sum_{i<j}(a_i b_j+a_j b_i)\Cov(X_i,X_j).
+\]
+Here the paired coefficient is $a_i b_j+a_j b_i$, not generally $2a_i b_j$. Both fixed constants disappear. For two underlying variables,
+\[
+\begin{aligned}
+\Cov(aX+bY,cX+dY)
+=ac\Var(X)+bd\Var(Y)+(ad+bc)\Cov(X,Y).
+\end{aligned}
+\]
+
+\subsubsection*{Worked example: two totals built from the same variables}
+Use $\Var(X)=4$, $\Var(Y)=9$, $\Cov(X,Y)=-1$, and let
+$U=2X-Y+1$, $V=X+3Y-4$. Then
+\[
+\begin{aligned}
+\Cov(U,V)
+ &=2(1)(4)+(-1)(3)(9)+[2(3)+(-1)(1)](-1)\\
+ &=8-27-5=-24.
+\end{aligned}
+\]
+Separately, $\Var(U)=29$ and $\Var(V)=79$, giving
+$\Corr(U,V)=-24/\sqrt{29\cdot79}$. A useful internal check is
+\[
+ \Var(U+V)=29+79+2(-24)=60.
+\]
+Since $U+V=3X+2Y-3$, direct calculation gives $9(4)+4(9)+12(-1)=60$, agreeing exactly.
+
+Even if the underlying $X_i$ are independent, two combinations built from the same variables need not be independent or uncorrelated. Underlying independence reduces their covariance to $\sum_i a_i b_i\Var(X_i)$; it does not make this diagonal sum disappear.
+
+\paragraph{Checkpoint.} Show that $\Cov(X+Y,X-Y)=\Var(X)-\Var(Y)$, without assuming independence. \emph{Answer:} Expand by bilinearity; $-\Cov(X,Y)+\Cov(Y,X)=0$. Thus equal variances make the sum and difference uncorrelated, but do not establish their independence.
+
+\paragraph{Textbook practice.} Freund Chapter~4, Exercises~49--50 (p.~140) compare means and variances with and without independence. Exercises~53--55 (p.~140) practice the covariance of two combinations, including the sum-and-difference identity.
+

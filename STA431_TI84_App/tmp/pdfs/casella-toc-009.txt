@@ -1,0 +1,60 @@
+viii PREFACE TO THE FIRST EDITION
+
+practitioner, but we feel that it is important to separate these endeavors. Different
+concerns are important, and different rules are invoked. Of further interest may be
+the sections of these chapters titled Other Considerations. Here, we indicate how the
+tules of statistical inference may be relaxed (as is done every day) and still produce
+meaningful inferences. Many of the techniques covered in these sections are ones that
+are used in consulting and are helpful in analyzing and inferring from actual problems.
+
+The final three chapters can be thought of as special topics, although we feel that
+some familiarity with the material is important in anyone’s statistical education.
+Chapter 10 is a thorough introduction to decision theory and contains the most mod-
+ern material we could include. Chapter 11 deals with the analysis of variance (oneway
+and randomized block), building the theory of the complete analysis from the more
+simple theory of treatment contrasts. Our experience has been that experimenters are
+most interested in inferences from contrasts, and using principles developed earlier,
+most tests and intervals can be derived from contrasts. Finally, Chapter 12 treats
+the theory of regression, dealing first with simple linear regression and then covering
+regression with “errors in variables.” This latter topic is quite important, not only to
+show its own usefulness and inherent difficulties, but also to illustrate the limitations
+of inferences from ordinary regression.
+
+As more concrete guidelines for basing a one-year course on this book, we offer the
+following suggestions. There can be two distinct types of courses taught from this
+book. One kind we might label “more mathematical,” being a course appropriate for
+students majoring in statistics and having a solid mathematics background (at least
+14 years of calculus, some matrix algebra, and perhaps a real analysis course). For
+such students we recommend covering Chapters 1-9 in their entirety (which should
+take approximately 22 weeks) and spend the remaining time customizing the course
+with selected topics from Chapters 10-12. Once the first nine chapters are covered,
+the material in each of the last three chapters is self-contained, and can be covered
+in any order.
+
+Another type of course is “more practical.” Such a course may also be a first course
+for mathematically sophisticated students, but is aimed ai students with one year of
+calculus who may not be majoring in statistics. It stresses the more practical uses of
+statistical theory, being more concerned with understanding basic statistical concepts
+and deriving reasonable statistical procedures for a variety of situations, and less
+concerned with formal optimality investigations. Such a course will necessarily omit
+a certain amount of material, but the following list of sections can be covered in a
+one-year course:
+
+Chapter Sections
+
+All
+
+2.1, 2.2, 2.3
+
+3.1, 3.2
+
+41, 4.2, 4.3, 4.5
+
+5.1, 5.2, 5.3.1, 5.4
+
+6.1.1, 6.2.1
+
+TA, 7.2.1, 7.2.2, 7.2.3, 7.3.1, 7.3.3, 74
+8.1, 8.2.1, 8.2.3, 8.2.4, 8.3.1, 8.3.2, 8.4
+
+ONFHKeRANH

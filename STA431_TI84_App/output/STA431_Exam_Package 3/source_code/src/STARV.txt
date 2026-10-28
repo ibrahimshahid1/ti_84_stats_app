@@ -1,0 +1,1933 @@
+// STARV - RANDOM VARIABLE TOOLS (calculator module, called from STA431 as prgmSTARV)
+// Tools: A PMF table+CDF  B max/min/sum draws  C poly pdf/cdf
+//        D any f(x) or F(x) (numeric)  E transform Y=g(X)
+//        J joint X,Y (discrete PMF or continuous PDF)  Z back
+// Formatter: value in W, prgmSTAFMT -> Str9 fraction candidate, Str8 decimal (clobbers Q R S T U V)
+// Lists: ʟRVX x values, ʟRVP p(x), ʟRVF F(x)          (tools A, B)
+//        ʟRVL lo, ʟRVH hi, ʟRVA..ʟRVE F-coefficients  (tool C, powers 0..4)
+//        ʟRVT one piece's display coefficients        (tool C)
+// Str7 = typed f or F (tools D, E and J continuous); Str6 = inverse h (E)
+// expr(Str7) avoids overwriting the user's Y₉/Y₀ graph functions.
+// Shared blocks (entered by Goto at depth 0, no return address):
+//   T0 table of ʟRVX/ʟRVP/ʟRVF (Str6 = variable letter) -> MO mean/var -> AQ query menu
+// Flat helpers with θ dispatch: FE (tool C: F at Z -> Y), DG (tool D: F at Z -> Y)
+Lbl M
+Menu("RANDOM VARIABLES","PMF TABLE + CDF",A,"MAX/MIN/SUM DRAWS",B,"POLY PDF/CDF",C,"ANY f(x) OR F(x)",D,"TRANSFORM Y=g(X)",E,"JOINT X,Y",J,"BACK",Z)
+// =====================================================================
+// A. PMF TABLE + CDF   G=mode N=count E=Σp H=Σw C,K,D=warning flags
+// =====================================================================
+Lbl A
+ClrHome
+Output(1,1,"PMF TABLE + CDF  USE WHEN")
+Output(2,1,"X takes values x1..xn")
+Output(3,1,"with probs p(x) (a pmf)")
+Output(4,1," F(x)=P(X≤x)=Σ p(xi≤x)")
+Output(5,1," E[X]=Σ x*p(x)")
+Output(6,1," Var=E[X²]-(E[X])²")
+Output(7,1,"WEIGHTS/COUNTS => p=w/Σw")
+Output(8,1,"CDF VALUES => p = jumps")
+Output(9,1," p(xi)=F(xi)-F(prev x)")
+Output(10,1,"cues pmf, cdf, mean, var")
+Pause
+Menu("YOU HAVE…","p(x) VALUES",A1,"WEIGHTS/COUNTS",A2,"CDF VALUES F(x)",A3,"BACK",M)
+Lbl A1
+1→G
+Goto A4
+Lbl A2
+2→G
+Goto A4
+Lbl A3
+3→G
+Lbl A4
+ClrHome
+Disp "PMF TABLE + CDF","HOW MANY x VALUES?"
+Input "n (1-20)?",N
+If N<1 or N>20 or fPart(N):Goto A8
+DelVar ʟRVX
+DelVar ʟRVP
+DelVar ʟRVF
+N→dim(ʟRVX)
+N→dim(ʟRVP)
+For(I,1,N)
+ClrHome
+Disp "VALUE "+toString(I)+" OF "+toString(N)
+If G=1
+Disp "p(x)=P(X=x)"
+If G=2
+Disp "WEIGHT OR COUNT"
+If G=3
+Disp "F(x)=P(X≤x)"
+Input "x?",X
+If G=1
+Input "p(x)?",P
+If G=2
+Input "WEIGHT?",P
+If G=3
+Input "F(x)?",P
+X→ʟRVX(I)
+P→ʟRVP(I)
+End
+SortA(ʟRVX,ʟRVP)
+0→D
+For(I,2,N)
+If abs(ʟRVX(I)-ʟRVX(I-1))<1ᴇ⁻9
+1→D
+End
+If G=2 and min(ʟRVP)<0:Goto A9
+If G=2 and sum(ʟRVP)≤0:Goto A9
+0→H
+If G=2
+Then
+sum(ʟRVP)→H
+ʟRVP/H→ʟRVP
+End
+If G=3
+Then
+For(I,N,2,⁻1)
+ʟRVP(I)-ʟRVP(I-1)→ʟRVP(I)
+End
+End
+cumSum(ʟRVP)→ʟRVF
+sum(ʟRVP)→E
+(min(ʟRVP)<⁻1ᴇ⁻12)→C
+(abs(E-1)>1ᴇ⁻9)→K
+If not(C or K or D or G=2):Goto A7
+ClrHome
+Output(1,1,"CHECKS")
+2→O
+If G=2
+Then
+H→W
+prgmSTAFMT
+"Σw="+Str9+"  SO p=w/Σw"→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+3→O
+End
+If K
+Then
+E→W
+prgmSTAFMT
+If G=1
+Output(O,1,"Σp="+Str9+"  NOT 1 !")
+If G=3
+Output(O,1,"LAST F="+Str9+"  NOT 1 !")
+Output(O+1,1," (a pmf must sum to 1)")
+O+2→O
+End
+If C and G=1
+Output(O,1,"SOME p(x)<0 - NOT A PMF")
+If C and G=3
+Output(O,1,"F DECREASES - NOT A CDF")
+If C
+O+1→O
+If D
+Output(O,1,"REPEATED x - ADD THEIR p")
+Output(10,1,"ENTER=TABLE")
+Pause
+Lbl A7
+"x"→Str6
+Goto T0
+Lbl A8
+ClrHome
+Output(4,1,"n MUST BE A WHOLE")
+Output(5,1,"NUMBER FROM 1 TO 20")
+Pause
+Goto A4
+Lbl A9
+ClrHome
+Output(4,1,"WEIGHTS MUST BE ≥ 0")
+Output(5,1,"AND NOT ALL ZERO")
+Pause
+Goto A4
+// ---------------------------------------------------------------------
+// T0: table x | p(x) | F(x), 8 rows per screen (shared by tools A, B)
+// ---------------------------------------------------------------------
+Lbl T0
+dim(ʟRVX)→N
+ClrHome
+Output(1,1,Str6)
+Output(1,8,"p("+Str6+")")
+Output(1,18,"F("+Str6+")")
+2→O
+For(I,1,N)
+toString(ʟRVX(I))→Str1
+Output(O,1,sub(Str1,1,min(6,length(Str1))))
+ʟRVP(I)→W
+prgmSTAFMT
+If length(Str9)>9
+toString(round(W/10^(int(log(abs(W)))),2))+"E"+toString(int(log(abs(W))))→Str9
+Output(O,8,Str9)
+ʟRVF(I)→W
+prgmSTAFMT
+If length(Str9)>9
+toString(round(W/10^(int(log(abs(W)))),2))+"E"+toString(int(log(abs(W))))→Str9
+Output(O,18,Str9)
+O+1→O
+If O=10 and I<N
+Then
+Output(10,1,"ENTER=MORE")
+Pause
+ClrHome
+Output(1,1,Str6)
+Output(1,8,"p("+Str6+")")
+Output(1,18,"F("+Str6+")")
+2→O
+End
+End
+Output(10,1,"ENTER=MEAN, VARIANCE")
+Pause
+// ---------------------------------------------------------------------
+// MO: E[X], E[X²], Var, SD   (E, F, D)
+// ---------------------------------------------------------------------
+Lbl MO
+sum(ʟRVX*ʟRVP)→E
+sum(ʟRVX²*ʟRVP)→F
+F-E²→D
+If D<0 and D>⁻1ᴇ⁻9
+0→D
+ClrHome
+Output(1,1,"MEAN AND VARIANCE")
+E→W
+prgmSTAFMT
+Str9→Str2
+"E[X]=Σx*p(x)="+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+If Str9≠Str8
+Output(3,1," ="+Str8)
+F→W
+prgmSTAFMT
+Str9→Str3
+"E[X²]=Σx²*p(x)="+Str9→Str1
+Output(4,1,sub(Str1,1,min(26,length(Str1))))
+If Str9≠Str8
+Output(5,1," ="+Str8)
+D→W
+prgmSTAFMT
+Output(6,1,"Var=E[X²]-(E[X])²")
+"="+Str3+"-("+Str2+")²="+Str9→Str1
+If length(Str1)>26
+"="+Str9→Str1
+Output(7,1,Str1)
+If Str9≠Str8
+Output(8,1," ="+Str8)
+If D≥0
+Then
+√(D)→W
+prgmSTAFMT
+Output(9,1,"SD=√(Var)="+Str9)
+Else
+Output(9,1,"SD UNDEFINED (Var<0)")
+End
+sum(ʟRVP)→W
+prgmSTAFMT
+If abs(W-1)≤1ᴇ⁻9
+Output(10,1,"Σp=1  OK")
+If abs(W-1)>1ᴇ⁻9
+Output(10,1,"Σp="+Str9+"  NOT 1 !")
+Pause
+Lbl AQ
+Menu("QUERY","P(a≤X≤b) ETC",AP,"F(x) AT A POINT",AX,"DONE",M)
+// P(a≤X≤b), P(a<X≤b), P(a≤X<b), P(a<X<b)  (L=a K=b Z=tolerance)
+Lbl AP
+ClrHome
+Disp "P(a≤X≤b) ETC","≤ INCLUDES THE END"
+Input "a?",L
+Input "b?",K
+1ᴇ⁻9*max(1,max(abs(L),abs(K)))→Z
+toString(L)→Str1
+toString(K)→Str2
+ClrHome
+For(I,1,4)
+(I=1 or I=3)→θ
+(I≤2)→J
+sum(ʟRVP*((ʟRVX>L+Z)+θ*(abs(ʟRVX-L)≤Z))*((ʟRVX<K-Z)+J*(abs(ʟRVX-K)≤Z)))→W
+prgmSTAFMT
+"P("+Str1+sub("<≤",θ+1,1)+"X"+sub("<≤",J+1,1)+Str2+")="+Str9→Str3
+If length(Str3)>26
+"P(a"+sub("<≤",θ+1,1)+"X"+sub("<≤",J+1,1)+"b)="+Str9→Str3
+Output(2*I-1,1,Str3)
+If Str9≠Str8
+Output(2*I,1," ="+Str8)
+End
+If L>K
+Output(9,1,"(a>b SO ALL ARE 0)")
+Output(10,1,"DISCRETE => < VS ≤ MATTERS")
+Pause
+Goto AQ
+// F(x) at a point, plus P(X<x), P(X=x), P(X>x)
+Lbl AX
+ClrHome
+Disp "F(x)=P(X≤x)"
+Input "x?",L
+1ᴇ⁻9*max(1,abs(L))→Z
+toString(L)→Str1
+sum(ʟRVP*(ʟRVX≤L+Z))→F
+sum(ʟRVP*(abs(ʟRVX-L)≤Z))→E
+ClrHome
+F→W
+prgmSTAFMT
+"F("+Str1+")=P(X≤"+Str1+")"→Str2
+Output(1,1,sub(Str2,1,min(26,length(Str2))))
+" ="+Str9→Str2
+If Str9≠Str8
+Str2+" ="+Str8→Str2
+Output(2,1,Str2)
+F-E→W
+prgmSTAFMT
+"P(X<"+Str1+")=F-P(X="+Str1+")"→Str2
+Output(3,1,sub(Str2,1,min(26,length(Str2))))
+" ="+Str9→Str2
+If Str9≠Str8
+Str2+" ="+Str8→Str2
+Output(4,1,Str2)
+E→W
+prgmSTAFMT
+"P(X="+Str1+")="+Str9→Str2
+If Str9≠Str8
+Str2+" ="+Str8→Str2
+Output(5,1,sub(Str2,1,min(26,length(Str2))))
+sum(ʟRVP)-F→W
+prgmSTAFMT
+"P(X>"+Str1+")=1-F("+Str1+")"→Str2
+Output(6,1,sub(Str2,1,min(26,length(Str2))))
+" ="+Str9→Str2
+If Str9≠Str8
+Str2+" ="+Str8→Str2
+Output(7,1,Str2)
+Output(9,1,"F = SUM OF p(xi), xi≤x")
+Output(10,1,"(0 BELOW ALL x, 1 ABOVE)")
+Pause
+Goto AQ
+// =====================================================================
+// B. MAX/MIN/SUM DRAWS  G=statistic H=1 with repl. N=values 1..N K=draws
+//    L..U = support  C=C(N,k)  Str6 = variable letter
+// =====================================================================
+Lbl B
+ClrHome
+Output(1,1,"MAX/MIN/SUM DRAWS")
+Output(2,1,"USE WHEN k draws from the")
+Output(3,1,"numbers 1..N (balls, dice)")
+Output(4,1,"and X = max, min, sum or")
+Output(5,1,"|diff| of the draws")
+Output(6,1,"WITHOUT = no replacement,")
+Output(7,1," all draws different")
+Output(8,1,"WITH = replacement (dice)")
+Output(9,1,"F(z)=P(X≤z)=Σ p up to z")
+Output(10,1,"cues largest, smallest")
+Pause
+Menu("STATISTIC","MAXIMUM",B1,"MINIMUM",B2,"SUM (2 DRAWS)",B3,"|DIFF| (2 DRAWS)",B4,"BACK",M)
+Lbl B1
+1→G
+Goto B5
+Lbl B2
+2→G
+Goto B5
+Lbl B3
+3→G
+Goto B5
+Lbl B4
+4→G
+Lbl B5
+ClrHome
+Disp "VALUES 1,2,…,N","(N FROM 1 TO 99)"
+Input "N?",N
+2→K
+If G≤2
+Input "DRAWS k?",K
+Menu("REPLACEMENT?","WITHOUT",B6,"WITH",B7)
+Lbl B6
+0→H
+Goto B8
+Lbl B7
+1→H
+Lbl B8
+If N<1 or N>99 or fPart(N) or K<1 or K>99 or fPart(K):Goto BE
+If H=0 and K>N:Goto BF
+1→L
+N→U
+If G=1 and H=0
+K→L
+If G=2 and H=0
+N-K+1→U
+If G=3
+Then
+3-H→L
+2*N-1+H→U
+End
+If G=4
+Then
+1-H→L
+N-1→U
+End
+N nCr K→C
+DelVar ʟRVX
+DelVar ʟRVP
+DelVar ʟRVF
+U-L+1→dim(ʟRVX)
+U-L+1→dim(ʟRVP)
+For(I,L,U)
+If G=1 and H=0
+((I-1) nCr (K-1))/C→P
+If G=1 and H=1
+(I/N)^K-((I-1)/N)^K→P
+If G=2 and H=0
+((N-I) nCr (K-1))/C→P
+If G=2 and H=1
+((N-I+1)/N)^K-((N-I)/N)^K→P
+If G=3
+(N-abs(I-N-1)-(H=0)*not(fPart(I/2)))/(N*(N-1+H))→P
+If G=4
+(2*(N-I)-(I=0)*N)/(N*(N-1+H))→P
+I→ʟRVX(I-L+1)
+P→ʟRVP(I-L+1)
+End
+cumSum(ʟRVP)→ʟRVF
+// formula screen
+"z"→Str6
+If G=3
+"s"→Str6
+If G=4
+"d"→Str6
+If G=1
+"MAXIMUM"→Str1
+If G=2
+"MINIMUM"→Str1
+If G=3
+"SUM OF 2"→Str1
+If G=4
+"|DIFF| OF 2"→Str1
+If H=0
+Str1+", WITHOUT REPL."→Str1
+If H=1
+Str1+", WITH REPL."→Str1
+ClrHome
+Output(1,1,Str1)
+Output(2,1,"N="+toString(N)+"  k="+toString(K)+"  "+Str6+"="+toString(L)+" TO "+toString(U))
+If G=1 and H=0
+Then
+Output(3,1,"p(z)=C(z-1,k-1)/C(N,k)")
+"   =C(z-1,"+toString(K-1)+")/"+toString(C)→Str1
+Output(4,1,sub(Str1,1,min(26,length(Str1))))
+Output(6,1,"F(z)=C(z,k)/C(N,k)")
+End
+If G=1 and H=1
+Then
+Output(3,1,"p(z)=(z^k-(z-1)^k)/N^k")
+"N^k"→Str2
+If K*log(N)<9
+toString(N^K)→Str2
+"   =(z^"+toString(K)+"-(z-1)^"+toString(K)+")/"+Str2→Str1
+Output(4,1,sub(Str1,1,min(26,length(Str1))))
+Output(6,1,"F(z)=(z/N)^k")
+End
+If G=2 and H=0
+Then
+Output(3,1,"p(z)=C(N-z,k-1)/C(N,k)")
+"   =C("+toString(N)+"-z,"+toString(K-1)+")/"+toString(C)→Str1
+Output(4,1,sub(Str1,1,min(26,length(Str1))))
+Output(6,1,"F(z)=1-C(N-z,k)/C(N,k)")
+End
+If G=2 and H=1
+Then
+Output(3,1,"p(z)=((N-z+1)^k-(N-z)^k)")
+Output(4,1,"      /N^k")
+Output(6,1,"F(z)=1-((N-z)/N)^k")
+End
+If G=3
+Then
+Output(3,1,"p(s)=#(i,j) WITH i+j=s")
+If H=1
+Output(4,1," #=N-|s-N-1|")
+If H=0
+Output(4,1," # ORDERED PAIRS, i≠j")
+End
+If G=4
+Then
+Output(3,1,"p(d)=#(i,j) WITH |i-j|=d")
+Output(4,1," #=2(N-d) FOR d≥1")
+End
+If G≥3 and H=1
+Output(5,1," DIVIDE BY N²="+toString(N²))
+If G≥3 and H=0
+Output(5,1," DIVIDE BY N(N-1)="+toString(N*(N-1)))
+If G=4 and H=1
+Output(4,20,"d=0 #=N")
+If G≥3
+Output(6,1,"F("+Str6+")=RUNNING SUM OF p")
+Output(7,1,"PMF SKETCH=SPIKES p("+Str6+")")
+Output(8,1,"CDF SKETCH=RIGHT-CONT.")
+Output(9,1," STEPS, JUMP p AT EACH "+Str6)
+Output(10,1,"ENTER=TABLE")
+Pause
+Goto T0
+Lbl BE
+ClrHome
+Output(4,1,"N AND k MUST BE WHOLE")
+Output(5,1,"NUMBERS FROM 1 TO 99")
+Pause
+Goto B5
+Lbl BF
+ClrHome
+Output(3,1,"k>N WITHOUT REPLACEMENT")
+Output(4,1,"IS IMPOSSIBLE")
+Output(5,1,"(C(N,k)=0 WAYS)")
+Output(6,1,"USE k≤N OR WITH REPL.")
+Pause
+Goto B5
+// =====================================================================
+// C. POLY PDF/CDF  G=1 pdf 2 cdf  C=c unknown  H=c  N=pieces  E=area
+//    lists ʟRVL ʟRVH, coefficients of F in ʟRVA..ʟRVE (powers 0..4)
+//    K=F(hi of last piece)  F=f<0 / decreasing flag  O=screen row
+// =====================================================================
+Lbl C
+ClrHome
+Output(1,1,"POLY PDF/CDF     USE WHEN")
+Output(2,1,"f(x) or F(x) is a poly")
+Output(3,1,"on up to 3 pieces, deg≤3")
+Output(4,1," AREA=Σ∫f=1 => c=1/AREA")
+Output(5,1," F(x)=∫ f(t)dt up to x")
+Output(6,1," F is flat in gaps")
+Output(7,1," P(a<X<b)=F(b)-F(a)")
+Output(8,1," f(x)=F'(x) on each piece")
+Output(9,1," P(X=a)=0 (continuous)")
+Output(10,1,"FRACTIONS OK, e.g. 3/16")
+Pause
+Menu("INPUT IS…","PDF f(x)",C1,"CDF F(x)",C2,"BACK",M)
+Lbl C1
+1→G
+Goto C3
+Lbl C2
+2→G
+Lbl C3
+0→C
+ClrHome
+If G=1
+Then
+Disp "UNKNOWN CONST c?","(ENTER f WITHOUT c)","1=YES  0=NO"
+Input "c UNKNOWN?",C
+End
+(C=1)→C
+Disp "NUMBER OF PIECES?"
+Input "PIECES (1-3)?",N
+If N<1 or N>3 or fPart(N):Goto C0
+DelVar ʟRVL
+DelVar ʟRVH
+DelVar ʟRVA
+DelVar ʟRVB
+DelVar ʟRVC
+DelVar ʟRVD
+DelVar ʟRVE
+N→dim(ʟRVL)
+N→dim(ʟRVH)
+N→dim(ʟRVA)
+N→dim(ʟRVB)
+N→dim(ʟRVC)
+N→dim(ʟRVD)
+N→dim(ʟRVE)
+1→I
+Lbl C4
+ClrHome
+Disp "PIECE "+toString(I)+" OF "+toString(N)
+If G=1
+Disp "f=C0+C1x+C2x²+C3x³"
+If G=2
+Disp "F=C0+C1x+C2x²+C3x³"
+Input "LO?",A
+Input "HI?",B
+Input "DEGREE (0-3)?",D
+If B≤A or D<0 or D>3 or fPart(D):Goto C8
+If I>1 and A<ʟRVH(max(1,I-1))-1ᴇ⁻9:Goto C9
+A→ʟRVL(I)
+B→ʟRVH(I)
+0→ʟRVB(I)
+0→ʟRVC(I)
+0→ʟRVD(I)
+Input "C0 (CONST)?",P
+P→ʟRVA(I)
+If D≥1
+Then
+Input "C1 (x)?",P
+P→ʟRVB(I)
+End
+If D≥2
+Then
+Input "C2 (x²)?",P
+P→ʟRVC(I)
+End
+If D≥3
+Then
+Input "C3 (x³)?",P
+P→ʟRVD(I)
+End
+I+1→I
+If I≤N:Goto C4
+If G=2:Goto C5
+// ---- PDF mode: area, c, f<0 check, convert to F coefficients
+sum(ʟRVA*(ʟRVH-ʟRVL)+ʟRVB*(ʟRVH²-ʟRVL²)/2+ʟRVC*(ʟRVH³-ʟRVL³)/3+ʟRVD*(ʟRVH^4-ʟRVL^4)/4)→E
+1→H
+If C=1 and abs(E)<1ᴇ⁻12:Goto CU
+If C=1
+Then
+1/E→H
+H*ʟRVA→ʟRVA
+H*ʟRVB→ʟRVB
+H*ʟRVC→ʟRVC
+H*ʟRVD→ʟRVD
+End
+0→F
+For(I,1,N)
+For(J,0,10)
+ʟRVL(I)+J*(ʟRVH(I)-ʟRVL(I))/10→X
+If ʟRVA(I)+X*(ʟRVB(I)+X*(ʟRVC(I)+X*ʟRVD(I)))<⁻1ᴇ⁻10
+1→F
+End
+End
+ʟRVD/4→ʟRVE
+ʟRVC/3→ʟRVD
+ʟRVB/2→ʟRVC
+ʟRVA→ʟRVB
+0→Y
+For(I,1,N)
+ʟRVL(I)→X
+Y-X*(ʟRVB(I)+X*(ʟRVC(I)+X*(ʟRVD(I)+X*ʟRVE(I))))→ʟRVA(I)
+ʟRVH(I)→X
+ʟRVA(I)+X*(ʟRVB(I)+X*(ʟRVC(I)+X*(ʟRVD(I)+X*ʟRVE(I))))→Y
+End
+Y→K
+ClrHome
+Output(1,1,"POLY PDF CHECK")
+E→W
+prgmSTAFMT
+Output(2,1,"AREA=Σ∫f dx="+Str9)
+If Str9≠Str8
+Output(3,1," ="+Str8)
+If C=1
+Then
+H→W
+prgmSTAFMT
+Output(4,1,"c=1/AREA="+Str9)
+If Str9≠Str8
+Output(5,1," ="+Str8)
+Output(6,1,"(f IS SCALED BY c)")
+End
+If C=0 and abs(E-1)>1ᴇ⁻9
+Then
+Output(4,1,"WARNING AREA≠1 !")
+Output(5,1," NOT A VALID PDF AS TYPED")
+End
+If F
+Then
+Output(7,1,"WARNING f<0 SOMEWHERE !")
+Output(8,1," NOT A VALID PDF")
+End
+If C=0 and abs(E-1)≤1ᴇ⁻9 and not(F)
+Output(4,1,"AREA=1 AND f≥0  OK")
+Output(10,1,"ENTER=CDF BY REGION")
+Pause
+Goto C6
+// ---- CDF mode: checks (F(lo1)=0, F(hi)=1, no jumps, F increasing)
+Lbl C5
+1→H
+0→F
+0→E
+For(I,1,N)
+For(J,0,10)
+ʟRVL(I)+J*(ʟRVH(I)-ʟRVL(I))/10→X
+If ʟRVB(I)+X*(2*ʟRVC(I)+X*3*ʟRVD(I))<⁻1ᴇ⁻10
+1→F
+End
+If I>1
+Then
+ʟRVL(I)→X
+ʟRVA(I)+X*(ʟRVB(I)+X*(ʟRVC(I)+X*ʟRVD(I)))→Y
+ʟRVH(I-1)→X
+If abs(Y-(ʟRVA(I-1)+X*(ʟRVB(I-1)+X*(ʟRVC(I-1)+X*ʟRVD(I-1)))))>1ᴇ⁻9
+1→E
+End
+End
+ClrHome
+Output(1,1,"POLY CDF CHECK")
+ʟRVL(1)→X
+ʟRVA(1)+X*(ʟRVB(1)+X*(ʟRVC(1)+X*ʟRVD(1)))→Y
+Y→W
+prgmSTAFMT
+"F(LO)=F("+toString(X)+")="+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+If abs(Y)>1ᴇ⁻9
+Output(3,1," WARNING ≠0 - JUMP AT LO")
+ʟRVH(N)→X
+ʟRVA(N)+X*(ʟRVB(N)+X*(ʟRVC(N)+X*ʟRVD(N)))→Z
+Z→W
+prgmSTAFMT
+"F(HI)=F("+toString(X)+")="+Str9→Str1
+Output(4,1,sub(Str1,1,min(26,length(Str1))))
+If abs(Z-1)>1ᴇ⁻9
+Output(5,1," WARNING ≠1 - JUMP AT HI")
+If E
+Output(6,1,"WARNING JUMP AT A PIECE")
+If F
+Output(7,1,"WARNING F DECREASES !")
+If not(E or F) and abs(Y)≤1ᴇ⁻9 and abs(Z-1)≤1ᴇ⁻9
+Output(6,1,"F GOES 0 TO 1 SMOOTHLY OK")
+Output(8,1,"F=0 BEFORE, 1 AFTER")
+Output(10,1,"ENTER=f(x)=F'(x)")
+Pause
+// ---- region display: G=1 F(x) (from ʟRVA..ʟRVE), G=2 f(x)=F'(x)
+Lbl C6
+"F"→Str5
+If G=2
+"f"→Str5
+ClrHome
+If G=1
+Output(1,1,"CDF F(x) BY REGION")
+If G=2
+Output(1,1,"PDF f(x)=F'(x) BY REGION")
+"x<"+toString(ʟRVL(1))+"  "+Str5+"=0"→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+3→O
+For(I,1,N)
+If I>1
+Then
+If ʟRVL(I)>ʟRVH(I-1)+1ᴇ⁻9
+Then
+0→W
+If G=1
+Then
+ʟRVH(I-1)→X
+ʟRVA(I-1)+X*(ʟRVB(I-1)+X*(ʟRVC(I-1)+X*(ʟRVD(I-1)+X*ʟRVE(I-1))))→W
+End
+prgmSTAFMT
+If O>9
+Then
+Output(10,1,"ENTER=MORE")
+Pause
+ClrHome
+1→O
+End
+toString(ʟRVH(I-1))+"≤x≤"+toString(ʟRVL(I))+"  "+Str5+"="+Str9→Str1
+Output(O,1,sub(Str1,1,min(26,length(Str1))))
+O+1→O
+End
+End
+If O>8
+Then
+Output(10,1,"ENTER=MORE")
+Pause
+ClrHome
+1→O
+End
+toString(ʟRVL(I))+"<x<"+toString(ʟRVH(I))+"  "+Str5+"="→Str1
+Output(O,1,sub(Str1,1,min(26,length(Str1))))
+O+1→O
+If G=1
+augment({ʟRVA(I),ʟRVB(I),ʟRVC(I)},{ʟRVD(I),ʟRVE(I)})→ʟRVT
+If G=2
+{ʟRVB(I),2*ʟRVC(I),3*ʟRVD(I),0,0}→ʟRVT
+"  "→Str1
+0→J
+For(θ,0,4)
+ʟRVT(θ+1)→E
+If abs(E)>1ᴇ⁻12
+Then
+abs(E)→W
+prgmSTAFMT
+Str9→Str2
+If θ=1
+"x"→Str4
+If θ=2
+"x²"→Str4
+If θ=3
+"x³"→Str4
+If θ=4
+"x^4"→Str4
+If θ=0
+Str2→Str3
+If θ>0 and Str2="1"
+Str4→Str3
+If θ>0 and Str2≠"1" and inString(Str2,"/")
+"("+Str2+")"+Str4→Str3
+If θ>0 and Str2≠"1" and not(inString(Str2,"/"))
+Str2+Str4→Str3
+If J=0 and E<0
+"-"+Str3→Str3
+If J>0 and E<0
+" - "+Str3→Str3
+If J>0 and E>0
+" + "+Str3→Str3
+If length(Str1)+length(Str3)>26
+Then
+Output(O,1,Str1)
+O+1→O
+If O>9
+Then
+Output(10,1,"ENTER=MORE")
+Pause
+ClrHome
+1→O
+End
+"  "+Str3→Str1
+Else
+Str1+Str3→Str1
+End
+J+1→J
+End
+End
+If J=0
+"  0"→Str1
+Output(O,1,sub(Str1,1,min(26,length(Str1))))
+O+1→O
+End
+If O>9
+Then
+Output(10,1,"ENTER=MORE")
+Pause
+ClrHome
+1→O
+End
+0→W
+If G=1
+K→W
+prgmSTAFMT
+"x>"+toString(ʟRVH(N))+"  "+Str5+"="+Str9→Str1
+Output(O,1,sub(Str1,1,min(26,length(Str1))))
+Output(10,1,"ENTER=QUERIES")
+Pause
+Lbl CQ
+Menu("QUERY","P(a<X<b)",CA,"F(x) AT A POINT",CB,"P(X>a)",CC,"P(X=a)",CD,"BACK",M)
+Lbl CA
+ClrHome
+Disp "P(a<X<b)=F(b)-F(a)"
+Input "a?",L
+Input "b?",P
+If L>P:Goto CE
+L→Z
+1→θ
+Goto FE
+Lbl F1
+Y→A
+P→Z
+2→θ
+Goto FE
+Lbl F2
+Y→B
+ClrHome
+Output(1,1,"P("+toString(L)+"<X<"+toString(P)+")=F(b)-F(a)")
+"=F("+toString(P)+")-F("+toString(L)+")"→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+B→W
+prgmSTAFMT
+Str9→Str2
+A→W
+prgmSTAFMT
+"="+Str2+"-"+Str9→Str1
+If A<0
+"="+Str2+"-("+Str9+")"→Str1
+Output(3,1,sub(Str1,1,min(26,length(Str1))))
+B-A→W
+prgmSTAFMT
+Output(4,1,"="+Str9)
+If Str9≠Str8
+Output(5,1,"="+Str8)
+Output(7,1,"SAME WITH ≤ INSTEAD OF <")
+Output(8,1,"(CONTINUOUS X)")
+Pause
+Goto CQ
+Lbl CB
+ClrHome
+Disp "F(x)=P(X≤x)"
+Input "x?",L
+L→Z
+3→θ
+Goto FE
+Lbl F3
+ClrHome
+Y→W
+prgmSTAFMT
+Output(1,1,"F(x)=P(X≤x)")
+"F("+toString(L)+")="+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+If Str9≠Str8
+Output(3,1," ="+Str8)
+Pause
+Goto CQ
+Lbl CC
+ClrHome
+Disp "P(X>a)=1-F(a)"
+Input "a?",L
+L→Z
+4→θ
+Goto FE
+Lbl F4
+ClrHome
+Output(1,1,"P(X>a)=1-F(a)")
+Y→W
+prgmSTAFMT
+"=1-F("+toString(L)+")=1-"+Str9→Str1
+If Y<0
+"=1-F("+toString(L)+")=1-("+Str9+")"→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+1-Y→W
+prgmSTAFMT
+Output(3,1,"="+Str9)
+If Str9≠Str8
+Output(4,1,"="+Str8)
+Output(6,1,"SAME AS P(X≥a)")
+Pause
+Goto CQ
+Lbl CD
+ClrHome
+Disp "P(X=a)"
+Input "a?",L
+ClrHome
+"P(X="+toString(L)+")=0"→Str1
+Output(1,1,sub(Str1,1,min(26,length(Str1))))
+Output(2,1,"0 (continuous X)")
+Output(4,1,"NO AREA OVER ONE POINT")
+Output(5,1,"SO P(X≤a)=P(X<a)")
+If G=2
+Output(7,1,"(UNLESS F JUMPS AT a)")
+Pause
+Goto CQ
+Lbl CE
+ClrHome
+Output(4,1,"NEED a ≤ b")
+Pause
+Goto CQ
+Lbl C0
+ClrHome
+Output(4,1,"PIECES MUST BE 1, 2 OR 3")
+Pause
+Goto C3
+Lbl C8
+ClrHome
+Output(3,1,"NEED LO < HI AND")
+Output(4,1,"DEGREE 0, 1, 2 OR 3")
+Output(6,1,"RE-ENTER THIS PIECE")
+Pause
+Goto C4
+Lbl C9
+ClrHome
+Output(3,1,"PIECES MUST GO LEFT TO")
+Output(4,1,"RIGHT, NOT OVERLAP")
+Output(5,1,"(LO ≥ PREVIOUS HI)")
+Output(6,1,"RE-ENTER THIS PIECE")
+Pause
+Goto C4
+Lbl CU
+ClrHome
+Output(3,1,"AREA=0 SO c=1/AREA IS")
+Output(4,1,"UNDEFINED (c UNDEF)")
+Output(6,1,"CHECK THE PIECES")
+Pause
+Goto M
+// FE: F(Z) -> Y for tool C (uses J, X)
+Lbl FE
+0→Y
+For(J,1,N)
+If Z≥ʟRVL(J)
+Then
+min(Z,ʟRVH(J))→X
+ʟRVA(J)+X*(ʟRVB(J)+X*(ʟRVC(J)+X*(ʟRVD(J)+X*ʟRVE(J))))→Y
+End
+End
+If G=2 and Z≥ʟRVH(N)
+1→Y
+If θ=1:Goto F1
+If θ=2:Goto F2
+If θ=3:Goto F3
+If θ=4:Goto F4
+Goto CQ
+// =====================================================================
+// D. ANY f(x) OR F(x) (numeric)  G=1 pdf 2 cdf  A=lo B=hi C=c unknown
+//    H=c  E=area  L,P=a,b  Y=result  Z=point
+// =====================================================================
+Lbl D
+ClrHome
+Output(1,1,"ANY f(x) OR F(x) USE WHEN")
+Output(2,1,"f or F is not a polynomial")
+Output(3,1," e.g. 2e^(-2x), 1/x²")
+Output(4,1,"TYPE X WITH X,T,θ,n KEY")
+Output(5,1," e^( IS 2nd LN")
+Output(6,1,"USE 50 AS THE INFINITY END")
+Output(7,1," AREA=∫f dx over support")
+Output(8,1," P(a<X<b)=∫f OR F(b)-F(a)")
+Output(9,1," f(x)=F'(x) BY nDeriv")
+Output(10,1,"ANSWERS TO 6 DECIMALS")
+Pause
+Menu("INPUT IS…","PDF f(x)",D1,"CDF F(x)",D2,"BACK",M)
+Lbl D1
+1→G
+Goto D3
+Lbl D2
+2→G
+Lbl D3
+ClrHome
+Disp "TYPE X WITH X,T,θ,n","e.g. 1-e^(-2X)"
+If G=1
+Input "f(X)=",Str1
+If G=2
+Input "F(X)=",Str1
+Input "LOW END?",A
+Input "HIGH END?",B
+If B≤A:Goto DE
+0→C
+If G=1
+Then
+Disp "UNKNOWN CONST c?","1=YES  0=NO"
+Input "c UNKNOWN?",C
+End
+(C=1)→C
+Str1→Str7
+1→H
+If G=2:Goto D5
+fnInt(expr(Str7),X,A,B)→E
+If C=1 and abs(E)<1ᴇ⁻12:Goto DU
+If C=1
+1/E→H
+ClrHome
+Output(1,1,"PDF CHECK")
+"SUPPORT "+toString(A)+" TO "+toString(B)→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+E→W
+prgmSTAFMT
+Output(3,1,"AREA=∫f dx="+Str9)
+If Str9≠Str8
+Output(4,1," ="+Str8)
+If C=1
+Then
+H→W
+prgmSTAFMT
+Output(5,1,"c=1/AREA="+Str9)
+If Str9≠Str8
+Output(6,1," ="+Str8)
+Output(7,1,"(PROBS USE c*f)")
+End
+If C=0 and abs(E-1)>1ᴇ⁻4
+Output(5,1,"WARNING AREA≠1 !")
+If C=0 and abs(E-1)≤1ᴇ⁻4
+Output(5,1,"AREA=1  OK")
+Output(10,1,"ENTER=QUERIES")
+Pause
+Goto DQ
+Lbl D5
+ClrHome
+Output(1,1,"CDF CHECK")
+A→X
+expr(Str7)→Y
+B→X
+expr(Str7)→Z
+Y→W
+prgmSTAFMT
+"F(LO)=F("+toString(A)+")="+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+If abs(Y)>1ᴇ⁻6
+Output(3,1," WARNING ≠0 - JUMP AT LO")
+Z→W
+prgmSTAFMT
+"F(HI)=F("+toString(B)+")="+Str9→Str1
+Output(4,1,sub(Str1,1,min(26,length(Str1))))
+If abs(Z-1)>1ᴇ⁻6
+Output(5,1," WARNING ≠1 - JUMP AT HI")
+If abs(Y)≤1ᴇ⁻6 and abs(Z-1)≤1ᴇ⁻6
+Output(5,1,"F GOES 0 TO 1  OK")
+Output(7,1,"F=0 BELOW LO, 1 FROM HI")
+Output(10,1,"ENTER=QUERIES")
+Pause
+Lbl DQ
+If G=2:Goto DR
+Menu("QUERY","P(a<X<b)",DA,"F(x) AT A POINT",DB,"P(X>a)",DC,"P(X=a)",DD,"BACK",M)
+Lbl DR
+Menu("QUERY","P(a<X<b)",DA,"F(x) AT A POINT",DB,"P(X>a)",DC,"P(X=a)",DD,"f(x)=F'(x) AT PT",DF,"BACK",M)
+Lbl DA
+ClrHome
+Disp "P(a<X<b)"
+Input "a?",L
+Input "b?",P
+If L>P:Goto DH
+If G=2:Goto D6
+max(L,A)→Z
+min(P,B)→Y
+0→W
+If Z<Y
+H*fnInt(expr(Str7),X,Z,Y)→W
+ClrHome
+Output(1,1,"P("+toString(L)+"<X<"+toString(P)+")")
+If C=1
+Output(2,1,"=c*∫f dx")
+If C=0
+Output(2,1,"=∫f dx")
+If Z<Y
+"  FROM "+toString(Z)+" TO "+toString(Y)→Str1
+If Z≥Y
+"  (OUTSIDE SUPPORT)"→Str1
+Output(3,1,sub(Str1,1,min(26,length(Str1))))
+prgmSTAFMT
+Output(4,1,"="+Str9)
+If Str9≠Str8
+Output(5,1,"="+Str8)
+Output(7,1,"SAME WITH ≤ INSTEAD OF <")
+Pause
+Goto DQ
+Lbl D6
+L→Z
+1→θ
+Goto DG
+Lbl G1
+Y→E
+P→Z
+2→θ
+Goto DG
+Lbl G2
+ClrHome
+Output(1,1,"P("+toString(L)+"<X≤"+toString(P)+")=F(b)-F(a)")
+"=F("+toString(P)+")-F("+toString(L)+")"→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+Y→W
+prgmSTAFMT
+Str9→Str2
+E→W
+prgmSTAFMT
+"="+Str2+"-"+Str9→Str1
+Output(3,1,sub(Str1,1,min(26,length(Str1))))
+Y-E→W
+prgmSTAFMT
+Output(4,1,"="+Str9)
+If Str9≠Str8
+Output(5,1,"="+Str8)
+Output(7,1,"SAME WITH < IF F HAS")
+Output(8,1,"NO JUMP (CONTINUOUS X)")
+Pause
+Goto DQ
+Lbl DB
+ClrHome
+Disp "F(x)=P(X≤x)"
+Input "x?",L
+L→Z
+3→θ
+Goto DG
+Lbl G3
+ClrHome
+Output(1,1,"F(x)=P(X≤x)")
+If G=1 and C=0
+Output(2,1," =∫f FROM LO TO x")
+If G=1 and C=1
+Output(2,1," =c*∫f FROM LO TO x")
+Y→W
+prgmSTAFMT
+"F("+toString(L)+")="+Str9→Str1
+Output(3,1,sub(Str1,1,min(26,length(Str1))))
+If Str9≠Str8
+Output(4,1," ="+Str8)
+Pause
+Goto DQ
+Lbl DC
+ClrHome
+Disp "P(X>a)"
+Input "a?",L
+If G=2:Goto D7
+max(L,A)→Z
+0→W
+If Z<B
+H*fnInt(expr(Str7),X,Z,B)→W
+ClrHome
+Output(1,1,"P(X>"+toString(L)+")")
+If Z<B
+"=∫f FROM "+toString(Z)+" TO "+toString(B)→Str1
+If Z≥B
+"=0 (PAST THE SUPPORT)"→Str1
+If C=1 and Z<B
+"=c*∫f FROM "+toString(Z)+" TO "+toString(B)→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+prgmSTAFMT
+Output(3,1,"="+Str9)
+If Str9≠Str8
+Output(4,1,"="+Str8)
+Pause
+Goto DQ
+Lbl D7
+L→Z
+4→θ
+Goto DG
+Lbl G4
+ClrHome
+Output(1,1,"P(X>"+toString(L)+")=1-F(a)")
+Y→W
+prgmSTAFMT
+"=1-"+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+1-Y→W
+prgmSTAFMT
+Output(3,1,"="+Str9)
+If Str9≠Str8
+Output(4,1,"="+Str8)
+Pause
+Goto DQ
+Lbl DD
+ClrHome
+Disp "P(X=a)"
+Input "a?",L
+ClrHome
+"P(X="+toString(L)+")=0"→Str1
+Output(1,1,sub(Str1,1,min(26,length(Str1))))
+Output(2,1,"0 (continuous X)")
+Output(4,1,"NO AREA OVER ONE POINT")
+Pause
+Goto DQ
+Lbl DF
+ClrHome
+Disp "f(x)=F'(x)"
+Input "x?",L
+0→W
+If L>A and L<B
+nDeriv(expr(Str7),X,L)→W
+ClrHome
+Output(1,1,"f(x)=F'(x) (nDeriv)")
+prgmSTAFMT
+"f("+toString(L)+")="+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+If Str9≠Str8
+Output(3,1," ="+Str8)
+If L≤A or L≥B
+Output(5,1,"(OUTSIDE (LO,HI) => 0)")
+Pause
+Goto DQ
+Lbl DE
+ClrHome
+Output(4,1,"NEED LOW END < HIGH END")
+Pause
+Goto D3
+Lbl DH
+ClrHome
+Output(4,1,"NEED a ≤ b")
+Pause
+Goto DQ
+Lbl DU
+ClrHome
+Output(3,1,"AREA=0 SO c=1/AREA IS")
+Output(4,1,"UNDEFINED (c UNDEF)")
+Pause
+Goto M
+// DG: F(Z) -> Y for tool D (pdf: c*∫ from lo; cdf: 0 / Y₉ / 1)
+Lbl DG
+0→Y
+If G=1 and Z>A
+H*fnInt(expr(Str7),X,A,min(Z,B))→Y
+If G=2 and Z≥A
+Then
+min(Z,B)→X
+expr(Str7)→Y
+End
+If G=2 and Z≥B
+1→Y
+If θ=1:Goto G1
+If θ=2:Goto G2
+If θ=3:Goto G3
+If θ=4:Goto G4
+Goto DQ
+// =====================================================================
+// E. TRANSFORM Y=g(X)  A=lo B=hi G=1 incr 2 decr  Z=y C=x=h(y)
+//    D=clipped x  E=F_X(x)  F=F_Y(y)  K=f_Y(y)
+// =====================================================================
+Lbl E
+ClrHome
+Output(1,1,"TRANSFORM Y=g(X)       1/2")
+Output(2,1,"CDF METHOD")
+Output(3,1,"1 F_Y(y)=P(g(X)≤y)")
+Output(4,1,"2 solve g(X)≤y for X")
+Output(5,1,"3 g incr => F_X(h(y))")
+Output(6,1,"  g decr => 1-F_X(h(y))")
+Output(7,1,"4 f_Y(y)=d/dy F_Y(y)")
+Output(8,1,"5 support of Y = g(supp X)")
+Output(9,1,"  f_Y=0 outside it")
+Output(10,1,"h = g^-1 (solve y=g(x))")
+Pause
+ClrHome
+Output(1,1,"MONOTONE SHORTCUT      2/2")
+Output(2,1," f_Y(y)=f_X(h(y))*|h'(y)|")
+Output(3,1," h=g^-1, x=h(y)")
+Output(4,1,"PROB INTEGRAL TRANSFORM")
+Output(5,1," U=F_X(X) => F_U(u)=u")
+Output(6,1," U IS UNIFORM(0,1)")
+Output(7,1,"CHECKER NEXT - type f_X,")
+Output(8,1," support, and h(y) using")
+Output(9,1," X in place of y")
+Output(10,1,"ex Y=-ln X => h=e^(-X)")
+Pause
+Lbl E0
+ClrHome
+Disp "f_X TYPED IN X","(X,T,θ,n KEY)"
+Input "f_X(X)=",Str1
+Input "LOW END?",A
+Input "HIGH END?",B
+If B≤A:Goto EE
+ClrHome
+Disp "INVERSE h(y)=g^-1","TYPE X IN PLACE OF y"
+Input "h(X)=",Str2
+Str1→Str7
+Str2→Str6
+Menu("g IS…","INCREASING",E1,"DECREASING",E2)
+Lbl E1
+1→G
+Goto E3
+Lbl E2
+2→G
+Lbl E3
+ClrHome
+Disp "y VALUE TO CHECK"
+Input "y?",Z
+Z→X
+expr(Str6)→C
+min(max(C,A),B)→D
+0→E
+If D>A
+fnInt(expr(Str7),X,A,D)→E
+E→F
+If G=2
+1-E→F
+0→K
+If C>A and C<B
+C→X
+expr(Str7)*abs(nDeriv(expr(Str6),X,Z))→K
+ClrHome
+"y="+toString(Z)→Str1
+If G=1
+Str1+"  (g INCREASING)"→Str1
+If G=2
+Str1+"  (g DECREASING)"→Str1
+Output(1,1,sub(Str1,1,min(26,length(Str1))))
+C→W
+prgmSTAFMT
+"x=h(y)="+Str9→Str1
+Output(2,1,sub(Str1,1,min(26,length(Str1))))
+Output(3,1,"F_X(x)=∫f_X FROM LO TO x")
+E→W
+prgmSTAFMT
+" ="+Str9→Str1
+If Str9≠Str8
+Str1+" ="+Str8→Str1
+Output(4,1,Str1)
+If G=1
+Output(5,1,"F_Y(y)=F_X(x)")
+If G=2
+Output(5,1,"F_Y(y)=1-F_X(x)")
+F→W
+prgmSTAFMT
+" ="+Str9→Str1
+If Str9≠Str8
+Str1+" ="+Str8→Str1
+Output(6,1,Str1)
+Output(7,1,"f_Y(y)=f_X(x)*|h'(y)|")
+K→W
+prgmSTAFMT
+" ="+Str9→Str1
+If Str9≠Str8
+Str1+" ="+Str8→Str1
+Output(8,1,Str1)
+If C≤A or C≥B
+Output(9,1,"x NOT IN SUPPORT => f_Y=0")
+Pause
+Menu("AGAIN?","ANOTHER y",E3,"BACK",M)
+Lbl EE
+ClrHome
+Output(4,1,"NEED LOW END < HIGH END")
+Pause
+Goto E0
+// =====================================================================
+// J. JOINT X,Y -- Freund Ch3 §§5-7
+// Discrete: ʟRVJ=x values, ʟRVK=y values, ʟRVM=joint p in x-major order,
+//           ʟRVN=pX, ʟRVO=pY.  M=#x, N=#y, H=1 p or 2 weights.
+// Continuous: Str7=f(X,Y), A..B x support, C..D y support, H=scale.
+// =====================================================================
+Lbl J
+ClrHome
+Output(1,1,"JOINT X,Y  FREUND CH3")
+Output(2,1,"p(x,y)=P(X=x,Y=y)")
+Output(3,1,"pX(x)=Σy p(x,y)")
+Output(4,1,"pY(y)=Σx p(x,y)")
+Output(5,1,"p(x|y)=p(x,y)/pY(y)")
+Output(6,1,"fX(x)=∫f(x,y)dy")
+Output(7,1,"f(x|y)=f(x,y)/fY(y)")
+Output(8,1,"F(a,b)=P(X≤a,Y≤b)")
+Output(9,1,"CHOSE PMF OR PDF NEXT")
+Pause
+Menu("JOINT TYPE","DISCRETE PMF",J1,"CONTINUOUS PDF",J2,"BACK",M)
+// ----- DISCRETE JOINT PMF -----
+Lbl J1
+ClrHome
+Output(1,1,"DISCRETE JOINT PMF")
+Output(2,1,"UP TO 4 X AND 4 Y VALUES")
+Output(3,1,"ENTER VALUES, THEN CELLS")
+Output(4,1,"CELL (i,j)=P(X=xi,Y=yj)")
+Output(5,1,"COUNTS ARE NORMALIZED")
+Output(6,1,"ZERO CELLS ARE ALLOWED")
+Output(8,1,"x IS FIRST, y IS SECOND")
+Output(10,1,"ENTER=INPUT")
+Pause
+Lbl J3
+ClrHome
+Input "X COUNT (1-4)?",M
+Input "Y COUNT (1-4)?",N
+If M<1 or M>4 or fPart(M) or N<1 or N>4 or fPart(N):Goto JE
+Menu("CELL INPUT","PROBABILITIES",J4,"COUNTS/WEIGHTS",J5,"BACK",M)
+Lbl J4
+1→H
+Goto J6
+Lbl J5
+2→H
+Lbl J6
+DelVar ʟRVJ
+DelVar ʟRVK
+DelVar ʟRVM
+DelVar ʟRVN
+DelVar ʟRVO
+M→dim(ʟRVJ)
+N→dim(ʟRVK)
+M*N→dim(ʟRVM)
+M→dim(ʟRVN)
+N→dim(ʟRVO)
+For(I,1,M)
+ClrHome
+Disp "X VALUE "+toString(I)+" OF "+toString(M)
+Input "x?",X
+X→ʟRVJ(I)
+End
+For(J,1,N)
+ClrHome
+Disp "Y VALUE "+toString(J)+" OF "+toString(N)
+Input "y?",Y
+Y→ʟRVK(J)
+End
+For(I,1,M)
+For(J,1,N)
+ClrHome
+Disp "CELL X#"+toString(I)+" Y#"+toString(J)
+If H=1
+Input "p(x,y)?",P
+If H=2
+Input "WEIGHT?",P
+P→ʟRVM((I-1)*N+J)
+End
+End
+0→K
+For(I,1,M)
+For(J,I+1,M)
+If abs(ʟRVJ(I)-ʟRVJ(J))<1ᴇ⁻9
+1→K
+End
+End
+For(I,1,N)
+For(J,I+1,N)
+If abs(ʟRVK(I)-ʟRVK(J))<1ᴇ⁻9
+1→K
+End
+End
+If K:Goto JG
+If min(ʟRVM)<0 or sum(ʟRVM)≤0:Goto JH
+sum(ʟRVM)→E
+If H=1 and abs(E-1)>1ᴇ⁻6:Goto JD
+If H=2
+ʟRVM/E→ʟRVM
+For(I,1,M)
+0→ʟRVN(I)
+End
+For(J,1,N)
+0→ʟRVO(J)
+End
+For(I,1,M)
+For(J,1,N)
+ʟRVM((I-1)*N+J)+ʟRVN(I)→ʟRVN(I)
+ʟRVM((I-1)*N+J)+ʟRVO(J)→ʟRVO(J)
+End
+End
+If H=2
+Then
+ClrHome
+E→W
+prgmSTAFMT
+Output(1,1,"TOTAL WEIGHT="+Str9)
+Output(3,1,"p(x,y)=WEIGHT/TOTAL")
+Output(10,1,"ENTER=JOINT TABLE")
+Pause
+End
+Lbl JT
+ClrHome
+Output(1,1,"(x,y)   p(x,y)")
+2→O
+For(I,1,M*N)
+int((I-1)/N)+1→L
+I-(L-1)*N→K
+ʟRVM(I)→W
+prgmSTAFMT
+"("+toString(ʟRVJ(L))+","+toString(ʟRVK(K))+")="+Str9→Str1
+Output(O,1,sub(Str1,1,min(26,length(Str1))))
+O+1→O
+If O=10 and I<M*N
+Then
+Output(10,1,"ENTER=MORE CELLS")
+Pause
+ClrHome
+Output(1,1,"(x,y)   p(x,y)")
+2→O
+End
+End
+Output(10,1,"ENTER=MARGINALS")
+Pause
+Lbl JM
+ClrHome
+Output(1,1,"X MARGINAL pX(x)")
+For(I,1,M)
+ʟRVN(I)→W
+prgmSTAFMT
+"pX("+toString(ʟRVJ(I))+")="+Str9→Str1
+Output(I+1,1,sub(Str1,1,min(26,length(Str1))))
+End
+Output(8,1,"pX(x)=Σy p(x,y)")
+Output(10,1,"ENTER=Y MARGINAL")
+Pause
+ClrHome
+Output(1,1,"Y MARGINAL pY(y)")
+For(J,1,N)
+ʟRVO(J)→W
+prgmSTAFMT
+"pY("+toString(ʟRVK(J))+")="+Str9→Str1
+Output(J+1,1,sub(Str1,1,min(26,length(Str1))))
+End
+0→K
+0→L
+For(I,1,M)
+For(J,1,N)
+If K=0 and abs(ʟRVM((I-1)*N+J)-ʟRVN(I)*ʟRVO(J))>1ᴇ⁻8
+Then
+I→K
+J→L
+End
+End
+End
+If K=0
+Output(6,1,"X,Y INDEPENDENT")
+If K>0
+Output(6,1,"X,Y DEPENDENT")
+Output(7,1,"CHECK p(x,y)=pX(x)pY(y)")
+If K>0
+Output(8,1,"FAIL AT X#"+toString(K)+" Y#"+toString(L))
+Output(10,1,"ENTER=QUERIES")
+Pause
+Lbl JQ
+Menu("JOINT PMF QUERY","JOINT CELL",JC,"F(x,y)",JF,"RECTANGLE",JR,"COND DISTRIB",JY,"EVENT TEST",JV,"DONE",M)
+Lbl JC
+ClrHome
+Input "X INDEX?",I
+Input "Y INDEX?",J
+If I<1 or I>M or fPart(I) or J<1 or J>N or fPart(J):Goto JW
+ClrHome
+Output(1,1,"p(x,y)=P(X=x,Y=y)")
+ʟRVM((I-1)*N+J)→W
+prgmSTAFMT
+Output(2,1,"x="+toString(ʟRVJ(I))+" y="+toString(ʟRVK(J)))
+Output(3,1,"p(x,y)="+Str9)
+ʟRVN(I)→W
+prgmSTAFMT
+Output(5,1,"pX(x)="+Str9)
+ʟRVO(J)→W
+prgmSTAFMT
+Output(6,1,"pY(y)="+Str9)
+Pause
+Goto JQ
+Lbl JF
+ClrHome
+Input "x THRESHOLD?",L
+Input "y THRESHOLD?",P
+0→E
+For(I,1,M)
+For(J,1,N)
+If ʟRVJ(I)≤L and ʟRVK(J)≤P
+ʟRVM((I-1)*N+J)+E→E
+End
+End
+ClrHome
+Output(1,1,"F(x,y)=P(X≤x,Y≤y)")
+Output(2,1,"SUM CELLS x_i≤x,y_j≤y")
+E→W
+prgmSTAFMT
+Output(4,1,"F("+toString(L)+","+toString(P)+")="+Str9)
+If Str9≠Str8
+Output(5,1,"="+Str8)
+Pause
+Goto JQ
+Lbl JR
+ClrHome
+Disp "a<X≤b, c<Y≤d"
+Input "a?",A
+Input "b?",B
+Input "c?",C
+Input "d?",D
+If A>B or C>D:Goto JZ
+0→E
+For(I,1,M)
+For(J,1,N)
+If ʟRVJ(I)>A and ʟRVJ(I)≤B and ʟRVK(J)>C and ʟRVK(J)≤D
+ʟRVM((I-1)*N+J)+E→E
+End
+End
+ClrHome
+Output(1,1,"P(a<X≤b,c<Y≤d)")
+Output(2,1,"=F(b,d)-F(a,d)")
+Output(3,1," -F(b,c)+F(a,c)")
+E→W
+prgmSTAFMT
+Output(5,1,"="+Str9)
+If Str9≠Str8
+Output(6,1,"="+Str8)
+Pause
+Goto JQ
+Lbl JY
+Menu("CONDITIONAL PMF","X GIVEN Y",JX,"Y GIVEN X",JK,"BACK",JQ)
+Lbl JX
+ClrHome
+Input "Y INDEX?",J
+If J<1 or J>N or fPart(J):Goto JW
+ClrHome
+If ʟRVO(J)≤0:Goto JU
+Output(1,1,"p(x|y)=p(x,y)/pY(y)")
+Output(2,1,"Y="+toString(ʟRVK(J)))
+For(I,1,M)
+ʟRVM((I-1)*N+J)/ʟRVO(J)→W
+prgmSTAFMT
+"X="+toString(ʟRVJ(I))+" ="+Str9→Str1
+Output(I+3,1,sub(Str1,1,min(26,length(Str1))))
+End
+Pause
+Goto JY
+Lbl JK
+ClrHome
+Input "X INDEX?",I
+If I<1 or I>M or fPart(I):Goto JW
+ClrHome
+If ʟRVN(I)≤0:Goto JU
+Output(1,1,"p(y|x)=p(x,y)/pX(x)")
+Output(2,1,"X="+toString(ʟRVJ(I)))
+For(J,1,N)
+ʟRVM((I-1)*N+J)/ʟRVN(I)→W
+prgmSTAFMT
+"Y="+toString(ʟRVK(J))+" ="+Str9→Str1
+Output(J+3,1,sub(Str1,1,min(26,length(Str1))))
+End
+Pause
+Goto JY
+Lbl JV
+ClrHome
+Output(1,1,"EVENT TEST - TYPE X,Y")
+Output(2,1,"E.G. X>Y OR X+Y≤2")
+Output(3,1,"TRUE CELL COUNTS IN SUM")
+Input "EVENT (X,Y)?",Str5
+0→E
+For(I,1,M)
+For(J,1,N)
+ʟRVJ(I)→X
+ʟRVK(J)→Y
+If expr(Str5)
+ʟRVM((I-1)*N+J)+E→E
+End
+End
+ClrHome
+Output(1,1,"P(EVENT)=SUM MATCHES")
+Output(2,1,sub(Str5,1,min(26,length(Str5))))
+E→W
+prgmSTAFMT
+Output(4,1,"="+Str9)
+If Str9≠Str8
+Output(5,1,"="+Str8)
+Pause
+Goto JQ
+Lbl JU
+Output(4,1,"CONDITION HAS p=0")
+Output(5,1,"CONDITIONAL UNDEFINED")
+Pause
+Goto JY
+Lbl JW
+ClrHome
+Output(4,1,"INDEX OUT OF RANGE")
+Output(5,1,"USE 1..X COUNT / Y COUNT")
+Pause
+Goto JQ
+Lbl JZ
+ClrHome
+Output(4,1,"NEED a≤b AND c≤d")
+Pause
+Goto JQ
+Lbl JE
+ClrHome
+Output(4,1,"COUNTS MUST BE WHOLE")
+Output(5,1,"NUMBERS FROM 1 TO 4")
+Pause
+Goto J3
+Lbl JG
+ClrHome
+Output(4,1,"DUPLICATE x OR y VALUE")
+Output(5,1,"VALUES MUST BE DISTINCT")
+Pause
+Goto J3
+Lbl JH
+ClrHome
+Output(4,1,"CELLS MUST BE ≥0")
+Output(5,1,"AND TOTAL MUST BE >0")
+Pause
+Goto J3
+Lbl JD
+ClrHome
+E→W
+prgmSTAFMT
+Output(3,1,"Σp="+Str9+"  NOT 1")
+Output(5,1,"ENTER VALID p OR USE")
+Output(6,1,"COUNTS/WEIGHTS MODE")
+Pause
+Goto J3
+// ----- CONTINUOUS JOINT PDF (numeric, rectangular support) -----
+Lbl J2
+ClrHome
+Output(1,1,"JOINT PDF (NUMERIC)")
+Output(2,1,"TYPE f(X,Y), RECT SUPPORT")
+Output(3,1,"AREA=∫∫f dx dy=1")
+Output(4,1,"TRIANGLE? MULTIPLY BY")
+Output(5,1,"(X+Y<1), E.G. 24XY*")
+Output(6,1,"(X+Y<1), RECT 0..1²")
+Output(7,1,"VARIABLES X AND Y KEYS")
+Output(8,1,"fnInt MAY TAKE TIME")
+Output(9,1,"RESULTS ARE NUMERIC")
+Output(10,1,"ENTER=INPUT")
+Pause
+Lbl J0
+ClrHome
+Input "f(X,Y)=",Str7
+Input "X LOW?",A
+Input "X HIGH?",B
+Input "Y LOW?",C
+Input "Y HIGH?",D
+If B≤A or D≤C:Goto J9
+ClrHome
+Disp "UNKNOWN FACTOR c?","ENTER f WITHOUT c","1=YES 0=NO"
+Input "c UNKNOWN?",G
+(G=1)→G
+fnInt(fnInt(expr(Str7),X,A,B),Y,C,D)→E
+If E≤1ᴇ⁻12:Goto J8
+1→H
+If G=1
+1/E→H
+0→K
+For(I,0,4)
+A+(I+.5)*(B-A)/5→X
+For(J,0,4)
+C+(J+.5)*(D-C)/5→Y
+If H*expr(Str7)<⁻1ᴇ⁻9
+1→K
+End
+End
+ClrHome
+Output(1,1,"JOINT PDF CHECK")
+E→W
+prgmSTAFMT
+Output(2,1,"AREA=∫∫f="+Str9)
+If Str9≠Str8
+Output(3,1,"="+Str8)
+If G=1
+Then
+H→W
+prgmSTAFMT
+Output(4,1,"c=1/AREA="+Str9)
+Output(5,1,"PROBS USE c*f")
+End
+If G=0 and abs(E-1)>1ᴇ⁻4
+Output(6,1,"WARNING AREA≠1")
+If K
+Output(7,1,"WARNING f<0 SAMPLED")
+Output(8,1,"CHECK f≥0 ON SUPPORT")
+Output(10,1,"ENTER=QUERIES")
+Pause
+Lbl JP
+Menu("JOINT PDF QUERY","P(RECTANGLE)",JA,"F(x,y)",JB,"MARGINAL f",JN,"COND DENSITY",JO,"EVENT TEST",JS,"DONE",M)
+Lbl JA
+ClrHome
+Disp "P(a<X<b,c<Y<d)"
+Input "a?",L
+Input "b?",P
+Input "c?",θ
+Input "d?",Z
+If L>P or θ>Z:Goto J7
+max(A,L)→L
+min(B,P)→P
+max(C,θ)→θ
+min(D,Z)→Z
+0→W
+If L<P and θ<Z
+H*fnInt(fnInt(expr(Str7),X,L,P),Y,θ,Z)→W
+ClrHome
+Output(1,1,"P(RECT)=c*∫∫ f")
+Output(2,1,"X "+toString(L)+" TO "+toString(P))
+Output(3,1,"Y "+toString(θ)+" TO "+toString(Z))
+prgmSTAFMT
+Output(5,1,"="+Str9)
+If Str9≠Str8
+Output(6,1,"="+Str8)
+Pause
+Goto JP
+Lbl JB
+ClrHome
+Disp "F(x,y)=P(X≤x,Y≤y)"
+Input "x?",L
+Input "y?",P
+min(B,L)→L
+min(D,P)→P
+0→W
+If L>A and P>C
+H*fnInt(fnInt(expr(Str7),X,A,L),Y,C,P)→W
+ClrHome
+Output(1,1,"F(x,y)=∫∫ f TO x,y")
+prgmSTAFMT
+Output(3,1,"="+Str9)
+If Str9≠Str8
+Output(4,1,"="+Str8)
+Pause
+Goto JP
+Lbl JN
+Menu("MARGINAL DENSITY","fX(x)",JI,"fY(y)",JL,"BACK",JP)
+Lbl JI
+ClrHome
+Input "x?",Z
+0→W
+If Z>A and Z<B
+Then
+Z→X
+H*fnInt(expr(Str7),Y,C,D)→W
+End
+ClrHome
+Output(1,1,"fX(x)=∫f(x,y)dy")
+prgmSTAFMT
+Output(3,1,"fX("+toString(Z)+")="+Str9)
+If Str9≠Str8
+Output(4,1,"="+Str8)
+Pause
+Goto JN
+Lbl JL
+ClrHome
+Input "y?",Z
+0→W
+If Z>C and Z<D
+Then
+Z→Y
+H*fnInt(expr(Str7),X,A,B)→W
+End
+ClrHome
+Output(1,1,"fY(y)=∫f(x,y)dx")
+prgmSTAFMT
+Output(3,1,"fY("+toString(Z)+")="+Str9)
+If Str9≠Str8
+Output(4,1,"="+Str8)
+Pause
+Goto JN
+Lbl JO
+ClrHome
+Disp "f(X|Y)=f/fY","f(Y|X)=f/fX"
+Input "x?",L
+Input "y?",P
+0→F
+0→I
+0→J
+If L>A and L<B and P>C and P<D
+Then
+L→X
+P→Y
+H*expr(Str7)→F
+End
+If L>A and L<B
+Then
+L→X
+H*fnInt(expr(Str7),Y,C,D)→I
+End
+If P>C and P<D
+Then
+P→Y
+H*fnInt(expr(Str7),X,A,B)→J
+End
+ClrHome
+Output(1,1,"COND DENSITY AT (x,y)")
+F→W
+prgmSTAFMT
+Output(2,1,"f(x,y)="+Str9)
+I→W
+prgmSTAFMT
+Output(3,1,"fX(x)="+Str9)
+J→W
+prgmSTAFMT
+Output(4,1,"fY(y)="+Str9)
+If J>1ᴇ⁻12
+Then
+F/J→W
+prgmSTAFMT
+Output(6,1,"f(x|y)="+Str9)
+Else
+Output(6,1,"f(x|y) UNDEFINED")
+End
+If I>1ᴇ⁻12
+Then
+F/I→W
+prgmSTAFMT
+Output(7,1,"f(y|x)="+Str9)
+Else
+Output(7,1,"f(y|x) UNDEFINED")
+End
+Output(9,1,"DENSITY ≠ POINT PROB")
+Pause
+Goto JP
+Lbl JS
+ClrHome
+Output(1,1,"EVENT TEST - TYPE X,Y")
+Output(2,1,"E.G. X+Y<1/2")
+Output(3,1,"1 IF TRUE, 0 IF FALSE")
+Input "EVENT (X,Y)?",Str5
+H*fnInt(fnInt(expr(Str7)*expr(Str5),X,A,B),Y,C,D)→W
+ClrHome
+Output(1,1,"P(EVENT)=∫∫1_EVENT*f")
+Output(2,1,sub(Str5,1,min(26,length(Str5))))
+prgmSTAFMT
+Output(4,1,"="+Str9)
+If Str9≠Str8
+Output(5,1,"="+Str8)
+Pause
+Goto JP
+Lbl J7
+ClrHome
+Output(4,1,"NEED a≤b AND c≤d")
+Pause
+Goto JP
+Lbl J8
+ClrHome
+Output(4,1,"AREA MUST BE POSITIVE")
+Output(5,1,"CHECK f AND SUPPORT")
+Pause
+Goto J0
+Lbl J9
+ClrHome
+Output(4,1,"NEED X LOW < X HIGH")
+Output(5,1,"AND Y LOW < Y HIGH")
+Pause
+Goto J0
+// =====================================================================
+Lbl Z
+DelVar ʟRVX
+DelVar ʟRVP
+DelVar ʟRVF
+DelVar ʟRVL
+DelVar ʟRVH
+DelVar ʟRVA
+DelVar ʟRVB
+DelVar ʟRVC
+DelVar ʟRVD
+DelVar ʟRVE
+DelVar ʟRVT
+DelVar ʟRVJ
+DelVar ʟRVK
+DelVar ʟRVM
+DelVar ʟRVN
+DelVar ʟRVO
+ClrHome
+Return

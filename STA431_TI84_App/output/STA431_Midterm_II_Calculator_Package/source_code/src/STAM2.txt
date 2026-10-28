@@ -1,0 +1,35 @@
+// STAM2 - separate Midterm II suite, leaves earlier STA431 programs unchanged
+0→Z
+Lbl M
+Menu("STA431 MIDTERM II","DISCRETE + JOINT",D,"DENSITY + INTEGRAL",C,"MGF TOOLS",G,"LINEAR COMBOS",V,"ENCYCLOPEDIA",E,"HOMEWORK MAP",H,"QUIT",Q)
+Lbl D
+0→Z
+prgmM2DISC
+Goto M
+Lbl C
+0→Z
+prgmM2CONT
+Goto M
+Lbl G
+0→Z
+prgmM2MGF
+Goto M
+Lbl V
+0→Z
+prgmM2COV
+Goto M
+Lbl E
+prgmM2ENC
+Goto M
+Lbl H
+Menu("HOMEWORK ASSISTANT","READ WALKTHROUGH",H1,"LOAD + SOLVE",H2,"BACK",M)
+Lbl H1
+prgmM2HW
+Goto H
+Lbl H2
+prgmM2RUN
+Goto H
+Lbl Q
+ClrHome
+Disp "MIDTERM II DONE"
+Return

@@ -1,0 +1,193 @@
+// One/two combinations of up to 3 variables. Input covariance matrix must be PSD.
+// Only private lists M2MU,M2VR,M2CV,M2CA,M2CB,M2CR are used.
+// All results are saved before M2FMT (which clobbers Q..V).
+If Z=15 or Z=16:Goto CP
+0→Z
+Lbl M
+Menu("LINEAR COMBINATIONS","ONE COMBINATION",A,"TWO COMBINATIONS",B,"BACK",Z)
+Lbl A
+1→M
+Goto C
+Lbl B
+2→M
+Lbl C
+Menu("GIVEN MOMENTS","VAR/COV ONLY",C1,"MEAN+VAR/COV",C2,"BACK",M)
+Lbl C1
+0→E
+Goto N1
+Lbl C2
+1→E
+Lbl N1
+ClrHome
+Disp "VARIABLES X1 TO Xn"
+Input "n (1-3)?",N
+If N<1 or N>3 or fPart(N):Goto NE
+Lbl D
+{0,0,0}→ʟM2MU
+{0,0,0}→ʟM2VR
+{0,0,0,0,0,0,0,0,0}→ʟM2CV
+{0,0,0}→ʟM2CA
+{0,0,0}→ʟM2CB
+0→D
+For(I,1,N)
+ClrHome
+Disp "MOMENTS OF X"+toString(I)
+0→T
+If E=1
+Input "MEAN?",T
+Input "VARIANCE?",V
+T→ʟM2MU(I)
+V→ʟM2VR(I)
+V→ʟM2CV(3*(I-1)+I)
+If V<0
+1→D
+End
+If D=1:Goto VE
+For(I,1,N-1)
+For(J,I+1,N)
+ClrHome
+Disp "COV(X"+toString(I)+",X"+toString(J)+")"
+Input "COVARIANCE?",C
+C→ʟM2CV(3*(I-1)+J)
+C→ʟM2CV(3*(J-1)+I)
+If abs(C)>√(ʟM2VR(I)*ʟM2VR(J))+1ᴇ⁻9
+1→D
+End
+End
+// The 3x3 determinant complements nonnegative diagonal and 2x2 minors.
+ʟM2VR(1)*ʟM2VR(2)*ʟM2VR(3)+2*ʟM2CV(2)*ʟM2CV(3)*ʟM2CV(6)-ʟM2VR(1)*ʟM2CV(6)²-ʟM2VR(2)*ʟM2CV(3)²-ʟM2VR(3)*ʟM2CV(2)²→T
+If T<⁻1ᴇ⁻9
+1→D
+If D=1:Goto CE
+ClrHome
+Disp "U=c+SUM ai*Xi"
+If M=2
+Disp "V=d+SUM bi*Xi"
+Pause
+For(I,1,N)
+ClrHome
+Disp "COEFF OF X"+toString(I)
+Input "a FOR U?",A
+A→ʟM2CA(I)
+If M=2
+Then
+Input "b FOR V?",B
+B→ʟM2CB(I)
+End
+End
+ClrHome
+Input "OFFSET c FOR U?",C
+0→D
+If M=2
+Input "OFFSET d FOR V?",D
+Lbl CP
+0→Z
+{0,0,0,0,0,0,0}→ʟM2CR
+C+sum(ʟM2CA*ʟM2MU)→ʟM2CR(1)
+D+sum(ʟM2CB*ʟM2MU)→ʟM2CR(3)
+For(I,1,N)
+For(J,1,N)
+ʟM2CR(2)+ʟM2CA(I)*ʟM2CA(J)*ʟM2CV(3*(I-1)+J)→ʟM2CR(2)
+ʟM2CR(4)+ʟM2CB(I)*ʟM2CB(J)*ʟM2CV(3*(I-1)+J)→ʟM2CR(4)
+ʟM2CR(5)+ʟM2CA(I)*ʟM2CB(J)*ʟM2CV(3*(I-1)+J)→ʟM2CR(5)
+End
+End
+If ʟM2CR(2)<0 and ʟM2CR(2)>⁻1ᴇ⁻8
+0→ʟM2CR(2)
+If ʟM2CR(4)<0 and ʟM2CR(4)>⁻1ᴇ⁻8
+0→ʟM2CR(4)
+If ʟM2CR(2)<0 or ʟM2CR(4)<0:Goto CE
+If ʟM2CR(2)>0 and ʟM2CR(4)>0
+Then
+ʟM2CR(5)/√(ʟM2CR(2)*ʟM2CR(4))→ʟM2CR(6)
+1→ʟM2CR(7)
+End
+ClrHome
+Output(1,1,"COMBINATION U")
+Output(2,1,"E(U)")
+If E=0
+Output(3,1,"MEAN NOT PROVIDED")
+If E=1
+Then
+ʟM2CR(1)→W
+prgmM2FMT
+Output(3,1,Str9)
+End
+Output(4,1,"VAR(U)")
+ʟM2CR(2)→W
+prgmM2FMT
+Output(5,1,Str9)
+Output(6,1,"SD(U)")
+√(ʟM2CR(2))→W
+prgmM2FMT
+Output(7,1,Str9)
+Output(9,1,"OFFSETS HAVE NO VARIANCE")
+Output(10,1,"ENTER=CONTINUE")
+Pause
+If M=2
+Then
+ClrHome
+Output(1,1,"COMBINATION V")
+Output(2,1,"E(V)")
+If E=0
+Output(3,1,"MEAN NOT PROVIDED")
+If E=1
+Then
+ʟM2CR(3)→W
+prgmM2FMT
+Output(3,1,Str9)
+End
+Output(4,1,"VAR(V)")
+ʟM2CR(4)→W
+prgmM2FMT
+Output(5,1,Str9)
+Output(6,1,"SD(V)")
+√(ʟM2CR(4))→W
+prgmM2FMT
+Output(7,1,Str9)
+Output(10,1,"ENTER=COVARIANCE")
+Pause
+ClrHome
+Output(1,1,"TWO COMBINATIONS")
+Output(2,1,"COV(U,V)")
+ʟM2CR(5)→W
+prgmM2FMT
+Output(3,1,Str9)
+Output(5,1,"CORR(U,V)")
+If ʟM2CR(7)=0
+Output(6,1,"UNDEFINED ZERO VARIANCE")
+If ʟM2CR(7)=1
+Then
+ʟM2CR(6)→W
+prgmM2FMT
+Output(6,1,Str8)
+End
+Output(8,1,"COV=0 DOES NOT PROVE")
+Output(9,1,"INDEPENDENCE IN GENERAL")
+Output(10,1,"ENTER=MENU")
+Pause
+End
+Goto M
+Lbl NE
+ClrHome
+Disp "n MUST BE INTEGER 1 TO 3"
+Pause
+Goto N1
+Lbl VE
+ClrHome
+Disp "VARIANCE MUST BE ≥0","REENTER MOMENTS"
+Pause
+Goto D
+Lbl CE
+ClrHome
+Disp "INVALID COVARIANCE DATA","CHECK VAR/COV VALUES","MATRIX MUST BE PSD"
+Pause
+Goto D
+Lbl Z
+DelVar ʟM2MU
+DelVar ʟM2VR
+DelVar ʟM2CV
+DelVar ʟM2CA
+DelVar ʟM2CB
+DelVar ʟM2CR
+Return

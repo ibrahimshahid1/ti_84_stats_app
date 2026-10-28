@@ -1,0 +1,83 @@
+\section{TI-84 Plus CE companion: numerical checks that fit these problems}
+\label{sec:calculator}
+The commands below use the calculator's built-in functions. No downloaded program is required. The arithmetic and integral results are mathematical checks of the examples; the commands have been checked against Texas Instruments documentation, rather than tested on your physical calculator. Use the symbolic setup in your written solution, because a decimal alone does not show the support, event, conditioning step, or MGF convergence condition.
+
+\subsection{Entering commands and lists}
+Press \texttt{[2nd][0]} to open \texttt{CATALOG} and select a command token. This avoids relying on a menu position that may differ across operating-system versions. The \texttt{MATH} menu contains \texttt{nDeriv(} and \texttt{fnInt(}; \texttt{[2nd][STAT]} opens \texttt{LIST}, with \texttt{seq(} under \texttt{OPS} and \texttt{sum(} under \texttt{MATH}. For the comma-separated syntax shown here, select \texttt{MODE: CLASSIC}. In MathPrint, the same calculus operations appear as templates.
+
+Enter data through \texttt{STAT > EDIT}. The notation \texttt{L1}, \texttt{L2}, and \texttt{L3} below means the calculator's list tokens, available with \texttt{[2nd][1]}, \texttt{[2nd][2]}, and \texttt{[2nd][3]}. For example, a PMF with values $1,2,3$ and probabilities $1/6,2/6,3/6$ can be entered as two columns. Each row must pair the correct value with its probability.
+
+\subsection{Discrete expectation, variance, and transformations}
+With values in \texttt{L1} and probabilities in \texttt{L2}, use:
+\begin{verbatim}
+sum(L2)
+sum(L1*L2)
+sum(L1^2*L2)-sum(L1*L2)^2
+\end{verbatim}
+These compute total probability, $\E X$, and $\Var X$. If \texttt{L2} contains unnormalized weights $w_i$, first use $p_i=w_i/\sum_jw_j$; equivalently, divide \emph{each moment sum} by \texttt{sum(L2)}. Do not divide the final variance expression only once.
+
+For HW5 Problem 1, $p(x)=(x^2+x)/40$ for $x=1,2,3,4$. The command
+\begin{verbatim}
+sum(seq(K*(K^2+K)/40,K,1,4))
+\end{verbatim}
+returns $13/4$. Replacing the leading \texttt{K} by \texttt{K\^{}2} returns $\E X^2=227/20$, so $\Var X=63/80$. The general syntax is
+\begin{verbatim}
+sum(seq(expression,variable,first,last))
+\end{verbatim}
+with an optional fifth \texttt{seq(} argument for the increment. For $Y=X^2$, compute $\E X^2$ and $\E X^4$, then subtract $(\E X^2)^2$ to get $\Var Y$.
+
+\subsection{Joint tables and event probabilities}
+Represent the joint PMF as one row for \emph{every allowed pair}: put its $x$ coordinate in \texttt{L1}, its $y$ coordinate in \texttt{L2}, and its joint probability in \texttt{L3}. Repeated coordinates across rows are expected. Then
+\begin{verbatim}
+sum(L1*L3)
+sum(L2*L3)
+sum(L1*L2*L3)
+sum((L1>L2)*L3)
+sum((L1+L2<=3)*L3)
+\end{verbatim}
+compute $\E X$, $\E Y$, $\E[XY]$, $P(X>Y)$, and $P(X+Y\le3)$. The comparison tokens are available under \texttt{[2nd][MATH] > TEST}; their outputs $1$ and $0$ select the desired rows. The printed text \texttt{<=} represents the calculator's single $\le$ token, rather than two separate characters. For conditional probabilities, sum selected joint rows and divide by the total probability of the conditioning rows. This method directly supports HW4 Problem 4 and HW5 Problem 8. It does not replace a written independence justification.
+
+\subsection{Continuous moments and conditional moments}
+The documented Classic-mode syntax is
+\begin{verbatim}
+fnInt(expression,variable,lower,upper)
+\end{verbatim}
+For HW5 Problem 2, use
+\begin{verbatim}
+fnInt(X^2*3/4*(1-X^2),X,-1,1)
+fnInt(X^4*3/4*(1-X^2),X,-1,1)
+\end{verbatim}
+The results are $1/5$ and $3/35$; hence $\E[X^2]=1/5$ and $\Var(X^2)=8/175$. Use the calculator's unary-negative key for negative numbers. The integration variable here is the calculator variable \texttt{X}, entered using \texttt{[X,T,theta,n]} in function mode.
+
+For HW5 Problem 7, first derive on paper
+$f_{X\mid Y}(x\mid1/2)=x+1/2$ for $0<x<1$. Then
+\begin{verbatim}
+fnInt(X*(X+1/2),X,0,1)
+fnInt(X^2*(X+1/2),X,0,1)
+\end{verbatim}
+return $7/12$ and $5/12$. The conditional variance is $5/12-(7/12)^2=11/144$.
+
+For HW4 Problem 5, integrate with respect to $y$ by hand first:
+\[
+\int_x^2\frac{2x+y}{4}\dd y
+=\frac{1+2x-5x^2/4}{2}
+=\frac12+x-\frac58x^2.
+\]
+The remaining numerical check is
+\begin{verbatim}
+fnInt(1/2+X-5*X^2/8,X,0,1)
+\end{verbatim}
+which returns $19/24$. This reduce-first method keeps the bounds visible and avoids relying on nested numerical integration. Always split an integral at a changing boundary before checking it numerically.
+
+\subsection{MGFs and first derivatives}
+After deriving $M_X(t)=3/(3-t)$ for $t<3$, the command
+\begin{verbatim}
+nDeriv(3/(3-X),X,0)
+\end{verbatim}
+checks $M'_X(0)\approx1/3$. The calculator variable \texttt{X} represents the mathematical argument $t$. Texas Instruments documents \texttt{nDeriv(} as a numerical derivative, with Classic syntax \texttt{nDeriv(expression,variable,value)} and an optional step parameter. Differentiate the MGF symbolically by hand for $M''(0)$ and higher moments. Repeated numerical differentiation can amplify error and provides no proof of existence or uniqueness of an MGF.
+
+\subsection{The population-versus-sample trap}
+\texttt{STAT > CALC > 1-Var Stats} accepts a data list and a frequency list. When used to summarize a full finite probability distribution through weights, the relevant variance is the square of the population standard deviation $\sigma_x$, not the square of the sample standard deviation $S_x$. The standalone \texttt{variance(} command is a sample-variance command. Weighted moment sums are the clearest choice for these homework problems, especially when the weights sum to $1$.
+
+\subsection{Official command references}
+Command syntax is grounded in the \href{https://education.ti.com/download/en/ed-tech/0E32ECD55D084B2EAE7632510BC25FC0/4C0D8E4ED84C4182BC94F8375DEC4E0A/TI84_Plus_CE_ReferenceGuide_EN_GB.pdf}{TI-84 Plus CE Reference Guide}: \texttt{nDeriv(}, printed p.~57; \texttt{seq(}, p.~75; \texttt{sum(}, p.~82; and \texttt{1-Var Stats}, p.~87. See also Texas Instruments' support articles \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34694}{34694 (numerical integration)}, \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34918}{34918 (numerical derivatives and lack of symbolic manipulation)}, and \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34473}{34473 (population and sample variance)}. Consulted October 27, 2026.

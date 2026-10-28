@@ -1,0 +1,267 @@
+// MGF templates and numeric-only typed MGF, with affine Z=A*X+B.
+// Private lists M2MR (moments), M2MV (near-zero function values), M2MD (differences).
+// M2FMT clobbers Q..V; save all needed results before each formatting call.
+If Z=13:Goto EP
+If Z=14:Goto QP
+0→Z
+Goto M
+Lbl EP
+0→Z
+1→G
+"L/(L-X)"→Str1
+Goto AM
+Lbl QP
+0→Z
+2→G
+"𝑒^(C*X+D*X²)"→Str1
+Goto AM
+Lbl M
+Menu("MOMENT GENERATING FN","EXPONENTIAL RATE",E,"QUADRATIC LOG MGF",Q,"TYPE MGF NUMERIC",G,"BACK",Z)
+Lbl E
+1→G
+ClrHome
+Disp "X RATE L EXPONENTIAL","Mx(t)=L/(L-t), t<L"
+Input "RATE L>0?",L
+If L≤0:Goto LE
+"L/(L-X)"→Str1
+Goto A
+Lbl Q
+2→G
+ClrHome
+Disp "Mx(t)=e^(C*t+D*t²)","C=MEAN; D=VAR/2"
+Input "C?",C
+Input "D≥0?",D
+If D<0:Goto DE
+"𝑒^(C*X+D*X²)"→Str1
+Goto A
+Lbl G
+3→G
+ClrHome
+Output(1,1,"TYPE M(X); X MEANS t")
+Output(2,1,"USE CALCULATOR TOKENS")
+Output(3,1,"EXAMPLE 3/(3-X)")
+Output(4,1,"NUMERICAL APPROX ONLY")
+Output(6,1,"MUST BE FINITE NEAR 0")
+Output(7,1,"DOMAIN NOT PROVED HERE")
+Output(10,1,"ENTER=INPUT")
+Pause
+Input "M(X)?",Str1
+Lbl A
+ClrHome
+Disp "TRANSFORM Z=aX+b","USE a=1,b=0 FOR X"
+Input "SCALE a?",A
+Input "SHIFT b?",B
+Lbl AM
+{0,0,0,0,0,0}→ʟM2MR
+If G=1
+Then
+1/L→ʟM2MR(1)
+2/L²→ʟM2MR(2)
+1/L²→ʟM2MR(3)
+End
+If G=2
+Then
+C→ʟM2MR(1)
+C²+2*D→ʟM2MR(2)
+2*D→ʟM2MR(3)
+End
+If G≠3:Goto R
+// Evaluate original MGF at 0,+.01,-.01,+.005,-.005.
+{0,0,0,0,0}→ʟM2MV
+{0,0,0,0,0}→ʟM2MD
+0→X
+expr(Str1)→ʟM2MV(1)
+If abs(ʟM2MV(1)-1)>1ᴇ⁻7:Goto ME
+.01→X
+expr(Str1)→ʟM2MV(2)
+⁻.01→X
+expr(Str1)→ʟM2MV(3)
+.005→X
+expr(Str1)→ʟM2MV(4)
+⁻.005→X
+expr(Str1)→ʟM2MV(5)
+If min(ʟM2MV)≤0:Goto PE
+(ʟM2MV(2)-ʟM2MV(3))/.02→ʟM2MD(1)
+(ʟM2MV(2)+ʟM2MV(3)-2*ʟM2MV(1))/.0001→ʟM2MD(2)
+(ʟM2MV(4)-ʟM2MV(5))/.01→ʟM2MD(3)
+(ʟM2MV(4)+ʟM2MV(5)-2*ʟM2MV(1))/.000025→ʟM2MD(4)
+0→ʟM2MD(5)
+If abs(ʟM2MD(3)-ʟM2MD(1))>.001*(1+abs(ʟM2MD(3))) or abs(ʟM2MD(4)-ʟM2MD(2))>.001*(1+abs(ʟM2MD(4)))
+1→ʟM2MD(5)
+ʟM2MD(3)→ʟM2MR(1)
+ʟM2MD(4)→ʟM2MR(2)
+ʟM2MR(2)-ʟM2MR(1)²→ʟM2MR(3)
+If ʟM2MR(3)<⁻1ᴇ⁻7:Goto VE
+If ʟM2MR(3)<0
+0→ʟM2MR(3)
+ClrHome
+Output(1,1,"NUMERIC TWO-STEP CHECK")
+Output(2,1,"MEAN h=.01 / h=.005")
+Output(3,1,toString(round(ʟM2MD(1),8)))
+Output(4,1,toString(round(ʟM2MD(3),8)))
+Output(5,1,"E(X²) h=.01 / h=.005")
+Output(6,1,toString(round(ʟM2MD(2),8)))
+Output(7,1,toString(round(ʟM2MD(4),8)))
+If ʟM2MD(5)=0
+Output(9,1,"AGREE AT .1% SCALE TEST")
+If ʟM2MD(5)=1
+Output(9,1,"WARNING STEP-SIZE CHANGE")
+Output(10,1,"ENTER=APPROX RESULTS")
+Pause
+Lbl R
+A*ʟM2MR(1)+B→ʟM2MR(4)
+A²*ʟM2MR(3)→ʟM2MR(6)
+ʟM2MR(6)+ʟM2MR(4)²→ʟM2MR(5)
+ClrHome
+If G≠3
+Output(1,1,"ORIGINAL X MOMENTS")
+If G=3
+Output(1,1,"APPROX X MOMENTS")
+Output(2,1,"E(X)")
+ʟM2MR(1)→W
+prgmM2FMT
+If G≠3
+Output(3,1,Str9)
+If G=3
+Output(3,1,Str8)
+Output(4,1,"E(X²)")
+ʟM2MR(2)→W
+prgmM2FMT
+If G≠3
+Output(5,1,Str9)
+If G=3
+Output(5,1,Str8)
+Output(6,1,"VAR(X)")
+ʟM2MR(3)→W
+prgmM2FMT
+If G≠3
+Output(7,1,Str9)
+If G=3
+Output(7,1,Str8)
+If G=1
+Output(9,1,"DOMAIN t<L")
+If G=2
+Output(9,1,"DOMAIN ALL REAL t")
+If G=3
+Output(9,1,"M(0)=1 IS NOT A PROOF")
+Output(10,1,"ENTER=TRANSFORMED")
+Pause
+ClrHome
+Output(1,1,"Z=aX+b MOMENTS")
+If G=3
+Output(1,1,"APPROX Z=aX+b MOMENTS")
+Output(2,1,"E(Z)")
+ʟM2MR(4)→W
+prgmM2FMT
+If G≠3
+Output(3,1,Str9)
+If G=3
+Output(3,1,Str8)
+Output(4,1,"E(Z²)")
+ʟM2MR(5)→W
+prgmM2FMT
+If G≠3
+Output(5,1,Str9)
+If G=3
+Output(5,1,Str8)
+Output(6,1,"VAR(Z)")
+ʟM2MR(6)→W
+prgmM2FMT
+If G≠3
+Output(7,1,Str9)
+If G=3
+Output(7,1,Str8)
+Output(9,1,"Mz(t)=e^(b*t)*Mx(a*t)")
+Output(10,1,"ENTER=MGF FORM")
+Pause
+ClrHome
+Output(1,1,"TRANSFORMED MGF")
+If G=1
+Then
+Output(2,1,"Mz(t)=e^(B*t)L/(L-A*t)")
+Output(4,1,"L="+toString(L))
+Output(5,1,"A="+toString(A))
+Output(6,1,"B="+toString(B))
+If A=0
+Output(8,1,"ALL REAL t; Mz=e^(B*t)")
+If A≠0
+Then
+L/A→W
+prgmM2FMT
+If A>0
+Output(8,1,"DOMAIN t<"+Str8)
+If A<0
+Output(8,1,"DOMAIN t>"+Str8)
+End
+End
+If G=2
+Then
+Output(2,1,"Mz(t)=e^(F*t+H*t²)")
+ʟM2MR(4)→W
+prgmM2FMT
+Output(4,1,"F="+Str9)
+ʟM2MR(6)/2→W
+prgmM2FMT
+Output(5,1,"H="+Str9)
+Output(8,1,"DOMAIN ALL REAL t")
+End
+If G=3
+Then
+Output(2,1,"Mz(t)=e^(B*t)*Mx(A*t)")
+Output(4,1,"A="+toString(A))
+Output(5,1,"B="+toString(B))
+Output(7,1,"DOMAIN A*t IN Mx DOMAIN")
+Output(8,1,"YOU MUST JUSTIFY IT")
+End
+Output(10,1,"ENTER=OPTIONS")
+Pause
+Lbl O
+Menu("MGF NEXT","EVAL Mz AT t",H,"NEW MGF",M,"BACK",Z)
+Lbl H
+ClrHome
+Input "EVAL t?",T
+If G=1 and L-A*T≤0:Goto TE
+A*T→X
+𝑒^(B*T)*expr(Str1)→Y
+ClrHome
+Output(1,1,"NUMERIC Mz(t)")
+Output(3,1,toString(Y))
+Output(6,1,"REQUIRES VALID MGF DOMAIN")
+Output(10,1,"ENTER=OPTIONS")
+Pause
+Goto O
+Lbl LE
+ClrHome
+Disp "RATE MUST BE POSITIVE"
+Pause
+Goto E
+Lbl DE
+ClrHome
+Disp "NEGATIVE VARIANCE","D MUST BE ≥0"
+Pause
+Goto Q
+Lbl ME
+ClrHome
+Disp "M(0) MUST EQUAL 1","CHECK TYPED EXPRESSION"
+Pause
+Goto M
+Lbl PE
+ClrHome
+Disp "MGF VALUES MUST BE >0","CHECK EXPRESSION/DOMAIN"
+Pause
+Goto M
+Lbl VE
+ClrHome
+Disp "NEGATIVE APPROX VARIANCE","INVALID OR UNSTABLE MGF","USE AN EXACT TEMPLATE"
+Pause
+Goto M
+Lbl TE
+ClrHome
+Disp "OUTSIDE MGF DOMAIN","NEED A*t<L"
+Pause
+Goto O
+Lbl Z
+DelVar ʟM2MR
+DelVar ʟM2MV
+DelVar ʟM2MD
+Return

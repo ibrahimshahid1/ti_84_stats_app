@@ -1,0 +1,889 @@
+{
+ "program": "STAE3",
+ "title": "CH3 RANDOM VARS",
+ "sections": [
+  {
+   "menu": "DISCRETE RVs",
+   "title": "CH3 DISCRETE RVs",
+   "topics": [
+    {
+     "menu": "RANDOM VARIABLE",
+     "title": "RANDOM VARIABLE",
+     "pages": [
+      [
+       "X = real-valued function",
+       " on the sample space S",
+       "{X=x} = set of outcomes s",
+       " with X(s)=x (an EVENT)",
+       "DISCRETE = countably many",
+       " values; pmf f(x)=P(X=x)",
+       "CONTINUOUS = P is area",
+       " under a pdf; P(X=a)=0",
+       "Cue  X = number/max/total"
+      ],
+      [
+       "Ex. HW3 Q1, draw 2 balls",
+       " from 1..5, no replacement",
+       "S = C(5,2) = 10 equally",
+       " likely pairs {i,j}",
+       "Z = max(i,j). Z=4 on",
+       " {1,4},{2,4},{3,4}",
+       " => P(Z=4) = 3/10",
+       "Z takes values 2,3,4,5",
+       "Freund Ch3 Def 1; Bert 2.1"
+      ]
+     ]
+    },
+    {
+     "menu": "PMF",
+     "title": "PMF f(x)=P(X=x)",
+     "pages": [
+      [
+       "pmf  f(x) = P(X=x)",
+       "Valid pmf iff",
+       " f(x) ≥ 0 for every x, and",
+       " Σ f(x) = 1 (all values)",
+       "P(X in A) = Σ f(x), x in A",
+       "Unknown c => c*Σ g(x) = 1",
+       "BUILD IT  list the values",
+       " x, find each P(X=x) by",
+       " counting(Freund Ch3 Thm1)"
+      ],
+      [
+       "Ex. f(x)=cx, x=1,2,3,4,5",
+       " Σ = c(1+2+3+4+5) = 15c",
+       " => c = 1/15",
+       " P(X≥4) = (4+5)/15 = 3/5",
+       "Ex f(x)=c(1/4)^x, x=1,2,..",
+       " Σ(1/4)^x = (1/4)/(1-1/4)",
+       "   = 1/3  => c = 3",
+       "Freund Ch3 Def 2; Bert 2.2",
+       "TOOL CALC>RV>1"
+      ]
+     ]
+    },
+    {
+     "menu": "DISCRETE CDF",
+     "title": "DISCRETE CDF",
+     "pages": [
+      [
+       "F(x)=P(X≤x)=Σ f(t), t≤x",
+       "Defined for ALL real x",
+       "Staircase  jump f(xi) at",
+       " each value xi, flat else",
+       "Nondecreasing; 0 far left,",
+       " 1 far right; right-cont.",
+       "pmf from F, x1<x2<…",
+       " f(x1)=F(x1),",
+       " f(xi)=F(xi)-F(x(i-1))"
+      ],
+      [
+       "F(a-) = F just left of a",
+       "P(a<X≤b) = F(b)-F(a)",
+       "P(X<a) = F(a-)",
+       "P(X=a) = F(a)-F(a-) = jump",
+       "P(X>a) = 1-F(a)",
+       "P(X≥a) = 1-F(a-)",
+       "ENDPOINTS MATTER here!",
+       "Ex. HW3 Q1 F(2)=1/10,",
+       " F(3)=3/10, F(4)=3/5"
+      ],
+      [
+       "So for Z = max (HW3 Q1)",
+       " P(2<Z≤4)=3/5-1/10=1/2",
+       " P(Z<4) = F(3) = 3/10",
+       " P(Z≥4) = 1-3/10 = 7/10",
+       " F(3.7) = F(3) = 3/10",
+       "TRAP  give F for every x,",
+       " not only at the values",
+       "Freund Ch3 Def 3, Thm 2-3",
+       "Bert 3.2. TOOL CALC>RV>1"
+      ]
+     ]
+    },
+    {
+     "menu": "PMF OF MAX/MIN",
+     "title": "PMF OF MAX/MIN",
+     "pages": [
+      [
+       "k draws from 1..N, Z=max",
+       "NO REPLACEMENT",
+       " P(Z≤z) = C(z,k)/C(N,k)",
+       " P(Z=z)=C(z-1,k-1)/C(N,k)",
+       "   for z = k,…,N",
+       "WITH REPLACEMENT",
+       " P(Z≤z) = (z/N)^k",
+       " P(Z=z)=(z^k-(z-1)^k)/N^k",
+       "   for z = 1,…,N"
+      ],
+      [
+       "WHY  Z=z means ball z is",
+       " drawn and the other k-1",
+       " come from the z-1 below",
+       "OR   p(z) = F(z)-F(z-1)",
+       "MIN W, no replacement",
+       " P(W=z)=C(N-z,k-1)/C(N,k)",
+       "MIN W, with replacement",
+       " P(W≥z)=((N-z+1)/N)^k",
+       " p(z)=P(W≥z)-P(W≥z+1)"
+      ],
+      [
+       "HW3 Q1  N=5, k=2, no repl",
+       "10 pairs; p(z)=(z-1)/10",
+       " z    2    3    4    5",
+       " p(z) 1/10 2/10 3/10 4/10",
+       " F(z) 1/10 3/10 6/10 1",
+       "F(z)=0 for z<2, steps up",
+       " at z=2,3,4,5; F=1 for z≥5",
+       "Check Σ p(z) = 1",
+       "TOOL CALC>RV>2"
+      ],
+      [
+       "Variants, N=5, k=2",
+       "MAX WITH repl, z=1..5",
+       " p(z)=(2z-1)/25",
+       "   = 1,3,5,7,9 over 25",
+       "MIN no repl, z=1..4",
+       " 4/10,3/10,2/10,1/10",
+       "TRAP  with repl the max",
+       " can be 1 (both draws 1)",
+       "SUM, |DIFF| => CALC>RV>2"
+      ]
+     ]
+    },
+    {
+     "menu": "SKETCH PMF/CDF",
+     "title": "SKETCH PMF/CDF",
+     "pages": [
+      [
+       "PMF  vertical spike (bar)",
+       " at each value x, height",
+       " p(x); nothing in between",
+       "CDF  staircase. 0 left of",
+       " smallest value, jumps UP",
+       " by p(x) at each x, flat",
+       " between, ends at 1",
+       " Closed dot on top of each",
+       " jump, open dot at bottom"
+      ],
+      [
+       "p(z) HW3 Q1 (spikes)",
+       ".4|              *",
+       ".3|          *   |",
+       ".2|      *   |   |",
+       ".1|  *   |   |   |",
+       " 0+--+---+---+---+-- z",
+       "     2   3   4   5",
+       "Label heights 1/10..4/10",
+       "Nothing drawn between"
+      ],
+      [
+       "F(z) HW3 Q1, not to scale",
+       " 1|              *----",
+       ".6|          *---o",
+       ".3|      *---o",
+       ".1|  *---o",
+       " 0+--o---+---+---+-- z",
+       "     2   3   4   5",
+       "* = closed dot = F value",
+       "o = open dot (not taken)"
+      ],
+      [
+       "CONTINUOUS (HW3 Q2)",
+       "pdf = two flat blocks of",
+       " height 1/4 on (0,2) and",
+       " (4,6); 0 elsewhere",
+       "CDF = 0 up to x=0, ramp to",
+       " 1/2 at x=2, flat 1/2 on",
+       " [2,4], ramp to 1 at x=6,",
+       " then 1. No jumps; slope",
+       " of F = height of f"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "CONTINUOUS RVs",
+   "title": "CH3 CONTINUOUS RVs",
+   "topics": [
+    {
+     "menu": "PDF BASICS",
+     "title": "PDF BASICS",
+     "pages": [
+      [
+       "P(a≤X≤b) = ∫(a,b) f(x)dx",
+       " ∫(a,b) = integral a to b",
+       "Valid pdf  f(x) ≥ 0 and",
+       " ∫ f(x)dx = 1 over all x",
+       "f(x) is NOT a probability",
+       " (can exceed 1); prob =",
+       " AREA under f",
+       "F(x) = ∫(-inf,x) f(t)dt",
+       "Freund Ch3 Def 4-5, Thm 5"
+      ],
+      [
+       "STEPS",
+       "1) words => interval of X",
+       "   ('at least 2' = X≥2)",
+       "2) clip to where f > 0",
+       "3) antiderivative G(x)",
+       "4) P = G(right)-G(left)",
+       "   (times the constant)",
+       "Pieces? split, add areas",
+       "TOOL CALC>RV>3 or RV>4"
+      ],
+      [
+       "HW3 Q4  f=3/256(16-x²)",
+       " on -4<x<4; G=16x-x³/3",
+       "(a) ≥2 min early => X≤-2",
+       " 3/256[G(-2)-G(-4)]",
+       " = 3/256*(40/3) = 5/32",
+       "(b) 1 to 3 late => 1<X<3",
+       " 3/256*(70/3) = 35/128",
+       "(c) exactly 1 min early",
+       " P(X=-1) = 0 (continuous)"
+      ]
+     ]
+    },
+    {
+     "menu": "P(X=a)=0",
+     "title": "P(X=a) = 0",
+     "pages": [
+      [
+       "Continuous X => P(X=a)=0",
+       " for EVERY a (area over a",
+       " single point is 0)",
+       "So endpoints don't matter",
+       " P(a≤X≤b) = P(a<X<b)",
+       "  = P(a≤X<b) = P(a<X≤b)",
+       "'Exactly' => answer 0",
+       " HW3 Q4c  P(X=-1) = 0",
+       "Freund Ch3 Thm 4"
+      ],
+      [
+       "TRAPS",
+       "* P=0 is not impossible",
+       "* f(a) ≠ P(X=a); f(a) can",
+       "  exceed 1",
+       "* Discrete/mixed X => ends",
+       "  DO matter; P(X=a) =",
+       "  jump of F at a",
+       "* 'to nearest minute' =>",
+       "  P(a-.5 < X < a+.5)"
+      ],
+      [
+       "MIXED = ATOMS + DENSITY",
+       "CDF JUMPS AT ATOMS",
+       "P(X=a)=F(a)-F(a-)",
+       "Derivative F' misses jumps",
+       "Ex Freund Ch3 Exer 41",
+       "F(z)=(z+4)/8, -2≤z<2",
+       "F=0 left, 1 at z≥2",
+       "P(Z=-2)=1/4; P(Z=2)=1/4",
+       "continuous mass between=.5"
+      ]
+     ]
+    },
+    {
+     "menu": "FIND CONSTANT c",
+     "title": "FIND CONSTANT c",
+     "pages": [
+      [
+       "Total probability = 1",
+       " discrete   c*Σ g(x) = 1",
+       " continuous c*∫g(x)dx = 1",
+       "   (over the support)",
+       "=> c = 1/(total of g)",
+       "Also need f ≥ 0 (c > 0)",
+       "Cue  'find c', 'find k',",
+       " 'what value of k'",
+       "Freund Ch3 Thm 1, Thm 5"
+      ],
+      [
+       "HW3 Q5(431) f=cy², 0<y<3",
+       "(a) ∫(0,3) y²dy = 27/3 = 9",
+       "    => c = 1/9",
+       "(b) F(y)=∫(0,y) t²/9 dt",
+       "    = y³/27 on 0≤y<3;",
+       "    0 if y<0, 1 if y≥3",
+       "(c) P(Y>2) = 1-F(2)",
+       "    = 1-8/27 = 19/27",
+       "TOOL CALC>RV>3 (c unknown)"
+      ],
+      [
+       "Freund Ch3 Ex 9",
+       " k*e^(-3x) for x>0",
+       " ∫(0,inf) = k/3 => k = 3",
+       "Freund Ch3 Exer 22",
+       " c/√(x) for 0<x<4",
+       " ∫ = c*2√(x) from 0 to 4",
+       "   = 4c => c = 1/4",
+       "TRAP  integrate over the",
+       " support only; check ∫f=1"
+      ]
+     ]
+    },
+    {
+     "menu": "BUILD CDF PIECES",
+     "title": "PIECEWISE CDF",
+     "pages": [
+      [
+       "F(x) = ∫(-inf,x) f(t)dt",
+       "1) mark the breakpoints",
+       "2) left of support, F=0",
+       "3) on a piece [a,b)",
+       "   F(x)=F(a)+∫(a,x) f(t)dt",
+       "   (CARRY area so far!)",
+       "4) gap where f=0, F flat",
+       "5) right of support, F=1",
+       "CHECK F continuous, ends 1"
+      ],
+      [
+       "HW3 Q2  f=1/4 on (0,2)",
+       " and (4,6); 0 elsewhere",
+       "F(x)=0          x≤0",
+       "    =x/4      0<x<2",
+       "    =1/2      2≤x≤4",
+       "    =(x-2)/4  4<x<6",
+       "    =1          x≥6",
+       "(x-2)/4 = 1/2 + (x-4)/4",
+       "TOOL CALC>RV>3"
+      ],
+      [
+       "TRAP  on (4,6) F ≠ x/4;",
+       " must add the carried 1/2",
+       "TRAP  F is flat (not 0)",
+       " in gaps where f = 0",
+       "Freund Ch3 Exer 28",
+       " f=x (0,1), f=2-x [1,2)",
+       " F=x²/2 on 0≤x<1",
+       " F=2x-x²/2-1 on 1≤x<2",
+       "Freund Ch3 Def 5; Bert 3.2"
+      ]
+     ]
+    },
+    {
+     "menu": "CDF ► PROBS",
+     "title": "CDF ► PROBS",
+     "pages": [
+      [
+       "CONTINUOUS X",
+       " P(a<X<b) = F(b)-F(a)",
+       " P(X≤b) = P(X<b) = F(b)",
+       " P(X>a) = P(X≥a) = 1-F(a)",
+       "DISCRETE/MIXED X",
+       " P(a<X≤b) = F(b)-F(a)",
+       " P(X=a) = jump at a",
+       "Use the formula piece that",
+       " holds at that point!"
+      ],
+      [
+       "HW3 Q3  F=(x+2)/4 on",
+       " -2≤x<2 (0 below, 1 above)",
+       "P(-1<X<1) = F(1)-F(-1)",
+       "  = 3/4 - 1/4 = 1/2",
+       "P(X>0.5) = 1-F(0.5)",
+       "  = 1 - 2.5/4 = 3/8",
+       "Bonus f=F'=1/4 on (-2,2)",
+       " (uniform); P(X>3) = 0",
+       "Freund Ch3 Thm 6; RV>3"
+      ]
+     ]
+    },
+    {
+     "menu": "PDF ◄► CDF",
+     "title": "PDF ◄► CDF",
+     "pages": [
+      [
+       "pdf => CDF  integrate",
+       " F(x) = ∫(-inf,x) f(t)dt",
+       "CDF => pdf  differentiate",
+       " f(x) = F'(x) where F'",
+       " exists; at corners any",
+       " value is ok (use 0)",
+       "Discrete  f(xi) = jump",
+       " = F(xi)-F(x(i-1))",
+       "Freund Ch3 Thm 6, Ex 11"
+      ],
+      [
+       "HW3 Q6(431) F=1-e^(-2x)",
+       " for x>0, 0 otherwise",
+       "(a) f(x) = F'(x)",
+       "    = 2e^(-2x) for x>0",
+       "    = 0 for x≤0",
+       "(b) P(X>1) = 1-F(1)",
+       "    = e^(-2) = .135335",
+       "Exponential, θ = 1/2",
+       "TOOL CALC>RV>4 (CDF mode)"
+      ],
+      [
+       "HW3 Q4 CDF, -4≤x≤4",
+       " F=∫(-4,x) 3/256(16-t²)dt",
+       "  = 1/2 + 3x/16 - x³/256",
+       " F(-2) = 5/32 (Q4a)",
+       " F(3)-F(1) = 35/128 (Q4b)",
+       "CHECK F(-4)=0, F(4)=1",
+       "CHECK F'=3/16-3x²/256",
+       "  = 3/256(16-x²) = f",
+       "Bert 3.2; Wass 2.2"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "JOINT / MARGINAL",
+   "title": "CH3 JOINT DISTRIBS",
+   "topics": [
+    {
+     "menu": "JOINT PMF + CDF",
+     "title": "JOINT PMF + CDF",
+     "pages": [
+      [
+       "JOINT p(x,y)=P(X=x,Y=y)",
+       "p≥0; ΣxΣy p(x,y)=1",
+       "P((X,Y) IN A)=ΣA p(x,y)",
+       "F(x,y)=P(X≤x,Y≤y)",
+       "=Σ(s≤x,t≤y) p(s,t)",
+       "CUE TABLE OR PAIR (X,Y)",
+       "SUM CELLS IN EVENT REGION",
+       "TOOL CALC>RV>6",
+       "Freund Ch3 Def 6-7"
+      ],
+      [
+       "Ex Freund Ch3 Ex 13",
+       "p(x,y)=kxy, x,y=1,2,3",
+       "ΣxΣy xy=(1+2+3)²=36",
+       "k=1/36",
+       "F(2,2)=(1+2)²/36=1/4",
+       "P(X>1,Y≤2)=5*3/36=5/12",
+       "COUNT SUPPORT PAIRS ONLY",
+       "TOOL CALC>RV>6"
+      ]
+     ]
+    },
+    {
+     "menu": "JOINT PDF + CDF",
+     "title": "JOINT PDF + CDF",
+     "pages": [
+      [
+       "JOINT PDF f(x,y)≥0",
+       "∫∫ f dxdy=1 ON SUPPORT",
+       "P((X,Y) IN A)=∫∫A f",
+       "F(x,y)=∫(-inf,x)∫(-inf,y)",
+       " f(s,t)dt ds",
+       "f=d/dx[dF/dy] WHERE OK",
+       "LIMITS FOLLOW SUPPORT",
+       "Freund Ch3 Def 8-9",
+       "CALC>RV>6>CONTINUOUS PDF"
+      ],
+      [
+       "RECTANGLE a<X≤b,c<Y≤d",
+       "P=F(b,d)-F(a,d)",
+       "  -F(b,c)+F(a,c)",
+       "Ch3 Ex16 f=x+y (0,1)²",
+       "F(x,y)=xy(x+y)/2 there",
+       "F(1/2,1/2)=1/8",
+       "INTEGRATE ONLY INSIDE",
+       " JOINT SUPPORT (SHAPE!)",
+       "CALC>RV>6>CONTINUOUS PDF"
+      ],
+      [
+       "NONRECTANGULAR SUPPORT",
+       "Ex Ch3 Exer51 f=2 where",
+       " x>0,y>0,x+y<1",
+       "EXACT ∫(0,1)∫(0,1-x)",
+       " f(x,y)dy dx",
+       "TOOL box X,Y in (0,1)",
+       "ENTER 2*(X+Y<1)",
+       "NUMERIC RESULT APPROX",
+       "CALC>RV>6>CONTINUOUS PDF"
+      ]
+     ]
+    },
+    {
+     "menu": "MARGINAL PMFs",
+     "title": "MARGINAL PMFs",
+     "pages": [
+      [
+       "FROM JOINT PMF p(x,y)",
+       "pX(x)=Σy p(x,y)  SUM y",
+       "pY(y)=Σx p(x,y)  SUM x",
+       "IF x COLUMNS, COL SUM=pX",
+       "IF y ROWS, ROW SUM=pY",
+       "Σx pX=1; Σy pY=1",
+       "SUM OUT UNWANTED VARIABLE",
+       "Freund Ch3 Def 10",
+       "TOOL CALC>RV>6"
+      ],
+      [
+       "Ex p(x,y)=xy/36, 1..3",
+       "pX(x)=x(1+2+3)/36",
+       "=x/6 for x=1,2,3",
+       "pY(y)=y/6 for y=1,2,3",
+       "pX(2)=2/6=1/3",
+       "TOOL CALC>RV>6"
+      ]
+     ]
+    },
+    {
+     "menu": "MARGINAL PDFs",
+     "title": "MARGINAL PDFs",
+     "pages": [
+      [
+       "FROM JOINT PDF f(x,y)",
+       "fX(x)=∫ f(x,y)dy",
+       "fY(y)=∫ f(x,y)dx",
+       "INTEGRATE OVER JOINT",
+       " SUPPORT AT FIXED x OR y",
+       "TRIANGLE x+y<1",
+       " y goes 0..(1-x)",
+       "Freund Ch3 Def 11",
+       "CALC>RV>6>CONTINUOUS PDF"
+      ],
+      [
+       "Ex f=x+y on (0,1)²",
+       "fX(x)=∫(0,1)(x+y)dy",
+       "=x+1/2, 0<x<1",
+       "fY(y)=y+1/2, 0<y<1",
+       "Check ∫(0,1) fX(x)dx=1",
+       "Outside support marg=0",
+       "CALC>RV>6>CONTINUOUS PDF"
+      ]
+     ]
+    },
+    {
+     "menu": "CONDITIONAL DIST",
+     "title": "CONDITIONAL DIST",
+     "pages": [
+      [
+       "PMF pX|Y(x|y)=p(x,y)/pY(y)",
+       "need pY(y)>0",
+       "PDF fX|Y(x|y)=f(x,y)/fY(y)",
+       "need fY(y)>0",
+       "Fix y; sum/integrate x",
+       "to 1 over allowed support",
+       "P(X in A|Y=y) from",
+       " cond pmf/pdf",
+       "Freund Ch3 Def 12-13"
+      ],
+      [
+       "Ex f=x+y, (0,1)²",
+       "fY(y)=y+1/2",
+       "Y=1/2 => fX|Y=x+1/2",
+       "P(X≤1/2|Y=1/2)",
+       "=∫(0,1/2)(x+1/2)dx",
+       "=1/8+1/4=3/8",
+       "CONT. P(Y=1/2)=0; use",
+       " CONDITIONAL DENSITY",
+       "CALC>RV>6>CONTINUOUS PDF"
+      ]
+     ]
+    },
+    {
+     "menu": "INDEPENDENT RVs",
+     "title": "INDEPENDENT RVs",
+     "pages": [
+      [
+       "X,Y INDEP IFF p(x,y)",
+       "=pX(x)pY(y) ALL PAIRS",
+       "or f(x,y)=fX(x)fY(y)",
+       "ON ALL JOINT SUPPORT",
+       "ONE FAILURE => DEPENDENT",
+       "ONE MATCH ≠ PROOF",
+       "JOINT SUPPORT MAY RULE OUT",
+       " product if both marg>0",
+       "Freund Ch3 Def 14"
+      ],
+      [
+       "Ex p(x,y)=xy/36, 1..3",
+       "pX=x/6,pY=y/6",
+       "product=xy/36 => INDEP",
+       "Ex f=4xy on (0,1)²",
+       "fX=2x,fY=2y; product",
+       "=4xy => INDEP",
+       "TOOL CALC>RV>6 (PMF)",
+       "PDF CHECK BY ALGEBRA",
+       "Freund Ch3 Ex25"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "STA 631 EXTRAS",
+   "title": "STA 631 TRANSFORMS",
+   "topics": [
+    {
+     "menu": "CDF METHOD Y=g(X)",
+     "title": "CDF METHOD Y=g(X)",
+     "pages": [
+      [
+       "Distribution-fn technique",
+       "1) support of Y = g(range)",
+       "2) FY(y) = P(g(X) ≤ y)",
+       "3) solve for X; FLIP the",
+       "   inequality if g decr.",
+       "4) FX(h(y)) or 1-FX(h(y))",
+       "5) fY(y) = d/dy FY(y)",
+       "6) FY=0 below, 1 above;",
+       "   fY=0 off the support"
+      ],
+      [
+       "HW3 Q5(631) f=2x on (0,1)",
+       " Y=-ln X > 0; FX(x)=x²",
+       "FY(y) = P(-ln X ≤ y)",
+       " = P(X ≥ e^(-y))  (flip)",
+       " = 1 - FX(e^(-y))",
+       " = 1 - e^(-2y) for y>0",
+       " (FY = 0 for y≤0)",
+       "fY(y) = 2e^(-2y), y>0",
+       " => exponential, θ=1/2"
+      ],
+      [
+       "NOT MONOTONE, e.g. Y=X²",
+       " FY=FX(√(y))-FX(-√(y))",
+       " fY=[f(√(y))+f(-√(y))]",
+       "     / (2√(y)),  y>0",
+       "Y=|X| => fY=f(y)+f(-y),y>0",
+       "Discrete X => add p(x) for",
+       " all x with g(x) = y",
+       "Freund Ch7 Ex 1-2; Bert3.6",
+       "TOOL CALC>RV>5"
+      ]
+     ]
+    },
+    {
+     "menu": "MONOTONE FORMULA",
+     "title": "MONOTONE FORMULA",
+     "pages": [
+      [
+       "g strictly incr. or decr.",
+       " + differentiable on the",
+       " support of X; h = g^-1",
+       " (x = h(y) solves y=g(x))",
+       "fY(y) = fX(h(y))*|h'(y)|",
+       " for y in g(support),",
+       " fY(y) = 0 elsewhere",
+       "LINEAR Y=aX+b, a≠0",
+       " fY(y) = fX((y-b)/a)/|a|"
+      ],
+      [
+       "PROOF. g increasing",
+       " FY(y)=P(X≤h(y))=FX(h(y))",
+       " d/dy=> fX(h(y))h'(y),h'>0",
+       "g decreasing",
+       " FY(y) = P(X≥h(y))",
+       "   = 1-FX(h(y))",
+       " d/dy => -fX(h(y))h'(y)",
+       "   with h'<0",
+       "Both = fX(h(y))|h'(y)|"
+      ],
+      [
+       "HW3 Q5(631) y = -ln x",
+       " h(y)=e^(-y), h'=-e^(-y)",
+       " fY = 2e^(-y)*e^(-y)",
+       "    = 2e^(-2y), y>0",
+       "Freund Ch7 Ex 6, f=e^(-x)",
+       " x>0, Y=√(X)=> h=y², h'=2y",
+       " fY = 2y*e^(-y²), y>0",
+       "Freund Ch7 Thm 1; Ross 5.7",
+       "Not 1-to-1? CDF method"
+      ]
+     ]
+    },
+    {
+     "menu": "PROB INTEGRAL XFRM",
+     "title": "PROB INTEGRAL XFORM",
+     "pages": [
+      [
+       "X continuous, CDF F",
+       " strictly increasing",
+       "U = F(X) => U uniform(0,1)",
+       " FU(u) = u,  0<u<1",
+       " fU(u) = 1,  0<u<1",
+       "Cue  'U=F(X)', 'flat pdf'",
+       " 'show U is uniform'",
+       "CONVERSE  X=F^-1(U) has",
+       " CDF F (simulation)"
+      ],
+      [
+       "PROOF (HW3 Q6, 631)",
+       "F cont. + strictly incr.",
+       " => F^-1 exists on (0,1)",
+       " and F(x)≤u iff x≤F^-1(u)",
+       "For 0<u<1",
+       " FU(u) = P(F(X)≤u)",
+       "  = P(X≤F^-1(u))",
+       "  = F(F^-1(u)) = u",
+       "u≤0 => FU=0; u≥1 => FU=1"
+      ],
+      [
+       "=> fU(u) = d/du u = 1 on",
+       " (0,1), 0 elsewhere. QED",
+       "ALT  monotone formula, g=F",
+       " h=F^-1, h'(u)=1/f(h(u))",
+       " fU = f(x)*1/f(x) = 1",
+       "Ex. F=1-e^(-2x) => X =",
+       " -ln(1-U)/2 is exponential",
+       "Freund Ch7 Ex 8",
+       "Wass Ch2 Exer 15"
+      ]
+     ]
+    },
+    {
+     "menu": "COMMON CDFs",
+     "title": "COMMON CDFs",
+     "pages": [
+      [
+       "UNIFORM(α,β), α<β",
+       " f = 1/(β-α) on (α,β)",
+       " F = 0              x≤α",
+       "   = (x-α)/(β-α)  α<x<β",
+       "   = 1              x≥β",
+       " P(c<X<d) = (d-c)/(β-α)",
+       "   for α≤c<d≤β",
+       " mean (α+β)/2",
+       " var (β-α)²/12"
+      ],
+      [
+       "EXPONENTIAL, mean θ>0",
+       " f = (1/θ)e^(-x/θ), x>0",
+       " F = 1-e^(-x/θ), x>0",
+       " P(X>x) = e^(-x/θ)",
+       " rate λ=1/θ => f=λe^(-λx)",
+       " mean θ, var θ²",
+       " memoryless P(X>s+t |",
+       "   X>s) = P(X>t)",
+       "HW3 Q6  λ=2, θ=1/2"
+      ],
+      [
+       "POWER on (0,1), k>0",
+       " F = x^k, f = kx^(k-1)",
+       " e.g. f=2x => F=x² (HW3)",
+       " = max of k indep U(0,1)",
+       "HW3 Q3  F=(x+2)/4 is",
+       " uniform(-2,2)",
+       "Freund Ch6 Def 1, Thm 1",
+       " Def 3, Cor 1",
+       "Bert 3.1; Ross 5.3, 5.5"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "menu": "CALCULUS HELP",
+   "title": "CALCULUS HELP",
+   "topics": [
+    {
+     "menu": "INTEGRALS",
+     "title": "INTEGRALS",
+     "pages": [
+      [
+       "∫x^n dx = x^(n+1)/(n+1)",
+       "   (n ≠ -1)",
+       "∫1/x dx = ln|x|",
+       "∫e^(ax)dx = e^(ax)/a",
+       "∫(a,b) f = G(b)-G(a), G'=f",
+       "∫(0,inf) e^(-ax)dx = 1/a",
+       "   (a>0; e^(-t) goes to 0)",
+       "∫x^(-1/2)dx = 2√(x)",
+       "Pull out constants"
+      ],
+      [
+       "SUBSTITUTION u=g(x)",
+       " ∫f(g(x))g'(x)dx=∫f(u)du",
+       " ex ∫2x e^(-x²)dx=-e^(-x²)",
+       "BY PARTS ∫u dv=uv-∫v du",
+       " ex ∫x e^(-x)dx",
+       "   = -(x+1)e^(-x)",
+       "Odd f on (-a,a) => ∫ = 0",
+       "Even f => ∫(-a,a)=2∫(0,a)",
+       "Pieces => ∫ where f≠0 only"
+      ],
+      [
+       "HW-STYLE CHECKS",
+       "∫(0,3) y² dy = 27/3 = 9",
+       "∫(0,2) 1/4 dx = 1/2",
+       "∫(-4,-2) 3/256(16-x²)dx",
+       "  = 3/256*(40/3) = 5/32",
+       "∫(0,1) 2x dx = 1",
+       "∫(0,inf) 2e^(-2x)dx = 1",
+       "Improper ∫(0,inf) = limit",
+       " as b grows; e^(-b) to 0"
+      ]
+     ]
+    },
+    {
+     "menu": "DERIVATIVES",
+     "title": "DERIVATIVES",
+     "pages": [
+      [
+       "d/dx x^n = n*x^(n-1)",
+       "d/dx e^(ax) = a*e^(ax)",
+       "d/dx ln x = 1/x",
+       "d/dx √(x) = 1/(2√(x))",
+       "(uv)' = u'v + uv'",
+       "(u/v)' = (u'v-uv')/v²",
+       "CHAIN  d/dy F(h(y))",
+       "   = f(h(y))*h'(y)",
+       "FTC (∫(a,x) f(t)dt)'=f(x)"
+      ],
+      [
+       "HW-STYLE",
+       "d/dx [1-e^(-2x)]=2e^(-2x)",
+       "d/dx (x+2)/4 = 1/4",
+       "d/dy FX(√(y))",
+       "   = fX(√(y))/(2√(y))",
+       "d/dy [1-FX(e^(-y))]",
+       "   = fX(e^(-y))*e^(-y)",
+       "INVERSE h'(y)=1/g'(h(y))",
+       "F' can fail at corners"
+      ]
+     ]
+    },
+    {
+     "menu": "TI-84 fnInt/nDeriv",
+     "title": "TI-84 fnInt/nDeriv",
+     "pages": [
+      [
+       "fnInt  = MATH 9",
+       " fnInt(f(X),X,a,b)",
+       " X from the [X,T,θ,n] key",
+       "nDeriv = MATH 8",
+       " nDeriv(F(X),X,x0)",
+       "Negatives => (-) key",
+       "To fraction => MATH 1",
+       " (►Frac) after the answer",
+       "inf => use big b, e.g. 50"
+      ],
+      [
+       "Ex. fnInt(3/256(16-X²),",
+       "   X,-4,-2) = .15625",
+       "   MATH 1 => 5/32",
+       "Ex. nDeriv(1-e^(-2X),X,1)",
+       "   = .270671 (= 2e^(-2))",
+       "e^( is 2nd LN; ln is LN",
+       "Long f? put it in Y1 (Y=",
+       " key), get Y₁ from VARS",
+       " >Y-VARS, fnInt(Y₁,X,a,b)"
+      ],
+      [
+       "MATH > PRB menu",
+       " 2 nPr   3 nCr   4 !",
+       " e.g. 12 nCr 3 = 220",
+       "      5 nPr 2 = 20",
+       "      5! = 120",
+       "Fraction template",
+       " ALPHA Y= (F1) 1 n/d",
+       "TOOL CALC>RV>4 runs fnInt",
+       " for any f(x) or F(x)"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

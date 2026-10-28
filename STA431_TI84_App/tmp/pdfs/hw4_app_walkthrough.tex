@@ -1,0 +1,277 @@
+\section{Homework 4: every problem with STAM2}
+\label{sec:hw4-app-walkthrough}
+This walkthrough covers the three common questions, both STA 431 questions, and the two separately labeled STA 631 questions. Start with \texttt{PRGM > STAM2}. The routes below name the actual solver menus. For the first five questions, use \texttt{HOMEWORK MAP > LOAD + SOLVE}, then \texttt{HW4 COMMON +431} and the matching question. This preloads inputs, not answers: the general solvers still calculate each result. Manual entries below show the model being solved and let you handle altered exam numbers.
+
+For continuous calculations, a displayed fraction is a numerical result that suggests an exact value. The integral and its algebra establish the exact answer. In particular, the app does not symbolically derive a marginal-density formula or prove independence of continuous variables.
+
+\subsection{Common Question 1: joint PMF, marginals, conditioning, independence}
+The joint PMF is $p(x,y)=c(x+y^2)$ on $x\in\{1,2\}$ and $y\in\{1,2,3\}$.
+
+\textbf{Quick load:} choose \texttt{Q1 JOINT PMF}; continue past its model screen.\par
+\textbf{Manual alternative: load the model once.} Choose \texttt{DISCRETE + JOINT > FORMULA/GRID}:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{x VALUES LIST?} & \texttt{\{1,2\}}\\
+\texttt{y VALUES LIST?} & \texttt{\{1,2,3\}}\\
+\texttt{q(X,Y)?} & \texttt{X+Y\^{}2}\\\bottomrule
+\end{tabular}
+\end{center}
+The app constructs all six pairs, sums their weights to 37, and displays $c=1/37$. You do not have to enter $c$ or manually type the six joint probabilities.
+
+\textbf{(a) What to write.} The six weights are $2,5,10,3,6,11$, hence $1=c(37)$ and $\boxed{c=1/37}$.
+
+\textbf{(b) Marginals.} From \texttt{TABLE TOOLS}, choose \texttt{MARG/CONDITIONAL}. Choose the new \texttt{MARGINAL TABLES} option to display both complete marginal tables. Press \texttt{ENTER} between them. You no longer have to query the five values individually. The returned values are
+\[
+\begin{array}{c|cc}
+x&1&2\\\hline
+p_X(x)&17/37&20/37
+\end{array}
+\qquad
+\begin{array}{c|ccc}
+y&1&2&3\\\hline
+p_Y(y)&5/37&11/37&21/37.
+\end{array}
+\]
+For the general formulas, write
+\[
+\begin{aligned}
+p_X(x)&=\sum_{y=1}^3\frac{x+y^2}{37}=\frac{3x+14}{37},\quad x=1,2;\\
+p_Y(y)&=\sum_{x=1}^2\frac{x+y^2}{37}=\frac{3+2y^2}{37},\quad y=1,2,3.
+\end{aligned}
+\]
+Both PMFs are zero outside their supports.
+
+\textbf{(c) Conditional PMF.} Choose \texttt{X GIVEN Y} and enter 2. The conditional-distribution screen gives
+\[
+\boxed{p_{X\mid Y}(1\mid2)=5/11,\qquad p_{X\mid Y}(2\mid2)=6/11.}
+\]
+The written step is $(5/37)/(11/37)=5/11$ and $(6/37)/(11/37)=6/11$. These sum to one. Extra conditional moments shown afterward are not required by this question.
+
+\textbf{(d) Independence.} Choose \texttt{INDEPENDENCE}. The app reports a numerical factorization failure and now displays a violating pair with its joint probability and marginal product. Convert that observation into an exact comparison. For example:
+\[
+p(1,1)=\frac2{37}=\frac{74}{1369}
+\ne \frac{17}{37}\frac5{37}=\frac{85}{1369}=p_X(1)p_Y(1).
+\]
+Therefore $X,Y$ are dependent. One failing PMF pair is sufficient.
+
+\textbf{Why this is easier.} The homework loader removes model re-entry; the manual alternative needs just three model entries. The new marginal-table command displays all five marginal values together, and the independence tool supplies a counterexample pair. The same data stay loaded for all subparts. You still write the marginal sums and the exact independence comparison.
+
+\clearpage
+\subsection{Common Question 2: a joint PDF and conditional-density formula}
+Here $f(x,y)=c(2x+y)$ on $0<x<1$, $0<y<2$.
+
+\textbf{Quick load:} choose \texttt{Q2 JOINT PDF}, then enter outer resolution $N=4$.\par
+\textbf{(a) Manual normalization route.} Choose \texttt{DENSITY + INTEGRAL > DOUBLE INTEGRAL}. Enter the following model. The fixed parameter $A$ is unused, so enter 0.
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{q(X,Y)?} & \texttt{2X+Y}\\
+\texttt{FIXED A?} & \texttt{0}\\
+\texttt{LOWER X?}, \texttt{UPPER X?} & \texttt{0}, \texttt{1}\\
+\texttt{LOWER Y(X)?}, \texttt{UPPER Y(X)?} & \texttt{0}, \texttt{2}\\
+\texttt{g(X,Y),1=AREA?} & \texttt{1}\\
+\texttt{EVEN N 4-100?} & \texttt{4}\\\bottomrule
+\end{tabular}
+\end{center}
+The app displays raw integral $I\approx4$ at $N=4$ and $N=8$. Choose \texttt{NORMALIZE FULL S}; because the entered rectangle is the full support, the app gives $c\approx1/4$.
+
+\textbf{What to write for (a).}
+\[
+1=c\int_0^1\int_0^2(2x+y)\dd y\dd x
+=c\int_0^1(4x+2)\dd x=4c,
+\qquad \boxed{c=\frac14}.
+\]
+The numerical solver removes the arithmetic burden, while this short calculation establishes the exact constant.
+
+\textbf{(b) Derive the marginal of $Y$.} Hold $y$ fixed and integrate over $x$:
+\[
+\boxed{f_Y(y)=\int_0^1\frac{2x+y}{4}\dd x=\frac{1+y}{4},\quad0<y<2;}
+\]
+$f_Y(y)=0$ otherwise. The app can check values of this function, but it cannot return the symbolic expression for all $y$.
+
+\textbf{Numerical check of (b), using the improved joint-slice tool.} Choose \texttt{DENSITY + INTEGRAL > JOINT SLICE > X GIVEN Y}. Enter joint shape \texttt{2X+Y}, known $c=1/4$, given value 1, and remaining-variable bounds 0 and 1. The results screen reports marginal density $f_Y(1)\approx1/2$. To check another $y$, use \texttt{NEW GIVEN VALUE}; the same joint model remains loaded. This separates the global multiplier from the conditional normalization instead of making you rename variables.
+
+\textbf{(c) Derive the conditional density.}
+\[
+\boxed{f_{X\mid Y}(x\mid y)=\frac{f(x,y)}{f_Y(y)}
+=\frac{2x+y}{1+y},\quad0<x<1,\quad0<y<2.}
+\]
+For each allowed $y$, it is zero outside $0<x<1$. The denominator belongs to the given variable $Y$.
+
+In the joint-slice tool, choose \texttt{PDF AT POINT} and enter remaining value $x=1/2$. It reports conditional density approximately 1 and joint density approximately $1/2$, agreeing with $(2x+1)/2$ and $(2x+1)/4$. Choose \texttt{INTERVAL PROB} with event bounds 0 and $1/2$ to obtain approximately $3/8$. These numerical checks are optional; the homework's requested density is the function boxed above.
+
+\textbf{Why this is easier.} The app computes the two-dimensional normalization without requiring you to evaluate both integrals manually. The joint-slice tool keeps the original variable names, reports the correct marginal value, and performs conditional probabilities or moments. The short symbolic integrations above remain essential because the requested answers are functions, not just numbers.
+
+\clearpage
+\subsection{Common Question 3: a device that fails when either component fails}
+The joint PDF is $(x+y)/8$ on the square $(0,2)^2$. The device lifetime is $T=\min(X,Y)$, so the requested event is
+\[
+\{T\le1\}=\{X\le1\}\cup\{Y\le1\}.
+\]
+Its complement is the single rectangle $X>1,Y>1$.
+
+\textbf{Quick load:} choose \texttt{Q3 SERIES LIFETIME}, continue past the survival/complement reminder, and enter $N=4$.\par
+\textbf{Manual route.} Choose \texttt{DENSITY + INTEGRAL > DOUBLE INTEGRAL}:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule Input & Value\\\midrule
+Joint integrand \texttt{q(X,Y)} & \texttt{(X+Y)/8}\\
+Fixed parameter \texttt{A} & \texttt{0}\\
+Outer $x$ limits & \texttt{1}, \texttt{2}\\
+Inner $y$ limits & \texttt{1}, \texttt{2}\\
+Multiplier \texttt{g(X,Y)} & \texttt{1}\\
+Outer resolution \texttt{N} & \texttt{4}\\\bottomrule
+\end{tabular}
+\end{center}
+Read \texttt{RAW I}, approximately $3/8$, on both resolution screens. This is the survival probability because you entered the already normalized joint density over the survival rectangle. Do \emph{not} choose \texttt{NORMALIZE FULL S}: the entered rectangle is an event region, not the original support.
+
+Subtract the survival probability from one:
+\[
+\boxed{P(T\le1)=1-\frac38=\frac58=0.625.}
+\]
+You can do $1-3/8$ on the home screen after leaving the solver. The preset also reminds you that failure is \texttt{1-RAW I}; the solver itself computes the survival integral.
+
+\textbf{What to write.}
+\[
+P(T\le1)=1-P(X>1,Y>1)
+=1-\int_1^2\int_1^2\frac{x+y}{8}\dd y\dd x
+=\frac58.
+\]
+The event translation earns the reasoning; the app handles the integration and arithmetic. Do not multiply marginal survival probabilities, because independence was not given.
+
+\textbf{Why this is easier.} A complement turns an L-shaped union into one rectangle. The app then computes its double integral in one run, with no separate intersection correction and no assumed independence.
+
+\clearpage
+\subsection{STA 431 Question 4: two discrete event probabilities}
+The PMF is $p(x,y)=(x+y)/32$ for $x\in\{1,2\}$ and $y\in\{1,2,3,4\}$.
+
+\textbf{Quick load:} choose \texttt{Q4 PMF EVENTS}; both event queries use the same loaded table.\par
+\textbf{Manual alternative: load once.} Choose \texttt{DISCRETE + JOINT > FORMULA/GRID}. Enter $x$ list \texttt{\{1,2\}}, $y$ list \texttt{\{1,2,3,4\}}, and weight formula \texttt{X+Y}. The weight total is 32, so the app reconstructs the stated PMF automatically.
+
+\textbf{(a) $P(X>Y)$.} From \texttt{TABLE TOOLS}, choose \texttt{EVENT PROB > P(EVENT)}. At \texttt{EVENT X,Y?}, enter \texttt{X>Y}. The app returns
+\[
+\boxed{P(X>Y)=\frac3{32}=0.09375.}
+\]
+For the written solution, only the pair $(2,1)$ satisfies the event, giving $p(2,1)=(2+1)/32$.
+
+\textbf{(b) $P(X+Y\le3)$.} You return to \texttt{EVENT TYPE}, so choose \texttt{P(EVENT)} again and enter \texttt{X+Y<=3}, using the actual $\le$ token rather than separate \texttt{<} and \texttt{=} characters. The result is
+\[
+\boxed{P(X+Y\le3)=\frac14=0.25.}
+\]
+The contributing pairs are $(1,1)$, $(1,2)$, and $(2,1)$, and
+\[
+P(X+Y\le3)=\frac{2+3+3}{32}=\frac8{32}=\frac14.
+\]
+
+\textbf{Why this is easier.} You enter the support and weight formula once, then change only the event expression. The app selects the right pairs and adds their unequal weights. Counting qualifying pairs and dividing by eight would be wrong because the pairs are not equally likely.
+
+\textbf{A useful way to check your entry.} The support is discrete. In part (a), $Y$ cannot be $1.5$; only the listed integer pairs matter. In part (b), the boundary pairs with sum exactly 3 must be included.
+
+\clearpage
+\subsection{STA 431 Question 5: $P(X<Y)$ from a joint PDF}
+Use $f(x,y)=(2x+y)/4$ on $0<x<1$, $0<y<2$.
+
+\textbf{Build the event region.} For a fixed $x\in(0,1)$, the event $x<y$ and the support $y<2$ give $x<y<2$. Thus
+\[
+P(X<Y)=\int_0^1\int_x^2\frac{2x+y}{4}\dd y\dd x.
+\]
+The lower inner limit is $x$, not 0. Once that support intersection is correct, the calculator can do the entire numerical integration.
+
+\textbf{Quick load:} choose \texttt{Q5 X LESS Y}, then enter $N=4$.\par
+\textbf{Manual route.} Choose \texttt{DENSITY + INTEGRAL > DOUBLE INTEGRAL}:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule Input & Value\\\midrule
+\texttt{q(X,Y)?} & \texttt{(2X+Y)/4}\\
+\texttt{FIXED A?} & \texttt{0}\\
+Outer $x$ limits & \texttt{0}, \texttt{1}\\
+Inner $y$ limits & \texttt{X}, \texttt{2}\\
+\texttt{g(X,Y),1=AREA?} & \texttt{1}\\
+\texttt{EVEN N 4-100?} & \texttt{4}\\\bottomrule
+\end{tabular}
+\end{center}
+Both resolution screens give \texttt{RAW I} approximately $19/24=0.7916666667$. Use this raw value as the probability. Normalizing the event region would answer a different question.
+
+\textbf{Exact written calculation.}
+\[
+\begin{aligned}
+P(X<Y)
+&=\int_0^1\left[x+\frac12-\frac58x^2\right]\dd x\\
+&=\frac12+\frac12-\frac5{24}
+=\boxed{\frac{19}{24}}.
+\end{aligned}
+\]
+The app removes both numerical integrations; writing the first iterated integral shows that you understood the event. The simplified single integral establishes the exact fraction.
+
+\textbf{Why the chosen order is easier.} Integrating first in $y$ needs one region. Reversing the order forces a split at $y=1$:
+\[
+\int_0^1\int_0^y f(x,y)\dd x\dd y
++\int_1^2\int_0^1 f(x,y)\dd x\dd y.
+\]
+Both are correct, but the first setup requires one app run and fewer boundary decisions.
+
+\clearpage
+\subsection{Optional STA 631 Question 4: triangular support}
+Here $f(x,y)=24x(1-x-y)$ on $x>0,y>0,x+y<1$. This is extra practice; it is separate from the STA 431 Question 4.
+
+\textbf{Quick load:} from \texttt{LOAD + SOLVE > OPTIONAL 631}, choose \texttt{HW4 Q4 TRIANGLE} and enter $N=4$.\par
+\textbf{Manual normalization check.} Use \texttt{DOUBLE INTEGRAL} with \texttt{q=24X*(1-X-Y)}, $A=0$, outer $x$ limits $0,1$, inner $y$ limits $0,\texttt{1-X}$, multiplier 1, and $N=4$. The raw integral is approximately 1, confirming the proposed normalization numerically. The sloping upper bound is the key entry.
+
+\textbf{(a) Marginal formulas require the appropriate slices.}
+\[
+\boxed{f_X(x)=\int_0^{1-x}24x(1-x-y)\dd y
+=12x(1-x)^2,\quad0<x<1,}
+\]
+\[
+\boxed{f_Y(y)=\int_0^{1-y}24x(1-x-y)\dd x
+=4(1-y)^3,\quad0<y<1.}
+\]
+Both densities are zero otherwise. Each upper limit comes from $x+y<1$.
+
+\textbf{Numerical checks of the two marginals, with original variable names.} Choose \texttt{DENSITY + INTEGRAL > JOINT SLICE}. Use joint shape \texttt{24X*(1-X-Y)} and known $c=1$ in both directions:
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.19\linewidth}Xp{0.21\linewidth}@{}}
+\toprule Target & Direction, fixed value, remaining-variable bounds & Marginal output\\\midrule
+$f_X(1/2)$ & \texttt{Y GIVEN X}; given $1/2$; bounds $0$, \texttt{1-X} & $3/2$\\
+$f_Y(1/2)$ & \texttt{X GIVEN Y}; given $1/2$; bounds $0$, \texttt{1-Y} & $1/2$\\\bottomrule
+\end{tabularx}
+\end{center}
+The first result exceeds one because it is a density value, not an interval probability. The app keeps the fixed coordinate in place while integrating the remaining one. These spot checks verify arithmetic at chosen values; the integral formulas above supply the complete marginal densities.
+
+\textbf{(b) Independence.} The marginals are positive throughout $(0,1)$, but the joint PDF is zero wherever $x+y>1$. For example, on the positive-area rectangle $0.6<x<0.8$, $0.6<y<0.8$, the marginal product is positive while the joint PDF is zero. Therefore $f_{X,Y}\ne f_Xf_Y$ on a set of positive area and the variables are dependent.
+
+\textbf{Why the app helps.} It checks the normalization and evaluates marginal slices with a moving bound. The app cannot replace the symbolic marginal derivations or the support-based independence argument.
+
+\clearpage
+\subsection{Optional STA 631 Question 5: conditional reimbursement}
+The joint density is $f(x,y)=(20-x)/(25x)$ on $10<x<20$, $x/2<y<x$. Here $X$ is spending and $Y$ is reimbursement.
+
+\textbf{(a) Marginal of spending.} The density is constant in $y$ over an interval of length $x/2$, so
+\[
+\boxed{f_X(x)=\int_{x/2}^x\frac{20-x}{25x}\dd y
+=\frac{20-x}{50},\quad10<x<20,}
+\]
+with zero elsewhere. The interval length is more efficient than doing a long integration.
+
+\textbf{App check of (a).} Choose \texttt{DENSITY + INTEGRAL > JOINT SLICE > Y GIVEN X}. Enter \texttt{q=(20-X)/(25X)}, known $c=1$, given spending $X=12$, lower reimbursement bound \texttt{X/2}, and upper bound \texttt{X}. The app reports marginal density $f_X(12)\approx4/25$. Original $X$ remains the spending variable; the app integrates in $Y$. It also reports conditional mean 9 and variance 3, which are useful checks but are not required here.
+
+\textbf{(b) Conditional density of reimbursement.}
+\[
+\boxed{f_{Y\mid X}(y\mid x)=\frac{(20-x)/(25x)}{(20-x)/50}
+=\frac2x,\quad\frac x2<y<x,\quad10<x<20.}
+\]
+Thus $Y\mid X=x$ is uniform on $(x/2,x)$. At $x=12$ its density is $1/6$ on $(6,12)$.
+
+\textbf{(c) Continue in the same joint-slice model.} Choose \texttt{INTERVAL PROB}, enter event lower 8 and event upper 12, and read approximately
+\[
+\boxed{P(Y\ge8\mid X=12)=\frac23.}
+\]
+No density re-entry or variable renaming is needed. Alternatively, the quick-load route \texttt{OPTIONAL 631 > HW4 Q5 REIMBURSE} preloads the equivalent uniform slice on $(6,12)$; choose its \texttt{INTERVAL PROB} and enter 8,12.
+Write the exact calculation as
+\[
+P(Y\ge8\mid X=12)=\int_8^{12}\frac16\dd y
+=\frac{12-8}{12-6}=\frac23.
+\]
+
+\textbf{Why this is easier.} Recognizing the uniform conditional law reduces the problem to an interval-length ratio. The app automatically divides the event integral by the full conditional-slice mass. You never divide by $P(X=12)$, which is zero in this continuous model.

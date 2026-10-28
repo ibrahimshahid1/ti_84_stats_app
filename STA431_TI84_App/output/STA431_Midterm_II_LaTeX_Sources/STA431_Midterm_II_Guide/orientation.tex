@@ -1,0 +1,32 @@
+\section*{Scope, reading plan, and notation}
+\addcontentsline{toc}{section}{Scope, reading plan, and notation}
+This guide follows your topic list. The repeated expectation item is combined into one topic; the seven resulting sections have ten original questions each. These questions model methods from Homeworks 4--5, rather than predicting the actual exam. The earlier whole-course study guide serves as a reading map; the textbook and homework PDFs supply the mathematical sources checked for this edition.
+
+\textbf{Study sequence.} Read a concept and its example, cover the checkpoint answer, and solve the checkpoint. Then attempt the corresponding ten-question practice set without consulting the solutions. Use the homework keys to check whether you can reproduce the assigned methods. Finally work a mixed set: A2, A6, B4, C6, D2, D6, E4, F3, F8, G3.
+
+\begin{tabularx}{\linewidth}{@{}p{0.10\linewidth}Xp{0.31\linewidth}@{}}
+\toprule Set & Skill & Homework connection\\\midrule
+A & Joint, marginal, conditional distributions; support; probabilities & HW4 common 1--3; STA431 4--5\\
+B & Expectation, functions of variables, linearity & HW5 common 1--2\\
+C & Raw and central moments; variance & HW5 common 1--2\\
+D & MGFs, derivatives, transformations, uniqueness & HW5 common 3--4\\
+E & Product moments, covariance, correlation & HW5 STA431 8\\
+F & One and two linear combinations & HW5 common 5--6; Freund Ch4 \S7\\
+G & Conditional mean and variance & HW5 common 7; STA431 8\\\bottomrule
+\end{tabularx}
+
+\subsection*{Notation that prevents common errors}
+$p_{X,Y}$ denotes a joint PMF, $f_{X,Y}$ a joint PDF, and $F_{X,Y}$ a joint CDF. Freund often uses $f$ for either a PMF or a PDF and $g,h$ for marginals; the meaning depends on the support and whether you sum or integrate. A support is the set on which probability mass or density can be positive. Every density is zero outside its stated support unless otherwise specified.
+
+$\mu_X=\E X$, $\sigma_X^2=\Var(X)$, $\mu'_r=\E(X^r)$, and $\mu_r=\E[(X-\mu_X)^r]$. The quantity $\E(XY)$ is not generally $\E X\E Y$. In conditional formulas the value after the vertical bar is held fixed.
+
+\begin{insight}[A repeatable solution method]
+\textbf{1. Model:} define the variables and translate words into an event or payoff.\quad
+\textbf{2. Support:} list the pairs or sketch the region.\quad
+\textbf{3. Normalize:} check nonnegativity and total mass one.\quad
+\textbf{4. Choose:} marginal, conditional, probability, moment, or MGF.\quad
+\textbf{5. Set up:} write the full sum/integral with limits before calculating.\quad
+\textbf{6. Check:} probability in $[0,1]$, variance nonnegative, sensible units, conditionals normalized.
+\end{insight}
+
+\textbf{Handwritten sheet.} Copy the separate landscape master using its three-column layout on each side. The explanations and solutions stay here for learning. US Letter landscape is $11\times8.5$ inches; a 0.3 mm pen helps with small lettering, but handwriting size determines fit. The master uses approximately 8-point body text; use a printout at actual size as your spacing guide.

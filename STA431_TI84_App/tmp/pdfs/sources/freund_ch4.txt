@@ -1,0 +1,2030 @@
+
+===PDF PAGE 118; PRINTED 113===
+Mathematical Expectation
+
+
+ 1 Introduction                                        6 Product Moments
+ 2 The Expected Value of a Random                      7 Moments of Linear Combinations of Random
+   Variable                                              Variables
+ 3 Moments                                             8 Conditional Expectations
+ 4 Chebyshev’s Theorem                                 9 The Theory in Practice
+ 5 Moment-Generating Functions
+
+
+1 Introduction          Originally, the concept of a mathematical expectation arose in connection with games
+                        of chance, and in its simplest form it is the product of the amount a player stands to
+                        win and the probability that he or she will win. For instance, if we hold one of 10,000
+                        tickets in a raffle for which the grand prize is a trip worth $4,800, our mathemati-
+                        cal expectation is 4,800 · 10,000
+                                                      1
+                                                          = $0.48. This amount will have to be interpreted in
+                        the sense of an average—altogether the 10,000 tickets pay $4,800, or on the average
+                        $4,800
+                        10,000 = $0.48 per ticket.
+                             If there is also a second prize worth $1,200 and a third prize worth $400, we can
+                        argue that altogether the 10,000 tickets pay $4,800 + $1,200 + $400 = $6,400, or on
+                        the average $6,400
+                                       10,000 = $0.64 per ticket. Looking at this in a different way, we could
+                        argue that if the raffle is repeated many times, we would lose 99.97 percent of the
+                        time (or with probability 0.9997) and win each of the prizes 0.01 percent of the time
+                        (or with probability 0.0001). On the average we would thus win
+
+                                  0(0.9997) + 4,800(0.0001) + 1,200(0.0001) + 400(0.0001) = $0.64
+
+                        which is the sum of the products obtained by multiplying each amount by the corre-
+                        sponding probability.
+
+
+
+2 The Expected Value of a Random Variable
+                        In the illustration of the preceding section, the amount we won was a random vari-
+                        able, and the mathematical expectation of this random variable was the sum of the
+                        products obtained by multiplying each value of the random variable by the corre-
+                        sponding probability. Referring to the mathematical expectation of a random vari-
+                        able simply as its expected value, and extending the definition to the continuous case
+                        by replacing the operation of summation by integration, we thus have the following
+                        definition.
+
+
+
+
+                        From Chapter 4 of John E. Freund’s Mathematical Statistics with Applications,
+                        Eighth Edition. Irwin Miller, Marylees Miller. Copyright © 2014 by Pearson Education, Inc.
+                        All rights reserved.
+                                                                                                                     113
+
+
+===PDF PAGE 119; PRINTED 114===
+                     Mathematical Expectation
+
+
+
+        DEFINITION 1. EXPECTED VALUE. If X is a discrete random variable and f(x) is the
+        value of its probability distribution at x, the expected value of X is
+                                                   
+                                        E(X) =           x · f (x)
+                                                     x
+
+        Correspondingly, if X is a continuous random variable and f(x) is the value of its
+        probability density at x, the expected value of X is
+                                                 q
+                                      E(X) =             x · f (x)dx
+                                                   −q
+
+
+      In this definition it is assumed, of course, that the sum or the integral exists; other-
+      wise, the mathematical expectation is undefined.
+
+      EXAMPLE 1
+      A lot of 12 television sets includes 2 with white cords. If 3 of the sets are chosen
+      at random for shipment to a hotel, how many sets with white cords can the shipper
+      expect to send to the hotel?
+
+      Solution
+          x 
+      Since    of the2 sets with white cords and 3 − x of the 10 
+                                                                   other sets can be 
+                                                                                    chosen
+          2       10                                             12                    12
+      in                ways, 3 of the 12 sets can be chosen in       ways, and these
+          x     3−x                                               3                     3
+      possibilities are presumably equiprobable, we find that the probability distribution
+      of X, the number of sets with white cords shipped to the hotel, is given by
+
+                                              
+                                        2     10
+                                        x   3−x
+                               f (x) =                      for x = 0, 1, 2
+                                           12
+                                            3
+
+
+      or, in tabular form,
+
+                                       x       0          1        2
+
+                                                 6         9       1
+                                       f (x)
+                                                11        22      22
+
+      Now,
+                                            6      9        1   1
+                             E(X) = 0 ·       +1 ·    +2 ·    =
+                                           11      22      22   2
+
+      and since half a set cannot possibly be shipped, it should be clear that the term
+      “expect” is not used in its colloquial sense. Indeed, it should be interpreted as an
+      average pertaining to repeated shipments made under the given conditions.
+
+
+
+
+114
+
+
+===PDF PAGE 120; PRINTED 115===
+                Mathematical Expectation
+
+
+EXAMPLE 2
+Certain coded measurements of the pitch diameter of threads of a fitting have the
+probability density
+                             ⎧
+                             ⎪
+                             ⎨     4
+                                           for 0 < x < 1
+                      f (x) = π(1 + x2 )
+                             ⎪
+                             ⎩0            elsewhere
+
+
+Find the expected value of this random variable.
+
+Solution
+Using Definition 1, we have
+
+                                         1
+                                                       4
+                              E(X) =          x·              dx
+                                         0         π(1 + x2 )
+                                              1
+                                        4            x
+                                    =                     dx
+                                        π     0    1 + x2
+                                        ln 4
+                                    =        = 0.4413
+                                         π
+
+
+
+     There are many problems in which we are interested not only in the expected
+value of a random variable X, but also in the expected values of random variables
+related to X. Thus, we might be interested in the random variable Y, whose values
+are related to those of X by means of the equation y = g(x); to simplify our notation,
+we denote this random variable by g(X). For instance, g(X) might be X 3 so that
+when X takes on the value 2, g(X) takes on the value 23 = 8. If we want to find
+the expected value of such a random variable g(X), we could first determine its
+probability distribution or density and then use Definition 1, but generally it is easier
+and more straightforward to use the following theorem.
+
+
+
+        THEOREM 1. If X is a discrete random variable and f (x) is the value of its
+        probability distribution at x, the expected value of g(X) is given by
+                                                   
+                                  E[g(X)] =              g(x) · f (x)
+                                                    x
+
+        Correspondingly, if X is a continuous random variable and f (x) is the
+        value of its probability density at x, the expected value of g(X) is given by
+                                                   q
+                                E[g(X)] =               g(x) · f (x) dx
+                                                   −q
+
+        Proof Since a more general proof is beyond the scope of this chapter, we
+        shall prove this theorem here only for the case where X is discrete and
+        has a finite range. Since y = g(x) does not necessarily define a one-to-one
+        correspondence, suppose that g(x) takes on the value gi when x takes on
+
+
+
+
+                                                                                            115
+
+
+===PDF PAGE 121; PRINTED 116===
+                      Mathematical Expectation
+
+
+              the values xi1 , xi2 , . . . , xini . Then, the probability that g(X) will take on the
+              value gi is
+                                                                       ni
+                                                       P[g(X) = gi ] =     f (xij )
+                                                                           j=1
+
+              and if g(x) takes on the values g1 , g2 , . . . , gm , it follows that
+
+                                                             
+                                                             m
+                                               E[g(X)] =           gi · P[g(X) = gi ]
+                                                             i=1
+
+                                                             
+                                                             m            
+                                                                          ni
+                                                         =         gi ·         f (xij )
+                                                             i=1          j=1
+
+                                                             
+                                                             m 
+                                                               ni
+                                                         =                gi · f (xij )
+                                                             i=1 j=1
+                                                             
+                                                         =         g(x) · f (x)
+                                                              x
+
+              where the summation extends over all values of X.
+
+
+
+
+      EXAMPLE 3
+      If X is the number of points rolled with a balanced die, find the expected value of
+      g(X) = 2X 2 + 1.
+
+      Solution
+      Since each possible outcome has the probability 16 , we get
+
+
+                                         
+                                         6
+                                                       1
+                          E[g(X)] =        (2x2 + 1) ·
+                                                       6
+                                         x=1
+                                                        1                          1
+                                     = (2 · 12 + 1) ·     + · · · + (2 · 62 + 1) ·
+                                                        6                          6
+                                         94
+                                     =
+                                         3
+
+
+
+
+      EXAMPLE 4
+      If X has the probability density
+
+
+                                                   ex    for x > 0
+                                         f (x) =
+                                                   0     elsewhere
+
+
+      find the expected value of g(X) = e3X/4 .
+
+
+
+116
+
+
+===PDF PAGE 122; PRINTED 117===
+                Mathematical Expectation
+
+
+Solution
+According to Theorem 1, we have
+                                               q
+                               E[e3X/4 ] =          e3x/4 · e−x dx
+                                               0
+                                               q
+                                          =         e−x/4 dx
+                                               0
+                                          =4
+
+
+     The determination of mathematical expectations can often be simplified by using
+the following theorems, which enable us to calculate expected values from other
+known or easily computed expectations. Since the steps are essentially the same,
+some proofs will be given for either the discrete case or the continuous case; others
+are left for the reader as exercises.
+
+
+        THEOREM 2. If a and b are constants, then
+
+                                     E(aX + b) = aE(X) + b
+
+        Proof Using Theorem 1 with g(X) = aX + b, we get
+                                  q
+                     E(aX + b) =     (ax + b) · f (x) dx
+                                          −q
+                                           q                          q
+                                     =a            x · f (x) dx + b         f (x) dx
+                                              −q                      −q
+
+                                     = aE(X) + b
+
+    If we set b = 0 or a = 0, we can state the following corollaries to Theorem 2.
+
+
+        COROLLARY 1. If a is a constant, then
+
+                                          E(aX) = aE(X)
+
+
+        COROLLARY 2. If b is a constant, then
+
+                                               E(b) = b
+
+Observe that if we write E(b), the constant b may be looked upon as a random
+variable that always takes on the value b.
+
+
+        THEOREM 3. If c1 , c2 , . . . , and cn are constants, then
+                                    ⎡               ⎤
+                                        n              
+                                                        n
+                                E⎣         ci gi (X)⎦ =    ci E[gi (X)]
+                                    i=1                  i=1
+
+
+
+
+                                                                                        117
+
+
+===PDF PAGE 123; PRINTED 118===
+                     Mathematical Expectation
+
+                                                                                 
+                                                                                 n
+              Proof According to Theorem 1 with g(X) =                                ci gi (X), we get
+                                                                                i=1
+                                    ⎡                  ⎤    ⎡            ⎤
+                                        
+                                        n                   n
+                               E⎣             ci gi (X)⎦ =  ⎣   ci gi (x)⎦ f (x)
+                                        i=1                     x         i=1
+
+                                                               
+                                                               n 
+                                                           =                ci gi (x)f (x)
+                                                               i=1      x
+
+                                                               
+                                                               n          
+                                                           =         ci         gi (x)f (x)
+                                                               i=1          x
+
+                                                               
+                                                               n
+                                                           =         ci E[gi (X)]
+                                                               i=1
+
+
+
+
+      EXAMPLE 5
+      Making use of the fact that
+
+                                                                                        1   91
+                         E(X 2 ) = (12 + 22 + 32 + 42 + 52 + 62 ) ·                       =
+                                                                                        6    6
+
+      for the random variable of Example 3, rework that example.
+
+      Solution
+                                                                            91      94
+                          E(2X 2 + 1) = 2E(X 2 ) + 1 = 2 ·                     +1 =
+                                                                             6       3
+
+
+
+      EXAMPLE 6
+      If the probability density of X is given by
+
+                                                   2(1 − x)     for 0 < x < 1
+                                    f (x) =
+                                                   0            elsewhere
+
+       (a) show that
+                                                                    2
+                                                  E(X r ) =
+                                                              (r + 1)(r + 2)
+       (b) and use this result to evaluate
+                                                       E[(2X + 1)2 ]
+      Solution
+       (a)                                1                                     1
+                                r                  r
+                           E(X ) =                x · 2(1 − x) dx = 2                 (xr − xr+1 ) dx
+                                          0                                      0
+                                                                   
+                                                   1   1                          2
+                                     =2              −                  =
+                                                  r+1 r+2                   (r + 1)(r + 2)
+
+
+
+
+118
+
+
+===PDF PAGE 124; PRINTED 119===
+               Mathematical Expectation
+
+
+ (b) Since E[(2X + 1)2 ] = 4E(X 2 ) + 4E(X) + 1 and substitution of r = 1 and r = 2
+     into the preceding formula yields E(X) = 2·3
+                                               2
+                                                  = 13 and E(X 2 ) = 3·4
+                                                                      2
+                                                                         = 16 , we get
+
+
+                                                        1    1
+                             E[(2X + 1)2 ] = 4 ·          +4· +1 = 3
+                                                        6    3
+
+
+
+
+EXAMPLE 7
+Show that
+                                           
+                                        
+                                        n
+                                           n n−i i
+                                    n
+                         E[(aX + b) ] =       a b E(X n−i )
+                                           i
+                                           i=0
+
+
+
+Solution                
+                    
+                    n   n
+Since (ax + b)n =          (ax)n−i bi , it follows that
+                    i=0 i
+
+
+                                          ⎡                   ⎤
+                                            n
+                                            n
+                        E[(aX + b)n ] = E ⎣       an−i bi X n−i ⎦
+                                               i
+                                                i=0
+
+                                             
+                                          
+                                          n
+                                             n n−i i
+                                        =       a b E(X n−i )
+                                             i
+                                          i=0
+
+
+
+
+    The concept of a mathematical expectation can easily be extended to situations
+involving more than one random variable. For instance, if Z is the random variable
+whose values are related to those of the two random variables X and Y by means of
+the equation z = g(x, y), we can state the following theorem.
+
+
+        THEOREM 4. If X and Y are discrete random variables and f (x, y) is the
+        value of their joint probability distribution at (x, y), the expected value of
+        g(X, Y) is
+                                           
+                             E[g(X, Y)] =          g(x, y) · f (x, y)
+                                                    x   y
+
+        Correspondingly, if X and Y are continuous random variables and f (x, y)
+        is the value of their joint probability density at (x, y), the expected value of
+        g(X, Y) is                            q       q
+                          E[g(X, Y)] =                      g(x, y)f (x, y) dx dy
+                                           −q −q
+
+
+
+Generalization of this theorem to functions of any finite number of random variables
+is straightforward.
+
+
+
+                                                                                           119
+
+
+===PDF PAGE 125; PRINTED 120===
+                      Mathematical Expectation
+
+
+      EXAMPLE 8
+      Find the expected value of g(X, Y) = X + Y.
+
+      Solution
+                                  
+                                  2 2
+                  E(X + Y) =                (x + y) · f (x, y)
+                                  x=0 y=0
+
+                                         1             2             1             1
+                               = (0 + 0) ·  + (0 + 1) · + (0 + 2) ·    + (1 + 0) ·
+                                         6             9            36             3
+                                            1             1
+                                 + (1 + 1) · + (2 + 0) ·
+                                            6            12
+                                 10
+                               =
+                                  9
+
+
+
+
+      EXAMPLE 9
+      If the joint probability density of X and Y is given by
+
+                                          7 (x + 2y)     for 0 < x < 1, 1 < y < 2
+                                          2
+                            f (x, y) =
+                                         0               elsewhere
+
+      find the expected value of g(X, Y) = X/Y 3 .
+
+      Solution
+                                                     2 1
+                                            3           2x(x + 2y)
+                                  E(X/Y ) =                        dx dy
+                                                   1  0    7y3
+                                                               
+                                                  2 2 1        1
+                                                =           +      dy
+                                                  7 1 3y3 y2
+                                                    15
+                                                =
+                                                    84
+
+
+
+          The following is another theorem that finds useful applications in subsequent
+      work. It is a generalization of Theorem 3, and its proof parallels the proof of that
+      theorem.
+
+
+              THEOREM 5. If c1 , c2 , . . . , and cn are constants, then
+                      ⎡                                   ⎤
+                         n                                  n
+                    E ⎣                                   ⎦
+                             ci gi (X1 , X2 , . . . , Xk ) =     ci E[gi (X1 , X2 , . . . , Xk )]
+                            i=1                                  i=1
+
+
+
+
+120
+
+
+===PDF PAGE 126; PRINTED 121===
+                                                        Mathematical Expectation
+
+
+Exercises
+1. To illustrate the proof of Theorem 1, consider the ran-            9. (a) If X takes on the values 0, 1, 2, and 3 with probabil-
+dom variable X, which takes on the values −2, −1, 0, 1,                      1
+                                                                      ities 125   12 48
+                                                                                , 125             64
+                                                                                      , 125 , and 125 , find E(X) and E(X 2 ).
+2, and 3 with probabilities f (−2), f (−1), f (0), f (1), f (2),      (b) Use the results of part (a) to determine the value of
+and f (3). If g(X) = X 2 , find                                       E[(3X + 2)2 ].
+(a) g1 , g2 , g3 , and g4 , the four possible values of g(x);
+(b) the probabilities P[g(X) = gi ] for i = 1, 2, 3, 4;               10. (a) If the probability density of X is given by
+                                                                                           ⎧
+                      4
+                                                                                           ⎪
+(c) E[g(X)] =             gi · P[g(X) = gi ], and show that                                ⎨ 1         for 1 < x < 3
+                   i=1                                                              f (x) = x(ln 3)
+it equals                                                                                  ⎪
+                                                                                           ⎩0          elsewhere
+                         
+                                g(x) · f (x)
+                                                                      find E(X), E(X 2 ), and E(X 3 ).
+                          x
+                                                                      (b) Use the results of part (a) to determine E(X 3 + 2X 2 −
+                                                                      3X + 1).
+2. Prove Theorem 2 for discrete random variables.
+                                                                      11. If the probability density of X is given by
+3. Prove Theorem 3 for continuous random variables.                                         ⎧
+                                                                                            ⎪
+                                                                                            ⎪ x
+4. Prove Theorem 5 for discrete random variables.                                           ⎪
+                                                                                            ⎪         for 0 < x F 1
+                                                                                            ⎪
+                                                                                            ⎪ 2
+                                                                                            ⎪
+                                                                                            ⎪
+                                                                                            ⎪
+                                                                                            ⎪ 1
+5. Given two continuous random variables X and Y, use                                       ⎪
+                                                                                            ⎨         for 1 < x F 2
+Theorem 4 to express E(X) in terms of                                               f (x) =   2
+(a) the joint density of X and Y;                                                           ⎪
+                                                                                            ⎪ 3−x
+                                                                                            ⎪
+                                                                                            ⎪
+(b) the marginal density of X.                                                              ⎪
+                                                                                            ⎪         for 2 < x < 3
+                                                                                            ⎪
+                                                                                            ⎪   2
+                                                                                            ⎪
+                                                                                            ⎪
+6. Find the expected value of the discrete random vari-                                     ⎪
+                                                                                            ⎩0        elsewhere
+able X having the probability distribution
+                                                                      find the expected value of g(X) = X 2 − 5X + 3.
+                      |x − 2|
+            f (x) =               for x = −1, 0, 1, 3                 12. This has been intentionally omitted for this edition.
+                         7
+7. Find the expected value of the random variable Y                   13. This has been intentionally omitted for this edition.
+whose probability density is given by                                 14. This has been intentionally omitted for this edition.
+                   ⎧
+                   ⎪
+                   ⎨ 1 ( y + 1) for 2 < y < 4                         15. This has been intentionally omitted for this edition.
+           f ( y) = 8                                                 16. If the probability distribution of X is given by
+                   ⎪
+                   ⎩0            elsewhere                                                  x
+                                                                                            1
+                                                                                   f (x) =          for x = 1, 2, 3, . . .
+8. Find the expected value of the random variable X                                         2
+whose probability density is given by                                 show that E(2X ) does not exist. This is the famous
+                    ⎧                                                 Petersburg paradox, according to which a player’s expec-
+                    ⎪
+                    ⎪          for 0 < x < 1                          tation is infinite (does not exist) if he or she is to receive
+                    ⎨x
+             f (x) = 2 − x for 1 F x < 2                              2x dollars when, in a series of flips of a balanced coin, the
+                    ⎪
+                    ⎪                                                 first head appears on the xth flip.
+                    ⎩0         elsewhere
+
+
+
+
+3 Moments                             In statistics, the mathematical expectations defined here and in Definition 4, called
+                                      the moments of the distribution of a random variable or simply the moments of a
+                                      random variable, are of special importance.
+
+
+
+
+                                                                                                                                       121
+
+
+===PDF PAGE 127; PRINTED 122===
+                       Mathematical Expectation
+
+
+
+        DEFINITION 2. MOMENTS ABOUT THE ORIGIN. The rth moment about the origin of a
+        random variable X, denoted by ␮r , is the expected value of X ; symbolically
+                                                           
+                                       μr = E(X r ) =          xr · f (x)
+                                                           x
+
+        for r = 0, 1, 2, . . . when X is discrete, and
+                                                          q
+                                     μr = E(X r ) =            xr · f (x)dx
+                                                         −q
+
+        when X is continuous.
+
+
+           It is of interest to note that the term “moment” comes from the field of physics:
+      If the quantities f (x) in the discrete case were point masses acting perpendicularly
+      to the x-axis at distances x from the origin, μ1 would   be the x-coordinate   of the
+      center of gravity, that is, the first moment divided by    f (x) = 1, and μ2 would be
+      the moment of inertia. This also explains why the moments μr are called moments
+      about the origin: In the analogy to physics, the length of the lever arm is in each
+      case the distance from the origin. The analogy applies also in the continuous case,
+      where μ1 and μ2 might be the x-coordinate of the center of gravity and the moment
+      of inertia of a rod of variable density.
+           When r = 0, we have μ0 = E(X 0 ) = E(1) = 1 by Corollary 2 of Theorem 2.
+      When r = 1, we have μ1 = E(X), which is just the expected value of the random
+      variable X, and in view of its importance in statistics we give it a special symbol and
+      a special name.
+
+
+
+        DEFINITION 3. MEAN OF A DISTRIBUTION. ␮1 is called the mean of the distribution of
+        X, or simply the mean of X, and it is denoted simply by ␮.
+
+
+          The special moments we shall define next are of importance in statistics because
+      they serve to describe the shape of the distribution of a random variable, that is, the
+      shape of the graph of its probability distribution or probability density.
+
+
+
+        DEFINITION 4. MOMENTS ABOUT THE MEAN. The rth moment about the mean of a
+        random variable X, denoted by ␮r , is the expected value of (X − ␮)r , symbolically
+                                               
+                                μr = E (X − μ)r =  (x − μ)r · f (x)
+                                                            x
+
+        for r = 0, 1, 2, . . . , when X is discrete, and
+                                                          q
+                                            
+                              μr = E (X − μ)r =                 (x − u)r · f (x)dx
+                                                           −q
+
+        when X is continuous.
+
+
+
+
+122
+
+
+===PDF PAGE 128; PRINTED 123===
+                Mathematical Expectation
+
+
+Note that μ0 = 1 and μ1 = 0 for any random variable for which μ exists (see
+Exercise 17).
+      The second moment about the mean is of special importance in statistics because
+it is indicative of the spread or dispersion of the distribution of a random variable;
+thus, it is given a special symbol and a special name.
+
+
+
+  DEFINITION 5. VARIANCE. ␮2 is called the variance of the distribution of X, or sim-
+  ply the variance of X, and it is denoted by σ 2 , σx 2 , var(X), or V(X). The positive
+  square root of the variance, σ , is called the standard deviation of X.
+
+
+
+Figure 1 shows how the variance reflects the spread or dispersion of the distribution
+of a random variable. Here we show the histograms of the probability distributions
+of four random variables with the same mean μ = 5 but variances equaling 5.26,
+3.18, 1.66, and 0.88. As can be seen, a small value of σ 2 suggests that we are likely to
+get a value close to the mean, and a large value of σ 2 suggests that there is a greater
+probability of getting a value that is not close to the mean. This will be discussed
+further in Section 4. A brief discussion of how μ3 , the third moment about the mean,
+describes the symmetry or skewness (lack of symmetry) of a distribution is given in
+Exercise 26.
+     In many instances, moments about the mean are obtained by first calculating
+moments about the origin and then expressing the μr in terms of the μr . To serve
+this purpose, the reader will be asked to verify a general formula in Exercise 25.
+Here, let us merely derive the following computing formula for σ 2 .
+
+
+
+
+                   Figure 1. Distributions with different dispersions.
+
+
+
+
+                                                                                            123
+
+
+===PDF PAGE 129; PRINTED 124===
+                      Mathematical Expectation
+
+
+              THEOREM 6.
+                                                 σ 2 = μ2 − μ2
+
+              Proof
+                                       σ 2 = E[(X − μ)2 ]
+                                            = E(X 2 − 2μX + μ2 )
+                                            = E(X 2 ) − 2μE(X) + E(μ2 )
+                                            = E(X 2 ) − 2μ · μ + μ2
+                                            = μ2 − μ2
+
+
+
+      EXAMPLE 10
+      Use Theorem 6 to calculate the variance of X, representing the number of points
+      rolled with a balanced die.
+
+      Solution
+      First we compute
+
+                                           1    1   1   1   1    1
+                      μ = E(X) = 1 ·         +2· +3· +4· +5· +6·
+                                           6    6   6   6   6    6
+                                       7
+                                   =
+                                       2
+      Now,
+
+                                           1       1      1      1      1       1
+                  μ2 = E(X 2 ) = 12 ·       + 22 · + 32 · + 42 · + 52 · + 62 ·
+                                           6       6      6      6      6       6
+                                   91
+                               =
+                                   6
+      and it follows that
+                                                   2
+                                           2 91    7     35
+                                         σ =    −      =
+                                              6    2     12
+
+
+
+      EXAMPLE 11
+      With reference to Example 2, find the standard deviation of the random
+      variable X.
+
+      Solution
+      In Example 2 we showed that μ = E(X) = 0.4413. Now
+                                                       1
+                                                  4   x2
+                              μ2 = E(X 2 ) =              dx
+                                                  π0 1+x
+                                                         2
+                                                              
+                                                 4 1        1
+                                               =      1−          dx
+                                                 π 0     1 + x2
+
+
+
+
+124
+
+
+===PDF PAGE 130; PRINTED 125===
+                                Mathematical Expectation
+
+
+                                                          4
+                                                        =    −1
+                                                          π
+                                                        = 0.2732
+
+
+                and it follows that
+
+                                          σ 2 = 0.2732 − (0.4413)2 = 0.0785
+
+                          √
+                and σ =    0.0785 = 0.2802.
+
+
+                    The following is another theorem that is of importance in work connected with
+                standard deviations or variances.
+
+
+
+                        THEOREM 7. If X has the variance σ 2 , then
+
+                                                     var(aX + b) = a2 σ 2
+
+
+                The proof of this theorem will be left to the reader, but let us point out the following
+                corollaries: For a = 1, we find that the addition of a constant to the values of a
+                random variable, resulting in a shift of all the values of X to the left or to the right,
+                in no way affects the spread of its distribution; for b = 0, we find that if the values
+                of a random variable are multiplied by a constant, the variance is multiplied by the
+                square of that constant, resulting in a corresponding change in the spread of the
+                distribution.
+
+
+
+4 Chebyshev’s Theorem
+                To demonstrate how σ or σ 2 is indicative of the spread or dispersion of the distribu-
+                tion of a random variable, let us now prove the following theorem, called
+                Chebyshev’s theorem after the nineteenth-century Russian mathematician P. L.
+                Chebyshev. We shall prove it here only for the continuous case, leaving the discrete
+                case as an exercise.
+
+
+                        THEOREM 8. (Chebyshev’s Theorem) If μ and σ are the mean and the stan-
+                        dard deviation of a random variable X, then for any positive constant
+                        k the probability is at least 1 − k12 that X will take on a value within k
+                        standard deviations of the mean; symbolically,
+                                                                       1
+                                              P(|x − μ| < kσ ) Ú 1 −      ,   σ Z0
+                                                                       k2
+
+                        Proof According to Definitions 4 and 5, we write
+                                                            q
+                                       2              2
+                                      σ = E[(X − μ) ] =         (x − μ)2 · f (x) dx
+                                                                 −q
+
+
+
+
+                                                                                                            125
+
+
+===PDF PAGE 131; PRINTED 126===
+                      Mathematical Expectation
+
+
+
+
+                          Figure 2. Diagram for proof of Chebyshev’s theorem.
+
+              Then, dividing the integral into three parts as shown in Figure 2, we get
+                                 μ−kσ                            μ+kσ
+                          2                        2
+                        σ =               (x − μ) · f (x) dx +              (x − μ)2 · f (x) dx
+                                 −q                                 μ−kσ
+                                     q
+                                +          (x − μ)2 · f (x) dx
+                                    μ+kσ
+
+
+              Since the integrand (x − μ)2 · f (x) is nonnegative, we can form the
+              inequality
+                                 μ−kσ                               q
+                         σ2 G              (x − μ)2 · f (x) dx +            (x − μ)2 · f (x) dx
+                                 −q                                 μ+kσ
+
+              by deleting the second integral. Therefore, since (x − μ)2 G k2 σ 2 for x F
+              μ − kσ or x G μ + kσ it follows that
+                                 μ−kσ                       q
+                           σ2 G         k2 σ 2 · f (x) dx +     k2 σ 2 · f (x) dx
+                                      −q                            μ+kσ
+
+              and hence that
+                                              μ−kσ                  q
+                                      1
+                                         G             f (x) dx +           f (x) dx
+                                      k2      −q                     μ+kσ
+
+              provided σ 2 Z 0. Since the sum of the two integrals on the right-hand side
+              is the probability that X will take on a value less than or equal to μ − kσ
+              or greater than or equal to μ + kσ , we have thus shown that
+                                                              1
+                                         P(|X − μ| G kσ ) F 2
+                                                             k
+              and it follows that
+                                                                1
+                                       P(|X − μ| < kσ ) G 1 − 2
+                                                                k
+
+
+          For instance, the probability is at least 1 − 212 = 34 that a random variable X will
+      take on a value within two standard deviations of the mean, the probability is at
+      least 1 − 312 = 89 that it will take on a value within three standard deviations of the
+      mean, and the probability is at least 1 − 512 = 24 25 that it will take on a value within
+
+
+
+
+126
+
+
+===PDF PAGE 132; PRINTED 127===
+                                Mathematical Expectation
+
+
+                 five standard deviations of the mean. It is in this sense that σ controls the spread
+                 or dispersion of the distribution of a random variable. Clearly, the probability given
+                 by Chebyshev’s theorem is only a lower bound; whether the probability that a given
+                 random variable will take on a value within k standard deviations of the mean is
+                 actually greater than 1 − k12 and, if so, by how much we cannot say, but Chebyshev’s
+                 theorem assures us that this probability cannot be less than 1 − k12 . Only when the
+                 distribution of a random variable is known can we calculate the exact probability.
+
+                 EXAMPLE 12
+                 If the probability density of X is given by
+
+                                                   630x4 (1 − x)4          for 0 < x < 1
+                                         f (x) =
+                                                   0                       elsewhere
+
+                 find the probability that it will take on a value within two standard deviations of the
+                 mean and compare this probability with the lower bound provided by Chebyshev’s
+                 theorem.
+
+                 Solution                                                                          
+                 Straightforward integration shows that μ = 12 and σ 2 = 44       1
+                                                                                    , so that σ = 1/44
+                 or approximately 0.15. Thus, the probability that X will take on a value within two
+                 standard deviations of the mean is the probability that it will take on a value between
+                 0.20 and 0.80, that is,
+                                                                0.80
+                                     P(0.20 < X < 0.80) =                  630x4 (1 − x)4 dx
+                                                                0.20
+                                                           = 0.96
+
+                     Observe that the statement “the probability is 0.96” is a much stronger state-
+                 ment than “the probability is at least 0.75,” which is provided by Chebyshev’s
+                 theorem.
+
+
+5 Moment-Generating Functions
+                 Although the moments of most distributions can be determined directly by evalu-
+                 ating the necessary integrals or sums, an alternative procedure sometimes provides
+                 considerable simplifications. This technique utilizes moment-generating functions.
+
+                   DEFINITION 6. MOMENT GENERATING FUNCTION. The moment generating function
+                   of a random variable X, where it exists, is given by
+                                                                 
+                                           MX (t) = E(etX ) =        etX · f (x)
+                                                                       x
+
+                   when X is discrete, and
+                                                                  q
+                                                         tX
+                                             MX (t) = E(e ) =               etx · f (x)dx
+                                                                    −q
+
+                   when X is continuous.
+
+
+
+
+                                                                                                           127
+
+
+===PDF PAGE 133; PRINTED 128===
+                        Mathematical Expectation
+
+
+      The independent variable is t, and we are usually interested in values of t in the
+      neighborhood of 0.
+          To explain why we refer to this function as a “moment-generating” function, let
+      us substitute for etx its Maclaurin’s series expansion, that is,
+
+                                                   t2 x2 t3 x3       tr xr
+                                  etx = 1 + tx +        +      +···+       +···
+                                                    2!    3!          r!
+      For the discrete case, we thus get
+                                                                  
+                                         t2 x2       tr xr
+            MX (t) =             1 + tx +       +···+       + · · · f (x)
+                         x
+                                           2!          r!
+                                                        t2  2                tr  r
+                    =        f (x) + t ·       xf (x) +     ·  x f (x) + · · · + ·   x f (x) + · · ·
+                         x                 x
+                                                          2! x                  r! x
+
+                                           t2                tr
+                    = 1 + μ · t + μ2 ·       + · · · + μr · + · · ·
+                                           2!                r!
+      and it can be seen that in the Maclaurin’s series of the moment-generating function
+                              tr
+      of X the coefficient of    is μr , the rth moment about the origin. In the continuous
+                              r!
+      case, the argument is the same.
+
+
+      EXAMPLE 13
+      Find the moment-generating function of the random variable whose probability den-
+      sity is given by
+                                          e−x for x > 0
+                                  f (x) =
+                                          0      elsewhere
+
+      and use it to find an expression for μr .
+
+      Solution
+      By definition
+                                                                 q
+                                      MX (t) = E(etX ) =              etx · e−x dx
+                                                                0
+                                                                 q
+                                                            =         e−x(1−t) dx
+                                                                0
+                                                                 1
+                                                            =            for t < 1
+                                                                1−t
+
+      As is well known, when |t| < 1 the Maclaurin’s series for this moment-generating
+      function is
+
+                        MX (t) = 1 + t + t2 + t3 + · · · + tr + · · ·
+                                                 t       t2     t3             tr
+                                   = 1 + 1! ·      + 2! · + 3! · + · · · + r! · + · · ·
+                                                1!       2!     3!             r!
+
+      and hence μr = r! for r = 0, 1, 2, . . . .
+
+
+
+
+128
+
+
+===PDF PAGE 134; PRINTED 129===
+               Mathematical Expectation
+
+
+       The main difficulty in using the Maclaurin’s series of a moment-generating func-
+tion to determine the moments of a random variable is usually not that of finding
+the moment-generating function, but that of expanding it into a Maclaurin’s series.
+If we are interested only in the first few moments of a random variable, say, μ1 and
+μ2 , their determination can usually be simplified by using the following theorem.
+
+
+        THEOREM 9.
+                                                 dr MX (t) 
+                                                                = μr
+                                                    dtr      t=0
+
+
+This follows from the fact that if a function is expanded as a power series in t, the
+               tr
+coefficient of r! is the rth derivative of the function with respect to t at t = 0.
+
+
+EXAMPLE 14
+                                                        
+                                                      1 3
+Given that X has the probability distribution f (x) =      for x = 0, 1, 2, and 3, find
+                                                      8 x
+the moment-generating function of this random variable and use it to determine μ1
+and μ2 .
+
+Solution
+In accordance with Definition 6,
+                                              
+                                      1  tx 3
+                                         3
+                                                tX
+                      MX (t) = E(e ) = ·   e
+                                      8       x
+                                                            x=0
+                                                      1
+                                                     =  (1 + 3et + 3e2t + e3t )
+                                                      8
+                                                      1
+                                                     = (1 + et )3
+                                                      8
+
+Then, by Theorem 9,
+                                                                      
+                                                      3                      3
+                         μ1 = MX
+                                
+                                  (0) =                 (1 + et )2 et      =
+                                                      8                 t=0   2
+and
+                                                                       
+                                        3               3              
+                  μ2 = MX
+                         
+                            (0) =         (1 + et )e2t + (1 + et )2 et      =3
+                                        4               8                t=0
+
+
+
+    Often the work involved in using moment-generating functions can be simplified
+by making use of the following theorem.
+
+
+        THEOREM 10. If a and b are constants, then
+           1. MX+a (t) = E[e(X+a)t ] = eat · MX (t);
+
+           2. MbX (t) = E(ebXt ) = MX (bt);
+                                                               
+                                  X+a
+                                            t         a          t
+           3. M X+a (t) = E[e      b
+                                                ]=e   bt   · MX    .
+                  b                                              b
+
+
+
+
+                                                                                          129
+
+
+===PDF PAGE 135; PRINTED 130===
+                                                        Mathematical Expectation
+
+
+                                       The proof of this theorem is left to the reader in Exercise 39. The first part of the
+                                       theorem is of special importance when a = −μ, and the third part is of special
+                                       importance when a = −μ and b = σ , in which case
+                                                                                          
+                                                                                  μt       t
+                                                                  M X−μ (t) = e− σ · MX
+                                                                       σ                   σ
+
+
+      Exercises
+      17. With reference to Definition 4, show that μ0 = 1            25. Show that
+      and that μ1 = 0 for any random variable for which                                                            
+                                                                                        r                             r
+      E(X) exists.                                                        μr = μr −       μr−1 · μ + · · · + (−1)i    μr−i · μi
+                                                                                        1                             i
+      18. Find μ, μ2 , and σ 2 for the random variable X that has
+                                                                                + · · · + (−1)r−1 (r − 1) · μr
+      the probability distribution f (x) = 12 for x = −2 and
+      x = 2.
+                                                                      for r = 1, 2, 3, . . . , and use this formula to express μ3 and
+      19. Find μ, μ2 , and σ 2 for the random variable X that has    μ4 in terms of moments about the origin.
+      the probability density                                         26. The symmetry or skewness (lack of symmetry) of a
+                              ⎧                                       distribution is often measured by means of the quantity
+                              ⎪
+                              ⎨
+                                x
+                                    for 0 < x < 2                                                   μ3
+                      f (x) =   2                                                              α3 = 3
+                              ⎪                                                                     σ
+                              ⎩0    elsewhere
+                                                                      Use the formula for μ3 obtained in Exercise 25 to deter-
+                                                                      mine α3 for each of the following distributions (which
+      20. Find μr and σ 2 for the random variable X that has the     have equal means and standard deviations):
+      probability density                                             (a) f (1) = 0.05, f (2) = 0.15, f (3) = 0.30, f (4) = 0.30,
+                                                                      f (5) = 0.15, and f (6) = 0.05;
+                          ⎧
+                          ⎪
+                          ⎨ 1 ·1                                      (b) f (1) = 0.05, f (2) = 0.20, f (3) = 0.15, f (4) = 0.45,
+                                       for 1 < x < 3                  f (5) = 0.10, and f (6) = 0.05.
+                   f (x) = ln 3 x
+                          ⎪
+                          ⎩0           elsewhere                      Also draw histograms of the two distributions and note
+                                                                      that whereas the first is symmetrical, the second has a
+                                                                      “tail” on the left-hand side and is said to be negatively
+      21. Prove Theorem 7.                                            skewed.
+
+      22. With reference to Exercise 8, find the variance of          27. The extent to which a distribution is peaked or flat,
+      g(X) = 2X + 3.                                                  also called the kurtosis of the distribution, is often mea-
+                                                                      sured by means of the quantity
+      23. If the random variable X has the mean μ and the stan-                                      μ4
+      dard deviation σ , show that the random variable Z whose                                 α4 = 4
+      values are related to those of X by means of the equation                                      σ
+      z = x−μσ has
+                                                                      Use the formula for μ4 obtained in Exercise 25 to find
+                                                                      α4 for each of the following symmetrical distributions,
+                    E(Z) = 0     and    var(Z) = 1                    of which the first is more peaked (narrow humped) than
+                                                                      the second:
+      A distribution that has the mean 0 and the variance 1 is        (a) f (−3) = 0.06, f (−2) = 0.09, f (−1) = 0.10, f (0) =
+      said to be in standard form, and when we perform the            0.50, f (1) = 0.10, f (2) = 0.09, and f (3) = 0.06;
+      above change of variable, we are said to be standardizing       (b) f (−3) = 0.04, f (−2) = 0.11, f (−1) = 0.20, f (0) =
+      the distribution of X.                                          0.30, f (1) = 0.20, f (2) = 0.11, and f (3) = 0.04.
+      24. If the probability density of X is given by                 28. Duplicate the steps used in the proof of Theorem 8 to
+                                                                      prove Chebyshev’s theorem for a discrete random vari-
+                                2x−3   for x > 1                      able X.
+                      f (x) =
+                                0      elsewhere                      29. Show that if X is a random variable with the mean μ
+                                                                      for which f (x) = 0 for x < 0, then for any positive con-
+      check whether its mean and its variance exist.                  stant a,
+
+
+
+
+130
+
+
+===PDF PAGE 136; PRINTED 131===
+                                                         Mathematical Expectation
+
+                                           μ                              35. If we let RX (t) = ln MX (t), show that RX (0) = μ and
+                          P(X G a) F
+                                           a                              RX (0) = σ 2 . Also, use these results to find the mean and
+                                                                          the variance of a random variable X having the moment-
+This inequality is called Markov’s inequality, and we have
+                                                                          generating function
+given it here mainly because it leads to a relatively simple
+                                                                                                     MX (t) = e4(e −1)
+                                                                                                                    t
+alternative proof of Chebyshev’s theorem.
+30. Use the inequality of Exercise 29 to prove Cheby-
+shev’s theorem. [Hint: Substitute (X − μ)2 for X.]                        36. Explain why there can be no random variable for
+                                                                          which MX (t) = 1−t
+                                                                                          t
+                                                                                             .
+31. What is the smallest value of k in Chebyshev’s theo-
+rem for which the probability that a random variable will                 37. Show that if a random variable has the probabil-
+take on a value between μ − kσ and μ + kσ is                              ity density
+(a) at least 0.95;
+                                                                                            1 −|x|
+(b) at least 0.99?                                                                       f (x) =
+                                                                                              e      for − q < x < q
+                                                                                            2
+32. If we let kσ = c in Chebyshev’s theorem, what does                    its moment-generating function is given by
+this theorem assert about the probability that a random
+variable will take on a value between μ − c and μ + c?                                                             1
+                                                                                                      MX (t) =
+                                                                                                                 1 − t2
+33. Find the moment-generating function of the contin-
+uous random variable X whose probability density is                       38. With reference to Exercise 37, find the variance of the
+given by                                                                  random variable by
+                       1 for 0 < x < 1                                    (a) expanding the moment-generating function as an infi-
+               f (x) =
+                       0 elsewhere                                        nite series and reading off the necessary coefficients;
+                                                                          (b) using Theorem 9.
+and use it to find μ1 , μ2 , and σ 2 .
+34. Find the moment-generating function of the discrete                   39. Prove the three parts of Theorem 10.
+random variable X that has the probability distribution
+                      x                                                 40. Given the moment-generating function MX (t) =
+                      1                                                         2
+           f (x) = 2       for x = 1, 2, 3, . . .                         e3t+8t , find the moment-generating function of the ran-
+                      3                                                   dom variable Z = 14 (X − 3), and use it to determine the
+and use it to determine the values of μ1 and μ2 .                       mean and the variance of Z.
+
+
+
+6 Product Moments
+                                      To continue the discussion of Section 3, let us now present the product moments of
+                                      two random variables.
+
+
+                                           DEFINITION 7. PRODUCT MOMENTS ABOUT THE ORIGIN. The rth and sth product
+                                           moment about the origin of the random variables X and Y, denoted by ␮r,s , is
+                                           the expected value of Xr Ys ; symbolically,
+                                                                                      
+                                                                μr,s = E(X r Y s ) =    xr ys · f (x, y)
+                                                                                            x    y
+
+                                           for r = 0, 1, 2, . . . and s = 0, 1, 2, . . . when X and Y are discrete, and
+                                                                                        q  q
+                                                               μr,s = E(X r Y s ) =                 xr ys · f (x, y)dxdy
+                                                                                       −q       −q
+
+                                           when X and Y are continuous.
+
+
+
+
+                                                                                                                                          131
+
+
+===PDF PAGE 137; PRINTED 132===
+                      Mathematical Expectation
+
+
+      In the discrete case, the double summation extends over the entire joint range of the
+      two random variables. Note that μ1,0 = E(X), which we denote here by μX , and that
+      μ0,1 = E(Y), which we denote here by μY .
+            Analogous to Definition 4, let us now state the following definition of product
+      moments about the respective means.
+
+
+        DEFINITION 8. PRODUCT MOMENTS ABOUT THE MEAN. The rth and sth product
+        moment about the means of the random variables X and Y, denoted by ␮r,s ,
+        is the expected value of (X − ␮X)r (Y − ␮Y )s ; symbolically,
+
+                              μr,s = E[(X − μX )r (Y − μY )s ]
+                                     
+                                   =       (x − μX )r (y − μY )s ·f (x, y)
+                                        x    y
+
+        for r = 0, 1, 2, . . . and s = 0, 1, 2, . . . when X and Y are discrete, and
+
+                          μr,s = E[(X − μX )r (Y − μY )s ]
+                                  q  q
+                               =         (x − μX )r (y − μY )s · f (x, y)dxdy
+                                   −q       −q
+
+        when X and Y are continuous.
+
+          In statistics, μ1,1 is of special importance because it is indicative of the relation-
+      ship, if any, between the values of X and Y; thus, it is given a special symbol and a
+      special name.
+
+        DEFINITION 9. COVARIANCE. ␮1,1 is called the covariance of X and Y, and it is
+        denoted by ␴XY , cov(X, Y), or C(X, Y).
+
+
+      Observe that if there is a high probability that large values of X will go with large
+      values of Y and small values of X with small values of Y, the covariance will be posi-
+      tive; if there is a high probability that large values of X will go with small values of Y,
+      and vice versa, the covariance will be negative. It is in this sense that the covariance
+      measures the relationship, or association, between the values of X and Y.
+           Let us now prove the following result, analogous to Theorem 6, which is useful
+      in actually determining covariances.
+
+              THEOREM 11.
+                                                 σXY = μ1, 1 − μX μY
+
+              Proof Using the various theorems about expected values, we can write
+                               σXY = E[(X − μX )(Y − μY )]
+                                    = E(XY − XμY − YμX + μX μY )
+                                    = E(XY) − μY E(X) − μX E(Y) + μX μY
+                                    = E(XY) − μY μX − μX μY + μX μY
+                                    = μ1, 1 − μX μY
+
+
+
+
+132
+
+
+===PDF PAGE 138; PRINTED 133===
+                  Mathematical Expectation
+
+
+EXAMPLE 15
+The joint and marginal probabilities of X and Y, the numbers of aspirin and sedative
+caplets among two caplets drawn at random from a bottle containing three aspirin,
+two sedative, and four laxative caplets, are recorded as follows:
+                                                x
+                                         0      1    2
+                                          1     1    1   7
+                                     0
+                                          6     3   12   12
+                                          2     1        7
+                                y    1
+                                          9     6        18
+                                          1              1
+                                     2
+                                         36              36
+                                          5     1    1
+                                         12     2   12
+Find the covariance of X and Y.
+
+Solution
+Referring to the joint probabilities given here, we get
+
+
+            μ1, 1 = E(XY)
+                             1      2       1      1     1       1
+                   = 0·0·      +0·1· +0·2·    +1·0· +1·1· +2·0·
+                             6      9      36      3     6      12
+                       1
+                   =
+                       6
+
+and using the marginal probabilities, we get
+
+                                               5    1     1   2
+                           μX = E(X) = 0 ·       +1· +2·    =
+                                              12    2    12   3
+
+and
+                                               7     7       1   4
+                           μY = E(Y) = 0 ·       +1·    +2·    =
+                                              12     18     36   9
+
+It follows that
+                                            1 2 4    7
+                                    σXY =    − · =−
+                                            6 3 9   54
+
+The negative result suggests that the more aspirin tablets we get the fewer sedative
+tablets we will get, and vice versa, and this, of course, makes sense.
+
+
+
+EXAMPLE 16
+Find the covariance of the random variables whose joint probability density is
+given by
+                               2 for x > 0, y > 0, x + y < 1
+                    f (x, y) =
+                               0 elsewhere
+
+
+
+                                                                                       133
+
+
+===PDF PAGE 139; PRINTED 134===
+                        Mathematical Expectation
+
+
+      Solution
+      Evaluating the necessary integrals, we get
+                                              1  1−x
+                                                                                    1
+                                    μX =                             2x dy dx =
+                                                 0       0                          3
+                                              1  1−x
+                                                                                    1
+                                    μY =                             2y dy dx =
+                                                 0       0                          3
+
+      and                                    1  1−x
+                                                                                    1
+                                   σ1,1 =                        2xy dy dx =
+                                             0       0                              12
+
+      It follows that
+
+                                                     1  1 1    1
+                                      σXY =            − · =−
+                                                     12 3 3   36
+
+
+          As far as the relationship between X and Y is concerned, observe that if X
+      and Y are independent, their covariance is zero; symbolically, we have the following
+      theorem.
+
+
+              THEOREM 12. If X and Y are independent, then E(XY) = E(X) · E(Y) and
+              σXY = 0.
+              Proof For the discrete case we have, by definition,
+                                                             
+                                        E(XY) =                            xy · f (x, y)
+                                                                 x     y
+
+              Since X and Y are independent, we can write f (x, y) = g(x) · h(y), where
+              g(x) and h(y) are the values of the marginal distributions of X and Y, and
+              we get
+                                                 
+                                  E(XY) =                        xy · g(x)h(y)
+                                                     x       y
+                                                 ⎡                         ⎤⎡              ⎤
+                                                                               
+                                            =⎣               x · g(x)⎦ ⎣            y · h(y)⎦
+                                                         x                      y
+
+                                            = E(X) · E(Y)
+
+              Hence,
+                                    σXY = μ1,1 − μX μY
+                                            = E(X) · E(Y) − E(X) · E(Y)
+                                            =0
+
+
+          It is of interest to note that the independence of two random variables implies
+      a zero covariance, but a zero covariance does not necessarily imply their indepen-
+      dence. This is illustrated by the following example (see also Exercises 46 and 47).
+
+
+
+134
+
+
+===PDF PAGE 140; PRINTED 135===
+               Mathematical Expectation
+
+
+EXAMPLE 17
+If the joint probability distribution of X and Y is given by
+
+
+                                             x
+                                          −1 0 1
+                                           1 1 1 2
+                                       −1
+                                           6 3 6 3
+                                   y    0 0      0 0 0
+
+                                            1        1 1
+                                        1        0
+                                            6        6 3
+                                            1    1 1
+                                            3    3 3
+
+show that their covariance is zero even though the two random variables are not
+independent.
+
+Solution
+Using the probabilities shown in the margins, we get
+
+
+                                     1      1      1
+                          μX = (−1) ·  +0· +1· = 0
+                                     3      3      3
+                                     2             1    1
+                          μY = (−1) · + 0 · 0 + 1 · = −
+                                     3             3    3
+
+and
+
+                               1          1         1         1          1
+          μ1,1 = (−1)(−1) ·     + 0(−1) · + 1(−1) · + (−1)1 · + 1 · 1 ·
+                               6          3         6         6          6
+               =0
+
+
+Thus, σXY = 0 − 0(− 13 ) = 0, the covariance is zero, but the two random variables are
+not independent. For instance, f (x, y) Z g(x) · h(y) for x = −1 and y = −1.
+
+
+    Product moments can also be defined for the case where there are more than
+two random variables. Here let us merely state the important result, in the following
+theorem.
+
+
+        THEOREM 13. If X1 , X2 , . . . , Xn are independent, then
+
+                      E(X1 X2 · . . . · Xn ) = E(X1 ) · E(X2 ) · . . . · E(Xn )
+
+
+This is a generalization of the first part of Theorem 12.
+
+
+
+                                                                                         135
+
+
+===PDF PAGE 141; PRINTED 136===
+                                       Mathematical Expectation
+
+
+      7 Moments of Linear Combinations of Random Variables
+                       In this section we shall derive expressions for the mean and the variance of a linear
+                       combination of n random variables and the covariance of two linear combinations
+                       of n random variables. Applications of these results will be important in our later
+                       discussion of sampling theory and problems of statistical inference.
+
+
+                               THEOREM 14. If X1 , X2 , . . . , Xn are random variables and
+                                                                           
+                                                                           n
+                                                                     Y=           ai Xi
+                                                                           i=1
+
+                               where a1 , a2 , . . . , an are constants, then
+                                                                           
+                                                                           n
+                                                                 E(Y) =           ai E(Xi )
+                                                                           i=1
+
+                               and                      
+                                                        n                           
+                                            var(Y) =           a2i · var(Xi ) + 2             ai aj · cov(Xi Xj )
+                                                        i=1                           i<j
+
+                               where the double summation extends over all values of i and j, from 1 to
+                               n, for which i < j.
+
+                               Proof From Theorem 5 with gi (X1 , X2 , . . . , Xk ) = Xi for i = 0, 1, 2, . . . , n,
+                               it follows immediately that
+                                                                ⎛              ⎞
+                                                                  n                 
+                                                                                     n
+                                                       E(Y) = E ⎝      ai Xi ⎠ =        ai E(Xi )
+                                                                            i=1                   i=1
+
+                               and this proves the first part of the theorem. To obtain the expression for
+                               the variance of Y, let us write μi for E(Xi ) so that we get
+                                                                             ⎧⎡                          ⎤2 ⎫
+                                                                           ⎪
+                                                                             ⎨   n         n              ⎪
+                                                                                                            ⎬
+                                          var(Y) = E [Y − E(Y)]2 = E ⎣              ai Xi −     ai E(Xi )⎦
+                                                                             ⎪
+                                                                             ⎩ i=1                          ⎪
+                                                                                                            ⎭
+                                                                                            i=1
+                                                      ⎧⎡                 ⎤2 ⎫
+                                                      ⎪
+                                                      ⎨ n                  ⎪
+                                                                            ⎬
+                                                    =E ⎣    ai (Xi − μi )⎦
+                                                      ⎪
+                                                      ⎩ i=1                 ⎪
+                                                                            ⎭
+
+                               Then, expanding by means of the multinomial theorem, according to which
+                               (a + b + c + d)2 , for example, equals a2 + b2 + c2 + d2 + 2ab + 2ac + 2ad +
+                               2bc + 2bd + 2cd, and again referring to Theorem 5, we get
+                                                       
+                                                       n                                  
+                                          var(Y) =           a2i E[(Xi − μi )2 ] + 2              ai aj E[(Xi − μi )(Xj − μj )]
+                                                       i=1                                  i<j
+
+                                                       
+                                                       n                          
+                                                   =         a2i · var(Xi ) + 2             ai aj · cov(Xi , Xj )
+                                                       i=1                          i<j
+
+                               Note that we have tacitly made use of the fact that cov(Xi , Xj ) = cov(Xj , Xi ).
+
+
+
+
+136
+
+
+===PDF PAGE 142; PRINTED 137===
+                 Mathematical Expectation
+
+
+    Since cov(Xi , Xj ) = 0 when Xi and Xj are independent, we obtain the following
+corollary.
+
+        COROLLARY 3. If the random variables X1 , X2 , . . . , Xn are independent and
+            
+            n
+        Y=     ai Xi , then
+              i=1
+                                                        
+                                                        n
+                                         var(Y) =             a2i · var(Xi )
+                                                        i=1
+
+
+
+EXAMPLE 18
+If the random variables X, Y, and Z have the means μX = 2, μY = −3, and μZ = 4,
+the variances σX2 = 1, σY2 = 5, and σZ2 = 2, and the covariances cov(X, Y) = −2,
+cov(X, Z) = −1, and cov(Y, Z) = 1, find the mean and the variance of
+W = 3X − Y + 2Z.
+
+Solution
+By Theorem 14, we get
+
+                               E(W) = E(3X − Y + 2Z)
+                                         = 3E(X) − E(Y) + 2E(Z)
+                                         = 3 · 2 − (−3) + 2 · 4
+                                         = 17
+
+and
+                 var(W) = 9 var(X) + var(Y) + 4 var(Z) − 6 cov(X, Y)
+                              + 12 cov(X, Z) − 4 cov(Y, Z)
+                           = 9 · 1 + 5 + 4 · 2 − 6(−2) + 12(−1) − 4 · 1
+                           = 18
+
+
+    The following is another important theorem about linear combinations of ran-
+dom variables; it concerns the covariance of two linear combinations of n random
+variables.
+
+        THEOREM 15. If X1 , X2 , . . . , Xn are random variables and
+                                         
+                                         n                              
+                                                                        n
+                                Y1 =            ai Xi   and      Y2 =          bi Xi
+                                          i=1                            i=1
+
+        where a1 , a2 , . . . , an , b1 , b2 , . . . , bn are constants, then
+                                 
+                                 n                            
+              cov(Y1 , Y2 ) =           ai bi · var(Xi ) +      (ai bj + aj bi ) · cov(Xi , Xj )
+                                  i=1                           i<j
+
+
+The proof of this theorem, which is very similar to that of Theorem 14, will be left to
+the reader in Exercise 52.
+    Since cov(Xi , Xj ) = 0 when Xi and Xj are independent, we obtain the following
+corollary.
+
+
+                                                                                                   137
+
+
+===PDF PAGE 143; PRINTED 138===
+                                        Mathematical Expectation
+
+
+                                COROLLARY 4. If the random variables X1 , X2 , . . . , Xn are independent, Y1 =
+                                n                n
+                                   ai Xi and Y2 =     bi Xi , then
+                                i=1                i=1
+
+                                                                           
+                                                                           n
+                                                         cov(Y1 , Y2 ) =         ai bi · var(Xi )
+                                                                           i=1
+
+
+
+                        EXAMPLE 19
+                        If the random variables X, Y, and Z have the means μX = 3, μY = 5, and μZ = 2,
+                        the variances σX2 = 8, σY2 = 12, and σZ2 = 18, and cov(X, Y) = 1, cov(X, Z) = −3,
+                        and cov(Y, Z) = 2, find the covariance of
+
+                                             U = X + 4Y + 2Z        and      V = 3X − Y − Z
+
+                        Solution
+                        By Theorem 15, we get
+
+                                      cov(U, V) = cov(X + 4Y + 2Z, 3X − Y − Z)
+                                               = 3 var(X) − 4 var(Y) − 2 var(Z) + 11 cov(X, Y)
+                                                  + 5 cov(X, Z) − 6 cov(Y, Z)
+                                               = 3 · 8 − 4 · 12 − 2 · 18 + 11 · 1 + 5(−3) − 6 · 2
+                                               = −76
+
+
+
+      8 Conditional Expectations
+                        Conditional probabilities are obtained by adding the values of conditional prob-
+                        ability distributions, or integrating the values of conditional probability densities.
+                        Conditional expectations of random variables are likewise defined in terms of their
+                        conditional distributions.
+
+
+                          DEFINITION 10. CONDITIONAL EXPECTATION. If X is a discrete random variable, and
+                          f(x|y) is the value of the conditional probability distribution of X given Y = y at
+                          x, the conditional expectation of u(X) given Y = y is
+                                                                     
+                                                    E[u(X)|y)] =           u(x) · f (x|y)
+                                                                       x
+
+                          Correspondingly, if X is a continuous variable and f(x|y) is the value of the condi-
+                          tional probability distribution of X given Y = y at x, the conditional expectation
+                          of u(X) given Y = y is
+                                                                     q
+                                                  E[(u(X)|y)] =            u(x) · f (x|y)dx
+                                                                     =q
+
+
+
+
+                        Similar expressions based on the conditional probability distribution or density of Y
+                        given X = x define the conditional expectation of υ(Y) given X = x.
+
+
+138
+
+
+===PDF PAGE 144; PRINTED 139===
+               Mathematical Expectation
+
+
+    If we let u(X) = X in Definition 10, we obtain the conditional mean of the
+random variable X given Y = y, which we denote by
+                                    μX|y = E(X|y)
+Correspondingly, the conditional variance of X given Y = y is
+                                2
+                               σX|y = E[(X − μX|y )2 |y]
+
+                                     = E(X 2 |y) − μ2X|y
+
+where E(X 2 |y) is given by Definition 10 with u(X) = X 2 . The reader should not find
+it difficult to generalize Definition 10 for conditional expectations involving more
+than two random variables.
+
+
+EXAMPLE 20
+If the joint probability density of X and Y is given by
+                              ⎧
+                              ⎪
+                              ⎨ 2 (x + 2y) for 0 < x < 1, 0 < y < 1
+                    f (x, y) = 3
+                              ⎪
+                              ⎩0           elsewhere
+
+find the conditional mean and the conditional variance of X given Y = 12 .
+
+Solution
+For these random variables the conditional density of X given Y = y is
+                                 ⎧
+                                 ⎨ 2x + 4y for 0 < x < 1
+                                 ⎪
+                       f (x|y) = 1 + 4y
+                                 ⎪
+                                 ⎩0          elsewhere
+
+so that                            ⎧
+                              ⎪2
+                              1   ⎨ (x + 1)         for 0 < x < 1
+                          f x   = 3
+                                2  ⎪
+                                   ⎩0                elsewhere
+
+Thus, μX| 1 is given by
+          2
+                                 
+                                  1     1 2
+                             E X    =      x(x + 1) dx
+                                    2   0 3
+
+                                             5
+                                         =
+                                             9
+Next we find
+                                  1
+                                 2 1  2 2
+                            E X    =     x (x + 1) dx
+                                  2     3    0
+
+                                              7
+                                         =
+                                             18
+and it follows that
+                                                  2
+                                     7            5     13
+                              σ2 1 =    −             =
+                               X| 2  18           9     162
+
+
+
+
+                                                                                         139
+
+
+===PDF PAGE 145; PRINTED 140===
+                                                           Mathematical Expectation
+
+
+      Exercises
+      41. Prove that cov(X, Y) = cov(Y, X) for both discrete             (a) Y = 2X1 − 3X2 + 4X3 ;
+      and continuous random variables X and Y.                           (b) Z = X1 + 2X2 − X3 .
+      42. If X and Y have the joint probability distribution             50. Repeat both parts of Exercise 49, dropping the
+      f (x, y) = 14 for x = −3 and y = −5, x = −1 and                    assumption of independence and using instead the
+      y = −1, x = 1 and y = 1, and x = 3 and y = 5, find                 information that cov(X1 , X2 ) = 1, cov(X2 , X3 ) = −2,
+      cov(X, Y).                                                         and cov(X1 , X3 ) = −3.
+      43. This has been intentionally omitted for this edition.          51. If the joint probability density of X and Y is given by
+
+      44. This has been intentionally omitted for this edition.                          ⎧
+                                                                                         ⎪
+                                                                                         ⎨ 1 (x + y)   for 0 < x < 1, 0 < y < 2
+      45. This has been intentionally omitted for this edition.                f (x, y) = 3
+                                                                                         ⎪
+                                                                                         ⎩0
+      46. If X and Y have the joint probability distribution                                           elsewhere
+      f (−1, 0) = 0, f (−1, 1) = 14 , f (0, 0) = 16 , f (0, 1) =
+      0, f (1, 0) = 12
+                    1
+                       , and f (1, 1) = 12 , show that                   find the variance of W = 3X + 4Y − 5.
+      (a) cov(X, Y) = 0;                                                 52. Prove Theorem 15.
+      (b) the two random variables are not independent.                  53. Express var(X + Y), var(X − Y), and cov(X + Y, X −
+      47. If the probability density of X is given by                    Y) in terms of the variances and covariance of X
+                           ⎧                                             and Y.
+                           ⎪
+                           ⎪
+                           ⎨1 + x for − 1 < x F 0                        54. If var(X1 ) = 5, var(X2 ) = 4, var(X3 ) = 7, cov(X1 ,
+                   f (x) = 1 − x for 0 < x < 1                           X2 ) = 3, cov(X1 , X3 ) = −2, and X2 and X3 are indepen-
+                           ⎪
+                           ⎪
+                           ⎩0       elsewhere                            dent, find the covariance of Y1 = X1 − 2X2 + 3X3 and
+                                                                         Y2 = −2X1 + 3X2 + 4X3 .
+      and U = X and V = X 2 , show that                                  55. With reference to Exercise 49, find cov(Y, Z).
+      (a) cov(U, V) = 0;
+      (b) U and V are dependent.                                         56. This question has been intentionally omitted for this
+                                                                         edition.
+      48. For k random variables X1 , X2 , . . . , Xk , the values of
+      their joint moment-generating function are given by                57. This question has been intentionally omitted for this
+                                                                         edition.
+                                                   
+                         E et1 X1 +t2 X2 +···+tk Xk                      58. This question has been intentionally omitted for this
+                                                                         edition.
+      (a) Show for either the discrete case or the continuous
+                                                                         59. This question has been intentionally omitted for this
+      case that the partial derivative of the joint moment-
+                                                                         edition.
+      generating function with respect to ti at t1 = t2 = · · · =
+      tk = 0 is E(Xi ).                                                  60. (a) Show that the conditional distribution function of
+      (b) Show for either the discrete case or the continu-              the continuous random variable X, given a < X F b, is
+      ous case that the second partial derivative of the joint           given by
+      moment-generating function with respect to ti and tj , i Z j,                           ⎧
+      at t1 = t2 = · · · = tk = 0 is E(Xi Xj ).                                               ⎪
+                                                                                              ⎪ 0                    for x F a
+                                                                                              ⎪
+                                                                                              ⎨ F(x) − F(a)
+      (c) If two random variables have the joint density
+                                                                             F(x|a < X F b) =                        for a < x F b
+      given by                                                                                ⎪
+                                                                                              ⎪ F(b) − F(a)
+                                                                                              ⎪
+                                                                                              ⎩1                     for x > b
+                             e−x−y      for x > 0, y > 0
+                  f (x, y) =
+                             0          elsewhere                        (b) Differentiate the result of part (a) with respect to
+                                                                         x to find the conditional probability density of X given
+      find their joint moment-generating function and use it             a < X F b, and show that
+      to determine the values of E(XY), E(X), E(Y), and
+      cov(X, Y).                                                                                            b
+                                                                                                              u(x)f (x) dx
+      49. If X1 , X2 , and X3 are independent and have the means                   E[u(X)|a < X F b] =      a
+                                                                                                              b
+      4, 9, and 3 and the variances 3, 7, and 5, find the mean and
+                                                                                                                 f (x) dx
+      the variance of                                                                                            a
+
+
+
+140
+
+
+===PDF PAGE 146; PRINTED 141===
+                                  Mathematical Expectation
+
+
+9 The Theory in Practice
+                  Empirical distributions, those arising from data, can be described by their shape. We
+                  will discuss descriptive measures, calculated from data, that extend the methodology
+                  of describing data. These descriptive measures are based on the ideas of moments,
+                  given in Section 3.
+                       The analog of the first moment, μ1 = μ, is the sample mean, x, defined as
+
+                                                              
+                                                              n
+                                                         x=         xi /n
+                                                              i=1
+
+                  where i = 1, 2, . . . , n and n is the number of observations.
+                       The usefulness of the sample mean as a description of data can be envisioned
+                  by imagining that the histogram of a data distribution has been cut out of a piece
+                  of cardboard and balanced by inserting a fulcrum along the horizontal axis. This
+                  balance point corresponds to the mean of the data. Thus, the mean can be thought
+                  of as the centroid of the data and, as such, it describes its location.
+                       The mean is an excellent measure of location for symmetric or nearly symmetric
+                  distributions. But it can be misleading when used to measure the location of highly
+                  skewed data. To give an example, suppose, in a small company, the annual salaries
+                  of its 10 employees (rounded to the nearest $1,000) are 25, 18, 36, 28, 16, 20, 29, 32,
+                  41, and 150. The mean of these observations is $39,500. One of the salaries, namely
+                  $150,000, is much higher than the others (it’s what the owner pays himself) and only
+                  one other employee earns as much as $39,500. Suppose the owner, in a recruiting
+                  ad, claimed that “Our company pays an average salary of $39,500.” He would be
+                  technically correct, but very misleading.
+                       Other descriptive measures for the location of data should be used in cases like
+                  the one just described. The median describes the center of the data as the middle
+                  point of the observations. If the data are ranked from, say, smallest to largest, the
+                  median becomes observation number n/2 if n is an even integer, and it is defined as
+                                                        (n − 1)     (n + 1)
+                  the mean value of observations                and         if n is an odd integer. The median
+                                                           2           2
+                  of the 10 observations given in the preceding example is $28,000, and it is a much
+                  better description of what an employee of this company can expect to earn. You may
+                  very well have heard the term “median income” for, say, the incomes of American
+                  families. The median is used instead of the mean here because it is well known that
+                  the distribution of family incomes in the United States is highly skewed—the great
+                  majority of families earn low to moderate incomes, but a relatively few have very
+                  high incomes.
+                       The dispersion of data also is important in its description. Give the location
+                  of data, one reasonably wants to know how closely the observations are grouped
+                  around this value. A reasonable measure of dispersion can be based on the square
+                  root of the second moment about the mean, σ . The sample standard deviation, s, is
+                  calculated analogously to the second moment, as follows:
+                                                           !
+                                                           " n
+                                                           "
+                                                           "     (x − x)2
+                                                           "
+                                                           # i=1
+                                                      s=
+                                                                n−1
+
+                  Since this formula requires first the calculation of the mean, then subtraction of the
+                  mean from each observation before squaring and adding, it is much easier to use the
+                  following calculating formula for s:
+
+
+
+                                                                                                                 141

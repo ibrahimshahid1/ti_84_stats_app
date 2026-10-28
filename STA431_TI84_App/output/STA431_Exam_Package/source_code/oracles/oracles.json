@@ -1,0 +1,9429 @@
+[
+ {
+  "id": "CNT-A-S1",
+  "program": "STACNT",
+  "tool": "A",
+  "tool_name": "n!, nPr, nCr",
+  "kind": "spec",
+  "inputs_description": "N=5, R=2",
+  "inputs": {
+   "N": 5,
+   "R": 2
+  },
+  "expected": {
+   "n!": "120",
+   "r!": "2",
+   "nPr": "20",
+   "nCr": "10",
+   "n^r": "25",
+   "C(n+r-1,r)": "15"
+  },
+  "decimal": {
+   "n!": 120,
+   "r!": 2,
+   "nPr": 20,
+   "nCr": 10,
+   "n^r": 25,
+   "C(n+r-1,r)": 15
+  },
+  "display": {
+   "n!": [
+    "120",
+    "120"
+   ],
+   "r!": [
+    "2",
+    "2"
+   ],
+   "nPr": [
+    "20",
+    "20"
+   ],
+   "nCr": [
+    "10",
+    "10"
+   ],
+   "n^r": [
+    "25",
+    "25"
+   ],
+   "C(n+r-1,r)": [
+    "15",
+    "15"
+   ]
+  },
+  "spec_check": {
+   "n!": {
+    "spec": "120",
+    "match": true
+   },
+   "r!": {
+    "spec": "2",
+    "match": true
+   },
+   "nPr": {
+    "spec": "20",
+    "match": true
+   },
+   "nCr": {
+    "spec": "10",
+    "match": true
+   },
+   "n^r": {
+    "spec": "25",
+    "match": true
+   },
+   "C(n+r-1,r)": {
+    "spec": "15",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-A-S2",
+  "program": "STACNT",
+  "tool": "A",
+  "tool_name": "n!, nPr, nCr",
+  "kind": "spec",
+  "inputs_description": "N=12, R=3",
+  "inputs": {
+   "N": 12,
+   "R": 3
+  },
+  "expected": {
+   "n!": "479001600",
+   "r!": "6",
+   "nPr": "1320",
+   "nCr": "220",
+   "n^r": "1728",
+   "C(n+r-1,r)": "364"
+  },
+  "decimal": {
+   "n!": 479001600,
+   "r!": 6,
+   "nPr": 1320,
+   "nCr": 220,
+   "n^r": 1728,
+   "C(n+r-1,r)": 364
+  },
+  "display": {
+   "n!": [
+    "479001600",
+    "479001600"
+   ],
+   "r!": [
+    "6",
+    "6"
+   ],
+   "nPr": [
+    "1320",
+    "1320"
+   ],
+   "nCr": [
+    "220",
+    "220"
+   ],
+   "n^r": [
+    "1728",
+    "1728"
+   ],
+   "C(n+r-1,r)": [
+    "364",
+    "364"
+   ]
+  },
+  "spec_check": {
+   "n!": {
+    "spec": "479001600",
+    "match": true
+   },
+   "r!": {
+    "spec": "6",
+    "match": true
+   },
+   "nPr": {
+    "spec": "1320",
+    "match": true
+   },
+   "nCr": {
+    "spec": "220",
+    "match": true
+   },
+   "n^r": {
+    "spec": "1728",
+    "match": true
+   },
+   "C(n+r-1,r)": {
+    "spec": "364",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-A-E1",
+  "program": "STACNT",
+  "tool": "A",
+  "tool_name": "n!, nPr, nCr",
+  "kind": "edge",
+  "inputs_description": "r>n: N=3, R=5",
+  "inputs": {
+   "N": 3,
+   "R": 5
+  },
+  "expected": {
+   "n!": "6",
+   "r!": "120",
+   "nPr": "0",
+   "nCr": "0",
+   "n^r": "243",
+   "C(n+r-1,r)": "21"
+  },
+  "decimal": {
+   "n!": 6,
+   "r!": 120,
+   "nPr": 0,
+   "nCr": 0,
+   "n^r": 243,
+   "C(n+r-1,r)": 21
+  },
+  "display": {
+   "n!": [
+    "6",
+    "6"
+   ],
+   "r!": [
+    "120",
+    "120"
+   ],
+   "nPr": [
+    "0",
+    "0"
+   ],
+   "nCr": [
+    "0",
+    "0"
+   ],
+   "n^r": [
+    "243",
+    "243"
+   ],
+   "C(n+r-1,r)": [
+    "21",
+    "21"
+   ]
+  },
+  "notes": "nPr=nCr=0 when r>n (SPEC rule 15). Multisets C(7,5)=21 still valid."
+ },
+ {
+  "id": "CNT-A-E2",
+  "program": "STACNT",
+  "tool": "A",
+  "tool_name": "n!, nPr, nCr",
+  "kind": "edge",
+  "inputs_description": "N=0, R=0",
+  "inputs": {
+   "N": 0,
+   "R": 0
+  },
+  "expected": {
+   "n!": "1",
+   "r!": "1",
+   "nPr": "1",
+   "nCr": "1",
+   "n^r": "1",
+   "C(n+r-1,r)": "1"
+  },
+  "decimal": {
+   "n!": 1,
+   "r!": 1,
+   "nPr": 1,
+   "nCr": 1,
+   "n^r": 1,
+   "C(n+r-1,r)": 1
+  },
+  "display": {
+   "n!": [
+    "1",
+    "1"
+   ],
+   "r!": [
+    "1",
+    "1"
+   ],
+   "nPr": [
+    "1",
+    "1"
+   ],
+   "nCr": [
+    "1",
+    "1"
+   ],
+   "n^r": [
+    "1",
+    "1"
+   ],
+   "C(n+r-1,r)": [
+    "1",
+    "1"
+   ]
+  },
+  "notes": "Real TI-84: 0^0 gives ERR:DOMAIN and (-1) nCr 0 gives ERR:DOMAIN; the tool must special-case n^r=1 when r=0 and C(n+r-1,r)=1 when n=0,r=0 (0 when n=0,r>0)."
+ },
+ {
+  "id": "CNT-A-E3",
+  "program": "STACNT",
+  "tool": "A",
+  "tool_name": "n!, nPr, nCr",
+  "kind": "edge",
+  "inputs_description": "N=70, R=2 (n! too big)",
+  "inputs": {
+   "N": 70,
+   "R": 2
+  },
+  "expected": {
+   "n!": "TOO BIG",
+   "r!": "2",
+   "nPr": "4830",
+   "nCr": "2415",
+   "n^r": "4900",
+   "C(n+r-1,r)": "2485"
+  },
+  "decimal": {
+   "r!": 2,
+   "nPr": 4830,
+   "nCr": 2415,
+   "n^r": 4900,
+   "C(n+r-1,r)": 2485
+  },
+  "display": {
+   "r!": [
+    "2",
+    "2"
+   ],
+   "nPr": [
+    "4830",
+    "4830"
+   ],
+   "nCr": [
+    "2415",
+    "2415"
+   ],
+   "n^r": [
+    "4900",
+    "4900"
+   ],
+   "C(n+r-1,r)": [
+    "2485",
+    "2485"
+   ]
+  },
+  "notes": "n! must show TOO BIG (70! overflows 1E100). nPr=4830, nCr=2415 are still computable."
+ },
+ {
+  "id": "CNT-A-E4",
+  "program": "STACNT",
+  "tool": "A",
+  "tool_name": "n!, nPr, nCr",
+  "kind": "edge",
+  "inputs_description": "N=2.5, R=1 (non-integer)",
+  "inputs": {
+   "N": 2.5,
+   "R": 1
+  },
+  "expected": {
+   "result": "REJECT (N,R must be non-negative integers)"
+  },
+  "decimal": {},
+  "display": {}
+ },
+ {
+  "id": "CNT-B-S1",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "spec",
+  "inputs_description": "WORD=PROBABILITY, letter B (block / not together)",
+  "inputs": {
+   "word": "PROBABILITY",
+   "letter": "B"
+  },
+  "expected": {
+   "n": "11",
+   "repeated": "B x2  I x2",
+   "total": "9979200",
+   "block": "1814400",
+   "not together": "8164800"
+  },
+  "decimal": {
+   "n": 11,
+   "total": 9979200,
+   "block": 1814400,
+   "not together": 8164800
+  },
+  "display": {
+   "n": [
+    "11",
+    "11"
+   ],
+   "total": [
+    "9979200",
+    "9979200"
+   ],
+   "block": [
+    "1814400",
+    "1814400"
+   ],
+   "not together": [
+    "8164800",
+    "8164800"
+   ]
+  },
+  "spec_check": {
+   "n": {
+    "spec": "11",
+    "match": true
+   },
+   "total": {
+    "spec": "9979200",
+    "match": true
+   },
+   "block": {
+    "spec": "1814400",
+    "match": true
+   },
+   "not together": {
+    "spec": "8164800",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-B-S2",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "spec",
+  "inputs_description": "WORD=MISSISSIPPI, letter S",
+  "inputs": {
+   "word": "MISSISSIPPI",
+   "letter": "S"
+  },
+  "expected": {
+   "n": "11",
+   "repeated": "I x4  S x4  P x2",
+   "total": "34650",
+   "block": "840",
+   "not together": "33810"
+  },
+  "decimal": {
+   "n": 11,
+   "total": 34650,
+   "block": 840,
+   "not together": 33810
+  },
+  "display": {
+   "n": [
+    "11",
+    "11"
+   ],
+   "total": [
+    "34650",
+    "34650"
+   ],
+   "block": [
+    "840",
+    "840"
+   ],
+   "not together": [
+    "33810",
+    "33810"
+   ]
+  },
+  "spec_check": {
+   "total": {
+    "spec": "34650",
+    "match": true
+   },
+   "block": {
+    "spec": "840",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-B-S3",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "spec",
+  "inputs_description": "WORD=STATISTICS",
+  "inputs": {
+   "word": "STATISTICS"
+  },
+  "expected": {
+   "n": "10",
+   "repeated": "S x3  T x3  I x2",
+   "total": "50400"
+  },
+  "decimal": {
+   "n": 10,
+   "total": 50400
+  },
+  "display": {
+   "n": [
+    "10",
+    "10"
+   ],
+   "total": [
+    "50400",
+    "50400"
+   ]
+  },
+  "spec_check": {
+   "total": {
+    "spec": "50400",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-B-E1",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "edge",
+  "inputs_description": "WORD=BOOKKEEPER, letter E",
+  "inputs": {
+   "word": "BOOKKEEPER",
+   "letter": "E"
+  },
+  "expected": {
+   "n": "10",
+   "repeated": "O x2  K x2  E x3",
+   "total": "151200",
+   "block": "10080",
+   "not together": "141120"
+  },
+  "decimal": {
+   "n": 10,
+   "total": 151200,
+   "block": 10080,
+   "not together": 141120
+  },
+  "display": {
+   "n": [
+    "10",
+    "10"
+   ],
+   "total": [
+    "151200",
+    "151200"
+   ],
+   "block": [
+    "10080",
+    "10080"
+   ],
+   "not together": [
+    "141120",
+    "141120"
+   ]
+  }
+ },
+ {
+  "id": "CNT-B-E2",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "edge",
+  "inputs_description": "WORD=AAB, letter B (a single letter: block = total)",
+  "inputs": {
+   "word": "AAB",
+   "letter": "B"
+  },
+  "expected": {
+   "n": "3",
+   "repeated": "A x2",
+   "total": "3",
+   "block": "3",
+   "not together": "0"
+  },
+  "decimal": {
+   "n": 3,
+   "total": 3,
+   "block": 3,
+   "not together": 0
+  },
+  "display": {
+   "n": [
+    "3",
+    "3"
+   ],
+   "total": [
+    "3",
+    "3"
+   ],
+   "block": [
+    "3",
+    "3"
+   ],
+   "not together": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "k=1: block formula (n-1+1)!/prod = total, not-together = 0."
+ },
+ {
+  "id": "CNT-B-E3",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "edge",
+  "inputs_description": "WORD=AAB, letter A",
+  "inputs": {
+   "word": "AAB",
+   "letter": "A"
+  },
+  "expected": {
+   "n": "3",
+   "repeated": "A x2",
+   "total": "3",
+   "block": "2",
+   "not together": "1"
+  },
+  "decimal": {
+   "n": 3,
+   "total": 3,
+   "block": 2,
+   "not together": 1
+  },
+  "display": {
+   "n": [
+    "3",
+    "3"
+   ],
+   "total": [
+    "3",
+    "3"
+   ],
+   "block": [
+    "2",
+    "2"
+   ],
+   "not together": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "CNT-B-E4",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "edge",
+  "inputs_description": "WORD=MATH, letter Z (not in word)",
+  "inputs": {
+   "word": "MATH",
+   "letter": "Z"
+  },
+  "expected": {
+   "n": "4",
+   "repeated": "(none)",
+   "total": "24",
+   "block": "REJECT (letter not in word)"
+  },
+  "decimal": {
+   "n": 4,
+   "total": 24
+  },
+  "display": {
+   "n": [
+    "4",
+    "4"
+   ],
+   "total": [
+    "24",
+    "24"
+   ]
+  },
+  "notes": "Letter absent: naive formula would give (n+1)!/prod = 120; tool should reject or say 0 copies."
+ },
+ {
+  "id": "CNT-C-S1",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "spec",
+  "inputs_description": "C1 split sizes 3,4,5 (labeled)",
+  "inputs": {
+   "mode": "C1",
+   "sizes": [
+    3,
+    4,
+    5
+   ]
+  },
+  "expected": {
+   "n": "12",
+   "labeled": "27720",
+   "unlabeled": "27720"
+  },
+  "decimal": {
+   "n": 12,
+   "labeled": 27720,
+   "unlabeled": 27720
+  },
+  "display": {
+   "n": [
+    "12",
+    "12"
+   ],
+   "labeled": [
+    "27720",
+    "27720"
+   ],
+   "unlabeled": [
+    "27720",
+    "27720"
+   ]
+  },
+  "spec_check": {
+   "labeled": {
+    "spec": "27720",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-C-S2",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "spec",
+  "inputs_description": "C1 split sizes 2,2,2",
+  "inputs": {
+   "mode": "C1",
+   "sizes": [
+    2,
+    2,
+    2
+   ]
+  },
+  "expected": {
+   "n": "6",
+   "labeled": "90",
+   "unlabeled": "15"
+  },
+  "decimal": {
+   "n": 6,
+   "labeled": 90,
+   "unlabeled": 15
+  },
+  "display": {
+   "n": [
+    "6",
+    "6"
+   ],
+   "labeled": [
+    "90",
+    "90"
+   ],
+   "unlabeled": [
+    "15",
+    "15"
+   ]
+  },
+  "spec_check": {
+   "labeled": {
+    "spec": "90",
+    "match": true
+   },
+   "unlabeled": {
+    "spec": "15",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-C-S3",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "spec",
+  "inputs_description": "C1 split sizes 4,4,2",
+  "inputs": {
+   "mode": "C1",
+   "sizes": [
+    4,
+    4,
+    2
+   ]
+  },
+  "expected": {
+   "n": "10",
+   "labeled": "3150",
+   "unlabeled": "1575"
+  },
+  "decimal": {
+   "n": 10,
+   "labeled": 3150,
+   "unlabeled": 1575
+  },
+  "display": {
+   "n": [
+    "10",
+    "10"
+   ],
+   "labeled": [
+    "3150",
+    "3150"
+   ],
+   "unlabeled": [
+    "1575",
+    "1575"
+   ]
+  },
+  "spec_check": {
+   "labeled": {
+    "spec": "3150",
+    "match": true
+   },
+   "unlabeled": {
+    "spec": "1575",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-C-S4",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "spec",
+  "inputs_description": "C2 N=10, exact counts 3,1, F=3 free choices",
+  "inputs": {
+   "mode": "C2",
+   "N": 10,
+   "counts": [
+    3,
+    1
+   ],
+   "F": 3
+  },
+  "expected": {
+   "r": "6",
+   "multinomial": "840",
+   "F^r": "729",
+   "total": "612360"
+  },
+  "decimal": {
+   "r": 6,
+   "multinomial": 840,
+   "F^r": 729,
+   "total": 612360
+  },
+  "display": {
+   "r": [
+    "6",
+    "6"
+   ],
+   "multinomial": [
+    "840",
+    "840"
+   ],
+   "F^r": [
+    "729",
+    "729"
+   ],
+   "total": [
+    "612360",
+    "612360"
+   ]
+  },
+  "spec_check": {
+   "multinomial": {
+    "spec": "840",
+    "match": true
+   },
+   "F^r": {
+    "spec": "729",
+    "match": true
+   },
+   "total": {
+    "spec": "612360",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-C-S5",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "spec",
+  "inputs_description": "C2 N=5, exact count 2, F=4",
+  "inputs": {
+   "mode": "C2",
+   "N": 5,
+   "counts": [
+    2
+   ],
+   "F": 4
+  },
+  "expected": {
+   "r": "3",
+   "multinomial": "10",
+   "F^r": "64",
+   "total": "640"
+  },
+  "decimal": {
+   "r": 3,
+   "multinomial": 10,
+   "F^r": 64,
+   "total": 640
+  },
+  "display": {
+   "r": [
+    "3",
+    "3"
+   ],
+   "multinomial": [
+    "10",
+    "10"
+   ],
+   "F^r": [
+    "64",
+    "64"
+   ],
+   "total": [
+    "640",
+    "640"
+   ]
+  },
+  "spec_check": {
+   "multinomial": {
+    "spec": "10",
+    "match": true
+   },
+   "F^r": {
+    "spec": "64",
+    "match": true
+   },
+   "total": {
+    "spec": "640",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-C-E1",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "edge",
+  "inputs_description": "C1 sizes 1,1,1",
+  "inputs": {
+   "mode": "C1",
+   "sizes": [
+    1,
+    1,
+    1
+   ]
+  },
+  "expected": {
+   "n": "3",
+   "labeled": "6",
+   "unlabeled": "1"
+  },
+  "decimal": {
+   "n": 3,
+   "labeled": 6,
+   "unlabeled": 1
+  },
+  "display": {
+   "n": [
+    "3",
+    "3"
+   ],
+   "labeled": [
+    "6",
+    "6"
+   ],
+   "unlabeled": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "CNT-C-E2",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "edge",
+  "inputs_description": "C1 sizes 2,2,2,2 (8 people into 4 pairs)",
+  "inputs": {
+   "mode": "C1",
+   "sizes": [
+    2,
+    2,
+    2,
+    2
+   ]
+  },
+  "expected": {
+   "n": "8",
+   "labeled": "2520",
+   "unlabeled": "105"
+  },
+  "decimal": {
+   "n": 8,
+   "labeled": 2520,
+   "unlabeled": 105
+  },
+  "display": {
+   "n": [
+    "8",
+    "8"
+   ],
+   "labeled": [
+    "2520",
+    "2520"
+   ],
+   "unlabeled": [
+    "105",
+    "105"
+   ]
+  }
+ },
+ {
+  "id": "CNT-C-E3",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "edge",
+  "inputs_description": "C2 N=4, counts 2,2, F=0 (r=0 -> F^0=1)",
+  "inputs": {
+   "mode": "C2",
+   "N": 4,
+   "counts": [
+    2,
+    2
+   ],
+   "F": 0
+  },
+  "expected": {
+   "r": "0",
+   "multinomial": "6",
+   "F^r": "1",
+   "total": "6"
+  },
+  "decimal": {
+   "r": 0,
+   "multinomial": 6,
+   "F^r": 1,
+   "total": 6
+  },
+  "display": {
+   "r": [
+    "0",
+    "0"
+   ],
+   "multinomial": [
+    "6",
+    "6"
+   ],
+   "F^r": [
+    "1",
+    "1"
+   ],
+   "total": [
+    "6",
+    "6"
+   ]
+  },
+  "notes": "0^0 must be 1 here (TI gives ERR:DOMAIN for 0^0; guard r=0)."
+ },
+ {
+  "id": "CNT-C-E4",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "edge",
+  "inputs_description": "C2 N=5, counts 3,3 (sum > N)",
+  "inputs": {
+   "mode": "C2",
+   "N": 5,
+   "counts": [
+    3,
+    3
+   ],
+   "F": 2
+  },
+  "expected": {
+   "result": "REJECT (sum of counts > N)"
+  },
+  "decimal": {},
+  "display": {}
+ },
+ {
+  "id": "CNT-D-S1",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "spec",
+  "inputs_description": "A=8 (G1), B=6 (G2), K=5, G1 at least 2, G1 at most 99, G2 at least 2, G2 at most 99",
+  "inputs": {
+   "A": 8,
+   "B": 6,
+   "K": 5,
+   "G1min": 2,
+   "G1max": 99,
+   "G2min": 2,
+   "G2max": 99
+  },
+  "expected": {
+   "i range": "2..3",
+   "i=2": "28*20=560",
+   "i=3": "56*15=840",
+   "total": "1400",
+   "C(A+B,K)": "2002",
+   "P": "100/143"
+  },
+  "decimal": {
+   "total": 1400,
+   "C(A+B,K)": 2002,
+   "P": 0.699300699301
+  },
+  "display": {
+   "total": [
+    "1400",
+    "1400"
+   ],
+   "C(A+B,K)": [
+    "2002",
+    "2002"
+   ],
+   "P": [
+    "100/143",
+    ".699301"
+   ]
+  },
+  "spec_check": {
+   "i=2": {
+    "spec": "28*20=560",
+    "match": true
+   },
+   "i=3": {
+    "spec": "56*15=840",
+    "match": true
+   },
+   "total": {
+    "spec": "1400",
+    "match": true
+   },
+   "P": {
+    "spec": "100/143",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-D-S2",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "spec",
+  "inputs_description": "A=5, B=15, K=15, G1 exactly 2 (min=max=2), G2 min 0 max 99",
+  "inputs": {
+   "A": 5,
+   "B": 15,
+   "K": 15,
+   "G1min": 2,
+   "G1max": 2,
+   "G2min": 0,
+   "G2max": 99
+  },
+  "expected": {
+   "i range": "2..2",
+   "i=2": "10*105=1050",
+   "total": "1050",
+   "C(A+B,K)": "15504",
+   "P": "175/2584"
+  },
+  "decimal": {
+   "total": 1050,
+   "C(A+B,K)": 15504,
+   "P": 0.067724458204
+  },
+  "display": {
+   "total": [
+    "1050",
+    "1050"
+   ],
+   "C(A+B,K)": [
+    "15504",
+    "15504"
+   ],
+   "P": [
+    "175/2584",
+    ".067724"
+   ]
+  },
+  "spec_check": {
+   "i=2": {
+    "spec": "10*105=1050",
+    "match": true
+   },
+   "total": {
+    "spec": "1050",
+    "match": true
+   },
+   "P": {
+    "spec": "175/2584",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-D-E1",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "edge",
+  "inputs_description": "A=8, B=6, K=5, no constraints (0,99,0,99)",
+  "inputs": {
+   "A": 8,
+   "B": 6,
+   "K": 5,
+   "G1min": 0,
+   "G1max": 99,
+   "G2min": 0,
+   "G2max": 99
+  },
+  "expected": {
+   "i range": "0..5",
+   "i=0": "1*6=6",
+   "i=1": "8*15=120",
+   "i=2": "28*20=560",
+   "i=3": "56*15=840",
+   "i=4": "70*6=420",
+   "i=5": "56*1=56",
+   "total": "2002",
+   "C(A+B,K)": "2002",
+   "P": "1"
+  },
+  "decimal": {
+   "total": 2002,
+   "C(A+B,K)": 2002,
+   "P": 1.0
+  },
+  "display": {
+   "total": [
+    "2002",
+    "2002"
+   ],
+   "C(A+B,K)": [
+    "2002",
+    "2002"
+   ],
+   "P": [
+    "1",
+    "1"
+   ]
+  },
+  "notes": "Vandermonde check: total = C(14,5) = 2002, P = 1."
+ },
+ {
+  "id": "CNT-D-E2",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "edge",
+  "inputs_description": "A=8, B=6, K=5, G1 at least 4, G2 at least 2 (impossible)",
+  "inputs": {
+   "A": 8,
+   "B": 6,
+   "K": 5,
+   "G1min": 4,
+   "G1max": 99,
+   "G2min": 2,
+   "G2max": 99
+  },
+  "expected": {
+   "i range": "empty (4>3)",
+   "total": "0",
+   "C(A+B,K)": "2002",
+   "P": "0"
+  },
+  "decimal": {
+   "total": 0,
+   "C(A+B,K)": 2002,
+   "P": 0.0
+  },
+  "display": {
+   "total": [
+    "0",
+    "0"
+   ],
+   "C(A+B,K)": [
+    "2002",
+    "2002"
+   ],
+   "P": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "Empty i range -> total 0, P = 0 (no terms listed)."
+ },
+ {
+  "id": "CNT-D-E3",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "edge",
+  "inputs_description": "A=3, B=2, K=6 (K > A+B)",
+  "inputs": {
+   "A": 3,
+   "B": 2,
+   "K": 6,
+   "G1min": 0,
+   "G1max": 99,
+   "G2min": 0,
+   "G2max": 99
+  },
+  "expected": {
+   "i range": "empty (4>3)",
+   "total": "0",
+   "C(A+B,K)": "0",
+   "P": "undef (K>A+B, C(A+B,K)=0)"
+  },
+  "decimal": {
+   "total": 0,
+   "C(A+B,K)": 0
+  },
+  "display": {
+   "total": [
+    "0",
+    "0"
+   ],
+   "C(A+B,K)": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "C(5,6)=0 -> division by zero if not guarded."
+ },
+ {
+  "id": "CNT-D-E4",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "edge",
+  "inputs_description": "A=8, B=6, K=5, G1 at most 1 (G2 at least 0, at most 99)",
+  "inputs": {
+   "A": 8,
+   "B": 6,
+   "K": 5,
+   "G1min": 0,
+   "G1max": 1,
+   "G2min": 0,
+   "G2max": 99
+  },
+  "expected": {
+   "i range": "0..1",
+   "i=0": "1*6=6",
+   "i=1": "8*15=120",
+   "total": "126",
+   "C(A+B,K)": "2002",
+   "P": "9/143"
+  },
+  "decimal": {
+   "total": 126,
+   "C(A+B,K)": 2002,
+   "P": 0.062937062937
+  },
+  "display": {
+   "total": [
+    "126",
+    "126"
+   ],
+   "C(A+B,K)": [
+    "2002",
+    "2002"
+   ],
+   "P": [
+    "9/143",
+    ".062937"
+   ]
+  }
+ },
+ {
+  "id": "CNT-E-S1",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "spec",
+  "inputs_description": "n=15, k=4, same min 1",
+  "inputs": {
+   "n": 15,
+   "k": 4,
+   "mins": [
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "expected": {
+   "n'": "11",
+   "ways": "364",
+   "shown": "C(14,3)=364"
+  },
+  "decimal": {
+   "n'": 11,
+   "ways": 364
+  },
+  "display": {
+   "n'": [
+    "11",
+    "11"
+   ],
+   "ways": [
+    "364",
+    "364"
+   ]
+  },
+  "spec_check": {
+   "ways": {
+    "spec": "364",
+    "match": true
+   },
+   "shown": {
+    "spec": "C(14,3)=364",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-E-S2",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "spec",
+  "inputs_description": "n=15, k=4, mins 3,1,1,1",
+  "inputs": {
+   "n": 15,
+   "k": 4,
+   "mins": [
+    3,
+    1,
+    1,
+    1
+   ]
+  },
+  "expected": {
+   "n'": "9",
+   "ways": "220",
+   "shown": "C(12,3)=220"
+  },
+  "decimal": {
+   "n'": 9,
+   "ways": 220
+  },
+  "display": {
+   "n'": [
+    "9",
+    "9"
+   ],
+   "ways": [
+    "220",
+    "220"
+   ]
+  },
+  "spec_check": {
+   "ways": {
+    "spec": "220",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-E-S3",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "spec",
+  "inputs_description": "n=10, k=3, min 0",
+  "inputs": {
+   "n": 10,
+   "k": 3,
+   "mins": [
+    0,
+    0,
+    0
+   ]
+  },
+  "expected": {
+   "n'": "10",
+   "ways": "66",
+   "shown": "C(12,2)=66"
+  },
+  "decimal": {
+   "n'": 10,
+   "ways": 66
+  },
+  "display": {
+   "n'": [
+    "10",
+    "10"
+   ],
+   "ways": [
+    "66",
+    "66"
+   ]
+  },
+  "spec_check": {
+   "ways": {
+    "spec": "66",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-E-E1",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "edge",
+  "inputs_description": "n=3, k=4, min 1 each (n'<0)",
+  "inputs": {
+   "n": 3,
+   "k": 4,
+   "mins": [
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "expected": {
+   "n'": "-1",
+   "ways": "0"
+  },
+  "decimal": {
+   "n'": -1,
+   "ways": 0
+  },
+  "display": {
+   "n'": [
+    "⁻1",
+    "⁻1"
+   ],
+   "ways": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "n'=-1 -> 0 ways (do not call nCr with negative args)."
+ },
+ {
+  "id": "CNT-E-E2",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "edge",
+  "inputs_description": "n=4, k=4, min 1 each (n'=0)",
+  "inputs": {
+   "n": 4,
+   "k": 4,
+   "mins": [
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "expected": {
+   "n'": "0",
+   "ways": "1",
+   "shown": "C(3,3)=1"
+  },
+  "decimal": {
+   "n'": 0,
+   "ways": 1
+  },
+  "display": {
+   "n'": [
+    "0",
+    "0"
+   ],
+   "ways": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "CNT-E-E3",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "edge",
+  "inputs_description": "n=7, k=1, min 0",
+  "inputs": {
+   "n": 7,
+   "k": 1,
+   "mins": [
+    0
+   ]
+  },
+  "expected": {
+   "n'": "7",
+   "ways": "1",
+   "shown": "C(7,0)=1"
+  },
+  "decimal": {
+   "n'": 7,
+   "ways": 1
+  },
+  "display": {
+   "n'": [
+    "7",
+    "7"
+   ],
+   "ways": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "CNT-F-S1",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "spec",
+  "inputs_description": "(2x-y+3z)^7, x^3 y^2 z^2: terms (2,3),(-1,2),(3,2)",
+  "inputs": {
+   "terms": [
+    [
+     2,
+     3
+    ],
+    [
+     -1,
+     2
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  "expected": {
+   "n": "7",
+   "multinomial": "210",
+   "product": "72",
+   "coefficient": "15120"
+  },
+  "decimal": {
+   "n": 7,
+   "multinomial": 210,
+   "product": 72,
+   "coefficient": 15120
+  },
+  "display": {
+   "n": [
+    "7",
+    "7"
+   ],
+   "multinomial": [
+    "210",
+    "210"
+   ],
+   "product": [
+    "72",
+    "72"
+   ],
+   "coefficient": [
+    "15120",
+    "15120"
+   ]
+  },
+  "spec_check": {
+   "n": {
+    "spec": "7",
+    "match": true
+   },
+   "multinomial": {
+    "spec": "210",
+    "match": true
+   },
+   "product": {
+    "spec": "72",
+    "match": true
+   },
+   "coefficient": {
+    "spec": "15120",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-F-S2",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "spec",
+  "inputs_description": "(x+2)^5 coefficient of x^3: terms (1,3),(2,2)",
+  "inputs": {
+   "terms": [
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     2
+    ]
+   ]
+  },
+  "expected": {
+   "n": "5",
+   "multinomial": "10",
+   "product": "4",
+   "coefficient": "40"
+  },
+  "decimal": {
+   "n": 5,
+   "multinomial": 10,
+   "product": 4,
+   "coefficient": 40
+  },
+  "display": {
+   "n": [
+    "5",
+    "5"
+   ],
+   "multinomial": [
+    "10",
+    "10"
+   ],
+   "product": [
+    "4",
+    "4"
+   ],
+   "coefficient": [
+    "40",
+    "40"
+   ]
+  },
+  "spec_check": {
+   "multinomial": {
+    "spec": "10",
+    "match": true
+   },
+   "product": {
+    "spec": "4",
+    "match": true
+   },
+   "coefficient": {
+    "spec": "40",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-F-S3",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "spec",
+  "inputs_description": "(3x-2y)^4 x^2 y^2: terms (3,2),(-2,2)",
+  "inputs": {
+   "terms": [
+    [
+     3,
+     2
+    ],
+    [
+     -2,
+     2
+    ]
+   ]
+  },
+  "expected": {
+   "n": "4",
+   "multinomial": "6",
+   "product": "36",
+   "coefficient": "216"
+  },
+  "decimal": {
+   "n": 4,
+   "multinomial": 6,
+   "product": 36,
+   "coefficient": 216
+  },
+  "display": {
+   "n": [
+    "4",
+    "4"
+   ],
+   "multinomial": [
+    "6",
+    "6"
+   ],
+   "product": [
+    "36",
+    "36"
+   ],
+   "coefficient": [
+    "216",
+    "216"
+   ]
+  },
+  "spec_check": {
+   "multinomial": {
+    "spec": "6",
+    "match": true
+   },
+   "product": {
+    "spec": "36",
+    "match": true
+   },
+   "coefficient": {
+    "spec": "216",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "CNT-F-E1",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "edge",
+  "inputs_description": "(x-2)^5 coefficient of x^2: terms (1,2),(-2,3)",
+  "inputs": {
+   "terms": [
+    [
+     1,
+     2
+    ],
+    [
+     -2,
+     3
+    ]
+   ]
+  },
+  "expected": {
+   "n": "5",
+   "multinomial": "10",
+   "product": "-8",
+   "coefficient": "-80"
+  },
+  "decimal": {
+   "n": 5,
+   "multinomial": 10,
+   "product": -8,
+   "coefficient": -80
+  },
+  "display": {
+   "n": [
+    "5",
+    "5"
+   ],
+   "multinomial": [
+    "10",
+    "10"
+   ],
+   "product": [
+    "⁻8",
+    "⁻8"
+   ],
+   "coefficient": [
+    "⁻80",
+    "⁻80"
+   ]
+  },
+  "notes": "Negative result shown as ⁻80."
+ },
+ {
+  "id": "CNT-F-E2",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "edge",
+  "inputs_description": "(x+0y)^3 coefficient of x^3 y^0: terms (1,3),(0,0)",
+  "inputs": {
+   "terms": [
+    [
+     1,
+     3
+    ],
+    [
+     0,
+     0
+    ]
+   ]
+  },
+  "expected": {
+   "n": "3",
+   "multinomial": "1",
+   "product": "1",
+   "coefficient": "1"
+  },
+  "decimal": {
+   "n": 3,
+   "multinomial": 1,
+   "product": 1,
+   "coefficient": 1
+  },
+  "display": {
+   "n": [
+    "3",
+    "3"
+   ],
+   "multinomial": [
+    "1",
+    "1"
+   ],
+   "product": [
+    "1",
+    "1"
+   ],
+   "coefficient": [
+    "1",
+    "1"
+   ]
+  },
+  "notes": "0^0 must count as 1 (TI: ERR:DOMAIN)."
+ },
+ {
+  "id": "CNT-F-E3",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "edge",
+  "inputs_description": "(2a+b-c)^6, a^2 b^1 c^3: terms (2,2),(1,1),(-1,3)",
+  "inputs": {
+   "terms": [
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     -1,
+     3
+    ]
+   ]
+  },
+  "expected": {
+   "n": "6",
+   "multinomial": "60",
+   "product": "-4",
+   "coefficient": "-240"
+  },
+  "decimal": {
+   "n": 6,
+   "multinomial": 60,
+   "product": -4,
+   "coefficient": -240
+  },
+  "display": {
+   "n": [
+    "6",
+    "6"
+   ],
+   "multinomial": [
+    "60",
+    "60"
+   ],
+   "product": [
+    "⁻4",
+    "⁻4"
+   ],
+   "coefficient": [
+    "⁻240",
+    "⁻240"
+   ]
+  }
+ },
+ {
+  "id": "PRB-A-S1",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "spec",
+  "inputs_description": "P(A)=.55, P(B)=.35, P(AuB)=.7, others unknown; NO EXTRA INFO",
+  "inputs": {
+   "A": ".55",
+   "B": ".35",
+   "AnB": -1,
+   "AuB": ".7",
+   "A|B": -1,
+   "B|A": -1,
+   "neither": -1,
+   "relation": "NO EXTRA INFO"
+  },
+  "expected": {
+   "P(A)": "11/20",
+   "P(B)": "7/20",
+   "P(AnB)": "1/5",
+   "P(AuB)": "7/10",
+   "P(A')": "9/20",
+   "P(B')": "13/20",
+   "P(A'nB')": "3/10",
+   "P(AnB')": "7/20",
+   "P(A'nB)": "3/20",
+   "P(A|B)": "4/7",
+   "P(B|A)": "4/11",
+   "P(A|B')": "7/13",
+   "P(B|A')": "1/3",
+   "P(A'|B)": "3/7",
+   "P(B'|A)": "7/11",
+   "P(exactly one)": "1/2",
+   "P(A)P(B)": "77/400",
+   "independent?": "NO",
+   "mutually exclusive?": "NO",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.55,
+   "P(B)": 0.35,
+   "P(AnB)": 0.2,
+   "P(AuB)": 0.7,
+   "P(A')": 0.45,
+   "P(B')": 0.65,
+   "P(A'nB')": 0.3,
+   "P(AnB')": 0.35,
+   "P(A'nB)": 0.15,
+   "P(A|B)": 0.571428571429,
+   "P(B|A)": 0.363636363636,
+   "P(A|B')": 0.538461538462,
+   "P(B|A')": 0.333333333333,
+   "P(A'|B)": 0.428571428571,
+   "P(B'|A)": 0.636363636364,
+   "P(exactly one)": 0.5,
+   "P(A)P(B)": 0.1925
+  },
+  "display": {
+   "P(A)": [
+    "11/20",
+    ".55"
+   ],
+   "P(B)": [
+    "7/20",
+    ".35"
+   ],
+   "P(AnB)": [
+    "1/5",
+    ".2"
+   ],
+   "P(AuB)": [
+    "7/10",
+    ".7"
+   ],
+   "P(A')": [
+    "9/20",
+    ".45"
+   ],
+   "P(B')": [
+    "13/20",
+    ".65"
+   ],
+   "P(A'nB')": [
+    "3/10",
+    ".3"
+   ],
+   "P(AnB')": [
+    "7/20",
+    ".35"
+   ],
+   "P(A'nB)": [
+    "3/20",
+    ".15"
+   ],
+   "P(A|B)": [
+    "4/7",
+    ".571429"
+   ],
+   "P(B|A)": [
+    "4/11",
+    ".363636"
+   ],
+   "P(A|B')": [
+    "7/13",
+    ".538462"
+   ],
+   "P(B|A')": [
+    "1/3",
+    ".333333"
+   ],
+   "P(A'|B)": [
+    "3/7",
+    ".428571"
+   ],
+   "P(B'|A)": [
+    "7/11",
+    ".636364"
+   ],
+   "P(exactly one)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A)P(B)": [
+    "77/400",
+    ".1925"
+   ]
+  },
+  "spec_check": {
+   "P(AnB)": {
+    "spec": "1/5",
+    "match": true
+   },
+   "P(A|B)": {
+    "spec": "4/7",
+    "match": true
+   },
+   "P(B|A)": {
+    "spec": "4/11",
+    "match": true
+   },
+   "P(B|A')": {
+    "spec": "1/3",
+    "match": true
+   },
+   "P(A|B')": {
+    "spec": "7/13",
+    "match": true
+   },
+   "P(A'nB')": {
+    "spec": "3/10",
+    "match": true
+   },
+   "P(AnB')": {
+    "spec": "7/20",
+    "match": true
+   },
+   "P(A'nB)": {
+    "spec": "3/20",
+    "match": true
+   },
+   "P(exactly one)": {
+    "spec": "1/2",
+    "match": true
+   },
+   "independent?": {
+    "spec": "NO",
+    "match": true
+   },
+   "P(A)P(B)": {
+    "spec": ".1925",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-A-S2",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "spec",
+  "inputs_description": "P(A)=.3, P(B)=.4, INDEPENDENT",
+  "inputs": {
+   "A": ".3",
+   "B": ".4",
+   "relation": "INDEPENDENT"
+  },
+  "expected": {
+   "P(A)": "3/10",
+   "P(B)": "2/5",
+   "P(AnB)": "3/25",
+   "P(AuB)": "29/50",
+   "P(A')": "7/10",
+   "P(B')": "3/5",
+   "P(A'nB')": "21/50",
+   "P(AnB')": "9/50",
+   "P(A'nB)": "7/25",
+   "P(A|B)": "3/10",
+   "P(B|A)": "2/5",
+   "P(A|B')": "3/10",
+   "P(B|A')": "2/5",
+   "P(A'|B)": "7/10",
+   "P(B'|A)": "3/5",
+   "P(exactly one)": "23/50",
+   "P(A)P(B)": "3/25",
+   "independent?": "YES",
+   "mutually exclusive?": "NO",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.3,
+   "P(B)": 0.4,
+   "P(AnB)": 0.12,
+   "P(AuB)": 0.58,
+   "P(A')": 0.7,
+   "P(B')": 0.6,
+   "P(A'nB')": 0.42,
+   "P(AnB')": 0.18,
+   "P(A'nB)": 0.28,
+   "P(A|B)": 0.3,
+   "P(B|A)": 0.4,
+   "P(A|B')": 0.3,
+   "P(B|A')": 0.4,
+   "P(A'|B)": 0.7,
+   "P(B'|A)": 0.6,
+   "P(exactly one)": 0.46,
+   "P(A)P(B)": 0.12
+  },
+  "display": {
+   "P(A)": [
+    "3/10",
+    ".3"
+   ],
+   "P(B)": [
+    "2/5",
+    ".4"
+   ],
+   "P(AnB)": [
+    "3/25",
+    ".12"
+   ],
+   "P(AuB)": [
+    "29/50",
+    ".58"
+   ],
+   "P(A')": [
+    "7/10",
+    ".7"
+   ],
+   "P(B')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'nB')": [
+    "21/50",
+    ".42"
+   ],
+   "P(AnB')": [
+    "9/50",
+    ".18"
+   ],
+   "P(A'nB)": [
+    "7/25",
+    ".28"
+   ],
+   "P(A|B)": [
+    "3/10",
+    ".3"
+   ],
+   "P(B|A)": [
+    "2/5",
+    ".4"
+   ],
+   "P(A|B')": [
+    "3/10",
+    ".3"
+   ],
+   "P(B|A')": [
+    "2/5",
+    ".4"
+   ],
+   "P(A'|B)": [
+    "7/10",
+    ".7"
+   ],
+   "P(B'|A)": [
+    "3/5",
+    ".6"
+   ],
+   "P(exactly one)": [
+    "23/50",
+    ".46"
+   ],
+   "P(A)P(B)": [
+    "3/25",
+    ".12"
+   ]
+  },
+  "spec_check": {
+   "P(AnB)": {
+    "spec": "3/25",
+    "match": true
+   },
+   "P(AuB)": {
+    "spec": "29/50",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-A-S3",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "spec",
+  "inputs_description": "P(AnB)=.1, P(A|B)=.25, P(B|A)=.5; NO EXTRA INFO",
+  "inputs": {
+   "AnB": ".1",
+   "A|B": ".25",
+   "B|A": ".5",
+   "relation": "NO EXTRA INFO"
+  },
+  "expected": {
+   "P(A)": "1/5",
+   "P(B)": "2/5",
+   "P(AnB)": "1/10",
+   "P(AuB)": "1/2",
+   "P(A')": "4/5",
+   "P(B')": "3/5",
+   "P(A'nB')": "1/2",
+   "P(AnB')": "1/10",
+   "P(A'nB)": "3/10",
+   "P(A|B)": "1/4",
+   "P(B|A)": "1/2",
+   "P(A|B')": "1/6",
+   "P(B|A')": "3/8",
+   "P(A'|B)": "3/4",
+   "P(B'|A)": "1/2",
+   "P(exactly one)": "2/5",
+   "P(A)P(B)": "2/25",
+   "independent?": "NO",
+   "mutually exclusive?": "NO",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.2,
+   "P(B)": 0.4,
+   "P(AnB)": 0.1,
+   "P(AuB)": 0.5,
+   "P(A')": 0.8,
+   "P(B')": 0.6,
+   "P(A'nB')": 0.5,
+   "P(AnB')": 0.1,
+   "P(A'nB)": 0.3,
+   "P(A|B)": 0.25,
+   "P(B|A)": 0.5,
+   "P(A|B')": 0.166666666667,
+   "P(B|A')": 0.375,
+   "P(A'|B)": 0.75,
+   "P(B'|A)": 0.5,
+   "P(exactly one)": 0.4,
+   "P(A)P(B)": 0.08
+  },
+  "display": {
+   "P(A)": [
+    "1/5",
+    ".2"
+   ],
+   "P(B)": [
+    "2/5",
+    ".4"
+   ],
+   "P(AnB)": [
+    "1/10",
+    ".1"
+   ],
+   "P(AuB)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A')": [
+    "4/5",
+    ".8"
+   ],
+   "P(B')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'nB')": [
+    "1/2",
+    ".5"
+   ],
+   "P(AnB')": [
+    "1/10",
+    ".1"
+   ],
+   "P(A'nB)": [
+    "3/10",
+    ".3"
+   ],
+   "P(A|B)": [
+    "1/4",
+    ".25"
+   ],
+   "P(B|A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A|B')": [
+    "1/6",
+    ".166667"
+   ],
+   "P(B|A')": [
+    "3/8",
+    ".375"
+   ],
+   "P(A'|B)": [
+    "3/4",
+    ".75"
+   ],
+   "P(B'|A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(exactly one)": [
+    "2/5",
+    ".4"
+   ],
+   "P(A)P(B)": [
+    "2/25",
+    ".08"
+   ]
+  },
+  "spec_check": {
+   "P(B)": {
+    "spec": "2/5",
+    "match": true
+   },
+   "P(A)": {
+    "spec": "1/5",
+    "match": true
+   },
+   "P(AuB)": {
+    "spec": "1/2",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-A-E1",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(A)=.3, P(B)=.4, MUTUALLY EXCL.",
+  "inputs": {
+   "A": ".3",
+   "B": ".4",
+   "relation": "MUTUALLY EXCL."
+  },
+  "expected": {
+   "P(A)": "3/10",
+   "P(B)": "2/5",
+   "P(AnB)": "0",
+   "P(AuB)": "7/10",
+   "P(A')": "7/10",
+   "P(B')": "3/5",
+   "P(A'nB')": "3/10",
+   "P(AnB')": "3/10",
+   "P(A'nB)": "2/5",
+   "P(A|B)": "0",
+   "P(B|A)": "0",
+   "P(A|B')": "1/2",
+   "P(B|A')": "4/7",
+   "P(A'|B)": "1",
+   "P(B'|A)": "1",
+   "P(exactly one)": "7/10",
+   "P(A)P(B)": "3/25",
+   "independent?": "NO",
+   "mutually exclusive?": "YES",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.3,
+   "P(B)": 0.4,
+   "P(AnB)": 0.0,
+   "P(AuB)": 0.7,
+   "P(A')": 0.7,
+   "P(B')": 0.6,
+   "P(A'nB')": 0.3,
+   "P(AnB')": 0.3,
+   "P(A'nB)": 0.4,
+   "P(A|B)": 0.0,
+   "P(B|A)": 0.0,
+   "P(A|B')": 0.5,
+   "P(B|A')": 0.571428571429,
+   "P(A'|B)": 1.0,
+   "P(B'|A)": 1.0,
+   "P(exactly one)": 0.7,
+   "P(A)P(B)": 0.12
+  },
+  "display": {
+   "P(A)": [
+    "3/10",
+    ".3"
+   ],
+   "P(B)": [
+    "2/5",
+    ".4"
+   ],
+   "P(AnB)": [
+    "0",
+    "0"
+   ],
+   "P(AuB)": [
+    "7/10",
+    ".7"
+   ],
+   "P(A')": [
+    "7/10",
+    ".7"
+   ],
+   "P(B')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'nB')": [
+    "3/10",
+    ".3"
+   ],
+   "P(AnB')": [
+    "3/10",
+    ".3"
+   ],
+   "P(A'nB)": [
+    "2/5",
+    ".4"
+   ],
+   "P(A|B)": [
+    "0",
+    "0"
+   ],
+   "P(B|A)": [
+    "0",
+    "0"
+   ],
+   "P(A|B')": [
+    "1/2",
+    ".5"
+   ],
+   "P(B|A')": [
+    "4/7",
+    ".571429"
+   ],
+   "P(A'|B)": [
+    "1",
+    "1"
+   ],
+   "P(B'|A)": [
+    "1",
+    "1"
+   ],
+   "P(exactly one)": [
+    "7/10",
+    ".7"
+   ],
+   "P(A)P(B)": [
+    "3/25",
+    ".12"
+   ]
+  },
+  "notes": "Disjoint => NOT independent (P(A)P(B)=.12 ≠ 0)."
+ },
+ {
+  "id": "PRB-A-E2",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(A)=0, P(B)=.5, P(AuB)=.5 (zero-probability conditioning)",
+  "inputs": {
+   "A": "0",
+   "B": ".5",
+   "AuB": ".5"
+  },
+  "expected": {
+   "P(A)": "0",
+   "P(B)": "1/2",
+   "P(AnB)": "0",
+   "P(AuB)": "1/2",
+   "P(A')": "1",
+   "P(B')": "1/2",
+   "P(A'nB')": "1/2",
+   "P(AnB')": "0",
+   "P(A'nB)": "1/2",
+   "P(A|B)": "0",
+   "P(B|A)": "undef",
+   "P(A|B')": "0",
+   "P(B|A')": "1/2",
+   "P(A'|B)": "1",
+   "P(B'|A)": "undef",
+   "P(exactly one)": "1/2",
+   "P(A)P(B)": "0",
+   "independent?": "YES",
+   "mutually exclusive?": "YES",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.0,
+   "P(B)": 0.5,
+   "P(AnB)": 0.0,
+   "P(AuB)": 0.5,
+   "P(A')": 1.0,
+   "P(B')": 0.5,
+   "P(A'nB')": 0.5,
+   "P(AnB')": 0.0,
+   "P(A'nB)": 0.5,
+   "P(A|B)": 0.0,
+   "P(A|B')": 0.0,
+   "P(B|A')": 0.5,
+   "P(A'|B)": 1.0,
+   "P(exactly one)": 0.5,
+   "P(A)P(B)": 0.0
+  },
+  "display": {
+   "P(A)": [
+    "0",
+    "0"
+   ],
+   "P(B)": [
+    "1/2",
+    ".5"
+   ],
+   "P(AnB)": [
+    "0",
+    "0"
+   ],
+   "P(AuB)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A')": [
+    "1",
+    "1"
+   ],
+   "P(B')": [
+    "1/2",
+    ".5"
+   ],
+   "P(A'nB')": [
+    "1/2",
+    ".5"
+   ],
+   "P(AnB')": [
+    "0",
+    "0"
+   ],
+   "P(A'nB)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A|B)": [
+    "0",
+    "0"
+   ],
+   "P(A|B')": [
+    "0",
+    "0"
+   ],
+   "P(B|A')": [
+    "1/2",
+    ".5"
+   ],
+   "P(A'|B)": [
+    "1",
+    "1"
+   ],
+   "P(exactly one)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A)P(B)": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "P(B|A), P(B'|A) must show undef (condition has probability 0). A=0 counts as independent."
+ },
+ {
+  "id": "PRB-A-E3",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(A)=.5, P(AuB)=.8, P(A|B)=.25 (uses B=(U-A)/(1-C))",
+  "inputs": {
+   "A": ".5",
+   "AuB": ".8",
+   "A|B": ".25"
+  },
+  "expected": {
+   "P(A)": "1/2",
+   "P(B)": "2/5",
+   "P(AnB)": "1/10",
+   "P(AuB)": "4/5",
+   "P(A')": "1/2",
+   "P(B')": "3/5",
+   "P(A'nB')": "1/5",
+   "P(AnB')": "2/5",
+   "P(A'nB)": "3/10",
+   "P(A|B)": "1/4",
+   "P(B|A)": "1/5",
+   "P(A|B')": "2/3",
+   "P(B|A')": "3/5",
+   "P(A'|B)": "3/4",
+   "P(B'|A)": "4/5",
+   "P(exactly one)": "7/10",
+   "P(A)P(B)": "1/5",
+   "independent?": "NO",
+   "mutually exclusive?": "NO",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.5,
+   "P(B)": 0.4,
+   "P(AnB)": 0.1,
+   "P(AuB)": 0.8,
+   "P(A')": 0.5,
+   "P(B')": 0.6,
+   "P(A'nB')": 0.2,
+   "P(AnB')": 0.4,
+   "P(A'nB)": 0.3,
+   "P(A|B)": 0.25,
+   "P(B|A)": 0.2,
+   "P(A|B')": 0.666666666667,
+   "P(B|A')": 0.6,
+   "P(A'|B)": 0.75,
+   "P(B'|A)": 0.8,
+   "P(exactly one)": 0.7,
+   "P(A)P(B)": 0.2
+  },
+  "display": {
+   "P(A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B)": [
+    "2/5",
+    ".4"
+   ],
+   "P(AnB)": [
+    "1/10",
+    ".1"
+   ],
+   "P(AuB)": [
+    "4/5",
+    ".8"
+   ],
+   "P(A')": [
+    "1/2",
+    ".5"
+   ],
+   "P(B')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'nB')": [
+    "1/5",
+    ".2"
+   ],
+   "P(AnB')": [
+    "2/5",
+    ".4"
+   ],
+   "P(A'nB)": [
+    "3/10",
+    ".3"
+   ],
+   "P(A|B)": [
+    "1/4",
+    ".25"
+   ],
+   "P(B|A)": [
+    "1/5",
+    ".2"
+   ],
+   "P(A|B')": [
+    "2/3",
+    ".666667"
+   ],
+   "P(B|A')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'|B)": [
+    "3/4",
+    ".75"
+   ],
+   "P(B'|A)": [
+    "4/5",
+    ".8"
+   ],
+   "P(exactly one)": [
+    "7/10",
+    ".7"
+   ],
+   "P(A)P(B)": [
+    "1/5",
+    ".2"
+   ]
+  }
+ },
+ {
+  "id": "PRB-A-E4",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(AuB)=.5, P(A|B)=.25, P(B|A)=.5 (uses I=U/(1/C+1/D-1))",
+  "inputs": {
+   "AuB": ".5",
+   "A|B": ".25",
+   "B|A": ".5"
+  },
+  "expected": {
+   "P(A)": "1/5",
+   "P(B)": "2/5",
+   "P(AnB)": "1/10",
+   "P(AuB)": "1/2",
+   "P(A')": "4/5",
+   "P(B')": "3/5",
+   "P(A'nB')": "1/2",
+   "P(AnB')": "1/10",
+   "P(A'nB)": "3/10",
+   "P(A|B)": "1/4",
+   "P(B|A)": "1/2",
+   "P(A|B')": "1/6",
+   "P(B|A')": "3/8",
+   "P(A'|B)": "3/4",
+   "P(B'|A)": "1/2",
+   "P(exactly one)": "2/5",
+   "P(A)P(B)": "2/25",
+   "independent?": "NO",
+   "mutually exclusive?": "NO",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.2,
+   "P(B)": 0.4,
+   "P(AnB)": 0.1,
+   "P(AuB)": 0.5,
+   "P(A')": 0.8,
+   "P(B')": 0.6,
+   "P(A'nB')": 0.5,
+   "P(AnB')": 0.1,
+   "P(A'nB)": 0.3,
+   "P(A|B)": 0.25,
+   "P(B|A)": 0.5,
+   "P(A|B')": 0.166666666667,
+   "P(B|A')": 0.375,
+   "P(A'|B)": 0.75,
+   "P(B'|A)": 0.5,
+   "P(exactly one)": 0.4,
+   "P(A)P(B)": 0.08
+  },
+  "display": {
+   "P(A)": [
+    "1/5",
+    ".2"
+   ],
+   "P(B)": [
+    "2/5",
+    ".4"
+   ],
+   "P(AnB)": [
+    "1/10",
+    ".1"
+   ],
+   "P(AuB)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A')": [
+    "4/5",
+    ".8"
+   ],
+   "P(B')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'nB')": [
+    "1/2",
+    ".5"
+   ],
+   "P(AnB')": [
+    "1/10",
+    ".1"
+   ],
+   "P(A'nB)": [
+    "3/10",
+    ".3"
+   ],
+   "P(A|B)": [
+    "1/4",
+    ".25"
+   ],
+   "P(B|A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A|B')": [
+    "1/6",
+    ".166667"
+   ],
+   "P(B|A')": [
+    "3/8",
+    ".375"
+   ],
+   "P(A'|B)": [
+    "3/4",
+    ".75"
+   ],
+   "P(B'|A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(exactly one)": [
+    "2/5",
+    ".4"
+   ],
+   "P(A)P(B)": [
+    "2/25",
+    ".08"
+   ]
+  }
+ },
+ {
+  "id": "PRB-A-E5",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(A)=.5 only",
+  "inputs": {
+   "A": ".5"
+  },
+  "expected": {
+   "result": "NOT ENOUGH INFO"
+  },
+  "decimal": {},
+  "display": {}
+ },
+ {
+  "id": "PRB-A-E6",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(NEITHER)=.3, P(A)=.55, P(B)=.35",
+  "inputs": {
+   "A": ".55",
+   "B": ".35",
+   "neither": ".3"
+  },
+  "expected": {
+   "P(A)": "11/20",
+   "P(B)": "7/20",
+   "P(AnB)": "1/5",
+   "P(AuB)": "7/10",
+   "P(A')": "9/20",
+   "P(B')": "13/20",
+   "P(A'nB')": "3/10",
+   "P(AnB')": "7/20",
+   "P(A'nB)": "3/20",
+   "P(A|B)": "4/7",
+   "P(B|A)": "4/11",
+   "P(A|B')": "7/13",
+   "P(B|A')": "1/3",
+   "P(A'|B)": "3/7",
+   "P(B'|A)": "7/11",
+   "P(exactly one)": "1/2",
+   "P(A)P(B)": "77/400",
+   "independent?": "NO",
+   "mutually exclusive?": "NO",
+   "warnings": "none"
+  },
+  "decimal": {
+   "P(A)": 0.55,
+   "P(B)": 0.35,
+   "P(AnB)": 0.2,
+   "P(AuB)": 0.7,
+   "P(A')": 0.45,
+   "P(B')": 0.65,
+   "P(A'nB')": 0.3,
+   "P(AnB')": 0.35,
+   "P(A'nB)": 0.15,
+   "P(A|B)": 0.571428571429,
+   "P(B|A)": 0.363636363636,
+   "P(A|B')": 0.538461538462,
+   "P(B|A')": 0.333333333333,
+   "P(A'|B)": 0.428571428571,
+   "P(B'|A)": 0.636363636364,
+   "P(exactly one)": 0.5,
+   "P(A)P(B)": 0.1925
+  },
+  "display": {
+   "P(A)": [
+    "11/20",
+    ".55"
+   ],
+   "P(B)": [
+    "7/20",
+    ".35"
+   ],
+   "P(AnB)": [
+    "1/5",
+    ".2"
+   ],
+   "P(AuB)": [
+    "7/10",
+    ".7"
+   ],
+   "P(A')": [
+    "9/20",
+    ".45"
+   ],
+   "P(B')": [
+    "13/20",
+    ".65"
+   ],
+   "P(A'nB')": [
+    "3/10",
+    ".3"
+   ],
+   "P(AnB')": [
+    "7/20",
+    ".35"
+   ],
+   "P(A'nB)": [
+    "3/20",
+    ".15"
+   ],
+   "P(A|B)": [
+    "4/7",
+    ".571429"
+   ],
+   "P(B|A)": [
+    "4/11",
+    ".363636"
+   ],
+   "P(A|B')": [
+    "7/13",
+    ".538462"
+   ],
+   "P(B|A')": [
+    "1/3",
+    ".333333"
+   ],
+   "P(A'|B)": [
+    "3/7",
+    ".428571"
+   ],
+   "P(B'|A)": [
+    "7/11",
+    ".636364"
+   ],
+   "P(exactly one)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A)P(B)": [
+    "77/400",
+    ".1925"
+   ]
+  },
+  "notes": "Same results as PRB-A-S1."
+ },
+ {
+  "id": "PRB-A-E7",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "edge",
+  "inputs_description": "P(A)=.3, P(B)=.4, P(AnB)=.5 (invalid data)",
+  "inputs": {
+   "A": ".3",
+   "B": ".4",
+   "AnB": ".5"
+  },
+  "expected": {
+   "P(A)": "3/10",
+   "P(B)": "2/5",
+   "P(AnB)": "1/2",
+   "P(AuB)": "1/5",
+   "P(A')": "7/10",
+   "P(B')": "3/5",
+   "P(A'nB')": "4/5",
+   "P(AnB')": "-1/5",
+   "P(A'nB)": "-1/10",
+   "P(A|B)": "5/4",
+   "P(B|A)": "5/3",
+   "P(A|B')": "-1/3",
+   "P(B|A')": "-1/7",
+   "P(A'|B)": "-1/4",
+   "P(B'|A)": "-2/3",
+   "P(exactly one)": "-3/10",
+   "P(A)P(B)": "3/25",
+   "independent?": "NO",
+   "mutually exclusive?": "NO",
+   "warnings": "P(AnB) > min(P(A),P(B))"
+  },
+  "decimal": {
+   "P(A)": 0.3,
+   "P(B)": 0.4,
+   "P(AnB)": 0.5,
+   "P(AuB)": 0.2,
+   "P(A')": 0.7,
+   "P(B')": 0.6,
+   "P(A'nB')": 0.8,
+   "P(AnB')": -0.2,
+   "P(A'nB)": -0.1,
+   "P(A|B)": 1.25,
+   "P(B|A)": 1.666666666667,
+   "P(A|B')": -0.333333333333,
+   "P(B|A')": -0.142857142857,
+   "P(A'|B)": -0.25,
+   "P(B'|A)": -0.666666666667,
+   "P(exactly one)": -0.3,
+   "P(A)P(B)": 0.12
+  },
+  "display": {
+   "P(A)": [
+    "3/10",
+    ".3"
+   ],
+   "P(B)": [
+    "2/5",
+    ".4"
+   ],
+   "P(AnB)": [
+    "1/2",
+    ".5"
+   ],
+   "P(AuB)": [
+    "1/5",
+    ".2"
+   ],
+   "P(A')": [
+    "7/10",
+    ".7"
+   ],
+   "P(B')": [
+    "3/5",
+    ".6"
+   ],
+   "P(A'nB')": [
+    "4/5",
+    ".8"
+   ],
+   "P(AnB')": [
+    "⁻1/5",
+    "⁻.2"
+   ],
+   "P(A'nB)": [
+    "⁻1/10",
+    "⁻.1"
+   ],
+   "P(A|B)": [
+    "5/4",
+    "1.25"
+   ],
+   "P(B|A)": [
+    "5/3",
+    "1.666667"
+   ],
+   "P(A|B')": [
+    "⁻1/3",
+    "⁻.333333"
+   ],
+   "P(B|A')": [
+    "⁻1/7",
+    "⁻.142857"
+   ],
+   "P(A'|B)": [
+    "⁻1/4",
+    "⁻.25"
+   ],
+   "P(B'|A)": [
+    "⁻2/3",
+    "⁻.666667"
+   ],
+   "P(exactly one)": [
+    "⁻3/10",
+    "⁻.3"
+   ],
+   "P(A)P(B)": [
+    "3/25",
+    ".12"
+   ]
+  },
+  "notes": "Validity warning expected: P(AnB) > min(P(A),P(B)); A only / B only negative."
+ },
+ {
+  "id": "PRB-B-S1",
+  "program": "STAPRB",
+  "tool": "B",
+  "tool_name": "2x2 TABLE",
+  "kind": "spec",
+  "inputs_description": "R1C1=40, R1 total=70, R2 total=50, C1 total=65, N=120, others unknown (HW2 Q3: R1=grad, R2=faculty, C1=female, C2=male)",
+  "inputs": {
+   "R1C1": 40,
+   "R1C2": -1,
+   "R1": 70,
+   "R2C1": -1,
+   "R2C2": -1,
+   "R2": 50,
+   "C1": 65,
+   "C2": -1,
+   "N": 120
+  },
+  "expected": {
+   "R1C1": "40",
+   "R1C2": "30",
+   "R1": "70",
+   "R2C1": "25",
+   "R2C2": "25",
+   "R2": "50",
+   "C1": "65",
+   "C2": "55",
+   "N": "120",
+   "P(R1nC1)": "1/3",
+   "P(R1nC2)": "1/4",
+   "P(R2nC1)": "5/24",
+   "P(R2nC2)": "5/24",
+   "P(R1)": "7/12",
+   "P(R2)": "5/12",
+   "P(C1)": "13/24",
+   "P(C2)": "11/24",
+   "P(R1|C1)": "8/13",
+   "P(R1|C2)": "6/11",
+   "P(R2|C1)": "5/13",
+   "P(R2|C2)": "5/11",
+   "P(C1|R1)": "4/7",
+   "P(C1|R2)": "1/2",
+   "P(C2|R1)": "3/7",
+   "P(C2|R2)": "1/2",
+   "P(R1)P(C1)": "91/288",
+   "independent?": "NO",
+   "totals consistent?": "YES"
+  },
+  "decimal": {
+   "R1C1": 40.0,
+   "R1C2": 30.0,
+   "R1": 70.0,
+   "R2C1": 25.0,
+   "R2C2": 25.0,
+   "R2": 50.0,
+   "C1": 65.0,
+   "C2": 55.0,
+   "N": 120.0,
+   "P(R1nC1)": 0.333333333333,
+   "P(R1nC2)": 0.25,
+   "P(R2nC1)": 0.208333333333,
+   "P(R2nC2)": 0.208333333333,
+   "P(R1)": 0.583333333333,
+   "P(R2)": 0.416666666667,
+   "P(C1)": 0.541666666667,
+   "P(C2)": 0.458333333333,
+   "P(R1|C1)": 0.615384615385,
+   "P(R1|C2)": 0.545454545455,
+   "P(R2|C1)": 0.384615384615,
+   "P(R2|C2)": 0.454545454545,
+   "P(C1|R1)": 0.571428571429,
+   "P(C1|R2)": 0.5,
+   "P(C2|R1)": 0.428571428571,
+   "P(C2|R2)": 0.5,
+   "P(R1)P(C1)": 0.315972222222
+  },
+  "display": {
+   "R1C1": [
+    "40",
+    "40"
+   ],
+   "R1C2": [
+    "30",
+    "30"
+   ],
+   "R1": [
+    "70",
+    "70"
+   ],
+   "R2C1": [
+    "25",
+    "25"
+   ],
+   "R2C2": [
+    "25",
+    "25"
+   ],
+   "R2": [
+    "50",
+    "50"
+   ],
+   "C1": [
+    "65",
+    "65"
+   ],
+   "C2": [
+    "55",
+    "55"
+   ],
+   "N": [
+    "120",
+    "120"
+   ],
+   "P(R1nC1)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(R1nC2)": [
+    "1/4",
+    ".25"
+   ],
+   "P(R2nC1)": [
+    "5/24",
+    ".208333"
+   ],
+   "P(R2nC2)": [
+    "5/24",
+    ".208333"
+   ],
+   "P(R1)": [
+    "7/12",
+    ".583333"
+   ],
+   "P(R2)": [
+    "5/12",
+    ".416667"
+   ],
+   "P(C1)": [
+    "13/24",
+    ".541667"
+   ],
+   "P(C2)": [
+    "11/24",
+    ".458333"
+   ],
+   "P(R1|C1)": [
+    "8/13",
+    ".615385"
+   ],
+   "P(R1|C2)": [
+    "6/11",
+    ".545455"
+   ],
+   "P(R2|C1)": [
+    "5/13",
+    ".384615"
+   ],
+   "P(R2|C2)": [
+    "5/11",
+    ".454545"
+   ],
+   "P(C1|R1)": [
+    "4/7",
+    ".571429"
+   ],
+   "P(C1|R2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(C2|R1)": [
+    "3/7",
+    ".428571"
+   ],
+   "P(C2|R2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(R1)P(C1)": [
+    "91/288",
+    ".315972"
+   ]
+  },
+  "spec_check": {
+   "R1C2": {
+    "spec": "30",
+    "match": true
+   },
+   "R2C1": {
+    "spec": "25",
+    "match": true
+   },
+   "R2C2": {
+    "spec": "25",
+    "match": true
+   },
+   "C2": {
+    "spec": "55",
+    "match": true
+   },
+   "P(R2nC2)": {
+    "spec": "5/24",
+    "match": true
+   },
+   "P(R1|C1)": {
+    "spec": "8/13",
+    "match": true
+   },
+   "P(C1|R1)": {
+    "spec": "4/7",
+    "match": true
+   },
+   "independent?": {
+    "spec": "NO",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-B-E1",
+  "program": "STAPRB",
+  "tool": "B",
+  "tool_name": "2x2 TABLE",
+  "kind": "edge",
+  "inputs_description": "probabilities: R1C1=.2, R1 total=.5, C1 total=.4, N=1, others unknown",
+  "inputs": {
+   "R1C1": ".2",
+   "R1": ".5",
+   "C1": ".4",
+   "N": "1"
+  },
+  "expected": {
+   "R1C1": "1/5",
+   "R1C2": "3/10",
+   "R1": "1/2",
+   "R2C1": "1/5",
+   "R2C2": "3/10",
+   "R2": "1/2",
+   "C1": "2/5",
+   "C2": "3/5",
+   "N": "1",
+   "P(R1nC1)": "1/5",
+   "P(R1nC2)": "3/10",
+   "P(R2nC1)": "1/5",
+   "P(R2nC2)": "3/10",
+   "P(R1)": "1/2",
+   "P(R2)": "1/2",
+   "P(C1)": "2/5",
+   "P(C2)": "3/5",
+   "P(R1|C1)": "1/2",
+   "P(R1|C2)": "1/2",
+   "P(R2|C1)": "1/2",
+   "P(R2|C2)": "1/2",
+   "P(C1|R1)": "2/5",
+   "P(C1|R2)": "2/5",
+   "P(C2|R1)": "3/5",
+   "P(C2|R2)": "3/5",
+   "P(R1)P(C1)": "1/5",
+   "independent?": "YES",
+   "totals consistent?": "YES"
+  },
+  "decimal": {
+   "R1C1": 0.2,
+   "R1C2": 0.3,
+   "R1": 0.5,
+   "R2C1": 0.2,
+   "R2C2": 0.3,
+   "R2": 0.5,
+   "C1": 0.4,
+   "C2": 0.6,
+   "N": 1.0,
+   "P(R1nC1)": 0.2,
+   "P(R1nC2)": 0.3,
+   "P(R2nC1)": 0.2,
+   "P(R2nC2)": 0.3,
+   "P(R1)": 0.5,
+   "P(R2)": 0.5,
+   "P(C1)": 0.4,
+   "P(C2)": 0.6,
+   "P(R1|C1)": 0.5,
+   "P(R1|C2)": 0.5,
+   "P(R2|C1)": 0.5,
+   "P(R2|C2)": 0.5,
+   "P(C1|R1)": 0.4,
+   "P(C1|R2)": 0.4,
+   "P(C2|R1)": 0.6,
+   "P(C2|R2)": 0.6,
+   "P(R1)P(C1)": 0.2
+  },
+  "display": {
+   "R1C1": [
+    "1/5",
+    ".2"
+   ],
+   "R1C2": [
+    "3/10",
+    ".3"
+   ],
+   "R1": [
+    "1/2",
+    ".5"
+   ],
+   "R2C1": [
+    "1/5",
+    ".2"
+   ],
+   "R2C2": [
+    "3/10",
+    ".3"
+   ],
+   "R2": [
+    "1/2",
+    ".5"
+   ],
+   "C1": [
+    "2/5",
+    ".4"
+   ],
+   "C2": [
+    "3/5",
+    ".6"
+   ],
+   "N": [
+    "1",
+    "1"
+   ],
+   "P(R1nC1)": [
+    "1/5",
+    ".2"
+   ],
+   "P(R1nC2)": [
+    "3/10",
+    ".3"
+   ],
+   "P(R2nC1)": [
+    "1/5",
+    ".2"
+   ],
+   "P(R2nC2)": [
+    "3/10",
+    ".3"
+   ],
+   "P(R1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(R2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(C1)": [
+    "2/5",
+    ".4"
+   ],
+   "P(C2)": [
+    "3/5",
+    ".6"
+   ],
+   "P(R1|C1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(R1|C2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(R2|C1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(R2|C2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(C1|R1)": [
+    "2/5",
+    ".4"
+   ],
+   "P(C1|R2)": [
+    "2/5",
+    ".4"
+   ],
+   "P(C2|R1)": [
+    "3/5",
+    ".6"
+   ],
+   "P(C2|R2)": [
+    "3/5",
+    ".6"
+   ],
+   "P(R1)P(C1)": [
+    "1/5",
+    ".2"
+   ]
+  },
+  "notes": "Independent: P(R1)P(C1) = .2 = P(R1nC1)."
+ },
+ {
+  "id": "PRB-B-E2",
+  "program": "STAPRB",
+  "tool": "B",
+  "tool_name": "2x2 TABLE",
+  "kind": "edge",
+  "inputs_description": "R1C1=10, R1C2=20, R1 total=40 (inconsistent), rest unknown",
+  "inputs": {
+   "R1C1": 10,
+   "R1C2": 20,
+   "R1": 40
+  },
+  "expected": {
+   "result": "INCONSISTENT TOTALS (warn)"
+  },
+  "decimal": {},
+  "display": {},
+  "notes": "Must warn: 10+20 ≠ 40."
+ },
+ {
+  "id": "PRB-B-E3",
+  "program": "STAPRB",
+  "tool": "B",
+  "tool_name": "2x2 TABLE",
+  "kind": "edge",
+  "inputs_description": "only R1C1=10 and N=100 known",
+  "inputs": {
+   "R1C1": 10,
+   "N": 100
+  },
+  "expected": {
+   "R1C1": "10",
+   "R1C2": "unknown",
+   "R1": "unknown",
+   "R2C1": "unknown",
+   "R2C2": "unknown",
+   "R2": "unknown",
+   "C1": "unknown",
+   "C2": "unknown",
+   "N": "100",
+   "result": "NOT ENOUGH INFO (some cells stay unknown)"
+  },
+  "decimal": {
+   "R1C1": 10.0,
+   "N": 100.0
+  },
+  "display": {
+   "R1C1": [
+    "10",
+    "10"
+   ],
+   "N": [
+    "100",
+    "100"
+   ]
+  }
+ },
+ {
+  "id": "PRB-C-S1",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "spec",
+  "inputs_description": "k=3, priors .5,.3,.2, likelihoods .15,.25,.10 (HW2 Q4)",
+  "inputs": {
+   "priors": [
+    ".5",
+    ".3",
+    ".2"
+   ],
+   "liks": [
+    ".15",
+    ".25",
+    ".10"
+   ]
+  },
+  "expected": {
+   "rescaled?": "NO",
+   "P(B1)": "1/2",
+   "P(B2)": "3/10",
+   "P(B3)": "1/5",
+   "P(A|B1)P(B1)": "3/40",
+   "P(A|B2)P(B2)": "3/40",
+   "P(A|B3)P(B3)": "1/50",
+   "P(A)": "17/100",
+   "P(B1|A)": "15/34",
+   "P(B2|A)": "15/34",
+   "P(B3|A)": "2/17",
+   "P(A')": "83/100",
+   "P(B1|A')": "85/166",
+   "P(B2|A')": "45/166",
+   "P(B3|A')": "18/83"
+  },
+  "decimal": {
+   "P(B1)": 0.5,
+   "P(B2)": 0.3,
+   "P(B3)": 0.2,
+   "P(A|B1)P(B1)": 0.075,
+   "P(A|B2)P(B2)": 0.075,
+   "P(A|B3)P(B3)": 0.02,
+   "P(A)": 0.17,
+   "P(B1|A)": 0.441176470588,
+   "P(B2|A)": 0.441176470588,
+   "P(B3|A)": 0.117647058824,
+   "P(A')": 0.83,
+   "P(B1|A')": 0.512048192771,
+   "P(B2|A')": 0.271084337349,
+   "P(B3|A')": 0.21686746988
+  },
+  "display": {
+   "P(B1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B2)": [
+    "3/10",
+    ".3"
+   ],
+   "P(B3)": [
+    "1/5",
+    ".2"
+   ],
+   "P(A|B1)P(B1)": [
+    "3/40",
+    ".075"
+   ],
+   "P(A|B2)P(B2)": [
+    "3/40",
+    ".075"
+   ],
+   "P(A|B3)P(B3)": [
+    "1/50",
+    ".02"
+   ],
+   "P(A)": [
+    "17/100",
+    ".17"
+   ],
+   "P(B1|A)": [
+    "15/34",
+    ".441176"
+   ],
+   "P(B2|A)": [
+    "15/34",
+    ".441176"
+   ],
+   "P(B3|A)": [
+    "2/17",
+    ".117647"
+   ],
+   "P(A')": [
+    "83/100",
+    ".83"
+   ],
+   "P(B1|A')": [
+    "85/166",
+    ".512048"
+   ],
+   "P(B2|A')": [
+    "45/166",
+    ".271084"
+   ],
+   "P(B3|A')": [
+    "18/83",
+    ".216867"
+   ]
+  },
+  "spec_check": {
+   "P(A)": {
+    "spec": "17/100",
+    "match": true
+   },
+   "P(B1|A)": {
+    "spec": "15/34",
+    "match": true
+   },
+   "P(B2|A)": {
+    "spec": "15/34",
+    "match": true
+   },
+   "P(B3|A)": {
+    "spec": "2/17",
+    "match": true
+   },
+   "P(A')": {
+    "spec": "83/100",
+    "match": true
+   },
+   "P(B1|A')": {
+    "spec": "85/166",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-C-S2",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "spec",
+  "inputs_description": "k=2, priors 2,4 (rescaled), likelihoods 3/7,5/7 (HW2 Q5)",
+  "inputs": {
+   "priors": [
+    "2",
+    "4"
+   ],
+   "liks": [
+    "3/7",
+    "5/7"
+   ]
+  },
+  "expected": {
+   "rescaled?": "YES",
+   "P(B1)": "1/3",
+   "P(B2)": "2/3",
+   "P(A|B1)P(B1)": "1/7",
+   "P(A|B2)P(B2)": "10/21",
+   "P(A)": "13/21",
+   "P(B1|A)": "3/13",
+   "P(B2|A)": "10/13",
+   "P(A')": "8/21",
+   "P(B1|A')": "1/2",
+   "P(B2|A')": "1/2"
+  },
+  "decimal": {
+   "P(B1)": 0.333333333333,
+   "P(B2)": 0.666666666667,
+   "P(A|B1)P(B1)": 0.142857142857,
+   "P(A|B2)P(B2)": 0.47619047619,
+   "P(A)": 0.619047619048,
+   "P(B1|A)": 0.230769230769,
+   "P(B2|A)": 0.769230769231,
+   "P(A')": 0.380952380952,
+   "P(B1|A')": 0.5,
+   "P(B2|A')": 0.5
+  },
+  "display": {
+   "P(B1)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(B2)": [
+    "2/3",
+    ".666667"
+   ],
+   "P(A|B1)P(B1)": [
+    "1/7",
+    ".142857"
+   ],
+   "P(A|B2)P(B2)": [
+    "10/21",
+    ".47619"
+   ],
+   "P(A)": [
+    "13/21",
+    ".619048"
+   ],
+   "P(B1|A)": [
+    "3/13",
+    ".230769"
+   ],
+   "P(B2|A)": [
+    "10/13",
+    ".769231"
+   ],
+   "P(A')": [
+    "8/21",
+    ".380952"
+   ],
+   "P(B1|A')": [
+    "1/2",
+    ".5"
+   ],
+   "P(B2|A')": [
+    "1/2",
+    ".5"
+   ]
+  },
+  "spec_check": {
+   "P(B1)": {
+    "spec": "1/3",
+    "match": true
+   },
+   "P(B2)": {
+    "spec": "2/3",
+    "match": true
+   },
+   "P(A)": {
+    "spec": "13/21",
+    "match": true
+   },
+   "P(B1|A)": {
+    "spec": "3/13",
+    "match": true
+   },
+   "P(B2|A)": {
+    "spec": "10/13",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-C-S3",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "spec",
+  "inputs_description": "k=2, priors .6,.4, likelihoods .4,.05 (HW2 431 Q6)",
+  "inputs": {
+   "priors": [
+    ".6",
+    ".4"
+   ],
+   "liks": [
+    ".4",
+    ".05"
+   ]
+  },
+  "expected": {
+   "rescaled?": "NO",
+   "P(B1)": "3/5",
+   "P(B2)": "2/5",
+   "P(A|B1)P(B1)": "6/25",
+   "P(A|B2)P(B2)": "1/50",
+   "P(A)": "13/50",
+   "P(B1|A)": "12/13",
+   "P(B2|A)": "1/13",
+   "P(A')": "37/50",
+   "P(B1|A')": "18/37",
+   "P(B2|A')": "19/37"
+  },
+  "decimal": {
+   "P(B1)": 0.6,
+   "P(B2)": 0.4,
+   "P(A|B1)P(B1)": 0.24,
+   "P(A|B2)P(B2)": 0.02,
+   "P(A)": 0.26,
+   "P(B1|A)": 0.923076923077,
+   "P(B2|A)": 0.076923076923,
+   "P(A')": 0.74,
+   "P(B1|A')": 0.486486486486,
+   "P(B2|A')": 0.513513513514
+  },
+  "display": {
+   "P(B1)": [
+    "3/5",
+    ".6"
+   ],
+   "P(B2)": [
+    "2/5",
+    ".4"
+   ],
+   "P(A|B1)P(B1)": [
+    "6/25",
+    ".24"
+   ],
+   "P(A|B2)P(B2)": [
+    "1/50",
+    ".02"
+   ],
+   "P(A)": [
+    "13/50",
+    ".26"
+   ],
+   "P(B1|A)": [
+    "12/13",
+    ".923077"
+   ],
+   "P(B2|A)": [
+    "1/13",
+    ".076923"
+   ],
+   "P(A')": [
+    "37/50",
+    ".74"
+   ],
+   "P(B1|A')": [
+    "18/37",
+    ".486486"
+   ],
+   "P(B2|A')": [
+    "19/37",
+    ".513514"
+   ]
+  },
+  "spec_check": {
+   "P(A)": {
+    "spec": "13/50",
+    "match": true
+   },
+   "P(B1|A)": {
+    "spec": "12/13",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-C-E1",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "edge",
+  "inputs_description": "percent everywhere: priors 50,30,20; likelihoods 15,25,10",
+  "inputs": {
+   "priors": [
+    "50",
+    "30",
+    "20"
+   ],
+   "liks": [
+    "15",
+    "25",
+    "10"
+   ]
+  },
+  "expected": {
+   "rescaled?": "YES",
+   "P(B1)": "1/2",
+   "P(B2)": "3/10",
+   "P(B3)": "1/5",
+   "P(A|B1)P(B1)": "3/40",
+   "P(A|B2)P(B2)": "3/40",
+   "P(A|B3)P(B3)": "1/50",
+   "P(A)": "17/100",
+   "P(B1|A)": "15/34",
+   "P(B2|A)": "15/34",
+   "P(B3|A)": "2/17",
+   "P(A')": "83/100",
+   "P(B1|A')": "85/166",
+   "P(B2|A')": "45/166",
+   "P(B3|A')": "18/83"
+  },
+  "decimal": {
+   "P(B1)": 0.5,
+   "P(B2)": 0.3,
+   "P(B3)": 0.2,
+   "P(A|B1)P(B1)": 0.075,
+   "P(A|B2)P(B2)": 0.075,
+   "P(A|B3)P(B3)": 0.02,
+   "P(A)": 0.17,
+   "P(B1|A)": 0.441176470588,
+   "P(B2|A)": 0.441176470588,
+   "P(B3|A)": 0.117647058824,
+   "P(A')": 0.83,
+   "P(B1|A')": 0.512048192771,
+   "P(B2|A')": 0.271084337349,
+   "P(B3|A')": 0.21686746988
+  },
+  "display": {
+   "P(B1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B2)": [
+    "3/10",
+    ".3"
+   ],
+   "P(B3)": [
+    "1/5",
+    ".2"
+   ],
+   "P(A|B1)P(B1)": [
+    "3/40",
+    ".075"
+   ],
+   "P(A|B2)P(B2)": [
+    "3/40",
+    ".075"
+   ],
+   "P(A|B3)P(B3)": [
+    "1/50",
+    ".02"
+   ],
+   "P(A)": [
+    "17/100",
+    ".17"
+   ],
+   "P(B1|A)": [
+    "15/34",
+    ".441176"
+   ],
+   "P(B2|A)": [
+    "15/34",
+    ".441176"
+   ],
+   "P(B3|A)": [
+    "2/17",
+    ".117647"
+   ],
+   "P(A')": [
+    "83/100",
+    ".83"
+   ],
+   "P(B1|A')": [
+    "85/166",
+    ".512048"
+   ],
+   "P(B2|A')": [
+    "45/166",
+    ".271084"
+   ],
+   "P(B3|A')": [
+    "18/83",
+    ".216867"
+   ]
+  },
+  "notes": "Same answers as PRB-C-S1; rescale note shown."
+ },
+ {
+  "id": "PRB-C-E2",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "edge",
+  "inputs_description": "priors .5,.5; likelihoods 1, 0",
+  "inputs": {
+   "priors": [
+    ".5",
+    ".5"
+   ],
+   "liks": [
+    "1",
+    "0"
+   ]
+  },
+  "expected": {
+   "rescaled?": "NO",
+   "P(B1)": "1/2",
+   "P(B2)": "1/2",
+   "P(A|B1)P(B1)": "1/2",
+   "P(A|B2)P(B2)": "0",
+   "P(A)": "1/2",
+   "P(B1|A)": "1",
+   "P(B2|A)": "0",
+   "P(A')": "1/2",
+   "P(B1|A')": "0",
+   "P(B2|A')": "1"
+  },
+  "decimal": {
+   "P(B1)": 0.5,
+   "P(B2)": 0.5,
+   "P(A|B1)P(B1)": 0.5,
+   "P(A|B2)P(B2)": 0.0,
+   "P(A)": 0.5,
+   "P(B1|A)": 1.0,
+   "P(B2|A)": 0.0,
+   "P(A')": 0.5,
+   "P(B1|A')": 0.0,
+   "P(B2|A')": 1.0
+  },
+  "display": {
+   "P(B1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A|B1)P(B1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A|B2)P(B2)": [
+    "0",
+    "0"
+   ],
+   "P(A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B1|A)": [
+    "1",
+    "1"
+   ],
+   "P(B2|A)": [
+    "0",
+    "0"
+   ],
+   "P(A')": [
+    "1/2",
+    ".5"
+   ],
+   "P(B1|A')": [
+    "0",
+    "0"
+   ],
+   "P(B2|A')": [
+    "1",
+    "1"
+   ]
+  },
+  "notes": "likelihood exactly 1 is NOT percent (only >1)."
+ },
+ {
+  "id": "PRB-C-E3",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "edge",
+  "inputs_description": "priors .5,.5; likelihoods 0, 0 (P(A)=0)",
+  "inputs": {
+   "priors": [
+    ".5",
+    ".5"
+   ],
+   "liks": [
+    "0",
+    "0"
+   ]
+  },
+  "expected": {
+   "rescaled?": "NO",
+   "P(B1)": "1/2",
+   "P(B2)": "1/2",
+   "P(A|B1)P(B1)": "0",
+   "P(A|B2)P(B2)": "0",
+   "P(A)": "0",
+   "P(B1|A)": "undef",
+   "P(B2|A)": "undef",
+   "P(A')": "1",
+   "P(B1|A')": "1/2",
+   "P(B2|A')": "1/2"
+  },
+  "decimal": {
+   "P(B1)": 0.5,
+   "P(B2)": 0.5,
+   "P(A|B1)P(B1)": 0.0,
+   "P(A|B2)P(B2)": 0.0,
+   "P(A)": 0.0,
+   "P(A')": 1.0,
+   "P(B1|A')": 0.5,
+   "P(B2|A')": 0.5
+  },
+  "display": {
+   "P(B1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B2)": [
+    "1/2",
+    ".5"
+   ],
+   "P(A|B1)P(B1)": [
+    "0",
+    "0"
+   ],
+   "P(A|B2)P(B2)": [
+    "0",
+    "0"
+   ],
+   "P(A)": [
+    "0",
+    "0"
+   ],
+   "P(A')": [
+    "1",
+    "1"
+   ],
+   "P(B1|A')": [
+    "1/2",
+    ".5"
+   ],
+   "P(B2|A')": [
+    "1/2",
+    ".5"
+   ]
+  },
+  "notes": "Posteriors given A undefined (division by P(A)=0)."
+ },
+ {
+  "id": "PRB-C-E4",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "edge",
+  "inputs_description": "counts 1,1,1 as priors; likelihoods 20,50,80 (percent)",
+  "inputs": {
+   "priors": [
+    "1",
+    "1",
+    "1"
+   ],
+   "liks": [
+    "20",
+    "50",
+    "80"
+   ]
+  },
+  "expected": {
+   "rescaled?": "YES",
+   "P(B1)": "1/3",
+   "P(B2)": "1/3",
+   "P(B3)": "1/3",
+   "P(A|B1)P(B1)": "1/15",
+   "P(A|B2)P(B2)": "1/6",
+   "P(A|B3)P(B3)": "4/15",
+   "P(A)": "1/2",
+   "P(B1|A)": "2/15",
+   "P(B2|A)": "1/3",
+   "P(B3|A)": "8/15",
+   "P(A')": "1/2",
+   "P(B1|A')": "8/15",
+   "P(B2|A')": "1/3",
+   "P(B3|A')": "2/15"
+  },
+  "decimal": {
+   "P(B1)": 0.333333333333,
+   "P(B2)": 0.333333333333,
+   "P(B3)": 0.333333333333,
+   "P(A|B1)P(B1)": 0.066666666667,
+   "P(A|B2)P(B2)": 0.166666666667,
+   "P(A|B3)P(B3)": 0.266666666667,
+   "P(A)": 0.5,
+   "P(B1|A)": 0.133333333333,
+   "P(B2|A)": 0.333333333333,
+   "P(B3|A)": 0.533333333333,
+   "P(A')": 0.5,
+   "P(B1|A')": 0.533333333333,
+   "P(B2|A')": 0.333333333333,
+   "P(B3|A')": 0.133333333333
+  },
+  "display": {
+   "P(B1)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(B2)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(B3)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(A|B1)P(B1)": [
+    "1/15",
+    ".066667"
+   ],
+   "P(A|B2)P(B2)": [
+    "1/6",
+    ".166667"
+   ],
+   "P(A|B3)P(B3)": [
+    "4/15",
+    ".266667"
+   ],
+   "P(A)": [
+    "1/2",
+    ".5"
+   ],
+   "P(B1|A)": [
+    "2/15",
+    ".133333"
+   ],
+   "P(B2|A)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(B3|A)": [
+    "8/15",
+    ".533333"
+   ],
+   "P(A')": [
+    "1/2",
+    ".5"
+   ],
+   "P(B1|A')": [
+    "8/15",
+    ".533333"
+   ],
+   "P(B2|A')": [
+    "1/3",
+    ".333333"
+   ],
+   "P(B3|A')": [
+    "2/15",
+    ".133333"
+   ]
+  }
+ },
+ {
+  "id": "PRB-D-S1",
+  "program": "STAPRB",
+  "tool": "D",
+  "tool_name": "SENS/SPEC TEST",
+  "kind": "spec",
+  "inputs_description": "p=.005, sens=.95, spec=.99, result +; then ANOTHER TEST sens .90, spec .95, + (HW2 631 Q7)",
+  "inputs": {
+   "p": ".005",
+   "sens": ".95",
+   "spec": ".99",
+   "result": "+",
+   "next": [
+    {
+     "sens": ".90",
+     "spec": ".95",
+     "result": "+"
+    }
+   ]
+  },
+  "expected": {
+   "P(+)": "147/10000",
+   "P(-)": "9853/10000",
+   "PPV=P(D|+)": "95/294",
+   "NPV=P(D'|-)": "19701/19706",
+   "P(D|-)": "5/19706",
+   "posterior (chosen result)": "95/294",
+   "test2 P(+)": "1909/5880",
+   "test2 P(-)": "3971/5880",
+   "UPDATED P(D) after test2": "1710/1909"
+  },
+  "decimal": {
+   "P(+)": 0.0147,
+   "P(-)": 0.9853,
+   "PPV=P(D|+)": 0.323129251701,
+   "NPV=P(D'|-)": 0.999746270172,
+   "P(D|-)": 0.000253729828,
+   "posterior (chosen result)": 0.323129251701,
+   "test2 P(+)": 0.324659863946,
+   "test2 P(-)": 0.675340136054,
+   "UPDATED P(D) after test2": 0.895756940807
+  },
+  "display": {
+   "P(+)": [
+    ".0147",
+    ".0147"
+   ],
+   "P(-)": [
+    ".9853",
+    ".9853"
+   ],
+   "PPV=P(D|+)": [
+    "95/294",
+    ".323129"
+   ],
+   "NPV=P(D'|-)": [
+    ".999746",
+    ".999746"
+   ],
+   "P(D|-)": [
+    "2.54ᴇ⁻4",
+    "2.54ᴇ⁻4"
+   ],
+   "posterior (chosen result)": [
+    "95/294",
+    ".323129"
+   ],
+   "test2 P(+)": [
+    "1909/5880",
+    ".32466"
+   ],
+   "test2 P(-)": [
+    "3971/5880",
+    ".67534"
+   ],
+   "UPDATED P(D) after test2": [
+    "1710/1909",
+    ".895757"
+   ]
+  },
+  "spec_check": {
+   "P(+)": {
+    "spec": "147/10000",
+    "match": true
+   },
+   "PPV=P(D|+)": {
+    "spec": "95/294",
+    "match": true
+   },
+   "UPDATED P(D) after test2": {
+    "spec": "1710/1909",
+    "match": true
+   }
+  },
+  "notes": "Prevalence 0.5% must be typed .005 (typing .5 is read as 50%, since only values >1 are percent)."
+ },
+ {
+  "id": "PRB-D-E1",
+  "program": "STAPRB",
+  "tool": "D",
+  "tool_name": "SENS/SPEC TEST",
+  "kind": "edge",
+  "inputs_description": "percent inputs p=.005, sens=95, spec=99, result -",
+  "inputs": {
+   "p": ".005",
+   "sens": "95",
+   "spec": "99",
+   "result": "-"
+  },
+  "expected": {
+   "P(+)": "147/10000",
+   "P(-)": "9853/10000",
+   "PPV=P(D|+)": "95/294",
+   "NPV=P(D'|-)": "19701/19706",
+   "P(D|-)": "5/19706",
+   "posterior (chosen result)": "5/19706"
+  },
+  "decimal": {
+   "P(+)": 0.0147,
+   "P(-)": 0.9853,
+   "PPV=P(D|+)": 0.323129251701,
+   "NPV=P(D'|-)": 0.999746270172,
+   "P(D|-)": 0.000253729828,
+   "posterior (chosen result)": 0.000253729828
+  },
+  "display": {
+   "P(+)": [
+    ".0147",
+    ".0147"
+   ],
+   "P(-)": [
+    ".9853",
+    ".9853"
+   ],
+   "PPV=P(D|+)": [
+    "95/294",
+    ".323129"
+   ],
+   "NPV=P(D'|-)": [
+    ".999746",
+    ".999746"
+   ],
+   "P(D|-)": [
+    "2.54ᴇ⁻4",
+    "2.54ᴇ⁻4"
+   ],
+   "posterior (chosen result)": [
+    "2.54ᴇ⁻4",
+    "2.54ᴇ⁻4"
+   ]
+  }
+ },
+ {
+  "id": "PRB-D-E2",
+  "program": "STAPRB",
+  "tool": "D",
+  "tool_name": "SENS/SPEC TEST",
+  "kind": "edge",
+  "inputs_description": "p=.005, sens .95, spec .99, +; then second test sens .9, spec .95, result -",
+  "inputs": {
+   "p": ".005",
+   "sens": ".95",
+   "spec": ".99",
+   "result": "+",
+   "next": [
+    {
+     "sens": ".9",
+     "spec": ".95",
+     "result": "-"
+    }
+   ]
+  },
+  "expected": {
+   "P(+)": "147/10000",
+   "P(-)": "9853/10000",
+   "PPV=P(D|+)": "95/294",
+   "NPV=P(D'|-)": "19701/19706",
+   "P(D|-)": "5/19706",
+   "posterior (chosen result)": "95/294",
+   "test2 P(+)": "1909/5880",
+   "test2 P(-)": "3971/5880",
+   "UPDATED P(D) after test2": "10/209"
+  },
+  "decimal": {
+   "P(+)": 0.0147,
+   "P(-)": 0.9853,
+   "PPV=P(D|+)": 0.323129251701,
+   "NPV=P(D'|-)": 0.999746270172,
+   "P(D|-)": 0.000253729828,
+   "posterior (chosen result)": 0.323129251701,
+   "test2 P(+)": 0.324659863946,
+   "test2 P(-)": 0.675340136054,
+   "UPDATED P(D) after test2": 0.047846889952
+  },
+  "display": {
+   "P(+)": [
+    ".0147",
+    ".0147"
+   ],
+   "P(-)": [
+    ".9853",
+    ".9853"
+   ],
+   "PPV=P(D|+)": [
+    "95/294",
+    ".323129"
+   ],
+   "NPV=P(D'|-)": [
+    ".999746",
+    ".999746"
+   ],
+   "P(D|-)": [
+    "2.54ᴇ⁻4",
+    "2.54ᴇ⁻4"
+   ],
+   "posterior (chosen result)": [
+    "95/294",
+    ".323129"
+   ],
+   "test2 P(+)": [
+    "1909/5880",
+    ".32466"
+   ],
+   "test2 P(-)": [
+    "3971/5880",
+    ".67534"
+   ],
+   "UPDATED P(D) after test2": [
+    "10/209",
+    ".047847"
+   ]
+  }
+ },
+ {
+  "id": "PRB-D-E3",
+  "program": "STAPRB",
+  "tool": "D",
+  "tool_name": "SENS/SPEC TEST",
+  "kind": "edge",
+  "inputs_description": "p=.2, sens=0, spec=1, result + (P(+)=0)",
+  "inputs": {
+   "p": ".2",
+   "sens": "0",
+   "spec": "1",
+   "result": "+"
+  },
+  "expected": {
+   "P(+)": "0",
+   "P(-)": "1",
+   "PPV=P(D|+)": "undef",
+   "NPV=P(D'|-)": "4/5",
+   "P(D|-)": "1/5",
+   "posterior (chosen result)": "undef"
+  },
+  "decimal": {
+   "P(+)": 0.0,
+   "P(-)": 1.0,
+   "NPV=P(D'|-)": 0.8,
+   "P(D|-)": 0.2
+  },
+  "display": {
+   "P(+)": [
+    "0",
+    "0"
+   ],
+   "P(-)": [
+    "1",
+    "1"
+   ],
+   "NPV=P(D'|-)": [
+    "4/5",
+    ".8"
+   ],
+   "P(D|-)": [
+    "1/5",
+    ".2"
+   ]
+  },
+  "notes": "PPV undefined: zero-probability conditioning must not crash."
+ },
+ {
+  "id": "PRB-D-E4",
+  "program": "STAPRB",
+  "tool": "D",
+  "tool_name": "SENS/SPEC TEST",
+  "kind": "edge",
+  "inputs_description": "p=0, sens .9, spec .95, result +",
+  "inputs": {
+   "p": "0",
+   "sens": ".9",
+   "spec": ".95",
+   "result": "+"
+  },
+  "expected": {
+   "P(+)": "1/20",
+   "P(-)": "19/20",
+   "PPV=P(D|+)": "0",
+   "NPV=P(D'|-)": "1",
+   "P(D|-)": "0",
+   "posterior (chosen result)": "0"
+  },
+  "decimal": {
+   "P(+)": 0.05,
+   "P(-)": 0.95,
+   "PPV=P(D|+)": 0.0,
+   "NPV=P(D'|-)": 1.0,
+   "P(D|-)": 0.0,
+   "posterior (chosen result)": 0.0
+  },
+  "display": {
+   "P(+)": [
+    "1/20",
+    ".05"
+   ],
+   "P(-)": [
+    "19/20",
+    ".95"
+   ],
+   "PPV=P(D|+)": [
+    "0",
+    "0"
+   ],
+   "NPV=P(D'|-)": [
+    "1",
+    "1"
+   ],
+   "P(D|-)": [
+    "0",
+    "0"
+   ],
+   "posterior (chosen result)": [
+    "0",
+    "0"
+   ]
+  }
+ },
+ {
+  "id": "PRB-E-S1",
+  "program": "STAPRB",
+  "tool": "E",
+  "tool_name": "VENN 2-3 SETS",
+  "kind": "spec",
+  "inputs_description": "3 SETS: n(A)=400,n(B)=500,n(C)=600,n(AnB)=200,n(AnC)=150,n(BnC)=250,n(AnBnC)=100,N=1000 (HW2 431 Q7: A=Digital,B=Print,C=Weekend)",
+  "inputs": {
+   "mode": 3,
+   "values": [
+    400,
+    500,
+    600,
+    200,
+    150,
+    250,
+    100,
+    1000
+   ]
+  },
+  "expected": {
+   "A only": "150",
+   "B only": "150",
+   "C only": "300",
+   "AnB only": "100",
+   "AnC only": "50",
+   "BnC only": "150",
+   "all 3": "100",
+   "union": "1000",
+   "none": "0",
+   "exactly 1": "600",
+   "exactly 2": "300",
+   "at least 2": "400",
+   "negative region warning?": "NO"
+  },
+  "decimal": {
+   "A only": 150,
+   "B only": 150,
+   "C only": 300,
+   "AnB only": 100,
+   "AnC only": 50,
+   "BnC only": 150,
+   "all 3": 100,
+   "union": 1000,
+   "none": 0,
+   "exactly 1": 600,
+   "exactly 2": 300,
+   "at least 2": 400
+  },
+  "display": {
+   "A only": [
+    "150",
+    "150"
+   ],
+   "B only": [
+    "150",
+    "150"
+   ],
+   "C only": [
+    "300",
+    "300"
+   ],
+   "AnB only": [
+    "100",
+    "100"
+   ],
+   "AnC only": [
+    "50",
+    "50"
+   ],
+   "BnC only": [
+    "150",
+    "150"
+   ],
+   "all 3": [
+    "100",
+    "100"
+   ],
+   "union": [
+    "1000",
+    "1000"
+   ],
+   "none": [
+    "0",
+    "0"
+   ],
+   "exactly 1": [
+    "600",
+    "600"
+   ],
+   "exactly 2": [
+    "300",
+    "300"
+   ],
+   "at least 2": [
+    "400",
+    "400"
+   ]
+  },
+  "spec_check": {
+   "A only": {
+    "spec": "150",
+    "match": true
+   },
+   "B only": {
+    "spec": "150",
+    "match": true
+   },
+   "C only": {
+    "spec": "300",
+    "match": true
+   },
+   "AnB only": {
+    "spec": "100",
+    "match": true
+   },
+   "AnC only": {
+    "spec": "50",
+    "match": true
+   },
+   "BnC only": {
+    "spec": "150",
+    "match": true
+   },
+   "all 3": {
+    "spec": "100",
+    "match": true
+   },
+   "union": {
+    "spec": "1000",
+    "match": true
+   },
+   "none": {
+    "spec": "0",
+    "match": true
+   },
+   "exactly 1": {
+    "spec": "600",
+    "match": true
+   },
+   "exactly 2": {
+    "spec": "300",
+    "match": true
+   },
+   "at least 2": {
+    "spec": "400",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-E-S2",
+  "program": "STAPRB",
+  "tool": "E",
+  "tool_name": "VENN 2-3 SETS",
+  "kind": "spec",
+  "inputs_description": "2 SETS: P(A)=.5, P(B)=.4, P(AnB)=.2, N=1",
+  "inputs": {
+   "mode": 2,
+   "values": [
+    ".5",
+    ".4",
+    ".2",
+    "1"
+   ]
+  },
+  "expected": {
+   "A only": "3/10",
+   "B only": "1/5",
+   "union": "7/10",
+   "neither": "3/10",
+   "exactly one": "1/2"
+  },
+  "decimal": {
+   "A only": 0.3,
+   "B only": 0.2,
+   "union": 0.7,
+   "neither": 0.3,
+   "exactly one": 0.5
+  },
+  "display": {
+   "A only": [
+    "3/10",
+    ".3"
+   ],
+   "B only": [
+    "1/5",
+    ".2"
+   ],
+   "union": [
+    "7/10",
+    ".7"
+   ],
+   "neither": [
+    "3/10",
+    ".3"
+   ],
+   "exactly one": [
+    "1/2",
+    ".5"
+   ]
+  },
+  "spec_check": {
+   "A only": {
+    "spec": ".3",
+    "match": true
+   },
+   "B only": {
+    "spec": ".2",
+    "match": true
+   },
+   "union": {
+    "spec": ".7",
+    "match": true
+   },
+   "neither": {
+    "spec": ".3",
+    "match": true
+   },
+   "exactly one": {
+    "spec": ".5",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-E-E1",
+  "program": "STAPRB",
+  "tool": "E",
+  "tool_name": "VENN 2-3 SETS",
+  "kind": "edge",
+  "inputs_description": "3 SETS with N unknown: 400,500,600,200,150,250,100,N=-1",
+  "inputs": {
+   "mode": 3,
+   "values": [
+    400,
+    500,
+    600,
+    200,
+    150,
+    250,
+    100,
+    -1
+   ]
+  },
+  "expected": {
+   "A only": "150",
+   "B only": "150",
+   "C only": "300",
+   "AnB only": "100",
+   "AnC only": "50",
+   "BnC only": "150",
+   "all 3": "100",
+   "union": "1000",
+   "none": "n/a (N unknown)",
+   "exactly 1": "600",
+   "exactly 2": "300",
+   "at least 2": "400",
+   "negative region warning?": "NO"
+  },
+  "decimal": {
+   "A only": 150,
+   "B only": 150,
+   "C only": 300,
+   "AnB only": 100,
+   "AnC only": 50,
+   "BnC only": 150,
+   "all 3": 100,
+   "union": 1000,
+   "exactly 1": 600,
+   "exactly 2": 300,
+   "at least 2": 400
+  },
+  "display": {
+   "A only": [
+    "150",
+    "150"
+   ],
+   "B only": [
+    "150",
+    "150"
+   ],
+   "C only": [
+    "300",
+    "300"
+   ],
+   "AnB only": [
+    "100",
+    "100"
+   ],
+   "AnC only": [
+    "50",
+    "50"
+   ],
+   "BnC only": [
+    "150",
+    "150"
+   ],
+   "all 3": [
+    "100",
+    "100"
+   ],
+   "union": [
+    "1000",
+    "1000"
+   ],
+   "exactly 1": [
+    "600",
+    "600"
+   ],
+   "exactly 2": [
+    "300",
+    "300"
+   ],
+   "at least 2": [
+    "400",
+    "400"
+   ]
+  }
+ },
+ {
+  "id": "PRB-E-E2",
+  "program": "STAPRB",
+  "tool": "E",
+  "tool_name": "VENN 2-3 SETS",
+  "kind": "edge",
+  "inputs_description": "3 SETS inconsistent: 10,10,10,8,8,8,1,N=30",
+  "inputs": {
+   "mode": 3,
+   "values": [
+    10,
+    10,
+    10,
+    8,
+    8,
+    8,
+    1,
+    30
+   ]
+  },
+  "expected": {
+   "A only": "-5",
+   "B only": "-5",
+   "C only": "-5",
+   "AnB only": "7",
+   "AnC only": "7",
+   "BnC only": "7",
+   "all 3": "1",
+   "union": "7",
+   "none": "23",
+   "exactly 1": "-15",
+   "exactly 2": "21",
+   "at least 2": "22",
+   "negative region warning?": "YES"
+  },
+  "decimal": {
+   "A only": -5,
+   "B only": -5,
+   "C only": -5,
+   "AnB only": 7,
+   "AnC only": 7,
+   "BnC only": 7,
+   "all 3": 1,
+   "union": 7,
+   "none": 23,
+   "exactly 1": -15,
+   "exactly 2": 21,
+   "at least 2": 22
+  },
+  "display": {
+   "A only": [
+    "⁻5",
+    "⁻5"
+   ],
+   "B only": [
+    "⁻5",
+    "⁻5"
+   ],
+   "C only": [
+    "⁻5",
+    "⁻5"
+   ],
+   "AnB only": [
+    "7",
+    "7"
+   ],
+   "AnC only": [
+    "7",
+    "7"
+   ],
+   "BnC only": [
+    "7",
+    "7"
+   ],
+   "all 3": [
+    "1",
+    "1"
+   ],
+   "union": [
+    "7",
+    "7"
+   ],
+   "none": [
+    "23",
+    "23"
+   ],
+   "exactly 1": [
+    "⁻15",
+    "⁻15"
+   ],
+   "exactly 2": [
+    "21",
+    "21"
+   ],
+   "at least 2": [
+    "22",
+    "22"
+   ]
+  },
+  "notes": "Must warn: some regions negative."
+ },
+ {
+  "id": "PRB-E-E3",
+  "program": "STAPRB",
+  "tool": "E",
+  "tool_name": "VENN 2-3 SETS",
+  "kind": "edge",
+  "inputs_description": "2 SETS disjoint counts: 30,20,0,N=100",
+  "inputs": {
+   "mode": 2,
+   "values": [
+    30,
+    20,
+    0,
+    100
+   ]
+  },
+  "expected": {
+   "A only": "30",
+   "B only": "20",
+   "union": "50",
+   "neither": "50",
+   "exactly one": "50"
+  },
+  "decimal": {
+   "A only": 30,
+   "B only": 20,
+   "union": 50,
+   "neither": 50,
+   "exactly one": 50
+  },
+  "display": {
+   "A only": [
+    "30",
+    "30"
+   ],
+   "B only": [
+    "20",
+    "20"
+   ],
+   "union": [
+    "50",
+    "50"
+   ],
+   "neither": [
+    "50",
+    "50"
+   ],
+   "exactly one": [
+    "50",
+    "50"
+   ]
+  }
+ },
+ {
+  "id": "PRB-F-S1",
+  "program": "STAPRB",
+  "tool": "F",
+  "tool_name": "URN DRAWS",
+  "kind": "spec",
+  "inputs_description": "N=7, K=3, n=2, k=1",
+  "inputs": {
+   "N": 7,
+   "K": 3,
+   "n": 2,
+   "k": 1
+  },
+  "expected": {
+   "w/o P(X=k)": "4/7",
+   "w/o P(X>=k)": "5/7",
+   "w/o P(X<=k)": "6/7",
+   "with P(X=k)": "24/49",
+   "with P(X>=k)": "33/49",
+   "with P(X<=k)": "40/49",
+   "specific order w/o": "2/7",
+   "specific order with": "12/49"
+  },
+  "decimal": {
+   "w/o P(X=k)": 0.571428571429,
+   "w/o P(X>=k)": 0.714285714286,
+   "w/o P(X<=k)": 0.857142857143,
+   "with P(X=k)": 0.489795918367,
+   "with P(X>=k)": 0.673469387755,
+   "with P(X<=k)": 0.816326530612,
+   "specific order w/o": 0.285714285714,
+   "specific order with": 0.244897959184
+  },
+  "display": {
+   "w/o P(X=k)": [
+    "4/7",
+    ".571429"
+   ],
+   "w/o P(X>=k)": [
+    "5/7",
+    ".714286"
+   ],
+   "w/o P(X<=k)": [
+    "6/7",
+    ".857143"
+   ],
+   "with P(X=k)": [
+    "24/49",
+    ".489796"
+   ],
+   "with P(X>=k)": [
+    "33/49",
+    ".673469"
+   ],
+   "with P(X<=k)": [
+    "40/49",
+    ".816327"
+   ],
+   "specific order w/o": [
+    "2/7",
+    ".285714"
+   ],
+   "specific order with": [
+    "12/49",
+    ".244898"
+   ]
+  },
+  "spec_check": {
+   "w/o P(X=k)": {
+    "spec": "4/7",
+    "match": true
+   },
+   "w/o P(X>=k)": {
+    "spec": "5/7",
+    "match": true
+   },
+   "w/o P(X<=k)": {
+    "spec": "6/7",
+    "match": true
+   },
+   "with P(X=k)": {
+    "spec": "24/49",
+    "match": true
+   },
+   "with P(X>=k)": {
+    "spec": "33/49",
+    "match": true
+   },
+   "with P(X<=k)": {
+    "spec": "40/49",
+    "match": true
+   },
+   "specific order w/o": {
+    "spec": "2/7",
+    "match": true
+   },
+   "specific order with": {
+    "spec": "12/49",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "PRB-F-S2",
+  "program": "STAPRB",
+  "tool": "F",
+  "tool_name": "URN DRAWS",
+  "kind": "spec",
+  "inputs_description": "N=52, K=4, n=5, k=2 (two aces in a poker hand)",
+  "inputs": {
+   "N": 52,
+   "K": 4,
+   "n": 5,
+   "k": 2
+  },
+  "expected": {
+   "w/o P(X=k)": "2162/54145",
+   "w/o P(X>=k)": "2257/54145",
+   "w/o P(X<=k)": "10810/10829",
+   "with P(X=k)": "17280/371293",
+   "with P(X>=k)": "18781/371293",
+   "with P(X<=k)": "369792/371293",
+   "specific order w/o": "1081/270725",
+   "specific order with": "1728/371293"
+  },
+  "decimal": {
+   "w/o P(X=k)": 0.039929818081,
+   "w/o P(X>=k)": 0.041684366054,
+   "w/o P(X<=k)": 0.998245452027,
+   "with P(X=k)": 0.046540064046,
+   "with P(X>=k)": 0.050582693452,
+   "with P(X<=k)": 0.995957370594,
+   "specific order w/o": 0.003992981808,
+   "specific order with": 0.004654006405
+  },
+  "display": {
+   "w/o P(X=k)": [
+    ".03993",
+    ".03993"
+   ],
+   "w/o P(X>=k)": [
+    ".041684",
+    ".041684"
+   ],
+   "w/o P(X<=k)": [
+    ".998245",
+    ".998245"
+   ],
+   "with P(X=k)": [
+    ".04654",
+    ".04654"
+   ],
+   "with P(X>=k)": [
+    ".050583",
+    ".050583"
+   ],
+   "with P(X<=k)": [
+    ".995957",
+    ".995957"
+   ],
+   "specific order w/o": [
+    ".003993",
+    ".003993"
+   ],
+   "specific order with": [
+    ".004654",
+    ".004654"
+   ]
+  },
+  "spec_check": {
+   "w/o P(X=k)": {
+    "spec": ".03993",
+    "match": true
+   }
+  },
+  "notes": "Exact value 2162/54145 has denominator > 9999, so the calculator shows only .03993."
+ },
+ {
+  "id": "PRB-F-E1",
+  "program": "STAPRB",
+  "tool": "F",
+  "tool_name": "URN DRAWS",
+  "kind": "edge",
+  "inputs_description": "N=7, K=3, n=2, k=3 (k>n)",
+  "inputs": {
+   "N": 7,
+   "K": 3,
+   "n": 2,
+   "k": 3
+  },
+  "expected": {
+   "w/o P(X=k)": "0",
+   "w/o P(X>=k)": "0",
+   "w/o P(X<=k)": "1",
+   "with P(X=k)": "0",
+   "with P(X>=k)": "0",
+   "with P(X<=k)": "1",
+   "specific order": "undef (k>n: C(n,k)=0, guard the division)"
+  },
+  "decimal": {
+   "w/o P(X=k)": 0.0,
+   "w/o P(X>=k)": 0.0,
+   "w/o P(X<=k)": 1.0,
+   "with P(X=k)": 0.0,
+   "with P(X>=k)": 0.0,
+   "with P(X<=k)": 1.0
+  },
+  "display": {
+   "w/o P(X=k)": [
+    "0",
+    "0"
+   ],
+   "w/o P(X>=k)": [
+    "0",
+    "0"
+   ],
+   "w/o P(X<=k)": [
+    "1",
+    "1"
+   ],
+   "with P(X=k)": [
+    "0",
+    "0"
+   ],
+   "with P(X>=k)": [
+    "0",
+    "0"
+   ],
+   "with P(X<=k)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "PRB-F-E2",
+  "program": "STAPRB",
+  "tool": "F",
+  "tool_name": "URN DRAWS",
+  "kind": "edge",
+  "inputs_description": "N=10, K=4, n=3, k=0",
+  "inputs": {
+   "N": 10,
+   "K": 4,
+   "n": 3,
+   "k": 0
+  },
+  "expected": {
+   "w/o P(X=k)": "1/6",
+   "w/o P(X>=k)": "1",
+   "w/o P(X<=k)": "1/6",
+   "with P(X=k)": "27/125",
+   "with P(X>=k)": "1",
+   "with P(X<=k)": "27/125",
+   "specific order w/o": "1/6",
+   "specific order with": "27/125"
+  },
+  "decimal": {
+   "w/o P(X=k)": 0.166666666667,
+   "w/o P(X>=k)": 1.0,
+   "w/o P(X<=k)": 0.166666666667,
+   "with P(X=k)": 0.216,
+   "with P(X>=k)": 1.0,
+   "with P(X<=k)": 0.216,
+   "specific order w/o": 0.166666666667,
+   "specific order with": 0.216
+  },
+  "display": {
+   "w/o P(X=k)": [
+    "1/6",
+    ".166667"
+   ],
+   "w/o P(X>=k)": [
+    "1",
+    "1"
+   ],
+   "w/o P(X<=k)": [
+    "1/6",
+    ".166667"
+   ],
+   "with P(X=k)": [
+    "27/125",
+    ".216"
+   ],
+   "with P(X>=k)": [
+    "1",
+    "1"
+   ],
+   "with P(X<=k)": [
+    "27/125",
+    ".216"
+   ],
+   "specific order w/o": [
+    "1/6",
+    ".166667"
+   ],
+   "specific order with": [
+    "27/125",
+    ".216"
+   ]
+  }
+ },
+ {
+  "id": "PRB-F-E3",
+  "program": "STAPRB",
+  "tool": "F",
+  "tool_name": "URN DRAWS",
+  "kind": "edge",
+  "inputs_description": "N=3, K=1, n=5, k=1 (n>N)",
+  "inputs": {
+   "N": 3,
+   "K": 1,
+   "n": 5,
+   "k": 1
+  },
+  "expected": {
+   "w/o": "n/a (n > N: cannot draw without replacement)",
+   "with P(X=k)": "80/243",
+   "with P(X>=k)": "211/243",
+   "with P(X<=k)": "112/243",
+   "specific order with": "16/243"
+  },
+  "decimal": {
+   "with P(X=k)": 0.329218106996,
+   "with P(X>=k)": 0.868312757202,
+   "with P(X<=k)": 0.460905349794,
+   "specific order with": 0.065843621399
+  },
+  "display": {
+   "with P(X=k)": [
+    "80/243",
+    ".329218"
+   ],
+   "with P(X>=k)": [
+    "211/243",
+    ".868313"
+   ],
+   "with P(X<=k)": [
+    "112/243",
+    ".460905"
+   ],
+   "specific order with": [
+    "16/243",
+    ".065844"
+   ]
+  },
+  "notes": "Without replacement impossible (C(3,5)=0: guard division); with replacement fine."
+ },
+ {
+  "id": "RV-A-S1",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "spec",
+  "inputs_description": "p(x) VALUES: x=2,3,4,5 p=.1,.2,.3,.4; query a=3,b=4; F(3.5)",
+  "inputs": {
+   "mode": "p(x) VALUES",
+   "x": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "p": [
+    ".1",
+    ".2",
+    ".3",
+    ".4"
+   ],
+   "a": 3,
+   "b": 4,
+   "Fx": "3.5"
+  },
+  "expected": {
+   "p(2)": "1/10",
+   "p(3)": "1/5",
+   "p(4)": "3/10",
+   "p(5)": "2/5",
+   "F(2)": "1/10",
+   "F(3)": "3/10",
+   "F(4)": "3/5",
+   "F(5)": "1",
+   "sum p": "1",
+   "warn sum≠1?": "NO",
+   "warn negative p?": "NO",
+   "E[X]": "4",
+   "E[X^2]": "17",
+   "Var(X)": "1",
+   "SD(X)": "1",
+   "P(3<=X<=4)": "1/2",
+   "P(3<X<=4)": "3/10",
+   "P(3<=X<4)": "1/5",
+   "P(3<X<4)": "0",
+   "F(7/2) query": "3/10"
+  },
+  "decimal": {
+   "p(2)": 0.1,
+   "p(3)": 0.2,
+   "p(4)": 0.3,
+   "p(5)": 0.4,
+   "F(2)": 0.1,
+   "F(3)": 0.3,
+   "F(4)": 0.6,
+   "F(5)": 1.0,
+   "sum p": 1.0,
+   "E[X]": 4.0,
+   "E[X^2]": 17.0,
+   "Var(X)": 1.0,
+   "SD(X)": 1.0,
+   "P(3<=X<=4)": 0.5,
+   "P(3<X<=4)": 0.3,
+   "P(3<=X<4)": 0.2,
+   "P(3<X<4)": 0.0,
+   "F(7/2) query": 0.3
+  },
+  "display": {
+   "p(2)": [
+    "1/10",
+    ".1"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "3/10",
+    ".3"
+   ],
+   "p(5)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "1/10",
+    ".1"
+   ],
+   "F(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(4)": [
+    "3/5",
+    ".6"
+   ],
+   "F(5)": [
+    "1",
+    "1"
+   ],
+   "sum p": [
+    "1",
+    "1"
+   ],
+   "E[X]": [
+    "4",
+    "4"
+   ],
+   "E[X^2]": [
+    "17",
+    "17"
+   ],
+   "Var(X)": [
+    "1",
+    "1"
+   ],
+   "SD(X)": [
+    "1",
+    "1"
+   ],
+   "P(3<=X<=4)": [
+    "1/2",
+    ".5"
+   ],
+   "P(3<X<=4)": [
+    "3/10",
+    ".3"
+   ],
+   "P(3<=X<4)": [
+    "1/5",
+    ".2"
+   ],
+   "P(3<X<4)": [
+    "0",
+    "0"
+   ],
+   "F(7/2) query": [
+    "3/10",
+    ".3"
+   ]
+  },
+  "spec_check": {
+   "F(2)": {
+    "spec": "1/10",
+    "match": true
+   },
+   "F(3)": {
+    "spec": "3/10",
+    "match": true
+   },
+   "F(4)": {
+    "spec": "3/5",
+    "match": true
+   },
+   "F(5)": {
+    "spec": "1",
+    "match": true
+   },
+   "E[X]": {
+    "spec": "4",
+    "match": true
+   },
+   "Var(X)": {
+    "spec": "1",
+    "match": true
+   },
+   "P(3<=X<=4)": {
+    "spec": "1/2",
+    "match": true
+   },
+   "P(3<X<=4)": {
+    "spec": "3/10",
+    "match": true
+   },
+   "P(3<=X<4)": {
+    "spec": "1/5",
+    "match": true
+   },
+   "P(3<X<4)": {
+    "spec": "0",
+    "match": true
+   },
+   "F(7/2) query": {
+    "spec": "3/10",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-A-S2",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "spec",
+  "inputs_description": "CDF VALUES F(x): x=2,3,4,5 F=.1,.3,.6,1",
+  "inputs": {
+   "mode": "CDF VALUES F(x)",
+   "x": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "F": [
+    ".1",
+    ".3",
+    ".6",
+    "1"
+   ]
+  },
+  "expected": {
+   "p(2)": "1/10",
+   "p(3)": "1/5",
+   "p(4)": "3/10",
+   "p(5)": "2/5",
+   "F(2)": "1/10",
+   "F(3)": "3/10",
+   "F(4)": "3/5",
+   "F(5)": "1",
+   "sum p": "1",
+   "warn sum≠1?": "NO",
+   "warn negative p?": "NO",
+   "E[X]": "4",
+   "E[X^2]": "17",
+   "Var(X)": "1",
+   "SD(X)": "1"
+  },
+  "decimal": {
+   "p(2)": 0.1,
+   "p(3)": 0.2,
+   "p(4)": 0.3,
+   "p(5)": 0.4,
+   "F(2)": 0.1,
+   "F(3)": 0.3,
+   "F(4)": 0.6,
+   "F(5)": 1.0,
+   "sum p": 1.0,
+   "E[X]": 4.0,
+   "E[X^2]": 17.0,
+   "Var(X)": 1.0,
+   "SD(X)": 1.0
+  },
+  "display": {
+   "p(2)": [
+    "1/10",
+    ".1"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "3/10",
+    ".3"
+   ],
+   "p(5)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "1/10",
+    ".1"
+   ],
+   "F(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(4)": [
+    "3/5",
+    ".6"
+   ],
+   "F(5)": [
+    "1",
+    "1"
+   ],
+   "sum p": [
+    "1",
+    "1"
+   ],
+   "E[X]": [
+    "4",
+    "4"
+   ],
+   "E[X^2]": [
+    "17",
+    "17"
+   ],
+   "Var(X)": [
+    "1",
+    "1"
+   ],
+   "SD(X)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(2)": {
+    "spec": ".1",
+    "match": true
+   },
+   "p(3)": {
+    "spec": ".2",
+    "match": true
+   },
+   "p(4)": {
+    "spec": ".3",
+    "match": true
+   },
+   "p(5)": {
+    "spec": ".4",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-A-S3",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "spec",
+  "inputs_description": "WEIGHTS/COUNTS: x=2,3,4,5 weights 1,2,3,4",
+  "inputs": {
+   "mode": "WEIGHTS/COUNTS",
+   "x": [
+    2,
+    3,
+    4,
+    5
+   ],
+   "w": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "expected": {
+   "p(2)": "1/10",
+   "p(3)": "1/5",
+   "p(4)": "3/10",
+   "p(5)": "2/5",
+   "F(2)": "1/10",
+   "F(3)": "3/10",
+   "F(4)": "3/5",
+   "F(5)": "1",
+   "sum p": "1",
+   "warn sum≠1?": "NO",
+   "warn negative p?": "NO",
+   "E[X]": "4",
+   "E[X^2]": "17",
+   "Var(X)": "1",
+   "SD(X)": "1"
+  },
+  "decimal": {
+   "p(2)": 0.1,
+   "p(3)": 0.2,
+   "p(4)": 0.3,
+   "p(5)": 0.4,
+   "F(2)": 0.1,
+   "F(3)": 0.3,
+   "F(4)": 0.6,
+   "F(5)": 1.0,
+   "sum p": 1.0,
+   "E[X]": 4.0,
+   "E[X^2]": 17.0,
+   "Var(X)": 1.0,
+   "SD(X)": 1.0
+  },
+  "display": {
+   "p(2)": [
+    "1/10",
+    ".1"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "3/10",
+    ".3"
+   ],
+   "p(5)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "1/10",
+    ".1"
+   ],
+   "F(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(4)": [
+    "3/5",
+    ".6"
+   ],
+   "F(5)": [
+    "1",
+    "1"
+   ],
+   "sum p": [
+    "1",
+    "1"
+   ],
+   "E[X]": [
+    "4",
+    "4"
+   ],
+   "E[X^2]": [
+    "17",
+    "17"
+   ],
+   "Var(X)": [
+    "1",
+    "1"
+   ],
+   "SD(X)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(2)": {
+    "spec": ".1",
+    "match": true
+   },
+   "p(3)": {
+    "spec": ".2",
+    "match": true
+   },
+   "p(4)": {
+    "spec": ".3",
+    "match": true
+   },
+   "p(5)": {
+    "spec": ".4",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-A-E1",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "edge",
+  "inputs_description": "p(x) VALUES unsorted: x=5,2,4,3 p=.4,.1,.3,.2; F(1), F(10)",
+  "inputs": {
+   "mode": "p(x) VALUES",
+   "x": [
+    5,
+    2,
+    4,
+    3
+   ],
+   "p": [
+    ".4",
+    ".1",
+    ".3",
+    ".2"
+   ],
+   "Fx": [
+    1,
+    10
+   ]
+  },
+  "expected": {
+   "p(2)": "1/10",
+   "p(3)": "1/5",
+   "p(4)": "3/10",
+   "p(5)": "2/5",
+   "F(2)": "1/10",
+   "F(3)": "3/10",
+   "F(4)": "3/5",
+   "F(5)": "1",
+   "sum p": "1",
+   "warn sum≠1?": "NO",
+   "warn negative p?": "NO",
+   "E[X]": "4",
+   "E[X^2]": "17",
+   "Var(X)": "1",
+   "SD(X)": "1",
+   "F(1) query": "0",
+   "F(10) query": "1"
+  },
+  "decimal": {
+   "p(2)": 0.1,
+   "p(3)": 0.2,
+   "p(4)": 0.3,
+   "p(5)": 0.4,
+   "F(2)": 0.1,
+   "F(3)": 0.3,
+   "F(4)": 0.6,
+   "F(5)": 1.0,
+   "sum p": 1.0,
+   "E[X]": 4.0,
+   "E[X^2]": 17.0,
+   "Var(X)": 1.0,
+   "SD(X)": 1.0,
+   "F(1) query": 0.0,
+   "F(10) query": 1.0
+  },
+  "display": {
+   "p(2)": [
+    "1/10",
+    ".1"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "3/10",
+    ".3"
+   ],
+   "p(5)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "1/10",
+    ".1"
+   ],
+   "F(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(4)": [
+    "3/5",
+    ".6"
+   ],
+   "F(5)": [
+    "1",
+    "1"
+   ],
+   "sum p": [
+    "1",
+    "1"
+   ],
+   "E[X]": [
+    "4",
+    "4"
+   ],
+   "E[X^2]": [
+    "17",
+    "17"
+   ],
+   "Var(X)": [
+    "1",
+    "1"
+   ],
+   "SD(X)": [
+    "1",
+    "1"
+   ],
+   "F(1) query": [
+    "0",
+    "0"
+   ],
+   "F(10) query": [
+    "1",
+    "1"
+   ]
+  },
+  "notes": "Must sort by x; F below support = 0, above = 1."
+ },
+ {
+  "id": "RV-A-E2",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "edge",
+  "inputs_description": "p(x) VALUES: x=-1,0,1 p=1/4,1/2,1/4 (irrational SD)",
+  "inputs": {
+   "mode": "p(x) VALUES",
+   "x": [
+    -1,
+    0,
+    1
+   ],
+   "p": [
+    "1/4",
+    "1/2",
+    "1/4"
+   ]
+  },
+  "expected": {
+   "p(-1)": "1/4",
+   "p(0)": "1/2",
+   "p(1)": "1/4",
+   "F(-1)": "1/4",
+   "F(0)": "3/4",
+   "F(1)": "1",
+   "sum p": "1",
+   "warn sum≠1?": "NO",
+   "warn negative p?": "NO",
+   "E[X]": "0",
+   "E[X^2]": "1/2",
+   "Var(X)": "1/2",
+   "SD(X)": "sqrt(2)/2"
+  },
+  "decimal": {
+   "p(-1)": 0.25,
+   "p(0)": 0.5,
+   "p(1)": 0.25,
+   "F(-1)": 0.25,
+   "F(0)": 0.75,
+   "F(1)": 1.0,
+   "sum p": 1.0,
+   "E[X]": 0.0,
+   "E[X^2]": 0.5,
+   "Var(X)": 0.5,
+   "SD(X)": 0.707106781186548
+  },
+  "display": {
+   "p(-1)": [
+    "1/4",
+    ".25"
+   ],
+   "p(0)": [
+    "1/2",
+    ".5"
+   ],
+   "p(1)": [
+    "1/4",
+    ".25"
+   ],
+   "F(-1)": [
+    "1/4",
+    ".25"
+   ],
+   "F(0)": [
+    "3/4",
+    ".75"
+   ],
+   "F(1)": [
+    "1",
+    "1"
+   ],
+   "sum p": [
+    "1",
+    "1"
+   ],
+   "E[X]": [
+    "0",
+    "0"
+   ],
+   "E[X^2]": [
+    "1/2",
+    ".5"
+   ],
+   "Var(X)": [
+    "1/2",
+    ".5"
+   ],
+   "SD(X)": [
+    ".707107",
+    ".707107"
+   ]
+  }
+ },
+ {
+  "id": "RV-A-E3",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "edge",
+  "inputs_description": "p(x) VALUES not summing to 1: x=1,2,3 p=.1,.2,.3",
+  "inputs": {
+   "mode": "p(x) VALUES",
+   "x": [
+    1,
+    2,
+    3
+   ],
+   "p": [
+    ".1",
+    ".2",
+    ".3"
+   ]
+  },
+  "expected": {
+   "p(1)": "1/10",
+   "p(2)": "1/5",
+   "p(3)": "3/10",
+   "F(1)": "1/10",
+   "F(2)": "3/10",
+   "F(3)": "3/5",
+   "sum p": "3/5",
+   "warn sum≠1?": "YES",
+   "warn negative p?": "NO",
+   "E[X]": "7/5",
+   "E[X^2]": "18/5",
+   "Var(X)": "41/25",
+   "SD(X)": "sqrt(41)/5"
+  },
+  "decimal": {
+   "p(1)": 0.1,
+   "p(2)": 0.2,
+   "p(3)": 0.3,
+   "F(1)": 0.1,
+   "F(2)": 0.3,
+   "F(3)": 0.6,
+   "sum p": 0.6,
+   "E[X]": 1.4,
+   "E[X^2]": 3.6,
+   "Var(X)": 1.64,
+   "SD(X)": 1.28062484748657
+  },
+  "display": {
+   "p(1)": [
+    "1/10",
+    ".1"
+   ],
+   "p(2)": [
+    "1/5",
+    ".2"
+   ],
+   "p(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(1)": [
+    "1/10",
+    ".1"
+   ],
+   "F(2)": [
+    "3/10",
+    ".3"
+   ],
+   "F(3)": [
+    "3/5",
+    ".6"
+   ],
+   "sum p": [
+    "3/5",
+    ".6"
+   ],
+   "E[X]": [
+    "7/5",
+    "1.4"
+   ],
+   "E[X^2]": [
+    "18/5",
+    "3.6"
+   ],
+   "Var(X)": [
+    "41/25",
+    "1.64"
+   ],
+   "SD(X)": [
+    "1.280625",
+    "1.280625"
+   ]
+  },
+  "notes": "Warn: sum of p = .6 ≠ 1."
+ },
+ {
+  "id": "RV-A-E4",
+  "program": "STARV",
+  "tool": "A",
+  "tool_name": "PMF TABLE + CDF",
+  "kind": "edge",
+  "inputs_description": "x=.1,.2,.3 p=1/3 each; query a=.2, b=.3 (tolerant comparisons)",
+  "inputs": {
+   "mode": "p(x) VALUES",
+   "x": [
+    ".1",
+    ".2",
+    ".3"
+   ],
+   "p": [
+    "1/3",
+    "1/3",
+    "1/3"
+   ],
+   "a": ".2",
+   "b": ".3"
+  },
+  "expected": {
+   "p(1/10)": "1/3",
+   "p(1/5)": "1/3",
+   "p(3/10)": "1/3",
+   "F(1/10)": "1/3",
+   "F(1/5)": "2/3",
+   "F(3/10)": "1",
+   "sum p": "1",
+   "warn sum≠1?": "NO",
+   "warn negative p?": "NO",
+   "E[X]": "1/5",
+   "E[X^2]": "7/150",
+   "Var(X)": "1/150",
+   "SD(X)": "sqrt(6)/30",
+   "P(1/5<=X<=3/10)": "2/3",
+   "P(1/5<X<=3/10)": "1/3",
+   "P(1/5<=X<3/10)": "1/3",
+   "P(1/5<X<3/10)": "0"
+  },
+  "decimal": {
+   "p(1/10)": 0.333333333333,
+   "p(1/5)": 0.333333333333,
+   "p(3/10)": 0.333333333333,
+   "F(1/10)": 0.333333333333,
+   "F(1/5)": 0.666666666667,
+   "F(3/10)": 1.0,
+   "sum p": 1.0,
+   "E[X]": 0.2,
+   "E[X^2]": 0.046666666667,
+   "Var(X)": 0.006666666667,
+   "SD(X)": 0.0816496580927726,
+   "P(1/5<=X<=3/10)": 0.666666666667,
+   "P(1/5<X<=3/10)": 0.333333333333,
+   "P(1/5<=X<3/10)": 0.333333333333,
+   "P(1/5<X<3/10)": 0.0
+  },
+  "display": {
+   "p(1/10)": [
+    "1/3",
+    ".333333"
+   ],
+   "p(1/5)": [
+    "1/3",
+    ".333333"
+   ],
+   "p(3/10)": [
+    "1/3",
+    ".333333"
+   ],
+   "F(1/10)": [
+    "1/3",
+    ".333333"
+   ],
+   "F(1/5)": [
+    "2/3",
+    ".666667"
+   ],
+   "F(3/10)": [
+    "1",
+    "1"
+   ],
+   "sum p": [
+    "1",
+    "1"
+   ],
+   "E[X]": [
+    "1/5",
+    ".2"
+   ],
+   "E[X^2]": [
+    "7/150",
+    ".046667"
+   ],
+   "Var(X)": [
+    "1/150",
+    ".006667"
+   ],
+   "SD(X)": [
+    ".08165",
+    ".08165"
+   ],
+   "P(1/5<=X<=3/10)": [
+    "2/3",
+    ".666667"
+   ],
+   "P(1/5<X<=3/10)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(1/5<=X<3/10)": [
+    "1/3",
+    ".333333"
+   ],
+   "P(1/5<X<3/10)": [
+    "0",
+    "0"
+   ]
+  }
+ },
+ {
+  "id": "RV-B-S1",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "spec",
+  "inputs_description": "MAXIMUM, N=5, k=2, WITHOUT (HW3 Q1)",
+  "inputs": {
+   "stat": "MAXIMUM",
+   "N": 5,
+   "k": 2,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "p(2)": "1/10",
+   "p(3)": "1/5",
+   "p(4)": "3/10",
+   "p(5)": "2/5",
+   "F(2)": "1/10",
+   "F(3)": "3/10",
+   "F(4)": "3/5",
+   "F(5)": "1"
+  },
+  "decimal": {
+   "p(2)": 0.1,
+   "p(3)": 0.2,
+   "p(4)": 0.3,
+   "p(5)": 0.4,
+   "F(2)": 0.1,
+   "F(3)": 0.3,
+   "F(4)": 0.6,
+   "F(5)": 1.0
+  },
+  "display": {
+   "p(2)": [
+    "1/10",
+    ".1"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "3/10",
+    ".3"
+   ],
+   "p(5)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "1/10",
+    ".1"
+   ],
+   "F(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(4)": [
+    "3/5",
+    ".6"
+   ],
+   "F(5)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(2)": {
+    "spec": "1/10",
+    "match": true
+   },
+   "p(3)": {
+    "spec": "1/5",
+    "match": true
+   },
+   "p(4)": {
+    "spec": "3/10",
+    "match": true
+   },
+   "p(5)": {
+    "spec": "2/5",
+    "match": true
+   },
+   "F(2)": {
+    "spec": "1/10",
+    "match": true
+   },
+   "F(3)": {
+    "spec": "3/10",
+    "match": true
+   },
+   "F(4)": {
+    "spec": "3/5",
+    "match": true
+   },
+   "F(5)": {
+    "spec": "1",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-B-S2",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "spec",
+  "inputs_description": "MAXIMUM, N=6, k=2, WITH",
+  "inputs": {
+   "stat": "MAXIMUM",
+   "N": 6,
+   "k": 2,
+   "repl": "WITH"
+  },
+  "expected": {
+   "p(1)": "1/36",
+   "p(2)": "1/12",
+   "p(3)": "5/36",
+   "p(4)": "7/36",
+   "p(5)": "1/4",
+   "p(6)": "11/36",
+   "F(1)": "1/36",
+   "F(2)": "1/9",
+   "F(3)": "1/4",
+   "F(4)": "4/9",
+   "F(5)": "25/36",
+   "F(6)": "1"
+  },
+  "decimal": {
+   "p(1)": 0.027777777778,
+   "p(2)": 0.083333333333,
+   "p(3)": 0.138888888889,
+   "p(4)": 0.194444444444,
+   "p(5)": 0.25,
+   "p(6)": 0.305555555556,
+   "F(1)": 0.027777777778,
+   "F(2)": 0.111111111111,
+   "F(3)": 0.25,
+   "F(4)": 0.444444444444,
+   "F(5)": 0.694444444444,
+   "F(6)": 1.0
+  },
+  "display": {
+   "p(1)": [
+    "1/36",
+    ".027778"
+   ],
+   "p(2)": [
+    "1/12",
+    ".083333"
+   ],
+   "p(3)": [
+    "5/36",
+    ".138889"
+   ],
+   "p(4)": [
+    "7/36",
+    ".194444"
+   ],
+   "p(5)": [
+    "1/4",
+    ".25"
+   ],
+   "p(6)": [
+    "11/36",
+    ".305556"
+   ],
+   "F(1)": [
+    "1/36",
+    ".027778"
+   ],
+   "F(2)": [
+    "1/9",
+    ".111111"
+   ],
+   "F(3)": [
+    "1/4",
+    ".25"
+   ],
+   "F(4)": [
+    "4/9",
+    ".444444"
+   ],
+   "F(5)": [
+    "25/36",
+    ".694444"
+   ],
+   "F(6)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(1)": {
+    "spec": "1/36",
+    "match": true
+   },
+   "p(2)": {
+    "spec": "1/12",
+    "match": true
+   },
+   "p(3)": {
+    "spec": "5/36",
+    "match": true
+   },
+   "p(4)": {
+    "spec": "7/36",
+    "match": true
+   },
+   "p(5)": {
+    "spec": "1/4",
+    "match": true
+   },
+   "p(6)": {
+    "spec": "11/36",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-B-S3",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "spec",
+  "inputs_description": "SUM (2 DRAWS), N=6, WITH",
+  "inputs": {
+   "stat": "SUM",
+   "N": 6,
+   "k": 2,
+   "repl": "WITH"
+  },
+  "expected": {
+   "p(2)": "1/36",
+   "p(3)": "1/18",
+   "p(4)": "1/12",
+   "p(5)": "1/9",
+   "p(6)": "5/36",
+   "p(7)": "1/6",
+   "p(8)": "5/36",
+   "p(9)": "1/9",
+   "p(10)": "1/12",
+   "p(11)": "1/18",
+   "p(12)": "1/36",
+   "F(2)": "1/36",
+   "F(3)": "1/12",
+   "F(4)": "1/6",
+   "F(5)": "5/18",
+   "F(6)": "5/12",
+   "F(7)": "7/12",
+   "F(8)": "13/18",
+   "F(9)": "5/6",
+   "F(10)": "11/12",
+   "F(11)": "35/36",
+   "F(12)": "1"
+  },
+  "decimal": {
+   "p(2)": 0.027777777778,
+   "p(3)": 0.055555555556,
+   "p(4)": 0.083333333333,
+   "p(5)": 0.111111111111,
+   "p(6)": 0.138888888889,
+   "p(7)": 0.166666666667,
+   "p(8)": 0.138888888889,
+   "p(9)": 0.111111111111,
+   "p(10)": 0.083333333333,
+   "p(11)": 0.055555555556,
+   "p(12)": 0.027777777778,
+   "F(2)": 0.027777777778,
+   "F(3)": 0.083333333333,
+   "F(4)": 0.166666666667,
+   "F(5)": 0.277777777778,
+   "F(6)": 0.416666666667,
+   "F(7)": 0.583333333333,
+   "F(8)": 0.722222222222,
+   "F(9)": 0.833333333333,
+   "F(10)": 0.916666666667,
+   "F(11)": 0.972222222222,
+   "F(12)": 1.0
+  },
+  "display": {
+   "p(2)": [
+    "1/36",
+    ".027778"
+   ],
+   "p(3)": [
+    "1/18",
+    ".055556"
+   ],
+   "p(4)": [
+    "1/12",
+    ".083333"
+   ],
+   "p(5)": [
+    "1/9",
+    ".111111"
+   ],
+   "p(6)": [
+    "5/36",
+    ".138889"
+   ],
+   "p(7)": [
+    "1/6",
+    ".166667"
+   ],
+   "p(8)": [
+    "5/36",
+    ".138889"
+   ],
+   "p(9)": [
+    "1/9",
+    ".111111"
+   ],
+   "p(10)": [
+    "1/12",
+    ".083333"
+   ],
+   "p(11)": [
+    "1/18",
+    ".055556"
+   ],
+   "p(12)": [
+    "1/36",
+    ".027778"
+   ],
+   "F(2)": [
+    "1/36",
+    ".027778"
+   ],
+   "F(3)": [
+    "1/12",
+    ".083333"
+   ],
+   "F(4)": [
+    "1/6",
+    ".166667"
+   ],
+   "F(5)": [
+    "5/18",
+    ".277778"
+   ],
+   "F(6)": [
+    "5/12",
+    ".416667"
+   ],
+   "F(7)": [
+    "7/12",
+    ".583333"
+   ],
+   "F(8)": [
+    "13/18",
+    ".722222"
+   ],
+   "F(9)": [
+    "5/6",
+    ".833333"
+   ],
+   "F(10)": [
+    "11/12",
+    ".916667"
+   ],
+   "F(11)": [
+    "35/36",
+    ".972222"
+   ],
+   "F(12)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(7)": {
+    "spec": "1/6",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-B-S4",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "spec",
+  "inputs_description": "MINIMUM, N=5, k=2, WITHOUT",
+  "inputs": {
+   "stat": "MINIMUM",
+   "N": 5,
+   "k": 2,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "p(1)": "2/5",
+   "p(2)": "3/10",
+   "p(3)": "1/5",
+   "p(4)": "1/10",
+   "F(1)": "2/5",
+   "F(2)": "7/10",
+   "F(3)": "9/10",
+   "F(4)": "1"
+  },
+  "decimal": {
+   "p(1)": 0.4,
+   "p(2)": 0.3,
+   "p(3)": 0.2,
+   "p(4)": 0.1,
+   "F(1)": 0.4,
+   "F(2)": 0.7,
+   "F(3)": 0.9,
+   "F(4)": 1.0
+  },
+  "display": {
+   "p(1)": [
+    "2/5",
+    ".4"
+   ],
+   "p(2)": [
+    "3/10",
+    ".3"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "1/10",
+    ".1"
+   ],
+   "F(1)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "7/10",
+    ".7"
+   ],
+   "F(3)": [
+    "9/10",
+    ".9"
+   ],
+   "F(4)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(1)": {
+    "spec": "2/5",
+    "match": true
+   },
+   "p(2)": {
+    "spec": "3/10",
+    "match": true
+   },
+   "p(3)": {
+    "spec": "1/5",
+    "match": true
+   },
+   "p(4)": {
+    "spec": "1/10",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-B-S5",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "spec",
+  "inputs_description": "|DIFF| (2 DRAWS), N=5, WITHOUT",
+  "inputs": {
+   "stat": "|DIFF|",
+   "N": 5,
+   "k": 2,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "p(1)": "2/5",
+   "p(2)": "3/10",
+   "p(3)": "1/5",
+   "p(4)": "1/10",
+   "F(1)": "2/5",
+   "F(2)": "7/10",
+   "F(3)": "9/10",
+   "F(4)": "1"
+  },
+  "decimal": {
+   "p(1)": 0.4,
+   "p(2)": 0.3,
+   "p(3)": 0.2,
+   "p(4)": 0.1,
+   "F(1)": 0.4,
+   "F(2)": 0.7,
+   "F(3)": 0.9,
+   "F(4)": 1.0
+  },
+  "display": {
+   "p(1)": [
+    "2/5",
+    ".4"
+   ],
+   "p(2)": [
+    "3/10",
+    ".3"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "1/10",
+    ".1"
+   ],
+   "F(1)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "7/10",
+    ".7"
+   ],
+   "F(3)": [
+    "9/10",
+    ".9"
+   ],
+   "F(4)": [
+    "1",
+    "1"
+   ]
+  },
+  "spec_check": {
+   "p(1)": {
+    "spec": "2/5",
+    "match": true
+   },
+   "p(2)": {
+    "spec": "3/10",
+    "match": true
+   },
+   "p(3)": {
+    "spec": "1/5",
+    "match": true
+   },
+   "p(4)": {
+    "spec": "1/10",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-B-E1",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "MAXIMUM, N=4, k=4, WITHOUT (k=N)",
+  "inputs": {
+   "stat": "MAXIMUM",
+   "N": 4,
+   "k": 4,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "p(4)": "1",
+   "F(4)": "1"
+  },
+  "decimal": {
+   "p(4)": 1.0,
+   "F(4)": 1.0
+  },
+  "display": {
+   "p(4)": [
+    "1",
+    "1"
+   ],
+   "F(4)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-B-E2",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "MINIMUM, N=4, k=3, WITHOUT",
+  "inputs": {
+   "stat": "MINIMUM",
+   "N": 4,
+   "k": 3,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "p(1)": "3/4",
+   "p(2)": "1/4",
+   "F(1)": "3/4",
+   "F(2)": "1"
+  },
+  "decimal": {
+   "p(1)": 0.75,
+   "p(2)": 0.25,
+   "F(1)": 0.75,
+   "F(2)": 1.0
+  },
+  "display": {
+   "p(1)": [
+    "3/4",
+    ".75"
+   ],
+   "p(2)": [
+    "1/4",
+    ".25"
+   ],
+   "F(1)": [
+    "3/4",
+    ".75"
+   ],
+   "F(2)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-B-E3",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "MAXIMUM, N=4, k=3, WITH",
+  "inputs": {
+   "stat": "MAXIMUM",
+   "N": 4,
+   "k": 3,
+   "repl": "WITH"
+  },
+  "expected": {
+   "p(1)": "1/64",
+   "p(2)": "7/64",
+   "p(3)": "19/64",
+   "p(4)": "37/64",
+   "F(1)": "1/64",
+   "F(2)": "1/8",
+   "F(3)": "27/64",
+   "F(4)": "1"
+  },
+  "decimal": {
+   "p(1)": 0.015625,
+   "p(2)": 0.109375,
+   "p(3)": 0.296875,
+   "p(4)": 0.578125,
+   "F(1)": 0.015625,
+   "F(2)": 0.125,
+   "F(3)": 0.421875,
+   "F(4)": 1.0
+  },
+  "display": {
+   "p(1)": [
+    "1/64",
+    ".015625"
+   ],
+   "p(2)": [
+    "7/64",
+    ".109375"
+   ],
+   "p(3)": [
+    "19/64",
+    ".296875"
+   ],
+   "p(4)": [
+    "37/64",
+    ".578125"
+   ],
+   "F(1)": [
+    "1/64",
+    ".015625"
+   ],
+   "F(2)": [
+    "1/8",
+    ".125"
+   ],
+   "F(3)": [
+    "27/64",
+    ".421875"
+   ],
+   "F(4)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-B-E4",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "SUM (2 DRAWS), N=4, WITHOUT",
+  "inputs": {
+   "stat": "SUM",
+   "N": 4,
+   "k": 2,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "p(3)": "1/6",
+   "p(4)": "1/6",
+   "p(5)": "1/3",
+   "p(6)": "1/6",
+   "p(7)": "1/6",
+   "F(3)": "1/6",
+   "F(4)": "1/3",
+   "F(5)": "2/3",
+   "F(6)": "5/6",
+   "F(7)": "1"
+  },
+  "decimal": {
+   "p(3)": 0.166666666667,
+   "p(4)": 0.166666666667,
+   "p(5)": 0.333333333333,
+   "p(6)": 0.166666666667,
+   "p(7)": 0.166666666667,
+   "F(3)": 0.166666666667,
+   "F(4)": 0.333333333333,
+   "F(5)": 0.666666666667,
+   "F(6)": 0.833333333333,
+   "F(7)": 1.0
+  },
+  "display": {
+   "p(3)": [
+    "1/6",
+    ".166667"
+   ],
+   "p(4)": [
+    "1/6",
+    ".166667"
+   ],
+   "p(5)": [
+    "1/3",
+    ".333333"
+   ],
+   "p(6)": [
+    "1/6",
+    ".166667"
+   ],
+   "p(7)": [
+    "1/6",
+    ".166667"
+   ],
+   "F(3)": [
+    "1/6",
+    ".166667"
+   ],
+   "F(4)": [
+    "1/3",
+    ".333333"
+   ],
+   "F(5)": [
+    "2/3",
+    ".666667"
+   ],
+   "F(6)": [
+    "5/6",
+    ".833333"
+   ],
+   "F(7)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-B-E5",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "|DIFF| (2 DRAWS), N=4, WITH (d=0 possible)",
+  "inputs": {
+   "stat": "|DIFF|",
+   "N": 4,
+   "k": 2,
+   "repl": "WITH"
+  },
+  "expected": {
+   "p(0)": "1/4",
+   "p(1)": "3/8",
+   "p(2)": "1/4",
+   "p(3)": "1/8",
+   "F(0)": "1/4",
+   "F(1)": "5/8",
+   "F(2)": "7/8",
+   "F(3)": "1"
+  },
+  "decimal": {
+   "p(0)": 0.25,
+   "p(1)": 0.375,
+   "p(2)": 0.25,
+   "p(3)": 0.125,
+   "F(0)": 0.25,
+   "F(1)": 0.625,
+   "F(2)": 0.875,
+   "F(3)": 1.0
+  },
+  "display": {
+   "p(0)": [
+    "1/4",
+    ".25"
+   ],
+   "p(1)": [
+    "3/8",
+    ".375"
+   ],
+   "p(2)": [
+    "1/4",
+    ".25"
+   ],
+   "p(3)": [
+    "1/8",
+    ".125"
+   ],
+   "F(0)": [
+    "1/4",
+    ".25"
+   ],
+   "F(1)": [
+    "5/8",
+    ".625"
+   ],
+   "F(2)": [
+    "7/8",
+    ".875"
+   ],
+   "F(3)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-B-E6",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "MAXIMUM, N=3, k=4, WITHOUT (k>N)",
+  "inputs": {
+   "stat": "MAXIMUM",
+   "N": 3,
+   "k": 4,
+   "repl": "WITHOUT"
+  },
+  "expected": {
+   "result": "invalid (k > N without replacement: C(N,k)=0)"
+  },
+  "decimal": {},
+  "display": {},
+  "notes": "C(3,4)=0: must reject, not divide by zero."
+ },
+ {
+  "id": "RV-B-E7",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "edge",
+  "inputs_description": "MINIMUM, N=6, k=2, WITH",
+  "inputs": {
+   "stat": "MINIMUM",
+   "N": 6,
+   "k": 2,
+   "repl": "WITH"
+  },
+  "expected": {
+   "p(1)": "11/36",
+   "p(2)": "1/4",
+   "p(3)": "7/36",
+   "p(4)": "5/36",
+   "p(5)": "1/12",
+   "p(6)": "1/36",
+   "F(1)": "11/36",
+   "F(2)": "5/9",
+   "F(3)": "3/4",
+   "F(4)": "8/9",
+   "F(5)": "35/36",
+   "F(6)": "1"
+  },
+  "decimal": {
+   "p(1)": 0.305555555556,
+   "p(2)": 0.25,
+   "p(3)": 0.194444444444,
+   "p(4)": 0.138888888889,
+   "p(5)": 0.083333333333,
+   "p(6)": 0.027777777778,
+   "F(1)": 0.305555555556,
+   "F(2)": 0.555555555556,
+   "F(3)": 0.75,
+   "F(4)": 0.888888888889,
+   "F(5)": 0.972222222222,
+   "F(6)": 1.0
+  },
+  "display": {
+   "p(1)": [
+    "11/36",
+    ".305556"
+   ],
+   "p(2)": [
+    "1/4",
+    ".25"
+   ],
+   "p(3)": [
+    "7/36",
+    ".194444"
+   ],
+   "p(4)": [
+    "5/36",
+    ".138889"
+   ],
+   "p(5)": [
+    "1/12",
+    ".083333"
+   ],
+   "p(6)": [
+    "1/36",
+    ".027778"
+   ],
+   "F(1)": [
+    "11/36",
+    ".305556"
+   ],
+   "F(2)": [
+    "5/9",
+    ".555556"
+   ],
+   "F(3)": [
+    "3/4",
+    ".75"
+   ],
+   "F(4)": [
+    "8/9",
+    ".888889"
+   ],
+   "F(5)": [
+    "35/36",
+    ".972222"
+   ],
+   "F(6)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-C-S1",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "spec",
+  "inputs_description": "PDF, c known; pieces (0,2) deg0 C0=1/4 and (4,6) deg0 C0=1/4 (HW3 Q2); queries P(1<X<5), F(3)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 0,
+   "pieces": [
+    [
+     0,
+     2,
+     [
+      "1/4"
+     ]
+    ],
+    [
+     4,
+     6,
+     [
+      "1/4"
+     ]
+    ]
+   ],
+   "queries": [
+    "P(1<X<5)",
+    "F(3)"
+   ]
+  },
+  "expected": {
+   "area": "1",
+   "warn area≠1?": "NO",
+   "warn f<0?": "NO",
+   "F piece1 (0<x<2) const": "0",
+   "F piece1 x": "1/4",
+   "F on gap 2<=x<=4": "1/2",
+   "F piece2 (4<x<6) const": "-1/2",
+   "F piece2 x": "1/4",
+   "F after last piece": "1",
+   "P(1<X<5)": "1/2",
+   "F(3)": "1/2"
+  },
+  "decimal": {
+   "area": 1.0,
+   "F piece1 (0<x<2) const": 0.0,
+   "F piece1 x": 0.25,
+   "F on gap 2<=x<=4": 0.5,
+   "F piece2 (4<x<6) const": -0.5,
+   "F piece2 x": 0.25,
+   "F after last piece": 1.0,
+   "P(1<X<5)": 0.5,
+   "F(3)": 0.5
+  },
+  "display": {
+   "area": [
+    "1",
+    "1"
+   ],
+   "F piece1 (0<x<2) const": [
+    "0",
+    "0"
+   ],
+   "F piece1 x": [
+    "1/4",
+    ".25"
+   ],
+   "F on gap 2<=x<=4": [
+    "1/2",
+    ".5"
+   ],
+   "F piece2 (4<x<6) const": [
+    "⁻1/2",
+    "⁻.5"
+   ],
+   "F piece2 x": [
+    "1/4",
+    ".25"
+   ],
+   "F after last piece": [
+    "1",
+    "1"
+   ],
+   "P(1<X<5)": [
+    "1/2",
+    ".5"
+   ],
+   "F(3)": [
+    "1/2",
+    ".5"
+   ]
+  },
+  "spec_check": {
+   "area": {
+    "spec": "1",
+    "match": true
+   },
+   "F on gap 2<=x<=4": {
+    "spec": "1/2",
+    "match": true
+   },
+   "F piece2 (4<x<6) const": {
+    "spec": "-1/2",
+    "match": true
+   },
+   "F piece2 x": {
+    "spec": "1/4",
+    "match": true
+   },
+   "P(1<X<5)": {
+    "spec": "1/2",
+    "match": true
+   },
+   "F(3)": {
+    "spec": "1/2",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-C-S2",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "spec",
+  "inputs_description": "PDF, c known; piece (-4,4) deg2 C0=3/16, C1=0, C2=-3/256 (HW3 Q4); queries F(-2), P(1<X<3), P(X=-1)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 0,
+   "pieces": [
+    [
+     -4,
+     4,
+     [
+      "3/16",
+      "0",
+      "-3/256"
+     ]
+    ]
+   ],
+   "queries": [
+    "P(-4<X<-2)",
+    "F(-2)",
+    "P(1<X<3)",
+    "P(X=-1)"
+   ]
+  },
+  "expected": {
+   "area": "1",
+   "warn area≠1?": "NO",
+   "warn f<0?": "NO",
+   "F piece1 (-4<x<4) const": "1/2",
+   "F piece1 x": "3/16",
+   "F piece1 x^3": "-1/256",
+   "F after last piece": "1",
+   "P(-4<X<-2)": "5/32",
+   "F(-2)": "5/32",
+   "P(1<X<3)": "35/128",
+   "P(X=-1)": "0 (continuous X)"
+  },
+  "decimal": {
+   "area": 1.0,
+   "F piece1 (-4<x<4) const": 0.5,
+   "F piece1 x": 0.1875,
+   "F piece1 x^3": -0.00390625,
+   "F after last piece": 1.0,
+   "P(-4<X<-2)": 0.15625,
+   "F(-2)": 0.15625,
+   "P(1<X<3)": 0.2734375
+  },
+  "display": {
+   "area": [
+    "1",
+    "1"
+   ],
+   "F piece1 (-4<x<4) const": [
+    "1/2",
+    ".5"
+   ],
+   "F piece1 x": [
+    "3/16",
+    ".1875"
+   ],
+   "F piece1 x^3": [
+    "⁻1/256",
+    "⁻.003906"
+   ],
+   "F after last piece": [
+    "1",
+    "1"
+   ],
+   "P(-4<X<-2)": [
+    "5/32",
+    ".15625"
+   ],
+   "F(-2)": [
+    "5/32",
+    ".15625"
+   ],
+   "P(1<X<3)": [
+    "35/128",
+    ".273438"
+   ]
+  },
+  "spec_check": {
+   "F piece1 (-4<x<4) const": {
+    "spec": "1/2",
+    "match": true
+   },
+   "F piece1 x": {
+    "spec": "3/16",
+    "match": true
+   },
+   "F piece1 x^3": {
+    "spec": "-1/256",
+    "match": true
+   },
+   "P(-4<X<-2)": {
+    "spec": "5/32",
+    "match": true
+   },
+   "F(-2)": {
+    "spec": "5/32",
+    "match": true
+   },
+   "P(1<X<3)": {
+    "spec": "35/128",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-C-S3",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "spec",
+  "inputs_description": "PDF, UNKNOWN c; piece (0,3) deg2 C0=0,C1=0,C2=1 (HW3 431 Q5); query P(X>2)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 1,
+   "pieces": [
+    [
+     0,
+     3,
+     [
+      "0",
+      "0",
+      "1"
+     ]
+    ]
+   ],
+   "queries": [
+    "P(X>2)"
+   ]
+  },
+  "expected": {
+   "area": "9",
+   "c": "1/9",
+   "warn f<0?": "NO",
+   "F piece1 (0<x<3) const": "0",
+   "F piece1 x^3": "1/27",
+   "F after last piece": "1",
+   "P(X>2)": "19/27"
+  },
+  "decimal": {
+   "area": 9.0,
+   "c": 0.111111111111,
+   "F piece1 (0<x<3) const": 0.0,
+   "F piece1 x^3": 0.037037037037,
+   "F after last piece": 1.0,
+   "P(X>2)": 0.703703703704
+  },
+  "display": {
+   "area": [
+    "9",
+    "9"
+   ],
+   "c": [
+    "1/9",
+    ".111111"
+   ],
+   "F piece1 (0<x<3) const": [
+    "0",
+    "0"
+   ],
+   "F piece1 x^3": [
+    "1/27",
+    ".037037"
+   ],
+   "F after last piece": [
+    "1",
+    "1"
+   ],
+   "P(X>2)": [
+    "19/27",
+    ".703704"
+   ]
+  },
+  "spec_check": {
+   "c": {
+    "spec": "1/9",
+    "match": true
+   },
+   "F piece1 x^3": {
+    "spec": "1/27",
+    "match": true
+   },
+   "P(X>2)": {
+    "spec": "19/27",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-C-S4",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "spec",
+  "inputs_description": "CDF mode; piece (-2,2) deg1 C0=1/2, C1=1/4 (HW3 Q3); queries P(-1<X<1), P(X>.5)",
+  "inputs": {
+   "mode": "CDF",
+   "pieces": [
+    [
+     -2,
+     2,
+     [
+      "1/2",
+      "1/4"
+     ]
+    ]
+   ],
+   "queries": [
+    "P(-1<X<1)",
+    "P(X>.5)"
+   ]
+  },
+  "expected": {
+   "f piece1 const": "1/4",
+   "F(lo1)": "0",
+   "F(hi_m)": "1",
+   "warn jump (F(lo1)≠0 or F(hi_m)≠1)?": "NO",
+   "P(-1<X<1)": "1/2",
+   "P(X>1/2)": "3/8"
+  },
+  "decimal": {
+   "f piece1 const": 0.25,
+   "F(lo1)": 0.0,
+   "F(hi_m)": 1.0,
+   "P(-1<X<1)": 0.5,
+   "P(X>1/2)": 0.375
+  },
+  "display": {
+   "f piece1 const": [
+    "1/4",
+    ".25"
+   ],
+   "F(lo1)": [
+    "0",
+    "0"
+   ],
+   "F(hi_m)": [
+    "1",
+    "1"
+   ],
+   "P(-1<X<1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(X>1/2)": [
+    "3/8",
+    ".375"
+   ]
+  },
+  "spec_check": {
+   "f piece1 const": {
+    "spec": "1/4",
+    "match": true
+   },
+   "P(-1<X<1)": {
+    "spec": "1/2",
+    "match": true
+   },
+   "P(X>1/2)": {
+    "spec": "3/8",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-C-E1",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "edge",
+  "inputs_description": "CDF mode with a jump at the left end: piece (0,1) deg1 C0=1/2, C1=1/2; queries P(-1<X<.5), P(X>.5)",
+  "inputs": {
+   "mode": "CDF",
+   "pieces": [
+    [
+     0,
+     1,
+     [
+      "1/2",
+      "1/2"
+     ]
+    ]
+   ],
+   "queries": [
+    "P(-1<X<.5)",
+    "P(X>.5)",
+    "P(X=0)"
+   ]
+  },
+  "expected": {
+   "f piece1 const": "1/2",
+   "F(lo1)": "1/2",
+   "F(hi_m)": "1",
+   "warn jump (F(lo1)≠0 or F(hi_m)≠1)?": "YES",
+   "P(-1<X<1/2)": "3/4",
+   "P(X>1/2)": "1/4",
+   "P(X=0)": "0 (continuous X)"
+  },
+  "decimal": {
+   "f piece1 const": 0.5,
+   "F(lo1)": 0.5,
+   "F(hi_m)": 1.0,
+   "P(-1<X<1/2)": 0.75,
+   "P(X>1/2)": 0.25
+  },
+  "display": {
+   "f piece1 const": [
+    "1/2",
+    ".5"
+   ],
+   "F(lo1)": [
+    "1/2",
+    ".5"
+   ],
+   "F(hi_m)": [
+    "1",
+    "1"
+   ],
+   "P(-1<X<1/2)": [
+    "3/4",
+    ".75"
+   ],
+   "P(X>1/2)": [
+    "1/4",
+    ".25"
+   ]
+  },
+  "notes": "Must warn F(lo1)=1/2 ≠ 0 (jump of 1/2 at x=0: X is not continuous there, true P(X=0)=1/2 even though the P(X=a) query prints '0 (continuous X)')."
+ },
+ {
+  "id": "RV-C-E2",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "edge",
+  "inputs_description": "PDF, UNKNOWN c; triangle pieces (0,1) deg1 C1=1 and (1,2) deg1 C0=2, C1=-1; query P(.5<X<1.5), F(1)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 1,
+   "pieces": [
+    [
+     0,
+     1,
+     [
+      "0",
+      "1"
+     ]
+    ],
+    [
+     1,
+     2,
+     [
+      "2",
+      "-1"
+     ]
+    ]
+   ],
+   "queries": [
+    "P(.5<X<1.5)",
+    "F(1)"
+   ]
+  },
+  "expected": {
+   "area": "1",
+   "c": "1",
+   "warn f<0?": "NO",
+   "F piece1 (0<x<1) const": "0",
+   "F piece1 x^2": "1/2",
+   "F piece2 (1<x<2) const": "-1",
+   "F piece2 x": "2",
+   "F piece2 x^2": "-1/2",
+   "F after last piece": "1",
+   "P(1/2<X<3/2)": "3/4",
+   "F(1)": "1/2"
+  },
+  "decimal": {
+   "area": 1.0,
+   "c": 1.0,
+   "F piece1 (0<x<1) const": 0.0,
+   "F piece1 x^2": 0.5,
+   "F piece2 (1<x<2) const": -1.0,
+   "F piece2 x": 2.0,
+   "F piece2 x^2": -0.5,
+   "F after last piece": 1.0,
+   "P(1/2<X<3/2)": 0.75,
+   "F(1)": 0.5
+  },
+  "display": {
+   "area": [
+    "1",
+    "1"
+   ],
+   "c": [
+    "1",
+    "1"
+   ],
+   "F piece1 (0<x<1) const": [
+    "0",
+    "0"
+   ],
+   "F piece1 x^2": [
+    "1/2",
+    ".5"
+   ],
+   "F piece2 (1<x<2) const": [
+    "⁻1",
+    "⁻1"
+   ],
+   "F piece2 x": [
+    "2",
+    "2"
+   ],
+   "F piece2 x^2": [
+    "⁻1/2",
+    "⁻.5"
+   ],
+   "F after last piece": [
+    "1",
+    "1"
+   ],
+   "P(1/2<X<3/2)": [
+    "3/4",
+    ".75"
+   ],
+   "F(1)": [
+    "1/2",
+    ".5"
+   ]
+  }
+ },
+ {
+  "id": "RV-C-E3",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "edge",
+  "inputs_description": "PDF, c known; piece (1,3) deg0 C0=1/2 (support not starting at 0); F(0), F(2), F(4)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 0,
+   "pieces": [
+    [
+     1,
+     3,
+     [
+      "1/2"
+     ]
+    ]
+   ],
+   "queries": [
+    "F(0)",
+    "F(2)",
+    "F(4)"
+   ]
+  },
+  "expected": {
+   "area": "1",
+   "warn area≠1?": "NO",
+   "warn f<0?": "NO",
+   "F piece1 (1<x<3) const": "-1/2",
+   "F piece1 x": "1/2",
+   "F after last piece": "1",
+   "F(0)": "0",
+   "F(2)": "1/2",
+   "F(4)": "1"
+  },
+  "decimal": {
+   "area": 1.0,
+   "F piece1 (1<x<3) const": -0.5,
+   "F piece1 x": 0.5,
+   "F after last piece": 1.0,
+   "F(0)": 0.0,
+   "F(2)": 0.5,
+   "F(4)": 1.0
+  },
+  "display": {
+   "area": [
+    "1",
+    "1"
+   ],
+   "F piece1 (1<x<3) const": [
+    "⁻1/2",
+    "⁻.5"
+   ],
+   "F piece1 x": [
+    "1/2",
+    ".5"
+   ],
+   "F after last piece": [
+    "1",
+    "1"
+   ],
+   "F(0)": [
+    "0",
+    "0"
+   ],
+   "F(2)": [
+    "1/2",
+    ".5"
+   ],
+   "F(4)": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "RV-C-E4",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "edge",
+  "inputs_description": "PDF, c known; piece (0,2) deg1 C0=1, C1=-1 (f<0 on (1,2), area 0)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 0,
+   "pieces": [
+    [
+     0,
+     2,
+     [
+      "1",
+      "-1"
+     ]
+    ]
+   ]
+  },
+  "expected": {
+   "area": "0",
+   "warn area≠1?": "YES",
+   "warn f<0?": "YES",
+   "F piece1 (0<x<2) const": "0",
+   "F piece1 x": "1",
+   "F piece1 x^2": "-1/2",
+   "F after last piece": "0"
+  },
+  "decimal": {
+   "area": 0.0,
+   "F piece1 (0<x<2) const": 0.0,
+   "F piece1 x": 1.0,
+   "F piece1 x^2": -0.5,
+   "F after last piece": 0.0
+  },
+  "display": {
+   "area": [
+    "0",
+    "0"
+   ],
+   "F piece1 (0<x<2) const": [
+    "0",
+    "0"
+   ],
+   "F piece1 x": [
+    "1",
+    "1"
+   ],
+   "F piece1 x^2": [
+    "⁻1/2",
+    "⁻.5"
+   ],
+   "F after last piece": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "Must warn area≠1 and f<0."
+ },
+ {
+  "id": "RV-C-E5",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "edge",
+  "inputs_description": "PDF, UNKNOWN c; piece (0,2) deg1 C0=1, C1=-1 (area 0 -> c undefined)",
+  "inputs": {
+   "mode": "PDF",
+   "unknown_c": 1,
+   "pieces": [
+    [
+     0,
+     2,
+     [
+      "1",
+      "-1"
+     ]
+    ]
+   ]
+  },
+  "expected": {
+   "area": "0",
+   "c": "undef (area 0)"
+  },
+  "decimal": {
+   "area": 0.0
+  },
+  "display": {
+   "area": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "Guard division by zero area."
+ },
+ {
+  "id": "RV-D-S1",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "spec",
+  "inputs_description": "CDF F(X)=\"1-𝑒^(⁻2X)\" on [0,50); P(X>1), f(1)=F'(1) (HW3 431 Q6)",
+  "inputs": {
+   "mode": "CDF",
+   "F": "1-𝑒^(⁻2X)",
+   "lo": 0,
+   "hi": 50,
+   "queries": [
+    "P(X>1)",
+    "f(1)"
+   ]
+  },
+  "expected": {
+   "F(0)": "0",
+   "F(50)": "1-exp(-100)",
+   "P(X>1)": "exp(-2)",
+   "f(1) exact": "2*exp(-2)",
+   "f(1)": "2*exp(-2) [nDeriv h=.001]"
+  },
+  "decimal": {
+   "F(0)": 0.0,
+   "F(50)": 1.0,
+   "P(X>1)": 0.135335283236613,
+   "f(1) exact": 0.270670566473225,
+   "f(1)": 0.270670566473225
+  },
+  "display": {
+   "F(0)": [
+    "0",
+    "0"
+   ],
+   "F(50)": [
+    "1",
+    "1"
+   ],
+   "P(X>1)": [
+    ".135335",
+    ".135335"
+   ],
+   "f(1) exact": [
+    ".270671",
+    ".270671"
+   ],
+   "f(1)": [
+    ".270671",
+    ".270671"
+   ]
+  },
+  "spec_check": {
+   "P(X>1)": {
+    "spec": ".135335",
+    "match": true
+   },
+   "f(1)": {
+    "spec": ".270671",
+    "match": true
+   }
+  },
+  "notes": "F(50) = 1-e^-100 = 1 to 14 digits, so no F(hi)≠1 warning should fire."
+ },
+ {
+  "id": "RV-D-S2",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "spec",
+  "inputs_description": "PDF f(X)=\"3/256(16-X²)\" on (-4,4), c known; P(-4<X<-2), P(1<X<3) (HW3 Q4)",
+  "inputs": {
+   "mode": "PDF",
+   "f": "3/256(16-X²)",
+   "lo": -4,
+   "hi": 4,
+   "unknown_c": 0,
+   "queries": [
+    "P(-4<X<-2)",
+    "P(1<X<3)"
+   ]
+  },
+  "expected": {
+   "area": "1",
+   "P(-4<X<-2)": "5/32",
+   "P(1<X<3)": "35/128"
+  },
+  "decimal": {
+   "area": 1.0,
+   "P(-4<X<-2)": 0.15625,
+   "P(1<X<3)": 0.2734375
+  },
+  "display": {
+   "area": [
+    "1",
+    "1"
+   ],
+   "P(-4<X<-2)": [
+    "5/32",
+    ".15625"
+   ],
+   "P(1<X<3)": [
+    "35/128",
+    ".273438"
+   ]
+  },
+  "spec_check": {
+   "P(-4<X<-2)": {
+    "spec": ".15625",
+    "match": true
+   },
+   "P(1<X<3)": {
+    "spec": ".273438",
+    "match": true
+   }
+  },
+  "notes": "Typed with implied multiplication: 3/256(16-X²) = (3/256)*(16-X²) (left-to-right). P(1<X<3)=35/128=.2734375 exactly is a rounding TIE at 6 places: Str8 is .273438 only if fnInt returns >= .2734375; a result 1E-13 low gives .273437. Str9 = 35/128 is robust -> assert Str9."
+ },
+ {
+  "id": "RV-D-S3",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "spec",
+  "inputs_description": "PDF f(X)=\"X²\" on (0,3), UNKNOWN c; P(X>2) (HW3 431 Q5)",
+  "inputs": {
+   "mode": "PDF",
+   "f": "X²",
+   "lo": 0,
+   "hi": 3,
+   "unknown_c": 1,
+   "queries": [
+    "P(X>2)"
+   ]
+  },
+  "expected": {
+   "area": "9",
+   "c": "1/9",
+   "P(X>2)": "19/27"
+  },
+  "decimal": {
+   "area": 9.0,
+   "c": 0.111111111111111,
+   "P(X>2)": 0.703703703703704
+  },
+  "display": {
+   "area": [
+    "9",
+    "9"
+   ],
+   "c": [
+    "1/9",
+    ".111111"
+   ],
+   "P(X>2)": [
+    "19/27",
+    ".703704"
+   ]
+  },
+  "spec_check": {
+   "c": {
+    "spec": ".111111",
+    "match": true
+   },
+   "P(X>2)": {
+    "spec": ".703704",
+    "match": true
+   }
+  }
+ },
+ {
+  "id": "RV-D-E1",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "edge",
+  "inputs_description": "PDF \"2𝑒^(⁻2X)\" on (0,50), c known; P(X>1), P(0<X<.5)",
+  "inputs": {
+   "mode": "PDF",
+   "f": "2𝑒^(⁻2X)",
+   "lo": 0,
+   "hi": 50,
+   "unknown_c": 0,
+   "queries": [
+    "P(X>1)",
+    "P(0<X<.5)"
+   ]
+  },
+  "expected": {
+   "area": "1-exp(-100)",
+   "P(X>1)": "exp(-2)-exp(-100)",
+   "P(0<X<.5)": "1-exp(-1)"
+  },
+  "decimal": {
+   "area": 1.0,
+   "P(X>1)": 0.135335283236613,
+   "P(0<X<.5)": 0.632120558828558
+  },
+  "display": {
+   "area": [
+    "1",
+    "1"
+   ],
+   "P(X>1)": [
+    ".135335",
+    ".135335"
+   ],
+   "P(0<X<.5)": [
+    ".632121",
+    ".632121"
+   ]
+  }
+ },
+ {
+  "id": "RV-D-E2",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "edge",
+  "inputs_description": "PDF \"X²\" on (0,3), UNKNOWN c; P(4<X<5) (interval outside support)",
+  "inputs": {
+   "mode": "PDF",
+   "f": "X²",
+   "lo": 0,
+   "hi": 3,
+   "unknown_c": 1,
+   "queries": [
+    "P(4<X<5)"
+   ]
+  },
+  "expected": {
+   "c": "1/9",
+   "P(4<X<5)": "0"
+  },
+  "decimal": {
+   "c": 0.111111111111111,
+   "P(4<X<5)": 0.0
+  },
+  "display": {
+   "c": [
+    "1/9",
+    ".111111"
+   ],
+   "P(4<X<5)": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "Clipped interval [max(a,lo),min(b,hi)] = [4,3] is empty -> 0 (do not call fnInt backwards: fnInt(…,4,3) would give a NEGATIVE value)."
+ },
+ {
+  "id": "RV-D-E3",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "edge",
+  "inputs_description": "CDF \"X/2\" on [0,1); P(X>.5), f(.5)",
+  "inputs": {
+   "mode": "CDF",
+   "F": "X/2",
+   "lo": 0,
+   "hi": 1,
+   "queries": [
+    "P(X>.5)",
+    "f(.5)"
+   ]
+  },
+  "expected": {
+   "F(lo)": "0",
+   "F(hi)": "1/2",
+   "warn F(hi)≠1?": "YES",
+   "P(X>.5)": "3/4",
+   "f(.5)": "1/2"
+  },
+  "decimal": {
+   "F(lo)": 0.0,
+   "F(hi)": 0.5,
+   "P(X>.5)": 0.75,
+   "f(.5)": 0.5
+  },
+  "display": {
+   "F(lo)": [
+    "0",
+    "0"
+   ],
+   "F(hi)": [
+    "1/2",
+    ".5"
+   ],
+   "P(X>.5)": [
+    "3/4",
+    ".75"
+   ],
+   "f(.5)": [
+    "1/2",
+    ".5"
+   ]
+  },
+  "notes": "Warn F(hi)=1/2≠1 (jump of 1/2 at x=1 by the tool's convention F=1 for t>=hi)."
+ },
+ {
+  "id": "RV-D-E4",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "edge",
+  "inputs_description": "CDF \"(X+2)/4\" on [-2,2) (HW3 Q3 numerically); P(-1<X<1), P(X>.5)",
+  "inputs": {
+   "mode": "CDF",
+   "F": "(X+2)/4",
+   "lo": -2,
+   "hi": 2,
+   "queries": [
+    "P(-1<X<=1)",
+    "P(X>.5)",
+    "f(0)"
+   ]
+  },
+  "expected": {
+   "P(-1<X<=1)": "1/2",
+   "P(X>.5)": "3/8",
+   "f(0)": "1/4"
+  },
+  "decimal": {
+   "P(-1<X<=1)": 0.5,
+   "P(X>.5)": 0.375,
+   "f(0)": 0.25
+  },
+  "display": {
+   "P(-1<X<=1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(X>.5)": [
+    "3/8",
+    ".375"
+   ],
+   "f(0)": [
+    "1/4",
+    ".25"
+   ]
+  }
+ },
+ {
+  "id": "RV-E-S1",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "spec",
+  "inputs_description": "f_X=\"2X\" on (0,1), h(y)=\"𝑒^(⁻X)\" (Y=-lnX), DECREASING; y=1 (HW3 631 Q5)",
+  "inputs": {
+   "fX": "2X",
+   "lo": 0,
+   "hi": 1,
+   "h": "𝑒^(⁻X)",
+   "g": "DECREASING",
+   "y": "1"
+  },
+  "expected": {
+   "x=h(y)": "exp(-1)",
+   "F_X(x)": "min(1,exp(-2*1))",
+   "F_Y(y)": "1-exp(-2*1)",
+   "f_Y(y) exact": "2*exp(-2*1)",
+   "f_Y(y)": "2*exp(-2*1) [via nDeriv]"
+  },
+  "decimal": {
+   "x=h(y)": 0.367879441171442,
+   "F_X(x)": 0.135335283236613,
+   "F_Y(y)": 0.864664716763387,
+   "f_Y(y) exact": 0.270670566473225,
+   "f_Y(y)": 0.270670566473225
+  },
+  "display": {
+   "x=h(y)": [
+    ".367879",
+    ".367879"
+   ],
+   "F_X(x)": [
+    ".135335",
+    ".135335"
+   ],
+   "F_Y(y)": [
+    ".864665",
+    ".864665"
+   ],
+   "f_Y(y) exact": [
+    ".270671",
+    ".270671"
+   ],
+   "f_Y(y)": [
+    ".270671",
+    ".270671"
+   ]
+  },
+  "spec_check": {
+   "x=h(y)": {
+    "spec": ".367879",
+    "match": true
+   },
+   "F_Y(y)": {
+    "spec": ".864665",
+    "match": true
+   },
+   "f_Y(y)": {
+    "spec": ".270671",
+    "match": true
+   }
+  },
+  "notes": "Exact: F_Y(y)=1-e^(-2y), f_Y(y)=2e^(-2y) for y>0 (Exponential, rate 2)."
+ },
+ {
+  "id": "RV-E-S2",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "spec",
+  "inputs_description": "f_X=\"2X\" on (0,1), h(y)=\"𝑒^(⁻X)\" (Y=-lnX), DECREASING; y=1/2 (HW3 631 Q5)",
+  "inputs": {
+   "fX": "2X",
+   "lo": 0,
+   "hi": 1,
+   "h": "𝑒^(⁻X)",
+   "g": "DECREASING",
+   "y": "1/2"
+  },
+  "expected": {
+   "x=h(y)": "exp(-1/2)",
+   "F_X(x)": "min(1,exp(-2*1/2))",
+   "F_Y(y)": "1-exp(-2*1/2)",
+   "f_Y(y) exact": "2*exp(-2*1/2)",
+   "f_Y(y)": "2*exp(-2*1/2) [via nDeriv]"
+  },
+  "decimal": {
+   "x=h(y)": 0.606530659712633,
+   "F_X(x)": 0.367879441171442,
+   "F_Y(y)": 0.632120558828558,
+   "f_Y(y) exact": 0.735758882342885,
+   "f_Y(y)": 0.735758882342885
+  },
+  "display": {
+   "x=h(y)": [
+    ".606531",
+    ".606531"
+   ],
+   "F_X(x)": [
+    ".367879",
+    ".367879"
+   ],
+   "F_Y(y)": [
+    ".632121",
+    ".632121"
+   ],
+   "f_Y(y) exact": [
+    ".735759",
+    ".735759"
+   ],
+   "f_Y(y)": [
+    ".735759",
+    ".735759"
+   ]
+  },
+  "spec_check": {
+   "F_Y(y)": {
+    "spec": ".632121",
+    "match": true
+   },
+   "f_Y(y)": {
+    "spec": ".735759",
+    "match": true
+   }
+  },
+  "notes": "Exact: F_Y(y)=1-e^(-2y), f_Y(y)=2e^(-2y) for y>0 (Exponential, rate 2)."
+ },
+ {
+  "id": "RV-E-E1",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "edge",
+  "inputs_description": "f_X=\"2X\" on (0,1), h(y)=\"𝑒^(⁻X)\" (Y=-lnX), DECREASING; y=3 (HW3 631 Q5)",
+  "inputs": {
+   "fX": "2X",
+   "lo": 0,
+   "hi": 1,
+   "h": "𝑒^(⁻X)",
+   "g": "DECREASING",
+   "y": "3"
+  },
+  "expected": {
+   "x=h(y)": "exp(-3)",
+   "F_X(x)": "min(1,exp(-2*3))",
+   "F_Y(y)": "1-exp(-2*3)",
+   "f_Y(y) exact": "2*exp(-2*3)",
+   "f_Y(y)": "2*exp(-2*3) [via nDeriv]"
+  },
+  "decimal": {
+   "x=h(y)": 0.0497870683678639,
+   "F_X(x)": 0.00247875217666636,
+   "F_Y(y)": 0.997521247823334,
+   "f_Y(y) exact": 0.00495750435333272,
+   "f_Y(y)": 0.00495750435333272
+  },
+  "display": {
+   "x=h(y)": [
+    ".049787",
+    ".049787"
+   ],
+   "F_X(x)": [
+    ".002479",
+    ".002479"
+   ],
+   "F_Y(y)": [
+    ".997521",
+    ".997521"
+   ],
+   "f_Y(y) exact": [
+    ".004958",
+    ".004958"
+   ],
+   "f_Y(y)": [
+    ".004958",
+    ".004958"
+   ]
+  },
+  "notes": "Exact: F_Y(y)=1-e^(-2y), f_Y(y)=2e^(-2y) for y>0 (Exponential, rate 2)."
+ },
+ {
+  "id": "RV-E-E2",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "edge",
+  "inputs_description": "f_X=\"2X\" on (0,1), h(y)=\"𝑒^(⁻X)\" (Y=-lnX), DECREASING; y=-1 (HW3 631 Q5)",
+  "inputs": {
+   "fX": "2X",
+   "lo": 0,
+   "hi": 1,
+   "h": "𝑒^(⁻X)",
+   "g": "DECREASING",
+   "y": "-1"
+  },
+  "expected": {
+   "x=h(y)": "exp(--1)",
+   "F_X(x)": "min(1,exp(-2*-1))",
+   "F_Y(y)": "0",
+   "f_Y(y) exact": "0",
+   "f_Y(y)": "0"
+  },
+  "decimal": {
+   "x=h(y)": 2.71828182845905,
+   "F_X(x)": 1.0,
+   "F_Y(y)": 0.0,
+   "f_Y(y) exact": 0.0,
+   "f_Y(y)": 0.0
+  },
+  "display": {
+   "x=h(y)": [
+    "2.718282",
+    "2.718282"
+   ],
+   "F_X(x)": [
+    "1",
+    "1"
+   ],
+   "F_Y(y)": [
+    "0",
+    "0"
+   ],
+   "f_Y(y) exact": [
+    "0",
+    "0"
+   ],
+   "f_Y(y)": [
+    "0",
+    "0"
+   ]
+  },
+  "notes": "y<0 is outside the support of Y: x=e>1 is clipped to hi, F_X=1, F_Y=0, f_Y=0."
+ },
+ {
+  "id": "RV-E-E3",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "edge",
+  "inputs_description": "PIT check: f_X=\"2X\" on (0,1), g=F_X (U=X²) INCREASING, h(u)=\"√(X)\"; y=.3",
+  "inputs": {
+   "fX": "2X",
+   "lo": 0,
+   "hi": 1,
+   "h": "√(X)",
+   "g": "INCREASING",
+   "y": ".3"
+  },
+  "expected": {
+   "x=h(y)": "sqrt(3/10)",
+   "F_X(x)": "3/10",
+   "F_Y(y)": "3/10",
+   "f_Y(y) exact": "1",
+   "f_Y(y)": "1 [via nDeriv]"
+  },
+  "decimal": {
+   "x=h(y)": 0.547722557505166,
+   "F_X(x)": 0.3,
+   "F_Y(y)": 0.3,
+   "f_Y(y) exact": 1.0,
+   "f_Y(y)": 1.0
+  },
+  "display": {
+   "x=h(y)": [
+    ".547723",
+    ".547723"
+   ],
+   "F_X(x)": [
+    "3/10",
+    ".3"
+   ],
+   "F_Y(y)": [
+    "3/10",
+    ".3"
+   ],
+   "f_Y(y) exact": [
+    "1",
+    "1"
+   ],
+   "f_Y(y)": [
+    "1.000001",
+    "1.000001"
+   ]
+  },
+  "notes": "Probability integral transform: F_U(u)=u, f_U=1. nDeriv(√(X),X,.3) has O(h²) error, so the calculator shows f_Y=1.000001 (not 1)."
+ },
+ {
+  "id": "RV-E-E4",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "edge",
+  "inputs_description": "f_X=\"1\" on (0,1) (uniform), Y=X² INCREASING, h(y)=\"√(X)\"; y=.25",
+  "inputs": {
+   "fX": "1",
+   "lo": 0,
+   "hi": 1,
+   "h": "√(X)",
+   "g": "INCREASING",
+   "y": ".25"
+  },
+  "expected": {
+   "x=h(y)": "1/2",
+   "F_Y(y)": "1/2",
+   "f_Y(y) exact": "1",
+   "f_Y(y)": "1/(2*sqrt(y)) = 1 [via nDeriv]"
+  },
+  "decimal": {
+   "x=h(y)": 0.5,
+   "F_Y(y)": 0.5,
+   "f_Y(y) exact": 1.0,
+   "f_Y(y)": 1.0
+  },
+  "display": {
+   "x=h(y)": [
+    "1/2",
+    ".5"
+   ],
+   "F_Y(y)": [
+    "1/2",
+    ".5"
+   ],
+   "f_Y(y) exact": [
+    "1",
+    "1"
+   ],
+   "f_Y(y)": [
+    "1.000002",
+    "1.000002"
+   ]
+  },
+  "notes": "Typing \"1\" as f_X: Y₉ = 1 is a constant; fnInt handles it."
+ },
+ {
+  "id": "HW1-Q2a-check",
+  "program": "PROOF",
+  "tool": "",
+  "tool_name": "",
+  "kind": "hw",
+  "inputs_description": "HW1 Q2(a) numeric sanity: sum r*C(n,r) = n*2^(n-1), n=1..12",
+  "inputs": {},
+  "expected": {
+   "n=4": "32",
+   "n=5": "80",
+   "n=10": "5120"
+  },
+  "decimal": {
+   "n=4": 32,
+   "n=5": 80,
+   "n=10": 5120
+  },
+  "display": {
+   "n=4": [
+    "32",
+    "32"
+   ],
+   "n=5": [
+    "80",
+    "80"
+   ],
+   "n=10": [
+    "5120",
+    "5120"
+   ]
+  },
+  "notes": "n*2^(n-1): 32, 80, 5120"
+ },
+ {
+  "id": "HW1-Q2b-check",
+  "program": "PROOF",
+  "tool": "",
+  "tool_name": "",
+  "kind": "hw",
+  "inputs_description": "HW1 Q2(b) numeric sanity: sum C(n,r)/(r+1) = (2^(n+1)-1)/(n+1)",
+  "inputs": {},
+  "expected": {
+   "n=4": "31/5",
+   "n=5": "21/2",
+   "n=10": "2047/11"
+  },
+  "decimal": {
+   "n=4": 6.2,
+   "n=5": 10.5,
+   "n=10": 186.090909090909
+  },
+  "display": {
+   "n=4": [
+    "31/5",
+    "6.2"
+   ],
+   "n=5": [
+    "21/2",
+    "10.5"
+   ],
+   "n=10": [
+    "2047/11",
+    "186.090909"
+   ]
+  },
+  "notes": "31/5, 21/2, 2047/11"
+ },
+ {
+  "id": "HW1-Q3",
+  "program": "STACNT",
+  "tool": "F",
+  "tool_name": "TERM COEFFICIENT",
+  "kind": "hw",
+  "inputs_description": "HW1 Q3: coefficient of x^3 y^2 z^2 in (2x-y+3z)^7",
+  "inputs": {},
+  "expected": {
+   "coefficient": "15120"
+  },
+  "decimal": {
+   "coefficient": 15120
+  },
+  "display": {
+   "coefficient": [
+    "15120",
+    "15120"
+   ]
+  }
+ },
+ {
+  "id": "HW1-Q4",
+  "program": "STACNT",
+  "tool": "B",
+  "tool_name": "WORD ARRANGEMENTS",
+  "kind": "hw",
+  "inputs_description": "HW1 Q4: PROBABILITY (a) distinct permutations (b) BB adjacent",
+  "inputs": {},
+  "expected": {
+   "(a)": "9979200",
+   "(b)": "1814400"
+  },
+  "decimal": {
+   "(a)": 9979200,
+   "(b)": 1814400
+  },
+  "display": {
+   "(a)": [
+    "9979200",
+    "9979200"
+   ],
+   "(b)": [
+    "1814400",
+    "1814400"
+   ]
+  }
+ },
+ {
+  "id": "HW1-Q5",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "hw",
+  "inputs_description": "HW1 Q5: 12 faculty into distinct committees of 3,4,5",
+  "inputs": {},
+  "expected": {
+   "ways": "27720"
+  },
+  "decimal": {
+   "ways": 27720
+  },
+  "display": {
+   "ways": [
+    "27720",
+    "27720"
+   ]
+  }
+ },
+ {
+  "id": "HW1-Q6",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "hw",
+  "inputs_description": "HW1 Q6: 20 T/F questions, 5 difficult; exactly 15 correct incl. exactly 2 difficult",
+  "inputs": {},
+  "expected": {
+   "ways": "1050"
+  },
+  "decimal": {
+   "ways": 1050
+  },
+  "display": {
+   "ways": [
+    "1050",
+    "1050"
+   ]
+  },
+  "notes": "C(5,2)*C(15,13) = 10*105; a T/F answer sheet is determined by which questions are correct."
+ },
+ {
+  "id": "HW1-431-Q7",
+  "program": "STACNT",
+  "tool": "D",
+  "tool_name": "2-GROUP SELECTION",
+  "kind": "hw",
+  "inputs_description": "HW1 431 Q7: 5 from 8 math + 6 stat, >=2 of each",
+  "inputs": {},
+  "expected": {
+   "ways": "1400",
+   "check via complement": "1400"
+  },
+  "decimal": {
+   "ways": 1400,
+   "check via complement": 1400
+  },
+  "display": {
+   "ways": [
+    "1400",
+    "1400"
+   ],
+   "check via complement": [
+    "1400",
+    "1400"
+   ]
+  }
+ },
+ {
+  "id": "HW1-431-Q8",
+  "program": "STACNT",
+  "tool": "C",
+  "tool_name": "GROUPS/MULTINOMIAL",
+  "kind": "hw",
+  "inputs_description": "HW1 431 Q8: grades A-F to 10 students, exactly 3 A and exactly 1 F",
+  "inputs": {},
+  "expected": {
+   "ways": "612360"
+  },
+  "decimal": {
+   "ways": 612360
+  },
+  "display": {
+   "ways": [
+    "612360",
+    "612360"
+   ]
+  },
+  "notes": "C(10,3)*C(7,1)*3^6 = 120*7*729"
+ },
+ {
+  "id": "HW1-631-Q8",
+  "program": "STACNT",
+  "tool": "E",
+  "tool_name": "STARS AND BARS",
+  "kind": "hw",
+  "inputs_description": "HW1 631 Q8: 15 identical clusters to 4 labs (a) each >=1 (b) lab1 >=3, others >=1",
+  "inputs": {},
+  "expected": {
+   "(a)": "364",
+   "(b)": "220",
+   "change": "144"
+  },
+  "decimal": {
+   "(a)": 364,
+   "(b)": 220,
+   "change": 144
+  },
+  "display": {
+   "(a)": [
+    "364",
+    "364"
+   ],
+   "(b)": [
+    "220",
+    "220"
+   ],
+   "change": [
+    "144",
+    "144"
+   ]
+  }
+ },
+ {
+  "id": "HW2-Q2",
+  "program": "STAPRB",
+  "tool": "A",
+  "tool_name": "TWO EVENTS A,B",
+  "kind": "hw",
+  "inputs_description": "HW2 Q2: P(X)=.55, P(Y)=.35, P(XuY)=.70",
+  "inputs": {},
+  "expected": {
+   "(a) P(XnY)": "1/5",
+   "(b) P(X|Y)": "4/7",
+   "(c) P(Y|X^c)": "1/3"
+  },
+  "decimal": {
+   "(a) P(XnY)": 0.2,
+   "(b) P(X|Y)": 0.571428571429,
+   "(c) P(Y|X^c)": 0.333333333333
+  },
+  "display": {
+   "(a) P(XnY)": [
+    "1/5",
+    ".2"
+   ],
+   "(b) P(X|Y)": [
+    "4/7",
+    ".571429"
+   ],
+   "(c) P(Y|X^c)": [
+    "1/3",
+    ".333333"
+   ]
+  }
+ },
+ {
+  "id": "HW2-Q3",
+  "program": "STAPRB",
+  "tool": "B",
+  "tool_name": "2x2 TABLE",
+  "kind": "hw",
+  "inputs_description": "HW2 Q3: 120 people, 70 grad/50 faculty, 40 female grads, 65 females",
+  "inputs": {},
+  "expected": {
+   "(a) P(male faculty)": "5/24",
+   "(b) P(grad|female)": "8/13"
+  },
+  "decimal": {
+   "(a) P(male faculty)": 0.208333333333,
+   "(b) P(grad|female)": 0.615384615385
+  },
+  "display": {
+   "(a) P(male faculty)": [
+    "5/24",
+    ".208333"
+   ],
+   "(b) P(grad|female)": [
+    "8/13",
+    ".615385"
+   ]
+  }
+ },
+ {
+  "id": "HW2-Q4",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "hw",
+  "inputs_description": "HW2 Q4: journal fields 50/30/20%, acceptance 15/25/10%",
+  "inputs": {},
+  "expected": {
+   "(a) P(accept)": "17/100",
+   "(b) P(Methodology|accept)": "15/34"
+  },
+  "decimal": {
+   "(a) P(accept)": 0.17,
+   "(b) P(Methodology|accept)": 0.441176470588
+  },
+  "display": {
+   "(a) P(accept)": [
+    "17/100",
+    ".17"
+   ],
+   "(b) P(Methodology|accept)": [
+    "15/34",
+    ".441176"
+   ]
+  }
+ },
+ {
+  "id": "HW2-Q5",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "hw",
+  "inputs_description": "HW2 Q5: die 1-2 -> urn A (3R,4B), 3-6 -> urn B (5R,2B)",
+  "inputs": {},
+  "expected": {
+   "(a) P(red)": "13/21",
+   "(b) P(die 1or2|red)": "3/13"
+  },
+  "decimal": {
+   "(a) P(red)": 0.619047619048,
+   "(b) P(die 1or2|red)": 0.230769230769
+  },
+  "display": {
+   "(a) P(red)": [
+    "13/21",
+    ".619048"
+   ],
+   "(b) P(die 1or2|red)": [
+    "3/13",
+    ".230769"
+   ]
+  }
+ },
+ {
+  "id": "HW2-431-Q6",
+  "program": "STAPRB",
+  "tool": "C",
+  "tool_name": "TOTAL PROB/BAYES",
+  "kind": "hw",
+  "inputs_description": "HW2 431 Q6: 60% spam; 'urgent' in 40% spam, 5% non-spam",
+  "inputs": {},
+  "expected": {
+   "(a) P(urgent)": "13/50",
+   "(b) P(spam|urgent)": "12/13"
+  },
+  "decimal": {
+   "(a) P(urgent)": 0.26,
+   "(b) P(spam|urgent)": 0.923076923077
+  },
+  "display": {
+   "(a) P(urgent)": [
+    "13/50",
+    ".26"
+   ],
+   "(b) P(spam|urgent)": [
+    "12/13",
+    ".923077"
+   ]
+  }
+ },
+ {
+  "id": "HW2-431-Q7",
+  "program": "STAPRB",
+  "tool": "E",
+  "tool_name": "VENN 2-3 SETS",
+  "kind": "hw",
+  "inputs_description": "HW2 431 Q7: Digital 400, Print 500, Weekend 600, DP 200, PW 250, DW 150, all 100, N=1000",
+  "inputs": {},
+  "expected": {
+   "Weekend only": "300",
+   "none": "0"
+  },
+  "decimal": {
+   "Weekend only": 300,
+   "none": 0
+  },
+  "display": {
+   "Weekend only": [
+    "300",
+    "300"
+   ],
+   "none": [
+    "0",
+    "0"
+   ]
+  }
+ },
+ {
+  "id": "HW2-631-Q7",
+  "program": "STAPRB",
+  "tool": "D",
+  "tool_name": "SENS/SPEC TEST",
+  "kind": "hw",
+  "inputs_description": "HW2 631 Q7: incidence .5%, sens 95%, spec 99%; then physician sens 90%, spec 95%",
+  "inputs": {},
+  "expected": {
+   "(a) P(event|flag)": "95/294",
+   "(b) P(event|flag, physician +)": "1710/1909"
+  },
+  "decimal": {
+   "(a) P(event|flag)": 0.323129251701,
+   "(b) P(event|flag, physician +)": 0.895756940807
+  },
+  "display": {
+   "(a) P(event|flag)": [
+    "95/294",
+    ".323129"
+   ],
+   "(b) P(event|flag, physician +)": [
+    "1710/1909",
+    ".895757"
+   ]
+  }
+ },
+ {
+  "id": "HW3-Q1",
+  "program": "STARV",
+  "tool": "B",
+  "tool_name": "MAX/MIN/SUM DRAWS",
+  "kind": "hw",
+  "inputs_description": "HW3 Q1: Z = max of 2 balls from 1..5 without replacement",
+  "inputs": {},
+  "expected": {
+   "p(2)": "1/10",
+   "p(3)": "1/5",
+   "p(4)": "3/10",
+   "p(5)": "2/5",
+   "F(2)": "1/10",
+   "F(3)": "3/10",
+   "F(4)": "3/5",
+   "F(5)": "1"
+  },
+  "decimal": {
+   "p(2)": 0.1,
+   "p(3)": 0.2,
+   "p(4)": 0.3,
+   "p(5)": 0.4,
+   "F(2)": 0.1,
+   "F(3)": 0.3,
+   "F(4)": 0.6,
+   "F(5)": 1.0
+  },
+  "display": {
+   "p(2)": [
+    "1/10",
+    ".1"
+   ],
+   "p(3)": [
+    "1/5",
+    ".2"
+   ],
+   "p(4)": [
+    "3/10",
+    ".3"
+   ],
+   "p(5)": [
+    "2/5",
+    ".4"
+   ],
+   "F(2)": [
+    "1/10",
+    ".1"
+   ],
+   "F(3)": [
+    "3/10",
+    ".3"
+   ],
+   "F(4)": [
+    "3/5",
+    ".6"
+   ],
+   "F(5)": [
+    "1",
+    "1"
+   ]
+  },
+  "notes": "p(z)=(z-1)/10 for z=2..5; F(z)=C(floor z,2)/10 for 2<=z<5, 0 for z<2, 1 for z>=5."
+ },
+ {
+  "id": "HW3-Q2",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "hw",
+  "inputs_description": "HW3 Q2: f=1/4 on (0,2) and (4,6): CDF",
+  "inputs": {},
+  "expected": {
+   "F(x), x<=0": "0",
+   "F(x), 0<x<2": "x/4",
+   "F(x), 2<=x<4": "1/2",
+   "F(x), 4<=x<6": "(x-2)/4 = -1/2 + x/4",
+   "F(x), x>=6": "1"
+  },
+  "decimal": {
+   "F(x), x<=0": 0.0,
+   "F(x), 2<=x<4": 0.5,
+   "F(x), x>=6": 1.0
+  },
+  "display": {
+   "F(x), x<=0": [
+    "0",
+    "0"
+   ],
+   "F(x), 2<=x<4": [
+    "1/2",
+    ".5"
+   ],
+   "F(x), x>=6": [
+    "1",
+    "1"
+   ]
+  }
+ },
+ {
+  "id": "HW3-Q3",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "hw",
+  "inputs_description": "HW3 Q3: F(x)=(x+2)/4 on [-2,2)",
+  "inputs": {},
+  "expected": {
+   "P(-1<X<1)": "1/2",
+   "P(X>0.5)": "3/8"
+  },
+  "decimal": {
+   "P(-1<X<1)": 0.5,
+   "P(X>0.5)": 0.375
+  },
+  "display": {
+   "P(-1<X<1)": [
+    "1/2",
+    ".5"
+   ],
+   "P(X>0.5)": [
+    "3/8",
+    ".375"
+   ]
+  }
+ },
+ {
+  "id": "HW3-Q4",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "hw",
+  "inputs_description": "HW3 Q4: f=3/256(16-x^2) on (-4,4)",
+  "inputs": {},
+  "expected": {
+   "(a) P(X<=-2)": "5/32",
+   "(b) P(1<=X<=3)": "35/128",
+   "(c) P(X=-1)": "0"
+  },
+  "decimal": {
+   "(a) P(X<=-2)": 0.15625,
+   "(b) P(1<=X<=3)": 0.2734375,
+   "(c) P(X=-1)": 0.0
+  },
+  "display": {
+   "(a) P(X<=-2)": [
+    "5/32",
+    ".15625"
+   ],
+   "(b) P(1<=X<=3)": [
+    "35/128",
+    ".273438"
+   ],
+   "(c) P(X=-1)": [
+    "0",
+    "0"
+   ]
+  }
+ },
+ {
+  "id": "HW3-431-Q5",
+  "program": "STARV",
+  "tool": "C",
+  "tool_name": "POLY PDF/CDF",
+  "kind": "hw",
+  "inputs_description": "HW3 431 Q5: f(y)=c y^2 on (0,3)",
+  "inputs": {},
+  "expected": {
+   "(a) c": "1/9",
+   "(b) F(y), 0<y<3": "y^3/27 (0 for y<=0, 1 for y>=3)",
+   "(c) P(Y>2)": "19/27"
+  },
+  "decimal": {
+   "(a) c": 0.111111111111,
+   "(c) P(Y>2)": 0.703703703704
+  },
+  "display": {
+   "(a) c": [
+    "1/9",
+    ".111111"
+   ],
+   "(c) P(Y>2)": [
+    "19/27",
+    ".703704"
+   ]
+  }
+ },
+ {
+  "id": "HW3-431-Q6",
+  "program": "STARV",
+  "tool": "D",
+  "tool_name": "ANY f(x) OR F(x)",
+  "kind": "hw",
+  "inputs_description": "HW3 431 Q6: F(x)=1-e^(-2x), x>0",
+  "inputs": {},
+  "expected": {
+   "(a) f(x)": "2e^(-2x) for x>0, 0 for x<0",
+   "(b) P(X>1)": "exp(-2)"
+  },
+  "decimal": {
+   "(b) P(X>1)": 0.135335283236613
+  },
+  "display": {
+   "(b) P(X>1)": [
+    ".135335",
+    ".135335"
+   ]
+  }
+ },
+ {
+  "id": "HW3-631-Q5",
+  "program": "STARV",
+  "tool": "E",
+  "tool_name": "TRANSFORM Y=g(X)",
+  "kind": "hw",
+  "inputs_description": "HW3 631 Q5: f_X=2x on (0,1), Y=-ln X",
+  "inputs": {},
+  "expected": {
+   "(a) F_Y(y)": "1-e^(-2y) for y>0; 0 for y<=0",
+   "(b) f_Y(y)": "2e^(-2y) for y>0; 0 for y<=0",
+   "F_Y(1)": "1-exp(-2)",
+   "f_Y(1)": "2*exp(-2)"
+  },
+  "decimal": {
+   "F_Y(1)": 0.864664716763387,
+   "f_Y(1)": 0.270670566473225
+  },
+  "display": {
+   "F_Y(1)": [
+    ".864665",
+    ".864665"
+   ],
+   "f_Y(1)": [
+    ".270671",
+    ".270671"
+   ]
+  }
+ },
+ {
+  "id": "HW3-631-Q6",
+  "program": "PROOF",
+  "tool": "",
+  "tool_name": "",
+  "kind": "hw",
+  "inputs_description": "HW3 631 Q6: U=F_X(X)",
+  "inputs": {},
+  "expected": {
+   "F_U(u)": "0 for u<=0; u for 0<u<1; 1 for u>=1",
+   "f_U(u)": "1 on (0,1), 0 elsewhere"
+  },
+  "decimal": {},
+  "display": {}
+ }
+]

@@ -1,0 +1,311 @@
+\section{Homework 5: solve every problem with STAM2}
+\label{sec:hw5-app-walkthrough}
+These instructions cover Common Problems 1--7, the STA 431 Problem 8, and the separately marked STA 631 Problem 8. Start with \texttt{PRGM > STAM2}. The paths below begin at its main menu. Press \texttt{ENTER} to advance through result pages and use \texttt{BACK} to return through menus. For the shortest route, use \texttt{HOMEWORK MAP > LOAD + SOLVE} and select the matching question. The loader supplies inputs to the same general solvers; it does not merely display an answer. The manual routes below let you reproduce each calculation with changed data.
+
+Use the calculator's actual $X,Y$, $e^{(}$, square, and comparison tokens. Enter a negative number with the unary \texttt{(-)} key. Fractions such as \texttt{1/4} can be entered directly. Fraction-looking outputs from numerical integration are convenient approximations; the displayed integral and its algebra establish the exact result.
+
+\subsection{Problem 1: normalize a PMF, then find its mean and variance}
+\textbf{Quick load:} group \texttt{HW5 Q1 TO Q4}, then \texttt{Q1 PMF MOMENTS}. Choose \texttt{MOMENTS} after normalization.
+
+The model is $p_X(x)=c(x^2+x)$ for $x=1,2,3,4$.
+
+\textbf{App route.} Select \texttt{DISCRETE + JOINT > FORMULA/GRID}.
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{x VALUES LIST?} & \texttt{\{1,2,3,4\}}\\
+\texttt{y VALUES LIST?} & \texttt{\{0\}}; this dummy coordinate makes a one-variable grid.\\
+\texttt{q(X,Y)?} & \texttt{X\^{}2+X}\\\bottomrule
+\end{tabularx}
+\end{center}
+The program generates the four weights $2,6,12,20$, reports total weight 40, and displays $c=1/40$. Choose \texttt{MOMENTS}. The $X$ result page gives
+\[
+\boxed{\E X=\frac{13}{4},\qquad \E X^2=\frac{227}{20},\qquad \Var X=\frac{63}{80}.}
+\]
+The app now recognizes the one-variable grid and suppresses dummy $Y$ and correlation pages.
+
+\textbf{Write for parts (a)--(c).}
+\[
+1=c(2+6+12+20)=40c\quad\Rightarrow\quad c=\frac1{40},
+\]
+\[
+\E X=\frac{2+12+36+80}{40}=\frac{13}{4},\qquad
+\E X^2=\frac{2+24+108+320}{40}=\frac{227}{20},
+\]
+\[
+\Var X=\E X^2-(\E X)^2=\frac{227}{20}-\frac{169}{16}=\frac{63}{80}.
+\]
+\textbf{Why the app helps.} One formula generates the values, sums the weights, normalizes them, and computes both moments and the variance. You do not need to enter four separate probabilities or repeat the weighted arithmetic.
+
+\subsection{Problem 2: a symmetric continuous variable and its square}
+\textbf{Quick load:} group \texttt{HW5 Q1 TO Q4}, then \texttt{Q2 PDF AND SQUARE}. Choose \texttt{MEAN+VARIANCE}, then \texttt{FUNCTION g(X)} with \texttt{X\^{}2}.
+
+The given density is $f_X(x)=\frac34(1-x^2)$ on $(-1,1)$. Both $X$ and $Y=X^2$ are involved.
+
+\textbf{App route.} Select \texttt{DENSITY + INTEGRAL > 1D PDF OR SLICE}.
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{q(X)?} & \texttt{1-X\^{}2}\\
+\texttt{FIXED A?} & \texttt{0}; this model has no parameter $A$.\\
+\texttt{LOWER X?}, \texttt{UPPER X?} & \texttt{(-)1}, then \texttt{1}\\\bottomrule
+\end{tabularx}
+\end{center}
+This manual route omits the known factor $3/4$ because the tool normalizes its shape. It reports $\int q=4/3$ and normalizing factor $3/4$. A preset that retains the given normalized density instead reports total mass 1; both routes yield the same moments.
+
+Choose \texttt{MEAN+VARIANCE}. For part (a), read
+\[
+\boxed{\E X=0,\qquad \E X^2=\frac15,\qquad \Var X=\frac15.}
+\]
+Then choose \texttt{FUNCTION g(X)} and enter \texttt{X\^{}2}. The output labels now refer to $g(X)=Y$, so part (b) is
+\[
+\boxed{\E Y=\frac15,\qquad \E Y^2=\frac3{35},\qquad \Var Y=\frac8{175}.}
+\]
+The program computes the centered integral for the transformed variance; you do not have to derive the distribution of $X^2$.
+
+\textbf{Write the mathematical setup.} Symmetry makes $xf_X(x)$ odd, hence $\E X=0$. For the even moments,
+\[
+\E X^2=\frac32\int_0^1(x^2-x^4)\dd x=\frac15,\qquad
+\E X^4=\frac32\int_0^1(x^4-x^6)\dd x=\frac3{35}.
+\]
+Then $\E Y=\E X^2$ and $\Var Y=\E X^4-(\E X^2)^2=3/35-1/25=8/175$.
+
+\textbf{Why the app helps.} Enter the density once, then change only the transformation to $X^2$. The same solver performs all the required finite integrals and uses the fourth moment automatically when calculating $\Var(X^2)$.
+
+\subsection{Problem 3: derive an exponential MGF and obtain two moments}
+\textbf{Quick load:} group \texttt{HW5 Q1 TO Q4}, then \texttt{Q3 EXPONENTIAL MGF}. Advance through the moments and MGF pages.
+
+Here $f_X(x)=3e^{-3x}$ for $x>0$, so the exponential \emph{rate} is 3.
+
+\textbf{App route.} Select \texttt{MGF TOOLS > EXPONENTIAL RATE}.
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{RATE L>0?} & \texttt{3}\\
+\texttt{SCALE a?} & \texttt{1}\\
+\texttt{SHIFT b?} & \texttt{0}\\\bottomrule
+\end{tabularx}
+\end{center}
+Scale 1 and shift 0 request the original variable. Advance through the output pages. They give
+\[
+\boxed{M_X(t)=\frac3{3-t},\quad t<3;\qquad \E X=\frac13,\quad \E X^2=\frac29.}
+\]
+The tool also reports variance $1/9$. Its general transformed-MGF display simplifies to the original expression when $a=1,b=0$.
+
+\textbf{Write part (a), including convergence.}
+\[
+M_X(t)=\E(e^{tX})=\int_0^\infty 3e^{-(3-t)x}\dd x
+=\frac3{3-t}\quad\text{for }t<3.
+\]
+The improper integral converges precisely when $3-t>0$. A finite numerical cutoff would not establish this domain; the exponential template records the relevant analytic result.
+
+\textbf{Write part (b).}
+\[
+M'_X(t)=\frac3{(3-t)^2},\qquad M''_X(t)=\frac6{(3-t)^3},
+\]
+so $M'_X(0)=1/3$ and $M''_X(0)=2/9$.
+
+\textbf{Why the app helps.} The exact exponential template supplies the MGF form, its domain, and both moment values from one parameter. Your written work then shows the short integral and derivative argument required by the question.
+
+\subsection{Problem 4: center and scale a given MGF}
+\textbf{Quick load:} group \texttt{HW5 Q1 TO Q4}, then \texttt{Q4 AFFINE MGF}. The original MGF and transformation are already supplied.
+
+The MGF is $M_X(t)=e^{4t+8t^2}$ and $Z=(X-4)/4=\frac14X-1$.
+
+\textbf{App route.} Select \texttt{MGF TOOLS > QUADRATIC LOG MGF}.
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{C?} & \texttt{4}; coefficient of $t$ in $\log M_X(t)$.\\
+\texttt{D}\,$\ge0$\texttt{?} & \texttt{8}; coefficient of $t^2$, equal to half the original variance.\\
+\texttt{SCALE a?} & \texttt{1/4}\\
+\texttt{SHIFT b?} & \texttt{(-)1}\\\bottomrule
+\end{tabularx}
+\end{center}
+The original moments page gives mean 4, second moment 32, and variance 16. The transformed page gives mean 0, second moment 1, and variance 1. On \texttt{TRANSFORMED MGF}, the form is $e^{Ft+Ht^2}$ with $F=0$ and $H=1/2$:
+\[
+\boxed{M_Z(t)=e^{t^2/2},\quad \E Z=0,\quad \Var Z=1.}
+\]
+Both MGFs are finite for every real $t$.
+
+\textbf{Write part (a).} Use the affine rule before simplifying:
+\[
+M_Z(t)=e^{-t}M_X(t/4)
+=e^{-t}\exp\!\left(4\frac t4+8\frac{t^2}{16}\right)=e^{t^2/2}.
+\]
+For part (b), $M'_Z(t)=te^{t^2/2}$ and $M''_Z(t)=(1+t^2)e^{t^2/2}$, so $\E Z=0$, $\E Z^2=1$, and $\Var Z=1$.
+
+\textbf{Why the app helps.} It keeps track of the shift, the substitution into the old MGF, and the factor of two between a quadratic log-MGF coefficient and a variance. This problem matches an exact template, so numerical differentiation is unnecessary.
+
+\subsection{Problem 5: variance of the updated insurance benefit}
+\textbf{Quick load:} group \texttt{HW5 Q5 TO Q8}, then \texttt{Q5 CLAIM VARIANCE}. Advance to the computed variance.
+
+First express the new total as
+\[
+T=W+V=2X+1.1Y+100.
+\]
+Only variances and covariance are supplied; a mean is not needed.
+
+\textbf{App route.} Select \texttt{LINEAR COMBOS > ONE COMBINATION > VAR/COV ONLY}. Enter values in the order shown:
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.40\linewidth}X@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{n (1-3)?} & \texttt{2}\\
+Variance of $X_1=X$, then $X_2=Y$ & \texttt{300}, then \texttt{500}\\
+\texttt{COV(X1,X2)} & \texttt{150}\\
+\texttt{a FOR U?} for $X_1$, then $X_2$ & \texttt{2}, then \texttt{1.1} (or \texttt{11/10})\\
+\texttt{OFFSET c FOR U?} & \texttt{100}\\\bottomrule
+\end{tabularx}
+\end{center}
+The result is $\boxed{\Var(T)=2465}$. The display correctly says \texttt{MEAN NOT PROVIDED}; do not fill in an invented mean.
+
+\textbf{Write the variance expansion.}
+\[
+\begin{aligned}
+\Var(T)&=4\Var X+(1.1)^2\Var Y+2(2)(1.1)\Cov(X,Y)\\
+&=4(300)+1.21(500)+4.4(150)\\
+&=1200+605+660=2465.
+\end{aligned}
+\]
+The fixed increase of 100 contributes no variance.
+
+\textbf{Why the app helps.} Enter the coefficient and covariance data once; it forms all square and cross terms. The variance-only mode avoids asking for information the problem does not supply.
+
+\subsection{Problem 6: a signed combination of three variables}
+\textbf{Quick load:} group \texttt{HW5 Q5 TO Q8}, then \texttt{Q6 THREE VARIABLES}. All supplied variances, covariances, and coefficients are prefilled.
+
+The target is $W=3X-2Y+Z$.
+
+\textbf{App route.} Select \texttt{LINEAR COMBOS > ONE COMBINATION > VAR/COV ONLY}.
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.42\linewidth}X@{}}
+\toprule Input group & Enter in this order\\\midrule
+Number of variables & \texttt{3}\\
+Variances of $X_1=X$, $X_2=Y$, $X_3=Z$ & \texttt{4}, \texttt{9}, \texttt{2}\\
+Covariances $12$, $13$, $23$ & \texttt{1}, \texttt{(-)1}, \texttt{0}\\
+Coefficients for $X_1$, $X_2$, $X_3$ & \texttt{3}, \texttt{(-)2}, \texttt{1}\\
+Offset & \texttt{0}\\\bottomrule
+\end{tabularx}
+\end{center}
+The result page gives $\boxed{\Var(W)=56}$.
+
+\textbf{Write all three covariance terms.}
+\[
+\begin{aligned}
+\Var(W)={}&9\Var X+4\Var Y+\Var Z\\
+&-12\Cov(X,Y)+6\Cov(X,Z)-4\Cov(Y,Z)\\
+={}&36+36+2-12-6-0=56.
+\end{aligned}
+\]
+The coefficient $-2$ changes two cross-term signs. The negative covariance $\Cov(X,Z)=-1$ then makes $6\Cov(X,Z)=-6$.
+
+\textbf{Why the app helps.} Three variances and three distinct covariances determine the calculation. It assembles every pair once with the correct signed coefficient products, reducing the chance of omitting a term or its factor of two.
+
+\subsection{Problem 7: marginal and conditional densities, then conditional moments}
+\textbf{Quick load:} group \texttt{HW5 Q5 TO Q8}, then \texttt{Q7 CONDITIONAL}. This loads the slice at $Y=1/2$; select \texttt{MEAN+VARIANCE}.
+
+The joint PDF is $f(x,y)=x+y$ on the unit square.
+
+\textbf{Parts (a)--(b): write the short symbolic calculation.}
+\[
+f_Y(y)=\int_0^1(x+y)\dd x=\frac12+y,\qquad 0<y<1,
+\]
+with zero density elsewhere. Therefore
+\[
+f_{X\mid Y}(x\mid y)=\frac{x+y}{1/2+y},\qquad 0<x<1,\quad 0<y<1,
+\]
+and the conditional density is zero outside its $x$ slice. The new \texttt{JOINT SLICE} tool now checks marginal and conditional density values directly. Select \texttt{DENSITY + INTEGRAL > JOINT SLICE > X GIVEN Y}, enter \texttt{q(X,Y)=X+Y}, known multiplier \texttt{1}, given value \texttt{1/2}, and remaining-variable bounds \texttt{0}, \texttt{1}. It reports the marginal density $f_Y(1/2)=1$ alongside the conditional moments below. In \texttt{SLICE OPTIONS}, \texttt{NEW GIVEN VALUE} lets you change $y$ without retyping the model; \texttt{PDF AT POINT} evaluates the conditional and joint densities at a remaining $x$ value. For example, at $y=1/4$ the marginal is $3/4$, and at $x=1/4$ the conditional density is $2/3$. These are density values, not probabilities at isolated points. A numerical calculation verifies values of these functions; it does not produce a symbolic formula in $y$.
+
+\textbf{Part (c): app route.} Select \texttt{DENSITY + INTEGRAL > 1D PDF OR SLICE}.
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{0.32\linewidth}X@{}}
+\toprule Prompt & Enter\\\midrule
+\texttt{q(X)?} & \texttt{X+A}\\
+\texttt{FIXED A?} & \texttt{1/2}; $A$ is the given value of $Y$.\\
+\texttt{LOWER X?}, \texttt{UPPER X?} & \texttt{0}, then \texttt{1}\\\bottomrule
+\end{tabularx}
+\end{center}
+The slice mass is $D=f_Y(1/2)=1$. Select \texttt{MEAN+VARIANCE}. Read
+\[
+\boxed{\E(X\mid Y=1/2)=\frac7{12},\qquad
+\E(X^2\mid Y=1/2)=\frac5{12},\qquad
+\Var(X\mid Y=1/2)=\frac{11}{144}.}
+\]
+For your written calculation,
+\[
+\int_0^1x(x+1/2)\dd x=\frac7{12},\qquad
+\int_0^1x^2(x+1/2)\dd x=\frac5{12},
+\]
+then $5/12-(7/12)^2=11/144$.
+
+\textbf{Why the app helps.} Enter the unnormalized joint slice $X+A$ directly. The solver computes its mass and divides by it, so conditional normalization and both moment integrals are handled together. This also works at other valid given values of $Y$ after updating the parameter and recomputing the slice.
+
+\subsection{STA 431 Problem 8: four tasks from one joint table}
+\textbf{Quick load:} group \texttt{HW5 Q5 TO Q8}, then \texttt{Q8 JOINT MOMENTS}. Choose \texttt{MOMENTS}; keep this dataset for the conditional part.
+
+The PMF is $(x+y)/36$ on $x,y\in\{1,2,3\}$.
+
+For both complete marginal tables, choose \texttt{MARG/CONDITIONAL > MARGINAL TABLES}.
+
+\textbf{Load once.} Select \texttt{DISCRETE + JOINT > FORMULA/GRID}; enter \texttt{\{1,2,3\}} for each coordinate list and \texttt{X+Y} for the weight formula. The app generates nine rows and reports total 36 and normalizer $1/36$.
+
+\textbf{Parts (a)--(c).} Choose \texttt{MOMENTS} and advance through the $X$, $Y$, and product pages:
+\[
+\boxed{\E X=\E Y=\frac{13}{6},\qquad \E XY=\frac{14}{3},\qquad \Cov(X,Y)=-\frac1{36}.}
+\]
+The additional marginal variances are both $23/36$, and correlation is $-1/23$; these are useful checks but are not requested by this question.
+
+\textbf{Part (d).} Return to \texttt{TABLE TOOLS}, choose \texttt{MARG/CONDITIONAL > Y GIVEN X}, and enter \texttt{1}. The conditional-distribution page gives
+\[
+\begin{array}{c|ccc}
+y&1&2&3\\\hline
+P(Y=y\mid X=1)&2/9&3/9&4/9
+\end{array}
+\]
+and the next page gives $\boxed{\E(Y\mid X=1)=20/9}$. These conditional weights sum to one.
+
+\textbf{Write the compact derivation.} The marginals are
+\[
+p_X(x)=\frac{x+2}{12},\quad p_Y(y)=\frac{y+2}{12}\qquad(x,y=1,2,3).
+\]
+Thus $\E X=(3+8+15)/12=13/6$, with the same result for $Y$. Since $\sum_{k=1}^3k=6$ and $\sum_{k=1}^3k^2=14$,
+\[
+\E XY=\frac{14(6)+6(14)}{36}=\frac{14}{3},\qquad
+\Cov(X,Y)=\frac{14}{3}-\left(\frac{13}{6}\right)^2=-\frac1{36}.
+\]
+Finally $p_X(1)=1/4$, so
+\[
+p_{Y\mid X}(y\mid1)=\frac{(1+y)/36}{1/4}=\frac{1+y}{9},\quad y=1,2,3,
+\]
+with zero mass elsewhere, and $\E(Y\mid X=1)=(2+6+12)/9=20/9$.
+
+\textbf{Why the app helps.} A single formula-generated table serves all four parts. It computes both marginal moments, the product moment, covariance, the full requested conditional PMF, and its mean without re-entering the model.
+
+\subsection{Optional STA 631 Problem 8: zero covariance without independence}
+\textbf{Quick load:} group \texttt{OPTIONAL 631}, then \texttt{HW5 Q8 ZERO COV}. Choose moments, functions, or interval probability as described below.
+
+This problem uses $f_X(x)=1-|x|$ on $(-1,1)$ and $Y=X^2$. It is also a useful counterexample for the STA 431 independence topic.
+
+\textbf{App calculations.} Select \texttt{DENSITY + INTEGRAL > 1D PDF OR SLICE}; enter \texttt{1-abs(X)}, fixed parameter \texttt{0}, and limits \texttt{(-)1}, \texttt{1}. The mass is 1. \texttt{MEAN+VARIANCE} gives $\E X=0$, $\E X^2=1/6$. In \texttt{FUNCTION g(X)}, enter \texttt{X\^{}3} to obtain $\E X^3=0$.
+
+\textbf{Part (a): the proof.} Symmetry makes the first and third raw moments zero. Because $Y=X^2$,
+\[
+\Cov(X,Y)=\E X^3-\E X\E X^2=0-0\cdot\frac16=0.
+\]
+The symmetry argument supplies exact zeros; numerical output checks the moment calculation.
+
+\textbf{Part (b): build explicit events.} Let
+\[
+A=\{-1/2<X<1/2\},\qquad B=\{0\le Y<1/4\}.
+\]
+Because $Y=X^2$, the events coincide up to zero-probability endpoints. Use \texttt{INTERVAL PROB} with lower \texttt{(-)1/2} and upper \texttt{1/2}; the app gives
+\[
+P(A)=\int_{-1/2}^{1/2}(1-|x|)\dd x=\frac34.
+\]
+Thus $P(B)=P(A\cap B)=3/4$, but
+\[
+\boxed{P(A\cap B)=\frac34\ne\frac9{16}=P(A)P(B).}
+\]
+The variables are dependent despite zero covariance.
+
+\textbf{Why the app helps.} It evaluates the moment and interval integrals. The dependence proof comes from relating the two events through $Y=X^2$. Use the supplied one-variable density: the pair $(X,X^2)$ lies on a curve and does not have an ordinary two-dimensional area density for the double-integral solver.

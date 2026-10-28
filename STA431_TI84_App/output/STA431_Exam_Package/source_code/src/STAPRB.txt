@@ -1,0 +1,943 @@
+// STAPRB - PROBABILITY TOOLS (calculator module, called from STA431 as prgmSTAPRB)
+// Tools (SPEC 4): A two events  B 2x2 table  C total prob/Bayes  D sens/spec test
+//                 E Venn 2-3 sets  F urn draws  Z back
+// Formatter: value in W, prgmSTAFMT -> Str9 fraction candidate, Str8 decimal (clobbers Q R S T U V)
+// Shared helper SV = show a list of labeled values (flat "subroutine", no Goto inside blocks)
+//   in : ʟPRV values, Str1 labels (each ends with ";"), Str3 header (reprinted on new pages),
+//        O = first screen row, θ = return code (dispatch table at the end of SV)
+//   value 1ᴇ99 shows "undef", 2ᴇ99 shows "? (N UNKNOWN)"; decimal right-aligned when it fits
+//   rows run to 10, then Pause + new page (header Str3, rows 2-10)
+//   scratch: J X Y O Str2 (and Q-W, Str8, Str9 via STAFMT)
+// Unknown inputs: a negative entry is replaced by the marker Z=⁻1ᴇ99 (tools A, B)
+// Lists: ʟPRV ʟPRT ʟPRL ʟPRP ʟPRQ (deleted on BACK)
+Lbl M
+Menu("PROBABILITY TOOLS","TWO EVENTS A,B",A,"2x2 TABLE",B,"TOTAL PROB/BAYES",C,"SENS/SPEC TEST",D,"VENN 2-3 SETS",E,"URN DRAWS",F,"BACK",Z)
+// =====================================================================
+// SV helper (see header)
+// =====================================================================
+Lbl SV
+1→Y
+For(X,1,dim(ʟPRV))
+inString(Str1,";",Y)→J
+sub(Str1,Y,J-Y)→Str2
+J+1→Y
+ʟPRV(X)→W
+If W≥1ᴇ99
+Then
+"undef"→Str9
+If W=2ᴇ99
+"? (N UNKNOWN)"→Str9
+Str9→Str8
+Else
+prgmSTAFMT
+End
+If O>10
+Then
+Pause
+ClrHome
+Output(1,1,Str3)
+2→O
+End
+Output(O,1,sub(Str2+Str9,1,min(26,length(Str2+Str9))))
+If Str9≠Str8 and length(Str2)+length(Str9)+length(Str8)<26
+Output(O,27-length(Str8),Str8)
+O+1→O
+End
+If θ=1:Goto A6
+If θ=2:Goto A7
+If θ=3:Goto B6
+If θ=4:Goto B7
+If θ=5:Goto C4
+If θ=6:Goto C5
+If θ=7:Goto C6
+If θ=8:Goto C7
+If θ=9:Goto D7
+If θ=10:Goto E4
+If θ=11:Goto E5
+If θ=12:Goto E8
+If θ=13:Goto F4
+If θ=14:Goto F5
+Goto M
+// =====================================================================
+// A. TWO EVENTS A,B  A=P(A) B=P(B) I=P(AnB) G=P(AuB) C=P(A|B) D=P(B|A)
+//    N=P(neither) E=relation (1 none, 2 indep, 3 excl) Z=unknown marker
+// =====================================================================
+Lbl A
+ClrHome
+Output(1,1,"TWO EVENTS A,B    USE WHEN")
+Output(2,1,"you know some of P(A),P(B)")
+Output(3,1,"P(AnB),P(AuB),P(A|B),…")
+Output(4,1,"P(AuB)=P(A)+P(B)-P(AnB)")
+Output(5,1,"P(A|B)=P(AnB)/P(B)")
+Output(6,1,"NEITHER=1-P(AuB)")
+Output(7,1,"INDEP  P(AnB)=P(A)P(B)")
+Output(8,1,"EXCL   P(AnB)=0")
+Output(9,1,"cues and, or, not, given")
+Output(10,1,"(-)1=UNKNOWN  ((-) key)")
+Pause
+ClrHome
+Disp "TWO EVENTS A,B","(-)1=UNKNOWN"
+Input "P(A)?",A
+Input "P(B)?",B
+Input "P(AnB)?",I
+Input "P(AuB)?",G
+Input "P(A|B)?",C
+Input "P(B|A)?",D
+Input "P(NEITHER)?",N
+Menu("A AND B ARE…","NO EXTRA INFO",A2,"INDEPENDENT",A3,"MUTUALLY EXCL.",A4)
+Lbl A2
+1→E
+Goto A5
+Lbl A3
+2→E
+Goto A5
+Lbl A4
+3→E
+Lbl A5
+⁻1ᴇ99→Z
+If A<0
+Z→A
+If B<0
+Z→B
+If I<0
+Z→I
+If G<0
+Z→G
+If C<0
+Z→C
+If D<0
+Z→D
+If N<0
+Z→N
+For(K,1,12)
+If G=Z and N≠Z
+1-N→G
+If N=Z and G≠Z
+1-G→N
+If I=Z and A≠Z and B≠Z and G≠Z
+A+B-G→I
+If G=Z and A≠Z and B≠Z and I≠Z
+A+B-I→G
+If B=Z and G≠Z and A≠Z and I≠Z
+G-A+I→B
+If A=Z and G≠Z and B≠Z and I≠Z
+G-B+I→A
+If I=Z and B≠Z and C≠Z
+B*C→I
+If I=Z and A≠Z and D≠Z
+A*D→I
+If B=Z and I≠Z and C>0
+I/C→B
+If A=Z and I≠Z and D>0
+I/D→A
+If C=Z and I≠Z and B>0
+I/B→C
+If D=Z and I≠Z and A>0
+I/A→D
+If E=2 and I=Z and A≠Z and B≠Z
+A*B→I
+If E=2 and A=Z and C≠Z
+C→A
+If E=2 and B=Z and D≠Z
+D→B
+If E=2 and A=Z and I≠Z and B>0
+I/B→A
+If E=2 and B=Z and I≠Z and A>0
+I/A→B
+If E=3 and I=Z
+0→I
+If B=Z and G≠Z and A≠Z and C≠Z and C<1
+(G-A)/(1-C)→B
+If A=Z and G≠Z and B≠Z and D≠Z and D<1
+(G-B)/(1-D)→A
+If I=Z and G≠Z and C>0 and D>0 and C≤1 and D≤1
+G/(1/C+1/D-1)→I
+End
+If A=Z or B=Z or I=Z:Goto A9
+A+B-I→G
+// screen 1: basic probabilities
+{A,B,I,G,1-A,1-B,1-G,A-I,B-I}→ʟPRV
+"P(A)=;P(B)=;P(AnB)=;P(AuB)=;P(A')=;P(B')=;NONE A'nB'=;A ONLY AnB'=;B ONLY A'nB=;"→Str1
+"TWO EVENTS   RESULTS 1/3"→Str3
+ClrHome
+Output(1,1,Str3)
+2→O
+1→θ
+Goto SV
+Lbl A6
+Pause
+// screen 2: conditional probabilities (1ᴇ99 = undef)
+{1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,A+B-2*I}→ʟPRV
+If B≠0
+I/B→ʟPRV(1)
+If A≠0
+I/A→ʟPRV(2)
+If B≠1
+(A-I)/(1-B)→ʟPRV(3)
+If A≠1
+(B-I)/(1-A)→ʟPRV(4)
+If B≠0
+(B-I)/B→ʟPRV(5)
+If A≠0
+(A-I)/A→ʟPRV(6)
+"P(A|B)=;P(B|A)=;P(A|B')=;P(B|A')=;P(A'|B)=;P(B'|A)=;EXACTLY ONE=;"→Str1
+"CONDITIONAL  RESULTS 2/3"→Str3
+ClrHome
+Output(1,1,Str3)
+Output(2,1,"P(X|Y)=P(XnY)/P(Y)")
+3→O
+2→θ
+Goto SV
+Lbl A7
+Output(10,1," =P(A)+P(B)-2P(AnB)")
+Pause
+// screen 3: checks
+ClrHome
+Output(1,1,"CHECKS       RESULTS 3/3")
+Output(2,1,"INDEPENDENT IF P(AnB)=")
+A*B→W
+prgmSTAFMT
+Output(3,1,"P(A)P(B)="+Str9)
+If Str9≠Str8 and length(Str9)+length(Str8)<17
+Output(3,27-length(Str8),Str8)
+I→W
+prgmSTAFMT
+Output(4,1,"P(AnB)="+Str9)
+If Str9≠Str8 and length(Str9)+length(Str8)<19
+Output(4,27-length(Str8),Str8)
+If abs(A*B-I)<1ᴇ⁻10
+Output(5,1,"=> INDEPENDENT")
+If abs(A*B-I)≥1ᴇ⁻10
+Output(5,1,"=> NOT INDEPENDENT")
+If abs(I)<1ᴇ⁻10
+Output(6,1,"MUTUALLY EXCLUSIVE (AnB=0)")
+If abs(I)≥1ᴇ⁻10
+Output(6,1,"NOT MUTUALLY EXCL (AnB>0)")
+8→O
+If min({A,B,I,1-G,A-I,B-I})<⁻1ᴇ⁻10 or max({A,B,I,G})>1+1ᴇ⁻10
+Then
+Output(O,1,"WARN A VALUE NOT IN [0,1]")
+O+1→O
+End
+If I>min(A,B)+1ᴇ⁻10
+Then
+Output(O,1,"WARN P(AnB)>MIN(P(A),P(B))")
+O+1→O
+End
+If G>1+1ᴇ⁻10
+Then
+Output(O,1,"WARN P(AuB)>1 IMPOSSIBLE")
+O+1→O
+End
+If O=8
+Output(8,1,"NO WARNINGS - DATA VALID")
+Pause
+Goto M
+Lbl A9
+{A,B,I,G,C,D,N}→ʟPRV
+"P(A)=;P(B)=;P(AnB)=;P(AuB)=;P(A|B)=;P(B|A)=;NEITHER=;"→Str1
+ClrHome
+Output(1,1,"NOT ENOUGH INFO")
+Output(2,1,"KNOWN (GIVEN OR SOLVED)")
+1→Y
+3→O
+For(X,1,7)
+inString(Str1,";",Y)→H
+If ʟPRV(X)≠Z
+Then
+ʟPRV(X)→W
+prgmSTAFMT
+Output(O,1,sub(Str1,Y,H-Y)+Str9)
+O+1→O
+End
+H+1→Y
+End
+Output(9,1,"ADD A VALUE, OR PICK")
+Output(10,1,"INDEPENDENT/MUTUALLY EXCL")
+Pause
+Goto M
+// =====================================================================
+// B. 2x2 TABLE  ʟPRT = {R1C1,R1C2,R1T,R2C1,R2C2,R2T,C1T,C2T,N}
+//    ʟPRL = index triples a+b=c (rows, columns, totals)
+//    C=# unknown P=inconsistent flag  Z=unknown marker
+// =====================================================================
+Lbl B
+ClrHome
+Output(1,1,"2x2 TABLE         USE WHEN")
+Output(2,1,"2 yes/no traits, counts")
+Output(3,1,"or probabilities, e.g.")
+Output(4,1,"grad/faculty x female/male")
+Output(5,1,"     C1    C2    TOTAL")
+Output(6,1," R1  a     b     R1")
+Output(7,1," R2  c     d     R2")
+Output(8,1," TOT C1    C2    N")
+Output(9,1,"(-)1=UNKNOWN, sums fill in")
+Output(10,1,"cues among, of those, if")
+Pause
+ClrHome
+Disp "2x2 TABLE","(-)1=UNKNOWN"
+Input "R1 C1 CELL?",A
+Input "R1 C2 CELL?",B
+Input "R1 TOTAL?",C
+Input "R2 C1 CELL?",D
+Input "R2 C2 CELL?",E
+Input "R2 TOTAL?",F
+Input "C1 TOTAL?",G
+Input "C2 TOTAL?",H
+Input "GRAND TOTAL?",N
+⁻1ᴇ99→Z
+{A,B,C,D,E,F,G,H,N}→ʟPRT
+For(J,1,9)
+If ʟPRT(J)<0
+Z→ʟPRT(J)
+End
+{1,2,3,4,5,6,1,4,7,2,5,8,3,6,9,7,8,9}→ʟPRL
+For(K,1,6)
+For(J,1,16,3)
+ʟPRL(J)→E
+ʟPRL(J+1)→F
+ʟPRL(J+2)→G
+(ʟPRT(E)=Z)+(ʟPRT(F)=Z)+(ʟPRT(G)=Z)→H
+If H=1 and ʟPRT(E)=Z
+ʟPRT(G)-ʟPRT(F)→ʟPRT(E)
+If H=1 and ʟPRT(F)=Z
+ʟPRT(G)-ʟPRT(E)→ʟPRT(F)
+If H=1 and ʟPRT(G)=Z
+ʟPRT(E)+ʟPRT(F)→ʟPRT(G)
+End
+End
+// consistency of every fully known line
+0→P
+For(J,1,16,3)
+ʟPRT(ʟPRL(J))→E
+ʟPRT(ʟPRL(J+1))→F
+ʟPRT(ʟPRL(J+2))→G
+If E≠Z and F≠Z and G≠Z
+Then
+If abs(E+F-G)>1ᴇ⁻9*max(1,abs(G))
+1→P
+End
+End
+sum(ʟPRT=Z)→C
+// screen 1: the table
+ClrHome
+Output(1,1,"2x2 TABLE (FILLED)    1/4")
+Output(2,5,"C1     C2     TOTAL")
+Output(3,1,"R1")
+Output(4,1,"R2")
+Output(5,1,"TOT")
+For(J,1,9)
+ʟPRT(J)→W
+"?"→Str2
+If W≠Z
+Then
+prgmSTAFMT
+Str9→Str2
+If length(Str2)>6
+sub(Str8,1,min(6,length(Str8)))→Str2
+End
+Output(3+int((J-1)/3),5+7*(J-1-3*int((J-1)/3)),Str2)
+End
+7→O
+If P=1
+Then
+Output(O,1,"WARN TOTALS INCONSISTENT")
+Output(O+1,1," (a row/col does not add)")
+O+2→O
+End
+If C=0
+Then
+If min(ʟPRT)<0
+Then
+Output(O,1,"WARN NEGATIVE ENTRY")
+O+1→O
+End
+End
+If C>0
+Then
+Output(O,1,"? = UNKNOWN")
+Output(O+1,1,"NOT ENOUGH INFO")
+End
+If C=0 and P=0
+Output(10,1,"ENTER=PROBABILITIES")
+Pause
+If C>0:Goto M
+If ʟPRT(9)≤0:Goto B8
+// screen 2: joint and marginal probabilities
+ʟPRT(9)→N
+{ʟPRT(1),ʟPRT(2),ʟPRT(4),ʟPRT(5),ʟPRT(3),ʟPRT(6),ʟPRT(7),ʟPRT(8)}/N→ʟPRV
+"P(R1nC1)=;P(R1nC2)=;P(R2nC1)=;P(R2nC2)=;P(R1)=;P(R2)=;P(C1)=;P(C2)=;"→Str1
+"JOINT + MARGINAL      2/4"→Str3
+ClrHome
+Output(1,1,Str3)
+Output(2,1,"P(RinCj)=CELL/GRAND TOTAL")
+3→O
+3→θ
+Goto SV
+Lbl B6
+Pause
+// screen 3: conditional probabilities
+{1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99,1ᴇ99}→ʟPRV
+If ʟPRT(7)≠0
+Then
+ʟPRT(1)/ʟPRT(7)→ʟPRV(1)
+ʟPRT(4)/ʟPRT(7)→ʟPRV(2)
+End
+If ʟPRT(8)≠0
+Then
+ʟPRT(2)/ʟPRT(8)→ʟPRV(3)
+ʟPRT(5)/ʟPRT(8)→ʟPRV(4)
+End
+If ʟPRT(3)≠0
+Then
+ʟPRT(1)/ʟPRT(3)→ʟPRV(5)
+ʟPRT(2)/ʟPRT(3)→ʟPRV(6)
+End
+If ʟPRT(6)≠0
+Then
+ʟPRT(4)/ʟPRT(6)→ʟPRV(7)
+ʟPRT(5)/ʟPRT(6)→ʟPRV(8)
+End
+"P(R1|C1)=;P(R2|C1)=;P(R1|C2)=;P(R2|C2)=;P(C1|R1)=;P(C2|R1)=;P(C1|R2)=;P(C2|R2)=;"→Str1
+"CONDITIONAL           3/4"→Str3
+ClrHome
+Output(1,1,Str3)
+Output(2,1,"P(X|Y)=CELL/TOTAL OF Y")
+3→O
+4→θ
+Goto SV
+Lbl B7
+Pause
+// screen 4: independence check
+ClrHome
+Output(1,1,"INDEPENDENCE CHECK    4/4")
+Output(2,1,"INDEP IF P(R1nC1)=")
+Output(3,1,"         P(R1)P(C1)")
+ʟPRT(3)*ʟPRT(7)/N²→W
+prgmSTAFMT
+Output(4,1,"P(R1)P(C1)="+Str9)
+If Str9≠Str8 and length(Str9)+length(Str8)<15
+Output(4,27-length(Str8),Str8)
+ʟPRT(1)/N→W
+prgmSTAFMT
+Output(5,1,"P(R1nC1)="+Str9)
+If Str9≠Str8 and length(Str9)+length(Str8)<17
+Output(5,27-length(Str8),Str8)
+If abs(ʟPRT(3)*ʟPRT(7)/N²-ʟPRT(1)/N)<1ᴇ⁻10
+Output(6,1,"=> INDEPENDENT")
+If abs(ʟPRT(3)*ʟPRT(7)/N²-ʟPRT(1)/N)≥1ᴇ⁻10
+Output(6,1,"=> NOT INDEPENDENT")
+Output(7,1,"(2x2 - ONE CELL IS ENOUGH)")
+If P=1
+Output(9,1,"WARN TOTALS INCONSISTENT")
+Pause
+Goto M
+Lbl B8
+ClrHome
+Output(4,1,"GRAND TOTAL MUST BE >0")
+Pause
+Goto M
+// =====================================================================
+// C. TOTAL PROB/BAYES  K=cases ʟPRP=priors ʟPRQ=likelihoods P=P(A)
+//    F=priors rescaled flag  G=percent likelihood flag  L=prior sum
+// =====================================================================
+Lbl C
+ClrHome
+Output(1,1,"TOTAL PROB/BAYES  USE WHEN")
+Output(2,1,"2-stage story - first a")
+Output(3,1,"case Bi (source/urn/type)")
+Output(4,1,"then event A given Bi")
+Output(5,1,"P(A)=ΣP(A|Bi)P(Bi)")
+Output(6,1,"P(Bi|A)=P(A|Bi)P(Bi)/P(A)")
+Output(7,1,"priors may be counts or %")
+Output(8,1," (rescaled to sum 1)")
+Output(9,1,"cues which one?, given A,")
+Output(10,1," die picks urn, % of")
+Pause
+Lbl C1
+ClrHome
+Disp "TOTAL PROB/BAYES","k = NUMBER OF CASES Bi"
+Input "k (2-9)?",K
+If K<2 or K>9 or fPart(K):Goto C8
+DelVar ʟPRP
+DelVar ʟPRQ
+K→dim(ʟPRP)
+K→dim(ʟPRQ)
+For(J,1,K)
+Disp "CASE B"+toString(J)
+Input "PRIOR P(Bi)?",X
+Input "P(A|Bi)?",Y
+X→ʟPRP(J)
+Y→ʟPRQ(J)
+End
+If min(ʟPRP)<0 or sum(ʟPRP)=0 or min(ʟPRQ)<0 or max(ʟPRQ)>100:Goto C9
+sum(ʟPRP)→L
+0→F
+If abs(L-1)>1ᴇ⁻9
+1→F
+ʟPRP/L→ʟPRP
+0→G
+If max(ʟPRQ)>1
+1→G
+ʟPRQ/(1+99*(ʟPRQ>1))→ʟPRQ
+If F=0 and G=0:Goto C3
+ClrHome
+Output(1,1,"NOTE")
+If F=1
+Then
+L→W
+prgmSTAFMT
+Output(3,1,"PRIORS ADDED TO "+Str9)
+Output(4,1," RESCALED TO SUM 1")
+Output(5,1," (counts/% are fine)")
+End
+If G=1
+Then
+Output(7,1,"LIKELIHOOD >1 READ AS %")
+Output(8,1," (divided by 100)")
+End
+Pause
+Lbl C3
+// screen 1: priors
+ʟPRP→ʟPRV
+" "→Str1
+For(J,1,K)
+Str1+"P(B"+toString(J)+")=;"→Str1
+End
+sub(Str1,2,length(Str1)-1)→Str1
+"PRIORS P(Bi)"→Str3
+ClrHome
+Output(1,1,Str3)
+2→O
+5→θ
+Goto SV
+Lbl C4
+Pause
+// screen 2: terms and P(A)
+ʟPRP*ʟPRQ→ʟPRV
+sum(ʟPRV)→P
+augment(ʟPRV,{P})→ʟPRV
+" "→Str1
+For(J,1,K)
+Str1+"P(A|B"+toString(J)+")P(B"+toString(J)+")=;"→Str1
+End
+sub(Str1,2,length(Str1)-1)+"TOTAL P(A)=;"→Str1
+"P(A)=Σ P(A|Bi)P(Bi)"→Str3
+ClrHome
+Output(1,1,Str3)
+2→O
+6→θ
+Goto SV
+Lbl C5
+Pause
+// screen 3: posteriors given A
+seq(1ᴇ99,J,1,K)→ʟPRV
+If P>0
+ʟPRP*ʟPRQ/P→ʟPRV
+" "→Str1
+For(J,1,K)
+Str1+"P(B"+toString(J)+"|A)=;"→Str1
+End
+sub(Str1,2,length(Str1)-1)→Str1
+"P(Bi|A)=P(A|Bi)P(Bi)/P(A)"→Str3
+ClrHome
+Output(1,1,Str3)
+2→O
+7→θ
+Goto SV
+Lbl C6
+If P=0
+Output(10,1,"P(A)=0 SO P(Bi|A) UNDEF")
+Pause
+// screen 4: if A did not happen
+seq(1ᴇ99,J,1,K)→ʟPRV
+If P<1
+ʟPRP*(1-ʟPRQ)/(1-P)→ʟPRV
+augment({1-P},ʟPRV)→ʟPRV
+"P(A')=1-P(A)=;"→Str1
+For(J,1,K)
+Str1+"P(B"+toString(J)+"|A')=;"→Str1
+End
+"IF NOT A  P(Bi|A')"→Str3
+ClrHome
+Output(1,1,Str3)
+2→O
+8→θ
+Goto SV
+Lbl C7
+Pause
+Goto M
+Lbl C8
+ClrHome
+Output(4,1,"k MUST BE 2 TO 9")
+Output(5,1,"(whole number of cases)")
+Pause
+Goto C1
+Lbl C9
+ClrHome
+Output(3,1,"PRIORS MUST BE ≥0 AND")
+Output(4,1," NOT ALL 0")
+Output(5,1,"LIKELIHOODS 0 TO 1")
+Output(6,1," (or 0 TO 100 as %)")
+Pause
+Goto C1
+// =====================================================================
+// D. SENS/SPEC TEST  P=prior P(D) X=sens Y=spec E=result (1 +, 2 -)
+//    L=P(+) H=posterior for chosen result G=test number-1 F=% flag
+// =====================================================================
+Lbl D
+ClrHome
+Output(1,1,"SENS/SPEC TEST    USE WHEN")
+Output(2,1,"a test/filter flags a")
+Output(3,1,"condition D (disease)")
+Output(4,1," SENS=P(+|D) SPEC=P(-|D')")
+Output(5,1," PREVALENCE p=P(D)")
+Output(6,1,"P(+)=sens*p+(1-spec)(1-p)")
+Output(7,1,"PPV=P(D|+)=sens*p/P(+)")
+Output(8,1,"2ND TEST prior=posterior")
+Output(9,1,"cues false +, true + rate")
+Output(10,1,"% OK - type 95 for 95%")
+Pause
+Lbl D1
+0→G
+0→F
+ClrHome
+Disp "SENS/SPEC TEST","% OK (95 means .95)"
+Input "PREVALENCE p?",P
+If P>1 and P≤100
+Then
+P/100→P
+1→F
+End
+If P<0 or P>1:Goto D9
+Lbl D4
+ClrHome
+If G=0
+Disp "TEST 1"
+If G>0
+Disp "TEST "+toString(G+1),"PRIOR=LAST POSTERIOR"
+Input "SENSITIVITY?",X
+Input "SPECIFICITY?",Y
+If X>1 and X≤100
+Then
+X/100→X
+1→F
+End
+If Y>1 and Y≤100
+Then
+Y/100→Y
+1→F
+End
+If X<0 or X>1 or Y<0 or Y>1:Goto D8
+Menu("TEST RESULT?","POSITIVE (+)",D2,"NEGATIVE (-)",D3)
+Lbl D2
+1→E
+Goto D6
+Lbl D3
+2→E
+Lbl D6
+X*P+(1-Y)*(1-P)→L
+{L,1-L,1ᴇ99,1ᴇ99,1ᴇ99}→ʟPRV
+If L>0
+X*P/L→ʟPRV(3)
+If L<1
+Y*(1-P)/(1-L)→ʟPRV(4)
+If L<1
+(1-X)*P/(1-L)→ʟPRV(5)
+ʟPRV(3)→H
+If E=2
+ʟPRV(5)→H
+"P(+)=;P(-)=;PPV P(D|+)=;NPV P(D'| -)=;P(D| -)=;"→Str1
+P→W
+prgmSTAFMT
+"PRIOR P(D)="+Str9→Str3
+ClrHome
+Output(1,1,Str3)
+Output(2,1,"P(+)=SENS*p+(1-SPEC)(1-p)")
+3→O
+9→θ
+Goto SV
+Lbl D7
+If F=1
+Output(8,1,"(% INPUTS DIVIDED BY 100)")
+H→W
+If H≠1ᴇ99
+Then
+prgmSTAFMT
+Else
+"undef"→Str9
+Str9→Str8
+End
+If G=0 and E=1
+"POSTERIOR P(D|+)="+Str9→Str2
+If G=0 and E=2
+"POSTERIOR P(D| -)="+Str9→Str2
+If G>0
+"UPDATED P(D)="+Str9→Str2
+Output(9,1,sub(Str2,1,min(26,length(Str2))))
+If Str9≠Str8
+Output(10,1,"   ="+Str8)
+Pause
+Menu("NEXT?","ANOTHER TEST",D5,"DONE",M)
+Lbl D5
+If H=1ᴇ99:Goto DU
+H→P
+G+1→G
+0→F
+Goto D4
+Lbl DU
+ClrHome
+Output(4,1,"POSTERIOR IS UNDEFINED")
+Output(5,1,"(that result has P=0)")
+Pause
+Goto M
+Lbl D8
+ClrHome
+Output(4,1,"SENS, SPEC MUST BE")
+Output(5,1,"0 TO 1 (or 0 TO 100 %)")
+Pause
+Goto D4
+Lbl D9
+ClrHome
+Output(4,1,"p MUST BE 0 TO 1")
+Output(5,1,"(or 0 TO 100 %)")
+Pause
+Goto D1
+// =====================================================================
+// E. VENN 2-3 SETS  A,B,C=n(A),n(B),n(C) D=n(AnB) E=n(AnC) F=n(BnC)
+//    G=n(AnBnC) N=total (neg=unknown) H=union
+// =====================================================================
+Lbl E
+ClrHome
+Output(1,1,"VENN 2-3 SETS     USE WHEN")
+Output(2,1,"overlapping groups given")
+Output(3,1,"as totals + overlaps")
+Output(4,1,"UNION (INCL-EXCL, 3 SETS)")
+Output(5,1," =A+B+C-AB-AC-BC+ABC")
+Output(6,1,"A ONLY=A-AB-AC+ABC")
+Output(7,1,"NONE=N-UNION")
+Output(8,1,"counts or probabilities")
+Output(9,1,"N UNKNOWN? type (-)1")
+Output(10,1,"cues only, none, neither")
+Pause
+Menu("VENN","2 SETS",E2,"3 SETS",E3,"BACK",M)
+Lbl E3
+ClrHome
+Disp "VENN 3 SETS","N UNKNOWN? (-)1"
+Input "n(A)?",A
+Input "n(B)?",B
+Input "n(C)?",C
+Input "n(AnB)?",D
+Input "n(AnC)?",E
+Input "n(BnC)?",F
+Input "n(AnBnC)?",G
+Input "N TOTAL?",N
+If min({A,B,C,D,E,F,G})<0:Goto EN
+A+B+C-D-E-F+G→H
+2ᴇ99→P
+If N≥0
+N-H→P
+{A-D-E+G,B-D-F+G,C-E-F+G,D-G,E-G,F-G,G,P}→ʟPRV
+"A ONLY=;B ONLY=;C ONLY=;AnB ONLY=;AnC ONLY=;BnC ONLY=;ALL 3=;NONE=;"→Str1
+"VENN 3 SETS REGIONS 1/2"→Str3
+ClrHome
+Output(1,1,Str3)
+2→O
+10→θ
+Goto SV
+Lbl E4
+Output(10,1,"(ONLY = in that one alone)")
+Pause
+// negative region? (the 2ᴇ99 marker is positive)
+min(ʟPRV)→K
+{H,sum(seq(ʟPRV(J),J,1,3)),sum(seq(ʟPRV(J),J,4,6)),sum(seq(ʟPRV(J),J,4,7)),P}→ʟPRV
+"UNION (≥1)=;EXACTLY 1=;EXACTLY 2=;AT LEAST 2=;NONE=N-UNION=;"→Str1
+"VENN 3 SETS TOTALS  2/2"→Str3
+ClrHome
+Output(1,1,Str3)
+Output(2,1,"UNION=A+B+C-AB-AC-BC+ABC")
+3→O
+11→θ
+Goto SV
+Lbl E5
+If N>1
+Output(8,1,"(PROBABILITY = COUNT/N)")
+If K<0
+Then
+Output(9,1,"WARN A REGION IS <0 -")
+Output(10,1," CHECK THE INPUT NUMBERS")
+Else
+Output(10,1,"ALL REGIONS ≥0  OK")
+End
+Pause
+Goto M
+Lbl E2
+ClrHome
+Disp "VENN 2 SETS","N UNKNOWN? (-)1"
+Input "n(A)?",A
+Input "n(B)?",B
+Input "n(AnB)?",D
+Input "N TOTAL?",N
+If min({A,B,D})<0:Goto EN
+A+B-D→H
+2ᴇ99→P
+If N≥0
+N-H→P
+{A-D,B-D,D,H,P,A+B-2*D}→ʟPRV
+"A ONLY=;B ONLY=;BOTH AnB=;UNION AuB=;NEITHER=;EXACTLY ONE=;"→Str1
+"VENN 2 SETS"→Str3
+ClrHome
+Output(1,1,Str3)
+Output(2,1,"UNION=n(A)+n(B)-n(AnB)")
+3→O
+12→θ
+Goto SV
+Lbl E8
+If min(ʟPRV)<0
+Output(10,1,"WARN A REGION IS <0")
+If min(ʟPRV)≥0 and N>1
+Output(10,1,"(PROBABILITY = COUNT/N)")
+Pause
+Goto M
+Lbl EN
+ClrHome
+Output(4,1,"ONLY N MAY BE UNKNOWN")
+Output(5,1,"(other entries ≥0)")
+Pause
+Goto E
+// =====================================================================
+// F. URN DRAWS  N=total K=successes L=draws n G=target k
+//    E=hyper P(X≤k) F=hyper P(X=k) C=binom P(X≤k) D=binom P(X=k)
+// =====================================================================
+Lbl F
+ClrHome
+Output(1,1,"URN DRAWS         USE WHEN")
+Output(2,1,"N items, K are successes,")
+Output(3,1,"draw n, want k successes")
+Output(4,1,"WITHOUT REPL (hypergeom)")
+Output(5,1," C(K,k)C(N-K,n-k)/C(N,n)")
+Output(6,1,"WITH REPL (binomial p=K/N)")
+Output(7,1," C(n,k)p^k(1-p)^(n-k)")
+Output(8,1,"ONE ORDER=P(X=k)/C(n,k)")
+Output(9,1,"cues cards, balls, defects")
+Output(10,1,"at least k => P(X≥k)")
+Pause
+Lbl F1
+ClrHome
+Disp "URN DRAWS","whole numbers"
+Input "N TOTAL?",N
+Input "K SUCCESSES?",K
+Input "n DRAWS?",L
+Input "k WANTED?",G
+If N<1 or N>300 or L<0 or L>300 or K<0 or K>N or G<0:Goto F9
+If fPart(N) or fPart(K) or fPart(L) or fPart(G):Goto F9
+0→C
+0→D
+0→E
+0→F
+For(J,0,min(G,L))
+0→H
+If L≤N
+(K nCr J)*((N-K) nCr (L-J))/(N nCr L)→H
+E+H→E
+If J=G
+H→F
+If K=0
+(J=0)→H
+If K=N
+(J=L)→H
+If K>0 and K<N
+(L nCr J)*(K/N)^J*(1-K/N)^(L-J)→H
+C+H→C
+If J=G
+H→D
+End
+// screen 1: without replacement
+ClrHome
+"N="+toString(N)+" K="+toString(K)+" n="+toString(L)+" k="+toString(G)→Str3
+Output(1,1,"WITHOUT REPLACEMENT  1/3")
+Output(2,1,Str3)
+Output(3,1,"P(X=k)=C(K,k)C(N-K,n-k)")
+Output(4,1,"       /C(N,n)")
+If L>N:Goto F7
+"=C("+toString(K)+","+toString(G)+")C("+toString(N-K)+","+toString(L-G)+")/C("+toString(N)+","+toString(L)+")"→Str2
+If G≤L and length(Str2)≤26
+Output(5,1,Str2)
+{F,1-E+F,E}→ʟPRV
+"P(X="+toString(G)+")=;P(X≥"+toString(G)+")=;P(X≤"+toString(G)+")=;"→Str1
+6→O
+13→θ
+Goto SV
+Lbl F4
+Output(10,1,"P(X≥k)=1-P(X≤k-1)")
+Pause
+Goto F6
+Lbl F7
+Output(6,1,"n>N  CANNOT DRAW n ITEMS")
+Output(7,1,"WITHOUT REPLACEMENT")
+Pause
+Lbl F6
+// screen 2: with replacement
+ClrHome
+Output(1,1,"WITH REPLACEMENT     2/3")
+Output(2,1,Str3)
+K/N→W
+prgmSTAFMT
+Output(3,1,"BINOMIAL p=K/N="+Str9)
+Output(4,1,"P(X=k)=C(n,k)p^k q^(n-k)")
+Output(5,1,"       q=1-p")
+{D,1-C+D,C}→ʟPRV
+"P(X="+toString(G)+")=;P(X≥"+toString(G)+")=;P(X≤"+toString(G)+")=;"→Str1
+6→O
+14→θ
+Goto SV
+Lbl F5
+Output(10,1,"P(X≥k)=1-P(X≤k-1)")
+Pause
+// screen 3: one specific order
+ClrHome
+Output(1,1,"ONE SPECIFIC ORDER   3/3")
+Output(2,1,"e.g. k successes first,")
+Output(3,1,"then n-k failures")
+Output(4,1,"=P(X=k)/C(n,k)")
+If G>L
+Then
+Output(6,1,"k>n  NO SUCH ORDER")
+Else
+Output(5,1,"C("+toString(L)+","+toString(G)+")="+toString(L nCr G))
+If L>N
+Then
+Output(6,1,"W/O REPL=n/a (n>N)")
+Else
+F/(L nCr G)→W
+prgmSTAFMT
+Output(6,1,"W/O REPL="+Str9)
+If Str9≠Str8 and length(Str9)+length(Str8)<17
+Output(6,27-length(Str8),Str8)
+End
+D/(L nCr G)→W
+prgmSTAFMT
+Output(7,1,"WITH REPL="+Str9)
+If Str9≠Str8 and length(Str9)+length(Str8)<16
+Output(7,27-length(Str8),Str8)
+End
+Output(9,1,"W/O = multiply draw-by-")
+Output(10,1,"draw fractions, e.g. K/N")
+Pause
+Goto M
+Lbl F9
+ClrHome
+Output(3,1,"WHOLE NUMBERS ONLY")
+Output(4,1,"1≤N≤300  0≤K≤N")
+Output(5,1,"0≤n≤300  k≥0")
+Pause
+Goto F1
+// =====================================================================
+Lbl Z
+DelVar ʟPRV
+DelVar ʟPRT
+DelVar ʟPRL
+DelVar ʟPRP
+DelVar ʟPRQ
+ClrHome
+Return

@@ -1,0 +1,309 @@
+\clearpage
+\section{Worked solutions to the 70 practice questions}
+The solution labels match the question bank. Values of a PMF or PDF outside the support are zero. Conditional formulas require a positive conditioning marginal; continuous conditioning uses a conditional density, not division by $P(Y=y)$.
+
+\subsection{A. Multivariate distributions}
+\begin{enumerate}[label=\textbf{A\arabic*.},leftmargin=*,itemsep=1em]
+\item The total unnormalized mass is $9+12=21$, so $c=1/21$. Summing in the other coordinate gives
+\[
+p_X(x)=\frac{3x+6}{21},\quad x=1,2;\qquad
+p_Y(y)=\frac{3+4y}{21},\quad y=0,1,2.
+\]
+Thus $p_{X\mid Y}(x\mid1)=(x+2)/7$, namely $3/7,4/7$. Independence fails: $p(1,0)=1/21$, whereas $p_X(1)p_Y(0)=(3/7)(1/7)=3/49$.
+\item Normalization gives $1=c\int_0^1\int_0^2(x+2y)\,\dd x\,\dd y=4c$, hence $c=1/4$. Consequently
+\[
+f_X(x)=\frac{x+1}{4},\ 0<x<2;\qquad
+f_Y(y)=\frac12+y,\ 0<y<1.
+\]
+For $0<y<1$, $f_{X\mid Y}(x\mid y)=(x+2y)/(2+4y)$ on $0<x<2$. Integrating it over $x$ gives one.
+\item The support lies below $y=x$ in the unit square. Vertical and horizontal slices give $f_X(x)=\int_0^x2\,\dd y=2x$ and $f_Y(y)=\int_y^12\,\dd x=2(1-y)$, each on $(0,1)$. Also
+\[
+P(Y<X/2)=\int_0^1\int_0^{x/2}2\,\dd y\,\dd x=\int_0^1x\,\dd x=\frac12.
+\]
+They are dependent: the product of marginals is positive above the diagonal, where the joint density is zero.
+\item System lifetime is $T=\min(X,Y)$. Its failure event is $\{X\leq1\}\cup\{Y\leq1\}$, up to endpoints of probability zero. Use the complement:
+\[
+P(T\leq1)=1-\int_1^3\int_1^3\frac{x+y}{27}\,\dd y\,\dd x
+=1-\frac{16}{27}=\frac{11}{27}.
+\]
+Multiplying marginal survival probabilities would require independence, which is not given.
+\item For (a), only $(2,1)$ contributes, so the probability is $3/21=1/7$. For (b), the pairs are $(1,1),(1,2),(1,3),(2,1),(2,2)$, with weights $2,3,4,3,4$. Therefore $P(X+Y\leq4)=16/21$.
+\item On the event region, $0<x<y<1$. Thus
+\[
+P(X<Y)=\int_0^1\int_0^y\frac23(2x+y)\,\dd x\,\dd y
+=\frac43\int_0^1y^2\,\dd y=\frac49.
+\]
+The reversed setup is $\int_0^1\int_x^1\frac23(2x+y)\,\dd y\,\dd x$.
+\item Taking the mixed derivative inside the rectangle gives $f(x,y)=x$ for $0<x<1$, $0<y<2$. The marginal densities are $2x$ on $(0,1)$ and $1/2$ on $(0,2)$. Their product equals the joint density, so independence holds. Rectangle probabilities satisfy
+\[
+[A(1)-A(1/2)][B(3/2)-B(1/2)]=(1-1/4)(3/4-1/4)=\frac38.
+\]
+The original CDF defines all boundary and exterior values through $A$ and $B$.
+\item The conditional density is $f_{Y\mid X}(y\mid x)=1/x$ for $0<y<x$. Multiplication gives $f(x,y)=2$ on $0<y<x<1$. Therefore $f_Y(y)=\int_y^12\,\dd x=2(1-y)$, $0<y<1$. Omitting the restriction $y<x$ would incorrectly spread mass over a square.
+\item The independent table has all four entries $1/4$, giving $P(X=Y)=1/2$. A dependent table has entries $p(0,0)=p(1,1)=1/2$ and the two off-diagonal entries zero, giving $P(X=Y)=1$. Both have the required marginals. Thus marginals alone do not determine a joint distribution.
+\item The support area is $\int_0^1(1-x^2)\,\dd x=2/3$, so $c=3/2$. For fixed $y$, $0<x<\sqrt y$, giving $f_Y(y)=\tfrac32\sqrt y$ on $(0,1)$. The two setups are
+\[
+\int_0^{1/4}\int_0^{\sqrt y}\frac32\,\dd x\,\dd y
+=\int_0^{1/2}\int_{x^2}^{1/4}\frac32\,\dd y\,\dd x
+=\left.y^{3/2}\right|_0^{1/4}=\frac18.
+\]
+\end{enumerate}
+
+\subsection{B. Expectation, LOTUS, and properties}
+\begin{enumerate}[label=\textbf{B\arabic*.},leftmargin=*,itemsep=1em]
+\item The four unnormalized masses are $1,2,5,10$, totaling $18$. Hence $c=1/18$ and
+\[
+\E[X]=\frac{0+2+10+30}{18}=\frac73,\qquad
+\E[2X+3]=2\left(\frac73\right)+3=\frac{23}{3}.
+\]
+\item By LOTUS, $\E[X]=\int_0^13x^3\,\dd x=3/4$ and $\E[1/X]=\int_0^13x\,\dd x=3/2$. The latter differs from $1/\E[X]=4/3$ because expectation is linear, but taking a reciprocal is a nonlinear operation.
+\item The density is even, so the odd integrand $x(1-|x|)$ integrates to zero. For the other moments,
+\[
+\E[|X|]=2\int_0^1x(1-x)\,\dd x=\frac13,\qquad
+\E[X^2]=2\int_0^1x^2(1-x)\,\dd x=\frac16.
+\]
+\item Apply LOTUS to $X$: $\E[Y]=\E[X^2]=(0+2+4)/4=3/2$ and $\E[Y^2]=\E[X^4]=(0+2+16)/4=9/2$. Thus $\Var(Y)=9/2-(3/2)^2=9/4$. Squaring $\E[X]$ would not give $\E[X^2]$.
+\item The continuous LOTUS formula is $\E[g(X)]=\int g(x)f_X(x)\,\dd x$, when the expectation exists. Here
+\[
+\E[(1-X)^2]=2\int_0^1(x-2x^2+x^3)\,\dd x=\frac16,
+\qquad \E[\log X]=2\int_0^1x\log x\,\dd x=-\frac12.
+\]
+For the logarithm, integration by parts gives $\int_0^1x\log x\,\dd x=-1/4$; the endpoint limit $x^2\log x\to0$ is used.
+\item Profit is $G=100-20X$. Since $\E[X]=0(1/2)+1(3/10)+3(1/5)=9/10$, linearity gives $\E[G]=100-20(9/10)=82$ dollars.
+\item Directly, the four values of $3X-2Y+5$ are $5,1,8,4$, so the expectation is $(5+2+24+16)/10=47/10$. Alternatively, $\E[X]=7/10$ and $\E[Y]=12/10$, giving $3(7/10)-2(12/10)+5=47/10$. No independence was needed.
+\item Linearity gives $3(-2)-\tfrac12(4)+7=-1$. Independence is unnecessary. The marginal means alone do not determine $\E[XY]$: for example, let a symmetric $R\in\{-1,1\}$ have equal probabilities and take $X=-2+R$, with either $Y=4+R$ or $Y=4-R$. The two products have expectations $-7$ and $-9$, respectively.
+\item Normalization is $\int_1^\infty x^{-2}\,\dd x=1$. The mean is the divergent nonnegative integral $\int_1^\infty x^{-1}\,\dd x=\infty$. Nevertheless $\E[1/X]=\int_1^\infty x^{-3}\,\dd x=1/2$. A transformed expectation can be finite when the original mean is not.
+\item Since $I$ is an indicator,
+\[
+\E[I]=P(X>1/2)=\int_{1/2}^12x\,\dd x=\frac34,\qquad
+\E[XI]=\int_{1/2}^12x^2\,\dd x=\frac7{12}.
+\]
+The second expression is an unnormalized truncated first moment, not a conditional mean.
+\end{enumerate}
+
+\subsection{C. Raw moments, central moments, and variance}
+\begin{enumerate}[label=\textbf{C\arabic*.},leftmargin=*,itemsep=1em]
+\item The raw moments are $\mu'_1=(1+4+9)/6=7/3$, $\mu'_2=(1+8+27)/6=6$, and $\mu'_3=(1+16+81)/6=49/3$. Thus
+\[
+\Var(X)=6-49/9=\frac59,\qquad
+\mu_3=\mu'_3-3\mu\mu'_2+2\mu^3
+=\frac{49}{3}-42+\frac{686}{27}=-\frac7{27}.
+\]
+\item Integration gives $\E[X^r]=4\int_0^1x^{r+3}\,\dd x=4/(r+4)$. Hence $\mu=4/5$, $\mu'_2=2/3$, $\mu'_3=4/7$. The requested central moments are
+\[
+\Var(X)=\frac23-\frac{16}{25}=\frac2{75},\qquad
+\mu_3=\frac47-3\left(\frac45\right)\left(\frac23\right)+2\left(\frac45\right)^3=-\frac4{875}.
+\]
+\item With $\mu=2$, the variance is $7-2^2=3$. Expanding the central powers gives
+\[
+\mu_3=26-3(2)(7)+2(2^3)=0,
+\]
+\[
+\mu_4=107-4(2)(26)+6(2^2)(7)-3(2^4)=19.
+\]
+These are central moments, whereas the supplied four numbers were raw moments.
+\item First $\E[X^2]=\Var(X)+(\E[X])^2=5+4=9$. Linearity gives $\E[Y]=3(2)-4=2$, and scaling gives $\Var(Y)=3^2(5)=45$. Therefore $\E[Y^2]=45+2^2=49$.
+\item The density is $1/4$ on $(-2,2)$, so
+\[
+\E[Y]=\E[X^2]=\frac14\int_{-2}^2x^2\,\dd x=\frac43,\qquad
+\E[Y^2]=\E[X^4]=\frac14\int_{-2}^2x^4\,\dd x=\frac{16}{5}.
+\]
+Thus $\Var(Y)=16/5-16/9=64/45$.
+\item By linearity, $\E[Z]=(\E[X]-\mu)/\sigma=0$. Since a shift does not change variance and scaling squares its multiplier, $\Var(Z)=\Var(X)/\sigma^2=1$. Rearranging the variance identity gives $\E[X^2]=\sigma^2+\mu^2$.
+\item The mean exists: $\E[X]=\int_1^\infty2x^{-2}\,\dd x=2$. But $\E[X^2]=\int_1^\infty2x^{-1}\,\dd x=\infty$. Since the mean is finite, the central second moment also diverges, so $\Var(X)=\infty$. The divergent integral is the second-moment integral.
+\item Symmetry gives $\mu=0$. Then $\sigma^2=(4+1+0+1+4)/5=2$ and $\mu_4=(16+1+0+1+16)/5=34/5$. The standardized fourth moment is $(34/5)/2^2=17/10$.
+\item Write $X-5=(X-3)-2$. Since $\E[X-3]=0$,
+\[
+\E[(X-5)^2]=\E[(X-3)^2]-4\E[X-3]+4=4+4=8.
+\]
+Variance centers at the actual mean $3$, whereas this expression centers at $5$.
+\item The odd first-moment integrand integrates to zero. For even powers, $\E[X^{2k}]=3\int_0^1x^{2k+2}\,\dd x=3/(2k+3)$. Thus $\Var(X)=\E[X^2]=3/5$, $\E[Y]=3/5$, and
+\[
+\Var(Y)=\E[X^4]-(\E[X^2])^2=\frac37-\frac9{25}=\frac{12}{175}.
+\]
+The second and fourth raw moments of $X$ are needed for $\Var(X^2)$.
+\end{enumerate}
+
+\subsection{D. Moment generating functions}
+\begin{enumerate}[label=\textbf{D\arabic*.},leftmargin=*,itemsep=1em]
+\item By definition,
+\[
+M_X(t)=5\int_0^\infty e^{-(5-t)x}\,\dd x=\frac5{5-t},\qquad t<5.
+\]
+The integral diverges for $t\geq5$. Its first two derivatives are $5/(5-t)^2$ and $10/(5-t)^3$. At zero they give $\E[X]=1/5$, $\E[X^2]=2/25$, and variance $2/25-1/25=1/25$.
+\item The MGF is $M_X(t)=\tfrac14e^{-t}+\tfrac12+\tfrac14e^{2t}$, finite for every real $t$. Differentiation gives $M'_X(0)=-1/4+1/2=1/4$ and $M''_X(0)=1/4+1=5/4$. Hence $\Var(X)=5/4-1/16=19/16$.
+\item Use $M_{aX+b}(t)=e^{bt}M_X(at)$:
+\[
+M_Z(t)=e^{-2t}M_X(t/3)
+=e^{-2t}\exp\left(2t+\frac{t^2}{2}\right)=e^{t^2/2}.
+\]
+Thus $M'_Z(0)=0$ and $M''_Z(0)=1$, giving mean zero and variance one.
+\item Differentiation yields $M'_X(t)=6(1-2t)^{-4}$ and $M''_X(t)=48(1-2t)^{-5}$. Therefore $\E[X]=6$, $\E[X^2]=48$, and $\Var(X)=48-36=12$. A shift multiplies the MGF by an exponential: $M_{X+4}(t)=e^{4t}(1-2t)^{-3}$ for $t<1/2$.
+\item From the uniform density,
+\[
+M_X(t)=\frac12\int_0^2e^{tx}\,\dd x=
+\begin{cases}(e^{2t}-1)/(2t),&t\ne0,\\1,&t=0.\end{cases}
+\]
+It is finite for all real $t$. Expanding gives $M_X(t)=1+t+\tfrac23t^2+O(t^3)$. Comparing with $1+\E[X]t+\E[X^2]t^2/2+\cdots$ gives $\E[X]=1$ and $\E[X^2]=4/3$.
+\item Independence permits multiplication:
+\[
+M_S(t)=M_X(2t)M_Y(t)=\frac2{2-2t}\frac4{4-t}
+=\frac4{(1-t)(4-t)},\qquad t<1.
+\]
+Both factors must exist, so $t<1$ and $t<4$ are intersected. Direct moment properties give $\E[S]=2(1/2)+1/4=5/4$ and $\Var(S)=4(1/4)+1/16=17/16$.
+\item Equality on a neighborhood of zero implies identical distributions. The MGF is that of an exponential variable with rate $2$, so $P(X>1)=\int_1^\infty2e^{-2x}\,\dd x=e^{-2}$. This identifies the marginal law; it gives no independence information about a pair of variables. They could even be equal almost surely.
+\item Transformation gives
+\[
+M_W(t)=e^{3t}M_X(-2t)=\frac{e^{3t}}{1+2t},\qquad -2t<1\iff t>-1/2.
+\]
+The original mean and variance are both $1$, so $\E[W]=3-2=1$ and $\Var(W)=(-2)^2=4$. The domain reverses direction because the scale coefficient is negative.
+\item At zero, $M'(0)=2$ and $M''(0)=2$. An MGF would therefore imply $\Var(X)=M''(0)-(M'(0))^2=2-4=-2$, which is impossible. The conditions $M(0)=1$ and positivity of $M(t)$ are not sufficient by themselves.
+\item For fixed $t>0$, exponential growth eventually dominates $x^2$, so $e^{tx}/x^2\geq1$ for all sufficiently large $x$. Therefore $\int_1^\infty e^{tx}x^{-2}\,\dd x=\infty$. Although $M(0)=1$, there is no open interval around zero on which it is finite. The usual MGF uniqueness and moment-derivative theorem requires such a neighborhood.
+\end{enumerate}
+
+\subsection{E. Product moments, covariance, and correlation}
+\begin{enumerate}[label=\textbf{E\arabic*.},leftmargin=*,itemsep=1em]
+\item The marginal success probabilities give $\E[X]=1/2$, $\E[Y]=7/10$, and the only nonzero product contributes $\E[XY]=p(1,1)=2/5$. Hence $\Cov(X,Y)=2/5-7/20=1/20$. The variances are $1/4$ and $21/100$, so
+\[
+\Corr(X,Y)=\frac{1/20}{\sqrt{(1/4)(21/100)}}=\frac1{\sqrt{21}}.
+\]
+Independence fails since $p(1,1)=2/5\ne(1/2)(7/10)=7/20$.
+\item The marginals are $f_X(x)=2x$ and $f_Y(y)=2y$, both on $(0,1)$. Their product equals $4xy$ throughout the rectangular support, proving independence. Since both means are $2/3$,
+\[
+\E[XY]=\E[X]\E[Y]=\frac49,\qquad \Cov(X,Y)=0.
+\]
+Each variance is $1/2-4/9=1/18>0$, so correlation is also zero.
+\item The marginals from A3 give $\E[X]=\int_0^12x^2\,\dd x=2/3$ and $\E[Y]=\int_0^12y(1-y)\,\dd y=1/3$. Also
+\[
+\E[XY]=\int_0^1\int_0^x2xy\,\dd y\,\dd x=\int_0^1x^3\,\dd x=\frac14.
+\]
+Thus covariance is $1/4-2/9=1/36$. The second moments are $1/2$ and $1/6$, so both variances equal $1/18$; correlation is $(1/36)/(1/18)=1/2$.
+\item Symmetry gives $\E[X]=\E[X^3]=0$, while $\E[Y]=\E[X^2]=1/3$. Therefore $\Cov(X,Y)=\E[X^3]-\E[X]\E[X^2]=0$. But $A=B$ as events, with probability $1/2$, so $P(A\cap B)=1/2\ne(1/2)^2$. Thus $X$ and $Y$ are dependent despite zero covariance.
+\item The covariance identity gives $\Cov(X,Y)=-5-(2)(-1)=-3$. Dividing by the product of standard deviations gives $\Corr(X,Y)=-3/(2\cdot3)=-1/2$.
+\item Covariance is linear in its second argument: $\Cov(X,5-3X)=-3\Var(X)=-6$. Also $\Var(Y)=9\Var(X)=18$. Hence $\Corr(X,Y)=-6/\sqrt{2\cdot18}=-1$. The negative coefficient describes an exact decreasing affine relationship.
+\item Constants have zero covariance with every variable, so
+\[
+\Cov(2X+7,-4Y+1)=(2)(-4)\Cov(X,Y)=(-8)(-2)=16.
+\]
+Shifts disappear from covariance; the two scale coefficients remain as a product.
+\item Since $X^2=X$, $\E[X^2]=\E[X]=2/5$. For $Y$, $\E[Y]=1/2$ and $\E[Y^2]=2/2^2=1/2$. Independence allows factorization of functions of the two variables:
+\[
+\E[X^2Y]=\frac25\frac12=\frac15,\qquad
+\E[XY^2]=\frac25\frac12=\frac15.
+\]
+\item Cauchy--Schwarz gives $|\Cov(X,Y)|\leq\sqrt{\Var(X)\Var(Y)}=2$. The specified value $3$ violates this bound and would give correlation $3/2$. The allowable interval is $[-2,2]$.
+\item For nonzero $a,c$ and positive variances,
+\[
+\Corr(aX+b,cY+d)=\frac{ac\Cov(X,Y)}{|a|\sigma_X|c|\sigma_Y}
+=\operatorname{sgn}(ac)\Corr(X,Y).
+\]
+Both scales are negative in the first pair, so the result is $-2/5$. Their signs differ in the second pair, so the result is $2/5$.
+\end{enumerate}
+
+\subsection{F. Moments of one and two linear combinations}
+\begin{enumerate}[label=\textbf{F\arabic*.},leftmargin=*,itemsep=1em]
+\item Linearity gives $\E[U]=2(3)-3(-2)+5=17$. Variance includes the covariance term:
+\[
+\Var(U)=2^2(4)+(-3)^2(9)+2(2)(-3)(1)=16+81-12=85.
+\]
+The added constant affects the mean but not the variance.
+\item Combine the payouts first: $W+V=1.5X+2Y+30$. Therefore
+\[
+\Var(W+V)=(1.5)^2(100)+2^2(64)+2(1.5)(2)(20)
+=225+256+120=601.
+\]
+\item With coefficients $(2,-1,3)$, the variance is
+\begin{align*}
+\Var(2X-Y+3Z)
+&=4(1)+1(4)+9(9)\\
+&\quad+2(2)(-1)(1/2)+2(2)(3)(-1)+2(-1)(3)(1)\\
+&=4+4+81-2-12-6=69.
+\end{align*}
+Each unordered pair appears once, multiplied by two and by its signed coefficients.
+\item The variances are $\Var(U)=2+4(5)+4(-1)=18$ and $\Var(V)=9(2)+5-6(-1)=29$. Bilinearity gives
+\[
+\Cov(U,V)=3\Var(X)-2\Var(Y)+(6-1)\Cov(X,Y)
+=6-10-5=-9.
+\]
+Therefore $\Corr(U,V)=-9/\sqrt{18\cdot29}=-9/\sqrt{522}$.
+\item For $S=\sum_{i=1}^5X_i$, linearity gives $\E[S]=20$, and the covariance terms vanish, giving $\Var(S)=15$. For $\overline X=S/5$, the mean is $4$ and variance is $15/25=3/5$. All four answers remain valid under pairwise zero covariance; even the zero-covariance assumption is unnecessary for the two means.
+\item The moments of $X$ are $\E[X]=0$, $\E[X^2]=1/3$, $\E[X^3]=0$, and $\E[X^4]=1/5$. Thus $\Var(Y)=1/5-1/9=4/45$ and $\Cov(X,Y)=0$. Consequently
+\[
+\Var(2X+Y)=4\left(\frac13\right)+\frac4{45}+4(0)=\frac{64}{45}.
+\]
+The covariance vanishes by symmetry, while $Y=X^2$ still determines dependence.
+\item The sum identity gives $20=4+9+2\Cov(X,Y)$, so $\Cov(X,Y)=7/2$. Then $\Var(X-Y)=4+9-2(7/2)=6$. The covariance contribution changes sign for a difference.
+\item Expand and complete the square:
+\[
+\Var(X-aY)=9+4a^2-4a=8+4(a-1/2)^2.
+\]
+The minimum is $8$, attained at $a=1/2$. This is a variance calculation; no independence assumption is used.
+\item The covariance is $(1/2)\sqrt{25}\sqrt{16}=10$. The mean is $0.4(100)+0.6(80)=88$, and
+\[
+\Var(T)=0.4^2(25)+0.6^2(16)+2(0.4)(0.6)(10)
+=4+5.76+4.8=\frac{364}{25}.
+\]
+The decimal value is $14.56$.
+\item The variances are $\Var(U)=1+4+2(1/2)=6$ and $\Var(V)=4+9-2(1)=11$. Expanding the two arguments gives
+\[
+\Cov(X+Y,Y-Z)=\Cov(X,Y)-\Cov(X,Z)+\Var(Y)-\Cov(Y,Z)
+=\frac12+1+4-1=\frac92.
+\]
+Thus correlation is $(9/2)/\sqrt{66}=9/(2\sqrt{66})$.
+\end{enumerate}
+
+\subsection{G. Conditional expectation and conditional variance}
+\begin{enumerate}[label=\textbf{G\arabic*.},leftmargin=*,itemsep=1em]
+\item At $X=1$, the unnormalized weights are $1,2,3$, totaling $6$. Thus $p_{Y\mid X}(y\mid1)=(1+y)/6$ for $y=0,1,2$. The conditional first and second moments are
+\[
+\E[Y\mid X=1]=\frac{0+2+6}{6}=\frac43,\qquad
+\E[Y^2\mid X=1]=\frac{0+2+12}{6}=\frac73.
+\]
+Their difference gives conditional variance $7/3-16/9=5/9$.
+\item Integrating over $x$ gives $f_Y(y)=\tfrac23(1+y)$ on $(0,1)$, and hence $f_{X\mid Y}(x\mid y)=(2x+y)/(1+y)$ on $(0,1)$. At $y=1/2$,
+\[
+\E[X\mid Y=1/2]=\frac{\int_0^1x(2x+1/2)\,\dd x}{3/2}
+=\frac{2/3+1/4}{3/2}=\frac{11}{18},
+\]
+\[
+\E[X^2\mid Y=1/2]=\frac{1/2+1/6}{3/2}=\frac49.
+\]
+Thus conditional variance is $4/9-(11/18)^2=23/324$.
+\item The marginal $f_X(x)=2x$ gives $f_{Y\mid X}(y\mid x)=1/x$ on $(0,x)$. This is uniform, so $\E[Y\mid X=x]=x/2$ and $\Var(Y\mid X=x)=x^2/12$. At $x=4/5$, the answers are $2/5$ and $(16/25)/12=4/75$.
+\item Independence makes the conditional density equal to $f_X$. Therefore $\E[X\mid Y=y]=\int_0^12x^2\,\dd x=2/3$, while the conditional second moment is $\int_0^12x^3\,\dd x=1/2$. The conditional variance is $1/2-4/9=1/18$, independent of $y$.
+\item The Bernoulli conditional law gives $\E[Y\mid X]=X$ and $\Var(Y\mid X)=X(1-X)$. Total expectation gives $\E[Y]=\E[X]=1/2$. Total variance gives
+\[
+\Var(Y)=\E[X(1-X)]+\Var(X)
+=\left(\frac12-\frac13\right)+\frac1{12}=\frac14.
+\]
+Both the variation within conditional groups and variation between their means contribute.
+\item At fixed $y$, the conditional density is $1/(1-y)$ for $y<x<1$. Hence
+\[
+\E[X\mid Y=y]=\frac{\int_y^1x\,\dd x}{1-y}
+=\frac{1-y^2}{2(1-y)}=\frac{1+y}{2}.
+\]
+Integrating this conditional mean against the marginal yields $\E[X]=\int_0^1\frac{1+y}{2}\,2(1-y)\,\dd y=\int_0^1(1-y^2)\,\dd y=2/3$.
+\item The conditional mean is $Y/2$ and conditional variance is $Y^2/12$. Since $Y$ is uniform on $(0,2)$, $\E[Y]=1$, $\Var(Y)=1/3$, and $\E[Y^2]=4/3$. Therefore
+\[
+\E[X]=\frac12,\qquad
+\Var(X)=\frac{\E[Y^2]}{12}+\Var(Y/2)
+=\frac19+\frac1{12}=\frac7{36}.
+\]
+\item Normalization gives $1=c\int_0^1x^2\,\dd x=c/3$, so $c=3$. The marginal is $f_X(x)=3x^2$, hence $f_{Y\mid X}(y\mid x)=1/x^2$ for $0<y<x^2$. At $x=1/2$, this is uniform on $(0,1/4)$, and
+\[
+P(Y>1/8\mid X=1/2)=\int_{1/8}^{1/4}4\,\dd y=\frac12.
+\]
+\item The event probability is $P(X>1/2)=\int_{1/2}^12x\,\dd x=3/4$. Using a restricted joint first moment,
+\[
+\E[Y\mid X>1/2]
+=\frac{\int_{1/2}^1\int_0^x2y\,\dd y\,\dd x}{3/4}
+=\frac{\int_{1/2}^1x^2\,\dd x}{3/4}
+=\frac7{18}.
+\]
+In contrast, $\E[Y\mid X=1/2]=(1/2)/2=1/4$. The first averages over every $X>1/2$; the second uses the conditional density at a single value.
+\item Here $\E[Y]=3/2$ and $\Var(Y)=1/4$. Thus $\E[X]=\E[1+2Y]=4$. Total variance gives
+\[
+\Var(X)=\E[3Y]+\Var(1+2Y)=\frac92+4\left(\frac14\right)=\frac{11}{2}.
+\]
+Finally $\E[X^2]=\Var(X)+(\E[X])^2=11/2+16=43/2$.
+\end{enumerate}

@@ -1,0 +1,145 @@
+\section{Homework 4: worked solutions}
+\label{sec:hw4}
+These solutions follow the supplied Homework 4. The common problems and the STA 431 problems are the core comparison set. The two STA 631 problems are included as clearly labeled extensions because they reinforce support-dependent integration and conditioning.
+
+\subsection*{Common Problem 1: a discrete joint law}
+The model is $p(x,y)=c(x+y^2)$ for $x\in\{1,2\}$ and $y\in\{1,2,3\}$.
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item Normalize by summing all six weights:
+\[
+1=c\sum_{x=1}^2\sum_{y=1}^3(x+y^2)
+=c\{3(1+2)+2(1+4+9)\}=37c,
+\qquad \boxed{c=1/37}.
+\]
+\item The marginals are
+\[
+ p_X(x)=\frac{3x+14}{37},\quad x=1,2,
+ \qquad
+ p_Y(y)=\frac{3+2y^2}{37},\quad y=1,2,3.
+\]
+Both are zero elsewhere. Their values and the joint table are
+\[
+\begin{array}{c|ccc|c}
+ &y=1&y=2&y=3&p_X(x)\\\hline
+x=1&2/37&5/37&10/37&17/37\\
+x=2&3/37&6/37&11/37&20/37\\\hline
+p_Y(y)&5/37&11/37&21/37&1
+\end{array}
+\]
+\item Since $p_Y(2)=11/37$,
+\[
+ \boxed{p_{X\mid Y}(x\mid2)=\frac{x+4}{11},\quad x=1,2.}
+\]
+The two conditional probabilities are $5/11$ and $6/11$.
+\item They are dependent. For instance,
+\[
+ p(1,1)=\frac2{37}=\frac{74}{1369}
+ \ne \frac{17}{37}\frac5{37}=\frac{85}{1369}.
+\]
+One failed equality suffices to disprove independence for a discrete PMF.
+\end{enumerate}
+
+\subsection*{Common Problem 2: a continuous joint law}
+The support is $0<x<1$, $0<y<2$, with density $f(x,y)=c(2x+y)$ there.
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item The normalizing integral is
+\[
+ 1=c\int_0^2\int_0^1(2x+y)\,\dd x\,\dd y
+ =c\int_0^2(1+y)\,\dd y=4c,
+ \qquad\boxed{c=1/4}.
+\]
+\item Integrate out $x$:
+\[
+ \boxed{f_Y(y)=\int_0^1\frac{2x+y}{4}\,\dd x
+ =\frac{1+y}{4},\quad0<y<2,}
+\]
+and zero elsewhere. Indeed, $\int_0^2(1+y)/4\,\dd y=1$.
+\item Divide by the marginal of the given variable:
+\[
+ \boxed{f_{X\mid Y}(x\mid y)=\frac{2x+y}{1+y},\quad0<x<1,}
+ \qquad0<y<2.
+\]
+For each fixed such $y$, $\int_0^1(2x+y)/(1+y)\,\dd x=1$.
+\end{enumerate}
+
+\subsection*{Common Problem 3: a device fails when either component fails}
+Let $T=\min(X,Y)$. The event requested is $T\leq1$, the complement of both components surviving beyond one hour. Do not use independence: the supplied joint law is the model.
+\[
+\begin{aligned}
+ P(T\leq1)
+ &=1-P(X>1,Y>1)\\
+ &=1-\int_1^2\int_1^2\frac{x+y}{8}\,\dd y\,\dd x\\
+ &=1-\int_1^2\frac{x+3/2}{8}\,\dd x
+ =1-\frac38=\boxed{\frac58}.
+\end{aligned}
+\]
+As a cross-check, the marginal CDFs give $F_X(1)=F_Y(1)=3/8$ and $F_{X,Y}(1,1)=1/8$, so the union probability is $3/8+3/8-1/8=5/8$.
+
+\subsection*{STA 431 Problem 4: select the allowed cells}
+The PMF is $p(x,y)=(x+y)/32$ for $x\in\{1,2\}$ and $y\in\{1,2,3,4\}$.
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item The only pair satisfying $x>y$ is $(2,1)$:
+\[
+ \boxed{P(X>Y)=p(2,1)=3/32}.
+\]
+\item The pairs satisfying $x+y\leq3$ are $(1,1),(1,2),(2,1)$:
+\[
+ \boxed{P(X+Y\leq3)=\frac{2+3+3}{32}=\frac14}.
+\]
+\end{enumerate}
+Listing the cells before summing prevents including $(2,2)$ or omitting a boundary cell.
+
+\subsection*{STA 431 Problem 5: $P(X<Y)$ on a rectangle}
+Use the density from Common Problem 2. Choose $x$ as the outer variable so that the event is handled without splitting:
+\[
+\begin{aligned}
+ P(X<Y)
+ &=\int_0^1\int_x^2\frac{2x+y}{4}\,\dd y\,\dd x\\
+ &=\int_0^1\left(x+\frac12-\frac58x^2\right)\,\dd x\\
+ &=\frac12+\frac12-\frac5{24}
+ =\boxed{\frac{19}{24}}.
+\end{aligned}
+\]
+For an independent setup check, reversing the order gives
+\[
+ \int_0^1\int_0^y\frac{2x+y}{4}\,\dd x\,\dd y
+ +\int_1^2\int_0^1\frac{2x+y}{4}\,\dd x\,\dd y.
+\]
+The first part is $1/6$ and the second is $5/8$, totaling $19/24$.
+
+\subsection*{Optional STA 631 extension 4: triangular support}
+Here $f(x,y)=24x(1-x-y)$ on $x>0,y>0,x+y<1$. The density is nonnegative on this triangle. For fixed $x$, $0<y<1-x$; for fixed $y$, $0<x<1-y$:
+\[
+\begin{aligned}
+ f_X(x)&=\int_0^{1-x}24x(1-x-y)\,\dd y
+ =\boxed{12x(1-x)^2},&&0<x<1,\\
+ f_Y(y)&=\int_0^{1-y}24x(1-x-y)\,\dd x
+ =\boxed{4(1-y)^3},&&0<y<1.
+\end{aligned}
+\]
+Both marginals are positive inside $(0,1)$, whereas the joint density vanishes on the positive-area set $\{0<x<1,0<y<1,x+y>1\}$. Thus it cannot equal $f_X(x)f_Y(y)$ almost everywhere, and $X,Y$ are \textbf{dependent}.
+
+\subsection*{Optional STA 631 extension 5: conditional reimbursement}
+The supplied density is
+\[
+ f(x,y)=\frac{20-x}{25x},\qquad10<x<20,\quad x/2<y<x.
+\]
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item At fixed $x$, the interval in $y$ has length $x/2$:
+\[
+ \boxed{f_X(x)=\int_{x/2}^{x}\frac{20-x}{25x}\,\dd y
+ =\frac{20-x}{50},\quad10<x<20,}
+\]
+zero elsewhere.
+\item Divide the joint density by this marginal:
+\[
+ \boxed{f_{Y\mid X}(y\mid x)=\frac2x,\quad x/2<y<x,}
+ \qquad10<x<20.
+\]
+Thus $Y\mid X=x$ is uniform on $(x/2,x)$.
+\item At $x=12$, the support is $6<y<12$, with density $1/6$. Hence
+\[
+ \boxed{P(Y\geq8\mid X=12)=\int_8^{12}\frac16\,\dd y=\frac23}.
+\]
+\end{enumerate}
+

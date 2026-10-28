@@ -1,0 +1,91 @@
+Authored encyclopedia and homework map.
+wrote /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/src/M2ENC.txt (23172 bytes tokenized)
+wrote /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/src/M2HW.txt (10587 bytes tokenized)
+M2CONT: 2853 bytes, 0 errors, 0 warnings
+M2COV: 2328 bytes, 0 errors, 0 warnings
+M2DISC: 3863 bytes, 0 errors, 0 warnings
+M2ENC: 23172 bytes, 0 errors, 0 warnings
+M2FMT: 290 bytes, 0 errors, 0 warnings
+M2HW: 10587 bytes, 0 errors, 0 warnings
+M2MGF: 3442 bytes, 0 errors, 0 warnings
+STAM2: 248 bytes, 0 errors, 0 warnings
+M2CONT: 0 errors, 0 warnings
+M2COV: 0 errors, 0 warnings
+M2DISC: 0 errors, 0 warnings
+M2ENC: 0 errors, 0 warnings
+M2FMT: 0 errors, 0 warnings
+M2HW: 0 errors, 0 warnings
+M2MGF: 0 errors, 0 warnings
+STAM2: 0 errors, 0 warnings
+PASS HW5 Q1 normalization and moments
+PASS HW4 Q1 formula/grid input
+PASS HW5 Q1 univariate formula/grid input
+PASS HW5 Q8 formula/grid input
+PASS grid duplicate-coordinate rejection
+PASS grid pair-count guard
+PASS grid negative-weight rejection
+PASS grid zero-total rejection
+PASS HW4 Q1 marginal and conditional PMF
+PASS HW5 Q8 joint and conditional moments
+PASS HW4 Q4 event masks
+PASS joint conditional event mask
+PASS discrete function square
+PASS raw and central product moments
+PASS zeroth product moment handles zero data
+PASS zero-probability conditioning guards
+PASS full Cartesian independence check
+PASS missing-pair dependence check
+PASS HW5 Q7 continuous conditional slice
+PASS HW5 Q2 symmetric density and square
+PASS continuous interval clipped to support
+PASS continuous empty interval
+PASS continuous raw and central moments
+PASS HW4 Q5 double integral with variable bound
+PASS HW4 Q3 reliability complement rectangle
+PASS HW4 Q2 unknown normalization and product moment
+PASS triangular support skips zero-length endpoint slice
+PASS double-integration refinement comparison
+PASS reversed moving limits guard
+PASS negative density guard
+PASS zero density guard
+
+31/31 M2DISC/M2CONT cases passed
+test_exponential_evaluation_rejects_boundary (__main__.Modules.test_exponential_evaluation_rejects_boundary) ... ok
+test_generic_exponential_numeric (__main__.Modules.test_generic_exponential_numeric) ... ok
+test_generic_invalid_m0 (__main__.Modules.test_generic_invalid_m0) ... ok
+test_generic_negative_values (__main__.Modules.test_generic_negative_values) ... ok
+test_generic_negative_variance (__main__.Modules.test_generic_negative_variance) ... ok
+test_generic_quadratic_numeric (__main__.Modules.test_generic_quadratic_numeric) ... ok
+test_generic_step_size_warning (__main__.Modules.test_generic_step_size_warning) ... ok
+test_hw5_q3_exponential_rate (__main__.Modules.test_hw5_q3_exponential_rate) ... ok
+test_hw5_q4_exact_quadratic_mgf_transform (__main__.Modules.test_hw5_q4_exact_quadratic_mgf_transform) ... ok
+test_hw5_q5_insurance_variance (__main__.Modules.test_hw5_q5_insurance_variance) ... ok
+test_hw5_q6_three_variable_variance (__main__.Modules.test_hw5_q6_three_variable_variance) ... ok
+test_invalid_covariance_matrix_reentry (__main__.Modules.test_invalid_covariance_matrix_reentry) ... ok
+test_invalid_dimension_reentry (__main__.Modules.test_invalid_dimension_reentry) ... ok
+test_invalid_rate_then_reentry (__main__.Modules.test_invalid_rate_then_reentry) ... ok
+test_invalid_variance_reentry (__main__.Modules.test_invalid_variance_reentry) ... ok
+test_negative_quadratic_then_reentry (__main__.Modules.test_negative_quadratic_then_reentry) ... ok
+test_negative_scale_reverses_domain_and_eval (__main__.Modules.test_negative_scale_reverses_domain_and_eval) ... ok
+test_one_variable_affine (__main__.Modules.test_one_variable_affine) ... ok
+test_static_and_token_roundtrip (__main__.Modules.test_static_and_token_roundtrip) ... ok
+test_two_combinations_mean_variance_covariance (__main__.Modules.test_two_combinations_mean_variance_covariance) ... ok
+test_zero_scale_gives_constant (__main__.Modules.test_zero_scale_gives_constant) ... ok
+test_zero_variance_correlation_undefined (__main__.Modules.test_zero_variance_correlation_undefined) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.280s
+
+OK
+PASS 44 reference/menu navigation checks; all topic pages reachable and fit.
+built M2CONT      2853 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2CONT.8xp
+built M2COV       2328 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2COV.8xp
+built M2DISC      3863 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2DISC.8xp
+built M2ENC      23172 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2ENC.8xp
+built M2FMT        290 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2FMT.8xp
+built M2HW       10587 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2HW.8xp
+built M2MGF       3442 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2MGF.8xp
+built STAM2        248 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/STAM2.8xp
+total program bytes: 46783
+PACKAGE READY /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/output/STA431_Midterm_II_Calculator_Package
+PROGRAMS 8 BYTES 47391

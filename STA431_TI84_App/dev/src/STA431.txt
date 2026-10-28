@@ -1,0 +1,63 @@
+// STA431 - main launcher for the STA 431/631 probability helper
+// Encyclopedia chapters: prgmSTAE1 (Ch1 counting) prgmSTAE2 (Ch2 probability) prgmSTAE3 (Ch3 RVs)
+// Calculators: prgmSTAHNT (which tool?) prgmSTACNT prgmSTAPRB prgmSTARV ; formatter prgmSTAFMT
+Lbl M
+Menu("STA 431 PROB HELPER","ENCYCLOPEDIA",E,"CALCULATORS",C,"WHICH TOOL? HINTS",H,"HELP + NOTATION",N,"QUIT",Q)
+Lbl E
+Menu("ENCYCLOPEDIA","CH1 COUNTING",E1,"CH2 PROBABILITY",E2,"CH3 RANDOM VARS",E3,"BACK",M)
+Lbl E1
+prgmSTAE1
+Goto E
+Lbl E2
+prgmSTAE2
+Goto E
+Lbl E3
+prgmSTAE3
+Goto E
+Lbl C
+Menu("CALCULATORS","WHICH TOOL? HINTS",H,"COUNTING",C1,"PROBABILITY",C2,"RANDOM VARIABLES",C3,"BACK",M)
+Lbl C1
+prgmSTACNT
+Goto C
+Lbl C2
+prgmSTAPRB
+Goto C
+Lbl C3
+prgmSTARV
+Goto C
+Lbl H
+prgmSTAHNT
+Goto M
+Lbl N
+ClrHome
+Output(1,1,"HOW TO USE             1/2")
+Output(2,1,"ENCYCLOPEDIA - pick topic")
+Output(3,1," ENTER=next page")
+Output(4,1," LEFT=back  CLEAR=menu")
+Output(5,1,"CALCULATORS - answer the")
+Output(6,1," prompts. Fractions OK,")
+Output(7,1," e.g. 3/16 or 15/100.")
+Output(8,1," Unknown value? type (-)1")
+Output(9,1,"Uses A-Z and Str1-Str9")
+Output(10,1,"Use BACK to exit safely")
+Repeat Ans:getKey:End
+Ans→K
+If K=45:Goto M
+ClrHome
+Output(1,1,"NOTATION               2/2")
+Output(2,1,"AuB = A union B  (or)")
+Output(3,1,"AnB = A intersect B (and)")
+Output(4,1,"A' = complement (not A)")
+Output(5,1,"P(A|B) = P(A given B)")
+Output(6,1,"C(n,r)=nCr=n!/(r!(n-r)!)")
+Output(7,1,"P(n,r)=nPr=n!/(n-r)!")
+Output(8,1,"F(x)=P(X≤x) f=pmf or pdf")
+Output(9,1,"S = sample space")
+Output(10,1,"Refs = Freund 8e chapters")
+Repeat Ans:getKey:End
+Ans→K
+If K=24:Goto N
+Goto M
+Lbl Q
+ClrHome
+""

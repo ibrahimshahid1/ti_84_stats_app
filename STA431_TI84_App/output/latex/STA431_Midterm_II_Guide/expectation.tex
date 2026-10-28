@@ -1,0 +1,44 @@
+\section{Expectation: definitions, functions, and properties}
+\textbf{Read:} Freund Ch4 \S2, pp.113--121; Bertsekas--Tsitsiklis Ch2 \S2.4 and Ch3 \S3.1; Wasserman \S\S3.1--3.2. Practice set B.
+\subsection{The definition and its meaning}
+Expectation is a probability-weighted average. A possible value receives weight equal to its probability in the discrete case; continuous values are weighted by a density:
+\[
+\E X=\sum_x x p_X(x),\qquad \E X=\int_{-\infty}^{\infty}x f_X(x)\dd x.
+\]
+Sum or integrate over the support. A mean need not be a possible observation: a fair die has mean $3.5$. It describes an average over repetitions, not the outcome you must see next.
+
+A finite expectation is well defined when $\E|X|<\infty$. A nonnegative variable can have expectation $+\infty$; if the positive and negative contributions are both infinite, the expectation is undefined. Symmetry alone does not repair divergence.
+\begin{example}[Normalize before averaging]
+Let $p_X(x)=cx$ for $x=1,2,3$. First $c(1+2+3)=1$, so $c=1/6$. Then $\E X=(1^2+2^2+3^2)/6=7/3$. The weights sum to one and the result lies between 1 and 3.
+\end{example}
+\checkpoint{If $f_X(x)=2x$ on $(0,1)$, find $\E X$.}{Integrate $\int_0^1x(2x)\dd x=2/3$.}
+\subsection{The generalized definition: LOTUS}
+For a function $g$, average the transformed values using the original probabilities:
+\[
+\E[g(X)]=\sum_xg(x)p_X(x),\qquad \E[g(X)]=\int g(x)f_X(x)\dd x.
+\]
+This is often called LOTUS, the law of the unconscious statistician. You do not need the distribution of $g(X)$ just to find its expectation. For two variables use the joint law:
+\[
+\E[g(X,Y)]=\sum_x\sum_yg(x,y)p_{X,Y}(x,y)
+\quad\text{or}\quad \iint_Sg(x,y)f_{X,Y}(x,y)\dd x\dd y.
+\]
+For $\E[g(X)]$ alone a marginal suffices. For a product or nonlinear function of both variables, the marginals usually do not supply the needed dependence information.
+\begin{example}[A transformed payoff]
+With $f_X(x)=2x$ on $(0,1)$ and $Y=X^2$,
+\[
+\E Y=\int_0^1x^2(2x)\dd x=\frac12,\qquad \E(Y^2)=\E(X^4)=\int_0^12x^5\dd x=\frac13.
+\]
+For a monetary payoff $R=20X^2-3$, the expected net payoff is $20(1/2)-3=7$ dollars.
+\end{example}
+\checkpoint{For $p(x)=x/6$, $x=1,2,3$, find $\E[(X-1)^2]$.}{The sum is $(0+2+12)/6=7/3$, not $(\E X-1)^2=16/9$.}
+\subsection{Properties and how to use them}
+For integrable variables and constants,
+\begin{align*}
+\E c&=c,&\E(aX+bY+c)&=a\E X+b\E Y+c,\\
+X\le Y\ \text{a.s.}&\Longrightarrow\E X\le\E Y,&\E(\mathbf1_A)&=P(A).
+\end{align*}
+Linearity requires no independence: distribute the sum or integral across addition. If $X,Y$ are independent and the expectations exist, then $\E[g(X)h(Y)]=\E[g(X)]\E[h(Y)]$. This product rule needs an assumption that linearity does not.
+\begin{pitfall}[Nonlinearity]
+Generally $\E[g(X)]\ne g(\E X)$. In particular $\E(X^2)\ne(\E X)^2$ unless $X$ is constant almost surely, and $\E(1/X)\ne1/\E X$ in general. Expand before averaging: $\E[(aX+b)^2]=a^2\E X^2+2ab\E X+b^2$.
+\end{pitfall}
+\checkpoint{If $\E X=3$ and $\E Y=5$ with arbitrary dependence, find $\E(2X-4Y+7)$. Can you obtain $\E(XY)$?}{The linear mean is $6-20+7=-7$. The product mean is undetermined without more information.}

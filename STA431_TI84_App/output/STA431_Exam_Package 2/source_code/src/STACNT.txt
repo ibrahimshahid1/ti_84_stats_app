@@ -1,0 +1,875 @@
+// STACNT - COUNTING TOOLS (calculator module, called from STA431 as prgmSTACNT)
+// Tools (SPEC 4): A n!,nPr,nCr  B word arrangements  C groups/multinomial
+//                 D 2-group selection  E stars and bars  F term coefficient  Z back
+// Formatter: value in W, prgmSTAFMT -> Str9 fraction candidate, Str8 decimal (clobbers Q R S T U V)
+// Shared helper MU = multinomial coefficient (flat "subroutine", no Goto inside blocks)
+//   in : list ʟCNT of whole-number counts, θ = return code (dispatch table at end of MU)
+//   out: Z = (sum c)!/prod(c!)  or ⁻1 if >= 1E99.99 (checked with logs first, no overflow)
+//        Str7 = plug-in text like "11!/(2!2!)"  (0! and 1! omitted)
+//   scratch: H I J X Y Z
+// Tool data vars: A-G K-P, Str1-Str6, lists ʟCNA ʟCNB ʟCNT (deleted on BACK)
+// Big results: helper returns ⁻1, shown as TOO BIG (never ERR:OVERFLOW)
+Lbl M
+Menu("COUNTING TOOLS","n!, nPr, nCr",A,"WORD ARRANGEMENTS",B,"GROUPS/MULTINOMIAL",C,"2-GROUP SELECTION",D,"STARS AND BARS",E,"TERM COEFFICIENT",F,"BACK",Z)
+// =====================================================================
+// A. n!, nPr, nCr   (N=n, K=r, P=nCr, L=nPr or n^r, O=multiset)
+// =====================================================================
+Lbl A
+ClrHome
+Output(1,1,"n!, nPr, nCr     USE WHEN")
+Output(2,1,"ORDER MATTERS, no repeats")
+Output(3,1," nPr = n!/(n-r)!")
+Output(4,1,"ORDER DOESN'T MATTER")
+Output(5,1," nCr = n!/(r!(n-r)!)")
+Output(6,1,"ORDERED, WITH REPLACEMENT")
+Output(7,1," n^r   (codes, PINs)")
+Output(8,1,"UNORDERED, WITH REPEATS")
+Output(9,1," C(n+r-1,r)  (multiset)")
+Output(10,1,"cues arrange/rank, choose")
+Pause
+Lbl A1
+ClrHome
+Disp "n!, nPr, nCr","n=total, r=number picked"
+Input "n?",N
+Input "r?",K
+If N<0 or K<0 or fPart(N) or fPart(K):Goto A9
+0→P
+If K>N:Goto A4
+{K,N-K}→ʟCNT
+1→θ
+Goto MU
+Lbl A2
+Z→P
+Str7→Str1
+Lbl A4
+// multiset C(n+r-1,r): 1 if r=0, 0 if n=0<r
+1→O
+If K=0:Goto A5
+0→O
+If N=0:Goto A5
+{K,N-1}→ʟCNT
+2→θ
+Goto MU
+Lbl A3
+Z→O
+Lbl A5
+ClrHome
+Output(1,1,"n="+toString(N)+"  r="+toString(K))
+If N≤69
+Then
+N!→W
+prgmSTAFMT
+Output(2,1,"n! ="+Str9)
+Else
+Output(2,1,"n! =TOO BIG (n>69)")
+End
+If K≤69
+Then
+K!→W
+prgmSTAFMT
+Output(3,1,"r! ="+Str9)
+Else
+Output(3,1,"r! =TOO BIG (r>69)")
+End
+// nPr = nCr*r!  (log check before computing)
+⁻1→L
+If P=0
+0→L
+If P>0 and K≤69
+Then
+If log(P)+log(K!)<99.99
+N nPr K→L
+End
+If L<0
+Output(4,1,"nPr=TOO BIG")
+If L=0
+Output(4,1,"nPr=0  (r>n)")
+If L>0
+Then
+L→W
+prgmSTAFMT
+"nPr="+toString(N)+"!/"+toString(N-K)+"!"+"="+Str9→Str2
+If length(Str2)>26
+"nPr="+Str9→Str2
+Output(4,1,Str2)
+End
+If P<0
+Output(5,1,"nCr=TOO BIG")
+If P=0
+Output(5,1,"nCr=0  (r>n)")
+If P>0
+Then
+P→W
+prgmSTAFMT
+"nCr="+Str1+"="+Str9→Str2
+If length(Str2)>26
+"nCr="+Str9→Str2
+Output(5,1,Str2)
+End
+// n^r  (0^0 counted as 1)
+1→L
+If K>0 and N=0
+0→L
+If K>0 and N>0
+Then
+If K*log(N)<99.99
+Then
+N^K→L
+Else
+⁻1→L
+End
+End
+If L<0
+Output(6,1,"n^r=TOO BIG")
+If L≥0
+Then
+L→W
+prgmSTAFMT
+"n^r="+toString(N)+"^"+toString(K)+"="+Str9→Str2
+If length(Str2)>26
+"n^r="+Str9→Str2
+Output(6,1,Str2)
+End
+If O<0
+Output(7,1,"C(n+r-1,r)=TOO BIG")
+If O≥0
+Then
+O→W
+prgmSTAFMT
+"C(n+r-1,r)=C("+toString(N+K-1)+","+toString(K)+")="+Str9→Str2
+If N=0 or length(Str2)>26
+"C(n+r-1,r)="+Str9→Str2
+Output(7,1,Str2)
+End
+Output(8,1,"ORDER MATTERS   nPr, n^r")
+Output(9,1,"ORDER DOESN'T   nCr, C(..)")
+Output(10,1,"n^r, C(..) ALLOW REPEATS")
+Pause
+Goto M
+Lbl A9
+ClrHome
+Output(4,1,"n AND r MUST BE WHOLE")
+Output(5,1,"NUMBERS 0,1,2,…")
+Pause
+Goto A1
+// =====================================================================
+// B. WORD ARRANGEMENTS  Str1=word Str4=distinct letters ʟCNA=counts
+//    N=length G=total E=1 block/2 not-together F=letter index K=its count L=block
+// =====================================================================
+Lbl B
+ClrHome
+Output(1,1,"WORD ARRANGEMENTS")
+Output(2,1,"USE WHEN arranging letters")
+Output(3,1,"of a word with repeats")
+Output(4,1," n!/(k1!k2!…)")
+Output(5,1," k = copies of each letter")
+Output(6,1,"BLOCK = glue all copies of")
+Output(7,1," a letter into 1 unit")
+Output(8,1,"NOT TOGETHER = TOTAL-BLOCK")
+Output(9,1,"TYPE WORD WITH ALPHA")
+Output(10,1,"(A-LOCK = 2nd ALPHA)")
+Pause
+Lbl B1
+ClrHome
+Disp "WORD ARRANGEMENTS","use ALPHA / A-LOCK"
+Input "WORD?",Str1
+length(Str1)→N
+If N<1:Goto B1
+// count each distinct character
+sub(Str1,1,1)→Str4
+{1}→ʟCNA
+For(I,2,N)
+sub(Str1,I,1)→Str3
+inString(Str4,Str3)→J
+If J
+Then
+ʟCNA(J)+1→ʟCNA(J)
+Else
+Str4+Str3→Str4
+1→ʟCNA(dim(ʟCNA)+1)
+End
+End
+" "→Str5
+For(I,1,dim(ʟCNA))
+If ʟCNA(I)>1
+Str5+sub(Str4,I,1)+" x"+toString(ʟCNA(I))+"  "→Str5
+End
+ʟCNA→ʟCNT
+3→θ
+Goto MU
+Lbl B2
+Z→G
+ClrHome
+Output(1,1,"WORD="+sub(Str1,1,min(N,21)))
+Output(2,1,"n="+toString(N)+" ("+toString(dim(ʟCNA))+" DISTINCT)")
+If Str5=" "
+Then
+Output(3,1,"NO REPEATED LETTERS")
+Else
+Output(3,1,"REPEATED LETTERS")
+If length(Str5)>52
+sub(Str5,1,51)+"…"→Str5
+Output(4,1,sub(Str5,1,min(26,length(Str5))))
+If length(Str5)>26
+Output(5,1,sub(Str5,27,length(Str5)-26))
+End
+Output(6,1,"TOTAL=n!/(k1!k2!…)")
+"="+Str7→Str2
+If length(Str2)>26
+sub(Str2,1,25)+"…"→Str2
+Output(7,1,Str2)
+G→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+Output(8,1,"="+Str9)
+Output(10,1,"ENTER=BLOCK OPTIONS")
+Pause
+Lbl B5
+Menu("WORD OPTIONS","LETTER BLOCK",B7,"NOT ALL TOGETHER",B8,"BACK",M)
+Lbl B7
+1→E
+Goto B9
+Lbl B8
+2→E
+Lbl B9
+ClrHome
+Disp "WHICH LETTER'S COPIES"
+If E=1
+Disp "MUST BE TOGETHER?"
+If E=2
+Disp "ARE NOT ALL TOGETHER?"
+Input "LETTER?",Str2
+If length(Str2)<1:Goto B5
+inString(Str4,sub(Str2,1,1))→F
+If F=0:Goto BN
+ʟCNA(F)→K
+sub(Str4,F,1)→Str3
+// block = one unit: set that letter's count to 1
+ʟCNA→ʟCNT
+1→ʟCNT(F)
+4→θ
+Goto MU
+Lbl B6
+Z→L
+ClrHome
+Output(1,1,"ALL "+toString(K)+" "+Str3+"'S AS 1 BLOCK")
+Output(2,1,"(n-k+1)!/(other k!'s)")
+"="+Str7→Str2
+If length(Str2)>26
+sub(Str2,1,25)+"…"→Str2
+Output(3,1,Str2)
+L→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+Output(4,1,"="+Str9)
+If E=1
+Output(6,1,"NOT TOGETHER=TOTAL-BLOCK")
+If E=2
+Then
+Output(6,1,"NOT ALL TOGETHER")
+Output(7,1,"=TOTAL-BLOCK")
+If G<0 or L<0
+Then
+Output(8,1,"=TOO BIG")
+Else
+Output(8,1,"="+toString(G)+"-"+toString(L))
+G-L→W
+prgmSTAFMT
+Output(9,1,"="+Str9)
+End
+End
+If E=2 and K=2
+Output(10,1,"(k=2  = NOT ADJACENT)")
+If E=2 and K>2
+Output(10,1,"NO 2 ADJACENT? USE GAPS")
+Pause
+Goto B5
+Lbl BN
+ClrHome
+Output(4,1,"LETTER NOT IN WORD")
+Output(5,1,"(type it with ALPHA)")
+Pause
+Goto B5
+// =====================================================================
+// C. GROUPS/MULTINOMIAL
+//  C1: K=#groups ʟCNA=sizes G=labeled D=prod m! L=labeled? (1=Y)
+//  C2: N=objects O=#categories ʟCNA=counts P=sum K=r F=choices
+//      G=multinomial L=F^r E=total
+// =====================================================================
+Lbl C
+ClrHome
+Output(1,1,"GROUPS/MULTINOMIAL")
+Output(2,1,"SPLIT n into groups of")
+Output(3,1," sizes n1,…,nk (Σ=n)")
+Output(4,1," n!/(n1!n2!…nk!)")
+Output(5,1," unnamed same-size groups")
+Output(6,1," divide by m! (m=# same)")
+Output(7,1,"EXACT COUNTS+FREE e.g.")
+Output(8,1," exactly 3 A's, 1 F, rest")
+Output(9,1," any of F other grades")
+Output(10,1," N!/(c1!..cM!r!)*F^r")
+Pause
+Menu("GROUPS","SPLIT INTO GROUPS",C1,"EXACT COUNTS+FREE",C2,"BACK",M)
+Lbl C1
+ClrHome
+Disp "SPLIT INTO GROUPS","k=number of groups"
+Input "k?",K
+If K<1 or K>30 or fPart(K):Goto C9
+DelVar ʟCNA
+K→dim(ʟCNA)
+For(I,1,K)
+Disp "GROUP "+toString(I)
+Input "SIZE?",A
+A→ʟCNA(I)
+End
+If min(ʟCNA)<1 or max(abs(fPart(ʟCNA)))>0:Goto C8
+ClrHome
+Disp "GROUPS LABELED?","(named/distinct, e.g.","committee A,B,C = YES)"
+Input "1=Y 0=N?",L
+ʟCNA→ʟCNT
+5→θ
+Goto MU
+Lbl C3
+Z→G
+// D = prod over sizes of m! (m = # groups sharing that size)
+1→D
+For(I,1,K)
+D*sum(seq(ʟCNA(J)=ʟCNA(I),J,1,I))→D
+End
+"SIZES "+toString(ʟCNA(1))→Str2
+For(I,2,K)
+Str2+","+toString(ʟCNA(I))→Str2
+End
+ClrHome
+Output(1,1,"n="+toString(sum(ʟCNA))+" INTO "+toString(K)+" GROUPS")
+If length(Str2)>26
+sub(Str2,1,25)+"…"→Str2
+Output(2,1,Str2)
+Output(3,1,"LABELED=n!/(n1!…nk!)")
+"="+Str7→Str2
+If length(Str2)>26
+sub(Str2,1,25)+"…"→Str2
+Output(4,1,Str2)
+If G<0
+Then
+Output(5,1,"=TOO BIG")
+Output(10,1,"ANSWER=TOO BIG")
+Else
+G→W
+prgmSTAFMT
+Output(5,1,"="+Str9)
+Str9→Str3
+"UNLABELED=LABELED/"+toString(D)→Str6
+If length(Str6)>26
+"UNLABELED=LABELED/(m!…)"→Str6
+Output(6,1,Str6)
+G/D→W
+prgmSTAFMT
+Output(7,1,"="+Str9)
+Output(8,1,"(/m! for m same-size grps)")
+If L=1
+Then
+Output(9,1,"YOU SAID LABELED")
+Output(10,1,"ANSWER="+Str3)
+Else
+Output(9,1,"YOU SAID UNLABELED")
+Output(10,1,"ANSWER="+Str9)
+End
+End
+Pause
+Goto M
+Lbl C9
+ClrHome
+Output(4,1,"k MUST BE 1 TO 30")
+Pause
+Goto C1
+Lbl C8
+ClrHome
+Output(4,1,"SIZES MUST BE WHOLE")
+Output(5,1,"NUMBERS 1,2,3,…")
+Pause
+Goto C1
+Lbl C2
+ClrHome
+Disp "EXACT COUNTS+FREE","N=total objects"
+Input "N?",N
+Disp "M=# categories with","an EXACT count"
+Input "M?",O
+If N<0 or fPart(N) or O<1 or O>20 or fPart(O):Goto CE
+DelVar ʟCNA
+O→dim(ʟCNA)
+For(I,1,O)
+Disp "CATEGORY "+toString(I)
+Input "EXACT COUNT?",A
+A→ʟCNA(I)
+End
+If min(ʟCNA)<0 or max(abs(fPart(ʟCNA)))>0:Goto CE
+sum(ʟCNA)→P
+If P>N:Goto CF
+N-P→K
+Disp "F=# OTHER CHOICES","for each free one"
+Input "F?",F
+If F<0 or fPart(F):Goto CE
+augment(ʟCNA,{K})→ʟCNT
+6→θ
+Goto MU
+Lbl C4
+Z→G
+// L = F^r  (0^0 = 1)
+1→L
+If K>0 and F=0
+0→L
+If K>0 and F>0
+Then
+If K*log(F)<99.99
+Then
+F^K→L
+Else
+⁻1→L
+End
+End
+// E = G*L with log check
+⁻1→E
+If L=0
+0→E
+If G>0 and L>0
+Then
+If log(G)+log(L)<99.99
+G*L→E
+End
+ClrHome
+Output(1,1,"N="+toString(N)+" Σc="+toString(P)+" FREE r="+toString(K))
+Output(2,1,"STEP1 N!/(c1!..cM!r!)")
+"="+Str7→Str6
+If length(Str6)>26
+sub(Str6,1,25)+"…"→Str6
+Output(3,1,Str6)
+G→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+Str9→Str2
+Output(4,1,"="+Str2)
+Output(5,1,"STEP2 F^r  each free one")
+L→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+Str9→Str3
+"="+toString(F)+"^"+toString(K)+"="+Str3→Str6
+If length(Str6)>26
+"="+Str3→Str6
+Output(6,1,Str6)
+Output(7,1,"TOTAL=STEP1*STEP2")
+"="+Str2+"*"+Str3→Str6
+If length(Str6)≤26 and G≥0 and L≥0
+Output(8,1,Str6)
+E→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+Output(9,1,"="+Str9)
+Pause
+Goto M
+Lbl CE
+ClrHome
+Output(4,1,"USE WHOLE NUMBERS ≥0")
+Output(5,1,"(1 TO 20 CATEGORIES)")
+Pause
+Goto C2
+Lbl CF
+ClrHome
+Output(4,1,"EXACT COUNTS ADD TO")
+Output(5,1,"MORE THAN N - REJECTED")
+Pause
+Goto C2
+// =====================================================================
+// D. 2-GROUP SELECTION  A=G1 size B=G2 size K=choose C,D=G1 min,max
+//    E,F=G2 min,max  L..N = range of i  G=C(A+B,K) P=total O=screen row
+// =====================================================================
+Lbl D
+ClrHome
+Output(1,1,"2-GROUP SELECTION")
+Output(2,1,"USE WHEN picking K from G1")
+Output(3,1,"(A items) and G2 (B items)")
+Output(4,1,"with at least/most/exactly")
+Output(5,1," Σ C(A,i)*C(B,K-i)")
+Output(6,1," i = # picked from G1")
+Output(7,1,"T/F EXAMS  #correct =")
+Output(8,1," choose which questions")
+Output(9,1," are correct (G1=hard qs)")
+Output(10,1,"AT MOST 99 = any (no max)")
+Pause
+Lbl D1
+ClrHome
+Disp "2-GROUP SELECTION","(AT MOST 99 = ANY)"
+Input "G1 SIZE A?",A
+Input "G2 SIZE B?",B
+Input "CHOOSE K?",K
+Input "G1 AT LEAST?",C
+Input "G1 AT MOST?",D
+Input "G2 AT LEAST?",E
+Input "G2 AT MOST?",F
+If A<0 or B<0 or K<0 or fPart(A) or fPart(B) or fPart(K):Goto DE
+If fPart(C) or fPart(D) or fPart(E) or fPart(F):Goto DE
+If K>A+B:Goto DF
+If D<0 or D≥99
+A→D
+If F<0 or F≥99
+B→F
+max(max(C,K-min(F,B)),0)→L
+min(min(D,A),min(K-E,K))→N
+{K,A+B-K}→ʟCNT
+7→θ
+Goto MU
+Lbl D2
+Z→G
+If G<0:Goto DG
+// every term C(A,i)C(B,K-i) <= C(A+B,K) < 1E100, so no overflow below
+"i  C("+toString(A)+",i)*C("+toString(B)+","+toString(K)+"-i)"→Str3
+If length(Str3)>26
+"i  C(A,i)*C(B,K-i)"→Str3
+0→P
+ClrHome
+Output(1,1,Str3)
+2→O
+For(I,L,N)
+A nCr I→X
+B nCr (K-I)→Y
+X*Y→Z
+P+Z→P
+"i="+toString(I)+" "+toString(X)+"*"+toString(Y)+"="+toString(Z)→Str1
+If length(Str1)>26
+"i="+toString(I)+" TERM="+toString(Z)→Str1
+Output(O,1,Str1)
+O+1→O
+If O=10 and I<N
+Then
+Output(10,1,"ENTER=MORE")
+Pause
+ClrHome
+Output(1,1,Str3)
+2→O
+End
+End
+If L>N
+Output(2,1,"NO VALID i  (0 WAYS)")
+Output(10,1,"ENTER=TOTAL")
+Pause
+ClrHome
+If L≤N
+Output(1,1,"i FROM "+toString(L)+" TO "+toString(N))
+If L>N
+Output(1,1,"NO i FITS THE LIMITS")
+Output(2,1,"TOTAL WAYS=Σ TERMS")
+P→W
+prgmSTAFMT
+Str9→Str2
+Output(3,1,"="+Str2)
+Output(4,1,"ALL=C(A+B,K)=C("+toString(A+B)+","+toString(K)+")")
+G→W
+prgmSTAFMT
+Str9→Str3
+Output(5,1,"="+Str3)
+Output(6,1,"PROB=WAYS/ALL")
+"="+Str2+"/"+Str3→Str6
+If length(Str6)≤26
+Output(7,1,Str6)
+P/G→W
+prgmSTAFMT
+Output(8,1,"P="+Str9)
+If Str9≠Str8
+Output(9,1," ="+Str8)
+Pause
+Goto M
+Lbl DE
+ClrHome
+Output(4,1,"USE WHOLE NUMBERS")
+Output(5,1,"(A, B, K AT LEAST 0)")
+Pause
+Goto D1
+Lbl DF
+ClrHome
+Output(4,1,"K IS MORE THAN A+B")
+Pause
+Goto D1
+Lbl DG
+ClrHome
+Output(4,1,"C(A+B,K) TOO BIG")
+Pause
+Goto M
+// =====================================================================
+// E. STARS AND BARS  N=items K=bins ʟCNA=mins P=sum mins O=n' G=ways
+// =====================================================================
+Lbl E
+ClrHome
+Output(1,1,"STARS AND BARS")
+Output(2,1,"USE WHEN n IDENTICAL items")
+Output(3,1,"go to k DISTINCT bins")
+Output(4,1,"(x1+…+xk=n, whole #s)")
+Output(5,1," xi≥0   C(n+k-1,k-1)")
+Output(6,1," xi≥1   C(n-1,k-1)")
+Output(7,1," xi≥mi  n'=n-Σmi, then")
+Output(8,1,"        C(n'+k-1,k-1)")
+Output(9,1,"cues identical, at least")
+Output(10,1," one each, # of solutions")
+Pause
+Lbl E1
+ClrHome
+Disp "STARS AND BARS"
+Input "n ITEMS?",N
+Input "k BINS?",K
+If N<0 or fPart(N) or K<1 or K>50 or fPart(K):Goto EE
+Disp "SAME MIN FOR ALL BINS?"
+Input "1=Y 0=N?",L
+If L=1:Goto E2
+DelVar ʟCNA
+K→dim(ʟCNA)
+For(I,1,K)
+Disp "BIN "+toString(I)
+Input "MIN?",A
+A→ʟCNA(I)
+End
+Goto E3
+Lbl E2
+Input "MIN EACH?",A
+seq(A,I,1,K)→ʟCNA
+Lbl E3
+If min(ʟCNA)<0 or max(abs(fPart(ʟCNA)))>0:Goto EE
+sum(ʟCNA)→P
+N-P→O
+0→G
+If O<0:Goto E4
+{K-1,O}→ʟCNT
+8→θ
+Goto MU
+Lbl E5
+Z→G
+Lbl E4
+ClrHome
+Output(1,1,"n="+toString(N)+" ITEMS, k="+toString(K)+" BINS")
+Output(2,1,"Σ MINS="+toString(P))
+Output(3,1,"n'=n-Σmin="+toString(N)+"-"+toString(P)+"="+toString(O))
+If O<0
+Then
+Output(5,1,"n'<0 SO 0 WAYS")
+Else
+Output(4,1,"WAYS=C(n'+k-1,k-1)")
+G→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+"=C("+toString(O+K-1)+","+toString(K-1)+")="+Str9→Str2
+If length(Str2)≤26
+Output(5,1,Str2)
+If length(Str2)>26
+Then
+Output(5,1,"=C("+toString(O+K-1)+","+toString(K-1)+")")
+Output(6,1,"="+Str9)
+End
+End
+Output(7,1,"(y1+…+yk=n', yi≥0")
+Output(8,1," where yi=xi-mi)")
+Pause
+Goto M
+Lbl EE
+ClrHome
+Output(4,1,"USE WHOLE NUMBERS")
+Output(5,1,"n≥0, 1≤k≤50, mins≥0")
+Pause
+Goto E1
+// =====================================================================
+// F. TERM COEFFICIENT  K=#terms ʟCNB=coeffs a ʟCNA=exponents e
+//    L=sum of positive log10 parts P=1 if a zero factor D=prod a^e
+//    G=multinomial N=1 if coefficient too big
+// =====================================================================
+Lbl F
+ClrHome
+Output(1,1,"TERM COEFFICIENT")
+Output(2,1,"USE WHEN asked for coeff")
+Output(3,1,"of x^a*y^b… in (..)^n")
+Output(4,1," n!/(e1!e2!…ek!)")
+Output(5,1,"  * a1^e1 * a2^e2 * …")
+Output(6,1,"ai = coeff of term i")
+Output(7,1," (keep sign, use (-) key)")
+Output(8,1,"ei = its power in target")
+Output(9,1,"EX (x+2)^5, coeff of x^3")
+Output(10,1," (a,e) = (1,3) and (2,2)")
+Pause
+Lbl F1
+ClrHome
+Disp "TERM COEFFICIENT","k=# terms inside (…)"
+Input "k (2-6)?",K
+If K<2 or K>6 or fPart(K):Goto FE
+DelVar ʟCNA
+DelVar ʟCNB
+K→dim(ʟCNA)
+K→dim(ʟCNB)
+For(I,1,K)
+Disp "TERM "+toString(I)
+Input "COEFF a?",A
+Input "EXPONENT e?",E
+A→ʟCNB(I)
+E→ʟCNA(I)
+End
+If min(ʟCNA)<0 or max(abs(fPart(ʟCNA)))>0:Goto FF
+// product of a^e, with 0^0=1 and a log check (sum of positive parts)
+0→L
+0→P
+For(I,1,K)
+If ʟCNA(I)>0 and ʟCNB(I)=0
+1→P
+If ʟCNB(I)≠0
+L+max(0,ʟCNA(I)*log(abs(ʟCNB(I))))→L
+End
+0→D
+If P=0 and L<99.99
+Then
+1→D
+For(I,1,K)
+If ʟCNA(I)>0
+D*ʟCNB(I)^ʟCNA(I)→D
+End
+End
+// plug-in text "=2^3*(⁻1)^2*3^2"
+"="→Str4
+For(I,1,K)
+If ʟCNA(I)>0
+Then
+If length(Str4)>1
+Str4+"*"→Str4
+ʟCNB(I)→W
+prgmSTAFMT
+Str9→Str6
+If ʟCNB(I)<0 or fPart(ʟCNB(I))
+"("+Str6+")"→Str6
+Str4+Str6+"^"+toString(ʟCNA(I))→Str4
+End
+End
+If length(Str4)=1
+"=1"→Str4
+ʟCNA→ʟCNT
+9→θ
+Goto MU
+Lbl F2
+Z→G
+ClrHome
+Output(1,1,"n=Σe="+toString(sum(ʟCNA))+"  CHECK n = POWER!")
+Output(2,1,"MULTINOMIAL n!/(e1!..ek!)")
+"="+Str7→Str2
+If length(Str2)>26
+sub(Str2,1,25)+"…"→Str2
+Output(3,1,Str2)
+G→W
+prgmSTAFMT
+If W<0
+"TOO BIG"→Str9
+Str9→Str3
+Output(4,1,"="+Str3)
+Output(5,1,"PRODUCT a1^e1*a2^e2*…")
+If length(Str4)≤26
+Output(6,1,Str4)
+D→W
+prgmSTAFMT
+If L≥99.99 and P=0
+"TOO BIG"→Str9
+Str9→Str5
+Output(7,1,"="+Str5)
+Output(8,1,"COEFF=MULTINOMIAL*PRODUCT")
+"="+Str3+"*"+Str5→Str6
+If length(Str6)≤26 and G≥0 and (L<99.99 or P=1)
+Output(9,1,Str6)
+0→N
+If G<0 or (L≥99.99 and P=0)
+1→N
+If N=0 and D≠0
+Then
+If log(G)+log(abs(D))≥99.99
+1→N
+End
+If N=0
+Then
+G*D→W
+prgmSTAFMT
+"="+Str9→Str6
+If Str9≠Str8
+Str6+"  ="+Str8→Str6
+Else
+"=TOO BIG"→Str6
+End
+If length(Str6)>26
+"="+Str9→Str6
+Output(10,1,Str6)
+Pause
+Goto M
+Lbl FE
+ClrHome
+Output(4,1,"k MUST BE 2 TO 6")
+Pause
+Goto F1
+Lbl FF
+ClrHome
+Output(4,1,"EXPONENTS MUST BE WHOLE")
+Output(5,1,"NUMBERS 0,1,2,…")
+Pause
+Goto F1
+// =====================================================================
+// MU: multinomial coefficient of ʟCNT -> Z (⁻1 = too big), Str7 = text
+//  pass 1: log10 of prod C(s_i,c_i) (s_i = running sum), build Str7
+//  pass 2 (only if safe): exact product of X nCr c_i
+// =====================================================================
+Lbl MU
+0→X
+0→Y
+1→Z
+"("→Str7
+For(I,1,dim(ʟCNT))
+ʟCNT(I)→H
+X+H→X
+If H>1
+Str7+toString(H)+"!"→Str7
+min(H,X-H)→H
+If H>333
+100→Y
+If Y<99.99
+Then
+For(J,1,H)
+Y+log((X-H+J)/J)→Y
+End
+End
+End
+If Str7="("
+Then
+toString(X)+"!"→Str7
+Else
+toString(X)+"!/"+Str7+")"→Str7
+End
+If Y≥99.99
+⁻1→Z
+If Y<99.99
+Then
+0→X
+For(I,1,dim(ʟCNT))
+X+ʟCNT(I)→X
+Z*(X nCr ʟCNT(I))→Z
+End
+End
+If θ=1:Goto A2
+If θ=2:Goto A3
+If θ=3:Goto B2
+If θ=4:Goto B6
+If θ=5:Goto C3
+If θ=6:Goto C4
+If θ=7:Goto D2
+If θ=8:Goto E5
+If θ=9:Goto F2
+Goto M
+// =====================================================================
+Lbl Z
+DelVar ʟCNA
+DelVar ʟCNB
+DelVar ʟCNT
+ClrHome
+Return

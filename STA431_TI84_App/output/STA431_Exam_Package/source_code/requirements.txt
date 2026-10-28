@@ -1,0 +1,5 @@
+tivars==1.1.1
+mpmath==1.3.0
+sympy==1.14.0
+reportlab==4.4.9
+pypdf==6.10.0

@@ -1,0 +1,241 @@
+// M2CONT: finite-bound 1D q(X) or conditional slice q(X;A).
+// Double integrals: one fnInt in Y per outer Simpson X node, never nested fnInt.
+// Fixed A, bounds B,C, mass D survive M2FMT scratch Q..V.
+If Z=12 or Z=17 or Z=22 or Z=23:Goto AP
+If Z=2 or Z=3 or Z=5 or Z=21:Goto JP
+0→Z
+Lbl T
+Menu("CONTINUOUS TOOLS","1D PDF OR SLICE",A0,"DOUBLE INTEGRAL",J0,"JOINT SLICE",JS,"BACK",Z)
+Lbl JS
+prgmM2SLICE
+Goto T
+Lbl A0
+ClrHome
+Disp "ENTER f(X) OR SHAPE q(X)","OMIT UNKNOWN CONSTANT c","FIX A FOR A SLICE q(X;A)","ENTER 0 IF A IS UNUSED"
+Input "q(X)?",Str1
+Input "FIXED A?",A
+Lbl A1
+Input "LOWER X?",B
+Input "UPPER X?",C
+Lbl AP
+0→Z
+If C≤B:Goto BA
+0→H
+For(I,0,20)
+B+(C-B)*(I+.5)/21→X
+If expr(Str1)<0
+1→H
+End
+If H:Goto BQ
+fnInt(expr(Str1),X,B,C)→D
+If D≤0:Goto BQ
+ClrHome
+Disp "NUMERIC NORMALIZATION","f(X)=q(X)/INT(q)","INTEGRAL q=",D
+1/D→W
+prgmM2FMT
+Disp "c APPROX=",Str9,"VALIDATE q≥0 ON SUPPORT"
+Pause
+Lbl M
+Menu("1D / SLICE TOOLS","MEAN+VARIANCE",M0,"INTERVAL PROB",P0,"FUNCTION g(X)",G0,"RAW/CENTRAL MOM",R0,"NEW DENSITY",A0,"TOOLS MENU",T,"BACK",Z)
+Lbl M0
+fnInt(X*expr(Str1),X,B,C)/D→E
+fnInt(X²*expr(Str1),X,B,C)/D→F
+fnInt((X-E)²*expr(Str1),X,B,C)/D→G
+ClrHome
+Disp "NUMERIC APPROXIMATIONS"
+E→W
+prgmM2FMT
+Disp "MEAN APPROX=",Str9
+F→W
+prgmM2FMT
+Disp "E[X^2] APPROX=",Str9
+G→W
+prgmM2FMT
+Disp "VAR(X) APPROX=",Str9
+Pause
+Goto M
+Lbl P0
+Input "EVENT LOWER?",E
+Input "EVENT UPPER?",F
+max(B,E)→H
+min(C,F)→J
+0→W
+If H<J
+fnInt(expr(Str1),X,H,J)/D→W
+prgmM2FMT
+ClrHome
+Disp "INTERSECTED WITH SUPPORT","P(INTERVAL) APPROX=",Str9
+Pause
+Goto M
+Lbl G0
+Input "g(X)?",Str2
+fnInt(expr(Str2)*expr(Str1),X,B,C)/D→E
+fnInt(expr(Str2)²*expr(Str1),X,B,C)/D→F
+fnInt((expr(Str2)-E)²*expr(Str1),X,B,C)/D→G
+ClrHome
+Disp "NUMERIC APPROXIMATIONS"
+E→W
+prgmM2FMT
+Disp "E[g] APPROX=",Str9
+F→W
+prgmM2FMT
+Disp "E[g^2] APPROX=",Str9
+G→W
+prgmM2FMT
+Disp "VAR(g) APPROX=",Str9
+Pause
+Goto M
+Lbl R0
+Menu("ONE-VAR MOMENT","RAW MOMENT",R1,"CENTRAL MOMENT",R2,"BACK",M)
+Lbl R1
+1→θ
+Goto R3
+Lbl R2
+2→θ
+Lbl R3
+Input "POWER 0-10?",R
+If R<0 or R>10 or fPart(R):Goto BR
+0→E
+If θ=2
+fnInt(X*expr(Str1),X,B,C)/D→E
+1→H
+If R>0
+fnInt((X-E)^R*expr(Str1),X,B,C)/D→H
+H→W
+prgmM2FMT
+ClrHome
+Disp "MOMENT APPROX=",Str9
+Pause
+Goto R0
+Lbl J0
+ClrHome
+Disp "RAW I=DOUBLE INT q","RAW J=DOUBLE INT(q*g)","USE FULL SUPPORT FOR c","USE NORMALIZED f FOR PROB","A IS A FIXED PARAMETER"
+Pause
+Input "q(X,Y)?",Str1
+Input "FIXED A?",A
+Input "LOWER X?",B
+Input "UPPER X?",C
+If C≤B:Goto BJ
+Input "LOWER Y(X)?",Str2
+Input "UPPER Y(X)?",Str3
+Input "g(X,Y),1=AREA?",Str4
+Lbl JP
+0→Z
+Lbl J1
+Input "EVEN N 4-100?",N
+If N<4 or N>100 or fPart(N/2):Goto BN
+0→P
+0→θ
+For(K,1,2)
+N*2^(K-1)→O
+(C-B)/O→L
+0→M
+0→T
+For(I,0,O)
+B+I*L→X
+expr(Str2)→H
+expr(Str3)→J
+0→Q
+0→R
+If J<H
+1→P
+If J>H
+Then
+(H+J)/2→Y
+If expr(Str1)<0
+1→θ
+fnInt(expr(Str1),Y,H,J)→Q
+If Str4="1"
+Then
+Q→R
+Else
+fnInt(expr(Str1)*expr(Str4),Y,H,J)→R
+End
+End
+2→S
+If fPart(I/2)
+4→S
+If I=0 or I=O
+1→S
+M+S*Q→M
+T+S*R→T
+End
+If K=1
+Then
+M*L/3→D
+T*L/3→E
+Else
+M*L/3→F
+T*L/3→G
+End
+End
+If P:Goto BL
+If θ:Goto BQ
+ClrHome
+Disp "SIMPSON N="+toString(N)
+D→W
+prgmM2FMT
+Disp "RAW I=INT q APPROX=",Str9
+E→W
+prgmM2FMT
+Disp "RAW J=INT(q*g) APPROX=",Str9
+Disp "ENTER FOR REFINED RESULT"
+Pause
+ClrHome
+Disp "REFINED N="+toString(2*N)
+F→W
+prgmM2FMT
+Disp "RAW I=INT q APPROX=",Str9
+G→W
+prgmM2FMT
+Disp "RAW J=INT(q*g) APPROX=",Str9
+Disp "CHANGE IN I=",abs(F-D)
+Disp "CHANGE IN J=",abs(G-E)
+Pause
+Lbl JM
+Menu("DOUBLE INTEGRAL","NORMALIZE FULL S",JN,"NEW REGION",J0,"TOOLS MENU",T,"BACK",Z)
+Lbl JN
+If F≤0:Goto BQ
+ClrHome
+Disp "FULL SUPPORT ONLY","c=1/RAW I APPROX="
+1/F→W
+prgmM2FMT
+Disp Str9
+G/F→W
+prgmM2FMT
+Disp "E[g]=RAW J/RAW I APPROX",Str9
+Disp "FOR EVENT PROB USE RAW I","q MUST ALREADY BE A PDF"
+Pause
+Goto JM
+Lbl BA
+ClrHome
+Disp "UPPER MUST EXCEED LOWER"
+Pause
+Goto A1
+Lbl BQ
+ClrHome
+Disp "INVALID q OR ZERO MASS","q MUST BE NONNEGATIVE","VALIDATE WHOLE SUPPORT"
+Pause
+Goto T
+Lbl BJ
+ClrHome
+Disp "UPPER MUST EXCEED LOWER"
+Pause
+Goto J0
+Lbl BL
+ClrHome
+Disp "Y LIMITS REVERSED","SPLIT REGION CORRECTLY"
+Pause
+Goto T
+Lbl BN
+ClrHome
+Disp "N MUST BE EVEN 4 TO 100"
+Pause
+Goto J1
+Lbl BR
+ClrHome
+Disp "POWER INTEGER 0 TO 10"
+Pause
+Goto R0
+Lbl Z
+Return

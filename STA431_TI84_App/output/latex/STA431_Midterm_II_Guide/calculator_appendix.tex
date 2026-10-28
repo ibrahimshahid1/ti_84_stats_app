@@ -1,0 +1,242 @@
+\section{TI-84 Plus CE: a calculator-first workflow}
+\label{sec:calculator}
+Start with \texttt{EXAM ASSISTANT} to identify the overall question type, or open \texttt{GENERAL SOLVERS} directly. Enter the current problem's values and formula. Use the calculator for arithmetic, finite sums, numerical integration, and moments wherever the model is known. The accompanying \texttt{STAM2} program suite adds guided solvers and an on-calculator encyclopedia. It uses the structure of your earlier \texttt{STA431} suite with separate program names. The recipes below are also available through native calculator commands, so you can still work directly from the home screen.
+
+The calculator can produce most numerical answers in Homeworks 4--5 after you identify the support, event, or conditional slice. A symbolic density formula, a convergence domain, or an independence proof still needs the mathematics in the main guide. In particular, finite numerical integration bounds do not stand for infinity, and matching numerical values at a few points does not prove two functions equal.
+
+\subsection{Start with the Midterm II suite}
+Transfer \textbf{all eleven} \texttt{.8xp} files from the package's \texttt{calculator\_files} directory using TI Connect CE. Then press \texttt{PRGM}, select \texttt{STAM2}, and press \texttt{ENTER} twice. This is a TI-BASIC program suite, launched from \texttt{PRGM}; it is not a Flash application in the \texttt{APPS} menu.
+
+\begin{tabularx}{\linewidth}{@{}p{0.30\linewidth}X@{}}
+\toprule General solver & Use it for\\\midrule
+DISCRETE + JOINT & A finite PMF or joint table, entered as rows or a formula/grid: normalization, moments, marginals, conditionals, events, and functions.\\
+DENSITY + INTEGRAL & A one-dimensional density or fixed conditional slice; numerical double integrals with support limits you enter.\\
+MGF TOOLS & Exponential and quadratic-exponential templates, affine transformations, and numerical derivatives of a typed MGF.\\
+LINEAR COMBOS & One or two combinations of up to three variables from their given variances and covariances, with means optional.\\
+ENCYCLOPEDIA & Definitions, formula selection, support rules, derivation outlines, and interpretation.\\
+HOMEWORK MAP & Read a problem-by-problem walkthrough, or choose LOAD + SOLVE to prefill the homework model and run its general solver.\\\bottomrule
+\end{tabularx}
+
+\textbf{Fast table entry.} Choose \texttt{DISCRETE + JOINT > FORMULA/GRID}. For HW4 Q1, enter $x$ values $\{1,2\}$, $y$ values $\{1,2,3\}$, and $q(X,Y)=X+Y^2$. The program generates all six pairs, sums the weights, and gives $c=1/37$. For HW5 Q8, use $\{1,2,3\}$ in both lists and $q=X+Y$. For a one-variable formula use the $y$ list $\{0\}$; for example $x$ list $\{1,2,3,4\}$ with $q=X^2+X$ generates HW5 Q1. The grid is limited to 30 pairs; manual row entry also supports finite nonrectangular supports.
+
+\textbf{Practice only: a shortest homework route.} Choose \texttt{PRACTICE + HW > LOAD PRACTICE DATA}, the homework group, and its question. The program supplies the input model to the existing solver. A double-integral preset asks for an even $N$; enter 4 for these polynomial homework examples. For changed exam data, use the manual general solver.
+
+Use \texttt{BACK} to return through the menus. In reference pages, \texttt{ENTER} advances, left arrow returns to the previous page, and \texttt{CLEAR} returns to the topic menu. The solvers use scalar variables, strings, and custom lists beginning \texttt{M2}; they leave your graph equations and standard lists \texttt{L1}--\texttt{L6} unchanged. Native recipes below use those standard lists intentionally. The package includes simulator checks and device test inputs; run the device checks on your actual CE before relying on the suite during an exam.
+
+\subsection{Key entry that makes every recipe faster}
+\texttt{[2nd][0]} opens \texttt{CATALOG}; paste the actual command token. \texttt{[2nd][STAT]} opens \texttt{LIST}, with \texttt{seq(} under \texttt{OPS} and \texttt{sum(} under \texttt{MATH}. \texttt{STAT > CALC} contains \texttt{1-Var Stats} and \texttt{2-Var Stats}. Choose commands by name because menu positions can differ across OS versions.
+
+The comma-separated calculus commands here use \texttt{MODE: CLASSIC}. MathPrint shows templates for the same operations. The printed arrow \texttt{->} below means the calculator's \texttt{STO}\,$\blacktriangleright$\ token. The text \texttt{L1} means the actual $L_1$ token, entered with \texttt{[2nd][1]}; similarly for the other lists. Comparisons such as \texttt{<=} mean the single $\le$ token under \texttt{[2nd][MATH] > TEST}. Use \texttt{(-)} for a negative number and the subtraction key between two quantities.
+
+\textbf{Store reusable values.} A result followed by \texttt{->M} remains in $M$ until overwritten; \texttt{Ans} changes after another calculation. Keep a mean in $M$, a total weight in $S$ or $D$, and reuse them. In a native recipe, do not change lists or run a program in the middle of a calculation and assume these variables still hold their previous values.
+
+\subsection{The fastest finite-PMF trick: unnormalized weighted Stats}
+Enter possible values in $L_1$ and their \textbf{nonnegative weights} in $L_2$, with at least one positive weight. They need not sum to one. Run
+\begin{verbatim}
+1-Var Stats L1,L2
+\end{verbatim}
+In the wizard set \texttt{List=L1} and \texttt{FreqList=L2}. Read
+\[
+\bar x=\E X,\qquad \sigma_x^2=\Var X,\qquad n=\sum_iw_i.
+\]
+The population standard deviation is $\sigma_x$. The sample $S_x$ is a different quantity; it can be undefined when frequency entries are fractional. Squaring $\sigma_x$ gives the variance of the modeled distribution. If $p_i=cw_i$, the normalizing constant is $c=1/n$.
+
+\begin{example}[Homework 5, Problem 1, with almost no arithmetic]
+Enter $L_1=\{1,2,3,4\}$ and $L_2=\{2,6,12,20\}$. Do not divide the second list by 40. \texttt{1-Var Stats L1,L2} gives $n=40$, $\bar x=13/4$, $\sigma_x^2=63/80$. Therefore $c=1/40$, $\E X=13/4$, and $\Var X=63/80$.
+\end{example}
+
+\textbf{Transform the values and reuse the weights.} To obtain the mean and variance of $Y=X^2$ from a discrete distribution:
+\begin{verbatim}
+L1^2->L3
+1-Var Stats L3,L2
+\end{verbatim}
+Now $\bar x$ on the results screen is $\E Y$, and $\sigma_x^2$ is $\Var Y$. More generally, put $g(L_1)$ into $L_3$ and use the same weight list. Do not square the original variance to obtain the variance of a square.
+
+For raw and central moments directly from the home screen, choose an integer power $R$:
+\begin{verbatim}
+sum(L1^R*L2)/sum(L2)
+sum((L1-M)^R*L2)/sum(L2)
+\end{verbatim}
+The second expression assumes that the original weighted mean was stored in $M$. This computes third and fourth central moments directly, avoiding a long raw-to-central expansion. Keep the expansion in your written work if the question explicitly requests that derivation.
+
+\subsection{A universal joint-table setup}
+Use \textbf{one row for every allowed pair}: $L_1$ contains $x$, $L_2$ the matching $y$, and $L_3$ the nonnegative raw weight. Repeated coordinates are expected. The pair list need not be a rectangular grid; list exactly the support. Set
+\begin{verbatim}
+sum(L3)->S
+\end{verbatim}
+Then $c=1/S$ when the input is an unnormalized weight. For product moments,
+\begin{verbatim}
+sum(L1^R*L2^T*L3)/S
+\end{verbatim}
+returns $\E[X^RY^T]$. Setting $R=T=1$ gives $\E XY$. A table-based linear combination can be handled by transforming the row values, without manually expanding its covariance terms:
+\begin{verbatim}
+2*L1-3*L2+5->L4
+1-Var Stats L4,L3
+\end{verbatim}
+Read its mean and population variance.
+
+\begin{example}[Homework 5, Problem 8, entered once]
+\begin{verbatim}
+{1,1,1,2,2,2,3,3,3}->L1
+{1,2,3,1,2,3,1,2,3}->L2
+L1+L2->L3
+sum(L3)->S
+\end{verbatim}
+Here $S=36$. \texttt{1-Var Stats L1,L3} gives $\E X=13/6$ and $\Var X=23/36$; exchanging $L_1,L_2$ gives the same $Y$ moments. The raw product command \texttt{sum(L1*L2*L3)/S} gives $14/3$.
+\end{example}
+
+\subsection{Masks turn events and conditionals into list calculations}
+A list comparison returns 1 for a true row and 0 for a false row. Multiply the mask by the weight list to keep exactly the desired rows:
+\begin{verbatim}
+sum((L1>L2)*L3)/S
+sum((L1+L2<=3)*L3)/S
+sum((L1<=A)*(L2<=B)*L3)/S
+\end{verbatim}
+These compute $P(X>Y)$, $P(X+Y\le3)$, and the joint CDF $F(A,B)$. Compound masks multiply the parenthesized conditions, so their meaning is intersection. To find $P(X=x_0)$, store $x_0$ in $A$ and use \texttt{sum((L1=A)*L3)/S}.
+
+For a conditional distribution, turn the selected joint weights into a new frequency list. For $X\mid Y=A$:
+\begin{verbatim}
+L3*(L2=A)->L4
+1-Var Stats L1,L4
+\end{verbatim}
+The weights automatically renormalize inside Stats. Read the conditional mean and population variance. Require \texttt{sum(L4)>0}. For $Y\mid X=A$, mask with \texttt{L1=A} and analyze $L_2$ instead. A condition such as $X>1$ can replace equality, which also handles conditioning on interval events.
+
+\begin{example}[Finish Homework 5, Problem 8]
+With the nine-row data above, set $A=1$, calculate \texttt{L3*(L1=A)->L4}, then run \texttt{1-Var Stats L2,L4}. The conditional mean is $20/9$, and the conditional variance is $50/81$. The selected weight total is 9, so $P(X=1)=9/36=1/4$ and $p_{Y\mid X}(y\mid1)=(1+y)/9$ on $y=1,2,3$.
+\end{example}
+
+\subsection{Two-variable Stats gives covariance with little typing}
+For the same joint row lists, run
+\begin{verbatim}
+2-Var Stats L1,L2,L3
+\end{verbatim}
+Scroll to the means, population standard deviations, total frequency $n$, and weighted sum $\Sigma xy$. Then
+\[
+\E XY=\frac{\Sigma xy}{n},\qquad
+\Cov(X,Y)=\frac{\Sigma xy}{n}-\bar x\bar y,\qquad
+\rho=\frac{\Cov(X,Y)}{\sigma_x\sigma_y}.
+\]
+Retrieve actual output tokens through \texttt{VARS > Statistics}, under \texttt{XY} or the sum menu. Store values before editing the lists or starting another analysis, which clears the statistics variables. The $n$ here is the \emph{sum of weights}, not necessarily the number of rows. No regression or \texttt{DiagnosticsOn} is needed.
+
+For HW5 Problem 8 this yields covariance $-1/36$ and correlation $-1/23$. A direct centered alternative uses only ordinary lists:
+\begin{verbatim}
+sum(L1*L3)/S->M
+sum(L2*L3)/S->N
+sum((L1-M)*(L2-N)*L3)/S
+\end{verbatim}
+This centered calculation often avoids subtracting two similar large values.
+
+\subsection{One reusable continuous-density engine}
+In \texttt{Y=}, save a \textbf{nonnegative unnormalized shape} $q(X)$ in $Y_1$. Store finite lower and upper support limits in $B,C$. For a conditional slice, replace the given variable by a scalar parameter $A$ and hold it fixed. Paste the actual $Y_1$ token from \texttt{VARS > Y-VARS > Function}.
+\begin{verbatim}
+fnInt(Y1,X,B,C)->D
+fnInt(X*Y1,X,B,C)/D->M
+fnInt((X-M)^2*Y1,X,B,C)/D
+\end{verbatim}
+The results are the total weight $D$, the mean $M$, and the variance. The normalizing constant is $1/D$ if this is the entire unnormalized density. For a slice of a globally normalized joint PDF, $D$ is instead the appropriate marginal density at the given value. Dividing by $D$ produces the conditional moments automatically. Require $D>0$.
+
+For any payoff $g(X)$, compute \texttt{fnInt(g(X)*Y1,X,B,C)/D}. For its variance, first store that mean in $M$, then use \texttt{fnInt((g(X)-M)\^{}2*Y1,X,B,C)/D}. Here \texttt{g(X)} is a placeholder: type the actual expression or a stored function token.
+
+\begin{example}[Homework 5, Problem 7, without deriving the denominator numerically]
+Set $Y_1=X+A$, $A=1/2$, $B=0$, $C=1$. The engine returns $D=1$, mean $7/12$, and variance $11/144$. For the \emph{symbolic} conditional density write $(x+y)/(1/2+y)$ on $(0,1)$; the calculator supplies the numerical moments at the chosen $y$.
+\end{example}
+
+For HW5 Problem 2, you may omit the constant $3/4$: use $Y_1=1-X^2$ on $(-1,1)$ and let the ratios normalize it. The second raw moment is $1/5$. To get $\Var(X^2)$ directly:
+\begin{verbatim}
+fnInt(X^2*Y1,X,B,C)/D->M
+fnInt((X^2-M)^2*Y1,X,B,C)/D
+\end{verbatim}
+This gives $8/175$. The raw fourth moment is $\texttt{fnInt(X\^{}4*Y1,X,B,C)/D}=3/35$.
+
+For an interval $[E,F]$ inside the support, $P(E\le X\le F)=\texttt{fnInt(Y1,X,E,F)/D}$. Clip bounds to the support first. If the density has different formulas on different intervals, split the integral and add the parts. Each new parameter value $A$ requires recomputing $D$ and any stored mean.
+
+\subsection{Joint slices: numerical marginals and conditional laws}
+Choose \texttt{DENSITY + INTEGRAL > JOINT SLICE}, then the conditioning direction. Enter the joint shape $q(X,Y)$, its known multiplier $c$, the given value, and the support bounds for the remaining variable. Use $c=1$ if $q$ is already the joint PDF. The output includes the appropriate marginal-density value and the conditional mean, second moment, and variance. Further options evaluate a conditional density at a point, integrate a conditional interval, or change the given value without retyping the joint model. This directly supports HW4 Q2, HW5 Q7, and the optional reimbursement question. Symbolic density formulas still follow from the integrals in the walkthrough.
+
+\subsection{Double integrals: let the app handle the second numerical layer}
+The CE cannot nest \texttt{fnInt}. The app's \texttt{DOUBLE INTEGRAL} tool therefore performs one numerical integral in $Y$ at each outer $X$ node and combines those values with Simpson's rule. Enter:
+\begin{enumerate}
+\item The density or weight $q(X,Y)$ and fixed parameter $A$ (enter 0 if absent).
+\item Constant outer $x$ limits, followed by inner $y$ limits as expressions in $X$.
+\item A multiplier $g(X,Y)$: enter 1 for probability or normalization, $X$, $Y$, or $XY$ for moments.
+\item An even outer resolution $N$; compare the $N$ and $2N$ results shown.
+\end{enumerate}
+For an integral $I=\int_a^bG(x)\dd x$, $G(x)=\int_{L(x)}^{U(x)}q(x,y)\dd y$, the outer rule is
+\[
+I_N\approx\frac h3\left[G(x_0)+G(x_N)+4\sum_{i\ \mathrm{odd}}G(x_i)+2\sum_{\substack{i\ \mathrm{even}\\0<i<N}}G(x_i)\right],
+\quad h=\frac{b-a}{N}.
+\]
+The app reports \textbf{raw integrals}. If $q$ is a globally normalized PDF and the entered bounds describe an event, its raw integral is the event probability. Do not renormalize that event to one. Use the optional normalization ratio only when the entered region is the full support of the model you intend to normalize.
+
+\begin{tabularx}{\linewidth}{@{}p{0.20\linewidth}Xp{0.16\linewidth}@{}}
+\toprule Homework task & Input region and integrand & Result\\\midrule
+HW4 Q2 normalizer & $q=2X+Y$, $x:0\to1$, $y:0\to2$, $g=1$ & Raw $I=4$, $c=1/4$\\
+HW4 Q3 survival & $q=(X+Y)/8$, $x:1\to2$, $y:1\to2$, $g=1$ & $I=3/8$, failure $1-I=5/8$\\
+HW4 Q5 event & $q=(2X+Y)/4$, $x:0\to1$, $y:X\to2$, $g=1$ & $I=19/24$\\
+Triangle example & $q=2$, $x:0\to1$, $y:0\to X$, $g=XY$ & $\E XY=1/4$\\\bottomrule
+\end{tabularx}
+
+These polynomial cases are particularly favorable. More difficult integrands can be slow or sensitive to bounds; split changing boundaries and compare refinements. Agreement at two resolutions is useful numerical evidence, not an error guarantee or a proof of normalization. If a formula is undefined at an endpoint, use a valid limiting form or a suitable change of variables rather than entering an undefined value.
+
+The native fallback is to do one integral algebraically and call \texttt{fnInt} on the remaining expression. For HW4 Q5 it reduces to
+\begin{verbatim}
+fnInt(1/2+X-5*X^2/8,X,0,1)
+\end{verbatim}
+which gives $19/24$. For a marginal density at a \emph{fixed} conditioning value, a single \texttt{fnInt} usually suffices directly.
+
+\subsection{Covariance matrices automate all cross terms}
+The guided \texttt{LINEAR COMBOS} solver asks for up to three variances and the distinct pairwise covariances, then coefficient lists for one or two combinations. If means are not supplied, choose the variance-only option; no invented means are needed.
+
+The native matrix equivalent is also fast. Open \texttt{[2nd][}$x^{-1}$\texttt{] MATRIX > EDIT}. Put the covariance matrix in $[A]$ and the coefficient rows in $[B]$. Then evaluate
+\[
+[B]*[A]*[B]^{\mathsf T}.
+\]
+Paste actual matrix names from \texttt{MATRIX > NAMES}; obtain the postfix transpose $\mathsf T$ from \texttt{MATRIX > MATH}, not the letter \texttt{T}. The diagonal outputs are variances and the off-diagonal outputs are covariances. Additive offsets do not belong in the covariance matrix or coefficient rows.
+
+For Homework 5 Problem 6,
+\[
+[A]=\begin{pmatrix}4&1&-1\\1&9&0\\-1&0&2\end{pmatrix},\qquad
+[B]=\begin{pmatrix}3&-2&1\end{pmatrix},
+\]
+and the result is $[[56]]$. For two combinations $U=2X-Y+1$, $V=X+3Y-4$, with $\Var X=4$, $\Var Y=9$, $\Cov(X,Y)=-1$,
+\[
+[A]=\begin{pmatrix}4&-1\\-1&9\end{pmatrix},\quad
+[B]=\begin{pmatrix}2&-1\\1&3\end{pmatrix}
+\quad\Longrightarrow\quad
+\begin{pmatrix}29&-24\\-24&79\end{pmatrix}.
+\]
+This gives $\rho_{UV}=-24/\sqrt{29\cdot79}$. In written work, retain the general variance or covariance formula so the meaning of the entries is visible.
+
+\subsection{MGFs: exact templates first, numerical derivatives when needed}
+The \texttt{MGF TOOLS} exponential template takes rate $\lambda$ and supplies $M(t)=\lambda/(\lambda-t)$, $t<\lambda$, together with mean $1/\lambda$, second moment $2/\lambda^2$, and variance $1/\lambda^2$. The quadratic-exponential template $e^{\alpha t+\beta t^2}$ gives mean $\alpha$ and variance $2\beta$. These directly cover HW5 Problems 3--4. The affine transformation uses the scale $a$ and shift $b$ in $Z=aX+b$.
+
+For a generic given MGF, save it in $Y_1$, with calculator $X$ representing mathematical $t$. The mean can be estimated by \texttt{nDeriv(Y1,X,0)}. A numerical second moment can be estimated by centered differences:
+\[
+\E X\approx\frac{M(h)-M(-h)}{2h},\qquad
+\E X^2\approx\frac{M(h)-2M(0)+M(-h)}{h^2}.
+\]
+The generic app compares two small step sizes and labels these estimates. Keep stable digits; a small step can worsen cancellation, so smaller is not automatically better. The points used must lie inside the MGF's domain. The exact template is preferable when it matches the expression.
+
+For a native affine transform, put $a$ in $A$, $b$ in $B$, and define $Y_2$ by
+\begin{verbatim}
+e^(B*X)*Y1(A*X)
+\end{verbatim}
+This evaluates $M_{aX+b}(t)$ numerically at any valid $t$. It does not symbolically simplify the expression. With $M_X(t)=e^{4t+8t^2}$, $a=1/4$, $b=-1$, simplify on paper to $e^{t^2/2}$; the app's exact template then gives mean 0 and variance 1.
+
+For a finite-support PDF in $Y_1$, the native expression
+\begin{verbatim}
+fnInt(e^(T*X)*Y1,X,B,C)/D
+\end{verbatim}
+gives the MGF value at a chosen numeric $T$. This is particularly useful for checking a proposed MGF against the original distribution.
+
+\subsection{A useful extra: minimize a linear-combination variance}
+Practice question F8 asks for the coefficient $a$ minimizing $\Var(X-aY)$ when the two variances are 9 and 4 and covariance is 2. The quadratic is $9+4a^2-4a$. The native command
+\begin{verbatim}
+fMin(9+4X^2-4X,X,-5,5)
+\end{verbatim}
+returns the minimizing coefficient $X=1/2$, not the minimum variance itself. Substitute it into the quadratic to obtain 8. Choose a search interval containing the relevant minimum; \texttt{fMin} is numerical. For the general exact answer, differentiate to get $a=\Cov(X,Y)/\Var(Y)$ when $\Var(Y)>0$.
+
+\subsection{Official references and validation limits}
+The commands were checked against the \href{https://education.ti.com/download/en/ed-tech/0E32ECD55D084B2EAE7632510BC25FC0/4C0D8E4ED84C4182BC94F8375DEC4E0A/TI84_Plus_CE_ReferenceGuide_EN_GB.pdf}{TI-84 Plus CE Reference Guide}, including \texttt{fnInt}, \texttt{nDeriv}, \texttt{seq}, \texttt{sum}, \texttt{fMin}, and one- and two-variable Stats. TI's \href{https://education.ti.com/download/en/ed-tech/1743A58846484D5C9C6E1525B2548EED/FE52ED11600F49ACBDEF6108BD98C99C/TI-84Plus_C_Guidebook_EN.pdf}{detailed family guide} explains fractional frequency weights and stored statistics. See official support articles \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34416}{34416 (weighted Stats)}, \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34431}{34431 (matrix transpose)}, \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34417}{34417 (stored functions)}, and \href{https://education.ti.com/en/customer-support/knowledge-base/ti-83-84-plus-family/product-usage/34694}{34694 (numerical integration)}. TI's hosted \href{https://education.ti.com/seniornspiredcurriculum/aus-nz/-/media/ti/files/aus-nz/downloads/pdf/tibookvol_2.pdf}{McIntyre, Mathematics on a TI-84/CE, Volume 2, Chapter 15}, discusses the non-nesting integral limit and outer quadrature. Consulted October 27, 2026.
+
+The new suite is checked by tokenization, static layout/control-flow checks, and a TI-BASIC simulator against homework targets and edge cases. This verifies those source-level behaviors within the simulator; it does not establish that every physical-CE behavior or arbitrary user-entered integrand has been tested. The transfer package supplies concrete device checks with expected results.

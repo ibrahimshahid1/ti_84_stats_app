@@ -1,0 +1,95 @@
+           STA 431/631 Introduction to Probability
+                       Homework 5
+                             Due: Saturday, October 24, 2026
+
+Instructions: Complete the problems below. Show all your work for full credit.
+
+Common Problems (Required for both STA 431 and STA 631)
+  1. Let X be a discrete random variable with the probability mass function (PMF):
+                              f (x) = c(x2 + x) for x ∈ {1, 2, 3, 4}
+      (a) Find the value of the constant c.
+      (b) Calculate the expectation E(X).
+      (c) Calculate the variance V ar(X).
+  2. Let X be a continuous random variable with the probability density function (PDF):
+                                   (
+                                     3
+                                       (1 − x2 ) for − 1 < x < 1
+                            f (x) = 4
+                                    0            otherwise
+      (a) Calculate the expectation E(X) and the variance V ar(X).
+      (b) Let Y = X 2 . Find the expectation E(Y ) and the variance V ar(Y ).
+  3. The continuous random variable X has the probability density function:
+                                        (
+                                         3e−3x for x > 0
+                                f (x) =
+                                         0      otherwise
+      (a) Derive the moment generating function (MGF), MX (t). Be sure to state the
+          condition on t for which the MGF exists.
+      (b) Use the derivatives of the MGF to find the first moment E(X) and the second
+          moment E(X 2 ).
+  4. The moment generating function (MGF) of a random variable X is given by MX (t) =
+           2
+     e4t+8t . Let Z be a new random variable defined by the linear transformation Z = X−4
+                                                                                       4
+                                                                                          .
+      (a) Use the properties of MGFs to find the MGF of Z, MZ (t).
+      (b) Use MZ (t) to find the expectation E(Z) and the variance V ar(Z).
+  5. An insurance policy pays a total medical benefit consisting of two parts for each claim.
+     Let X represent the part paid to the surgeon, and Y represent the part paid to the
+     hospital. The variance of X is 300, the variance of Y is 500, and the covariance between
+     X and Y is 150.
+     Due to rising costs, the company updates the policy. The new payout to the surgeon
+     will be W = 2X +100, and the new payout to the hospital will be V = 1.1Y . Calculate
+     the variance of the new total benefit, V ar(W + V ).
+
+                                              1
+  6. Let X, Y , and Z be random variables. We are given the following variances and
+     covariances: V ar(X) = 4, V ar(Y ) = 9, V ar(Z) = 2, Cov(X, Y ) = 1, Cov(X, Z) = −1,
+     and Cov(Y, Z) = 0. Calculate the variance of the linear combination W = 3X −2Y +Z.
+
+  7. Let the continuous random variables X and Y have the joint PDF:
+                                  (
+                                   x + y for 0 < x < 1 and 0 < y < 1
+                       f (x, y) =
+                                   0      otherwise
+
+     (a) Find the marginal PDF of Y , fY (y).
+     (b) Derive the conditional PDF of X given Y = y, fX|Y (x | y).
+     (c) Find the conditional mean E(X | Y = 1/2) and the conditional variance V ar(X |
+         Y = 1/2).
+
+STA 431 Only Problems
+
+  8. Let the joint PMF of X and Y be defined by:
+                               (
+                                 x+y
+                                     for x ∈ {1, 2, 3} and y ∈ {1, 2, 3}
+                     f (x, y) = 36
+                                0    otherwise
+
+     (a) Find the marginal expectations E(X) and E(Y ).
+     (b) Find the product moment E(XY ).
+     (c) Calculate the covariance Cov(X, Y ).
+     (d) Find the conditional PMF fY |X (y | 1) and calculate the conditional expectation
+         E(Y | X = 1).
+
+
+
+
+STA 631 Only Problems
+
+  8. Let X be a continuous random variable with PDF f (x) = 1 − |x| for −1 < x < 1, and
+     0 otherwise. Let Y = X 2 .
+
+     (a) Prove that the covariance Cov(X, Y ) = 0.
+     (b) Are X and Y independent? Provide a formal mathematical justification for your
+         answer.
+         (Hint: Recall that X and Y are independent if and only if P (X ∈ A, Y ∈ B) =
+         P (X ∈ A)P (Y ∈ B) for all sets A and B. To show they are not independent,
+         construct an explicit pair of intervals A and B of positive probability for which
+         this equality fails.)
+
+
+
+                                           2
+

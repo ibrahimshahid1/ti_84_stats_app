@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "test_disc_cont.py": 31,
+    "test_cov_mgf.py": 22,
+    "test_reference_navigation.py": 44,
+    "test_slice.py": 19,
+    "test_presets.py": 17,
+    "test_workflow_upgrades.py": 8
+  },
+  "total_checks": 141,
+  "programs": 10,
+  "physical_device_tested": false
+}

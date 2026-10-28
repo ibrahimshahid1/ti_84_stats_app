@@ -1,0 +1,273 @@
+// M2RUN - supplied-homework input presets; general solvers compute every result.
+Lbl M
+Menu("HOMEWORK QUICK SOLVE","HW4 COMMON +431",A,"HW5 Q1 TO Q4",B,"HW5 Q5 TO Q8",C,"OPTIONAL 631",D,"BACK",Z)
+Lbl A
+Menu("HW4 LOAD + SOLVE","Q1 JOINT PMF",A1,"Q2 JOINT PDF",A2,"Q3 SERIES LIFETIME",A3,"Q4 PMF EVENTS",A4,"Q5 X LESS Y",A5,"BACK",M)
+Lbl B
+Menu("HW5 LOAD + SOLVE","Q1 PMF MOMENTS",B1,"Q2 PDF AND SQUARE",B2,"Q3 EXPONENTIAL MGF",B3,"Q4 AFFINE MGF",B4,"BACK",M)
+Lbl C
+Menu("HW5 LOAD + SOLVE","Q5 CLAIM VARIANCE",C1,"Q6 THREE VARIABLES",C2,"Q7 CONDITIONAL",C3,"Q8 JOINT MOMENTS",C4,"BACK",M)
+Lbl D
+Menu("OPTIONAL 631","HW4 Q4 TRIANGLE",D1,"HW4 Q5 REIMBURSE",D2,"HW5 Q8 ZERO COV",D3,"BACK",M)
+Lbl A1
+ClrHome
+Disp "HW4 Q1"
+Disp "PRELOAD x AND y GRID"
+Disp "q=X+Y²"
+Disp "GENERAL SOLVER COMPUTES"
+Pause
+{1,2}→ʟM2AX
+{1,2,3}→ʟM2AY
+"X+Y²"→Str1
+1→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl A4
+ClrHome
+Disp "HW4 Q4"
+Disp "PRELOAD x AND y GRID"
+Disp "q=X+Y"
+Disp "GENERAL SOLVER COMPUTES"
+Pause
+{1,2}→ʟM2AX
+{1,2,3,4}→ʟM2AY
+"X+Y"→Str1
+4→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl B1
+ClrHome
+Disp "HW5 Q1"
+Disp "PRELOAD x AND y GRID"
+Disp "q=X²+X"
+Disp "GENERAL SOLVER COMPUTES"
+Pause
+{1,2,3,4}→ʟM2AX
+{0}→ʟM2AY
+"X²+X"→Str1
+11→Z
+prgmM2DISC
+0→Z
+Goto B
+Lbl C4
+ClrHome
+Disp "HW5 Q8"
+Disp "PRELOAD x AND y GRID"
+Disp "q=X+Y"
+Disp "GENERAL SOLVER COMPUTES"
+Pause
+{1,2,3}→ʟM2AX
+{1,2,3}→ʟM2AY
+"X+Y"→Str1
+18→Z
+prgmM2DISC
+0→Z
+Goto C
+Lbl A2
+ClrHome
+Disp "HW4 Q2"
+Disp "PRELOAD JOINT INTEGRAL"
+Disp "CHOOSE EVEN N, e.g. 4"
+Disp "READ RAW INTEGRAL I"
+Pause
+"2X+Y"→Str1
+0→A
+0→B
+1→C
+"0"→Str2
+"2"→Str3
+"1"→Str4
+2→Z
+prgmM2CONT
+0→Z
+Goto A
+Lbl A3
+ClrHome
+Disp "HW4 Q3 SURVIVAL"
+Disp "PRELOAD JOINT INTEGRAL"
+Disp "CHOOSE EVEN N, e.g. 4"
+Disp "READ RAW INTEGRAL I"
+Pause
+Disp "THIS IS SURVIVAL PROB","FAILURE IS 1-RAW I"
+Pause
+"(X+Y)/8"→Str1
+0→A
+1→B
+2→C
+"1"→Str2
+"2"→Str3
+"1"→Str4
+3→Z
+prgmM2CONT
+0→Z
+Goto A
+Lbl A5
+ClrHome
+Disp "HW4 Q5"
+Disp "PRELOAD JOINT INTEGRAL"
+Disp "CHOOSE EVEN N, e.g. 4"
+Disp "READ RAW INTEGRAL I"
+Pause
+"(2X+Y)/4"→Str1
+0→A
+0→B
+1→C
+"X"→Str2
+"2"→Str3
+"1"→Str4
+5→Z
+prgmM2CONT
+0→Z
+Goto A
+Lbl D1
+ClrHome
+Disp "631 HW4 Q4"
+Disp "PRELOAD JOINT INTEGRAL"
+Disp "CHOOSE EVEN N, e.g. 4"
+Disp "READ RAW INTEGRAL I"
+Pause
+"24X*(1-X-Y)"→Str1
+0→A
+0→B
+1→C
+"0"→Str2
+"1-X"→Str3
+"1"→Str4
+21→Z
+prgmM2CONT
+0→Z
+Goto D
+Lbl B2
+ClrHome
+Disp "HW5 Q2"
+Disp "PRELOAD 1D DENSITY/SLICE"
+Disp "q=3/4*(1-X²)"
+Disp "USE MOMENTS OR INTERVAL"
+Pause
+"3/4*(1-X²)"→Str1
+0→A
+⁻1→B
+1→C
+12→Z
+prgmM2CONT
+0→Z
+Goto B
+Lbl C3
+ClrHome
+Disp "HW5 Q7 Y=1/2"
+Disp "PRELOAD 1D DENSITY/SLICE"
+Disp "q=X+A"
+Disp "USE MOMENTS OR INTERVAL"
+Pause
+"X+A"→Str1
+1/2→A
+0→B
+1→C
+17→Z
+prgmM2CONT
+0→Z
+Goto C
+Lbl D2
+ClrHome
+Disp "631 HW4 Q5 X=12"
+Disp "PRELOAD 1D DENSITY/SLICE"
+Disp "q=1"
+Disp "USE MOMENTS OR INTERVAL"
+Pause
+"1"→Str1
+0→A
+6→B
+12→C
+22→Z
+prgmM2CONT
+0→Z
+Goto D
+Lbl D3
+ClrHome
+Disp "631 HW5 Q8"
+Disp "PRELOAD 1D DENSITY/SLICE"
+Disp "q=1-abs(X)"
+Disp "USE MOMENTS OR INTERVAL"
+Pause
+"1-√(X²)"→Str1
+0→A
+⁻1→B
+1→C
+23→Z
+prgmM2CONT
+0→Z
+Goto D
+Lbl B3
+ClrHome
+Disp "HW5 Q3"
+Disp "EXPONENTIAL RATE 3"
+Disp "NO AFFINE CHANGE"
+Pause
+3→L
+1→A
+0→B
+13→Z
+prgmM2MGF
+0→Z
+Goto B
+Lbl B4
+ClrHome
+Disp "HW5 Q4"
+Disp "Mx=e^(4t+8t²)"
+Disp "Z=(X-4)/4"
+Pause
+4→C
+8→D
+1/4→A
+⁻1→B
+14→Z
+prgmM2MGF
+0→Z
+Goto B
+Lbl C1
+ClrHome
+Disp "HW5 Q5"
+Disp "PRELOAD GIVEN VAR/COV"
+Disp "MEANS NOT PROVIDED"
+Disp "OFFSETS INCLUDED"
+Pause
+2→N
+1→M
+0→E
+{0,0,0}→ʟM2MU
+{300,500,0}→ʟM2VR
+{300,150,0,150,500,0,0,0,0}→ʟM2CV
+{2,1.1,0}→ʟM2CA
+{0,0,0}→ʟM2CB
+100→C
+0→D
+15→Z
+prgmM2COV
+0→Z
+Goto C
+Lbl C2
+ClrHome
+Disp "HW5 Q6"
+Disp "PRELOAD GIVEN VAR/COV"
+Disp "MEANS NOT PROVIDED"
+Disp "OFFSETS INCLUDED"
+Pause
+3→N
+1→M
+0→E
+{0,0,0}→ʟM2MU
+{4,9,2}→ʟM2VR
+{4,1,⁻1,1,9,0,⁻1,0,2}→ʟM2CV
+{3,⁻2,1}→ʟM2CA
+{0,0,0}→ʟM2CB
+0→C
+0→D
+16→Z
+prgmM2COV
+0→Z
+Goto C
+Lbl Z
+0→Z
+Return

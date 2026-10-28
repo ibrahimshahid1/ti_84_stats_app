@@ -1,0 +1,338 @@
+\documentclass[letterpaper,landscape]{article}
+\usepackage[margin=0.32in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,multicol,xcolor,enumitem,microtype}
+\usepackage[hidelinks]{hyperref}
+\definecolor{navy}{RGB}{24,49,72}
+\definecolor{rulegray}{RGB}{168,177,184}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.2pt}
+\setlength{\columnsep}{0.19in}
+\setlength{\columnseprule}{0.3pt}
+\def\columnseprulecolor{\color{rulegray}}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\dd}{\,d}
+\newcommand{\head}[1]{\vspace{3pt}{\color{navy}\bfseries\fontsize{10}{11}\selectfont #1}\par\vspace{1pt}\hrule\vspace{3pt}}
+\newcommand{\mini}[1]{{\bfseries #1}}
+\newcommand{\cmd}[1]{{\ttfamily\fontsize{7.6}{8.7}\selectfont #1}}
+\newcommand{\topline}[2]{{\color{navy}\bfseries\fontsize{15}{16}\selectfont STA 431\quad Midterm II}\hfill{\bfseries #1}\par\vspace{2pt}{\fontsize{8}{9}\selectfont #2}\par\vspace{3pt}\hrule\vspace{3pt}}
+\begin{document}
+\fontsize{8.3}{9.35}\selectfont
+\topline{FRONT: DISTRIBUTIONS + MOMENTS}{Handwritten-copy master\quad\textbullet\quad US Letter, landscape\quad\textbullet\quad Three columns on each side}
+\begin{multicols*}{3}
+\head{1\quad Joint, marginal, conditional}
+\mini{Normalize first.} PMF: $p(x,y)\ge0$, $\sum_x\sum_y p(x,y)=1$. PDF: $f(x,y)\ge0$, $\iint_S f=1$. If $f=cq$, then $c=1/\iint_Sq$ (use sums for PMFs). Write the support $S$; zero elsewhere.
+
+\mini{Marginal = eliminate the other variable.}
+\[
+ p_X(x)=\sum_y p(x,y),\qquad
+ f_X(x)=\int_{y:(x,y)\in S}f(x,y)\dd y.
+\]
+Interchange $x,y$ for the other marginal. A marginal's support is the projection of $S$ onto its axis.
+
+\mini{Conditional = joint / conditioning marginal.}
+\[
+ p_{X\mid Y}(x\mid y)=\frac{p(x,y)}{p_Y(y)},\qquad
+ f_{X\mid Y}(x\mid y)=\frac{f(x,y)}{f_Y(y)}.
+\]
+Use only where the denominator is positive; retain the slice of $S$ at that $y$. Sum/integrate to 1 over $x$.
+\[
+ f(x,y)=f_{X\mid Y}(x\mid y)f_Y(y).
+\]
+A conditional alone or two marginals generally do \emph{not} determine the joint. Conditional plus its conditioning marginal does (almost everywhere).
+
+\mini{Joint CDF.} $F(x,y)=P(X\le x,Y\le y)$.
+\[
+ F(x,y)=\sum_{u\le x}\sum_{v\le y}p(u,v)
+\]
+\[
+ F(x,y)=\int_{-\infty}^{x}\int_{-\infty}^{y}f(u,v)\dd v\dd u.
+\]
+Intersect this rectangle with $S$ before integrating.
+\[
+ F_X(x)=\lim_{y\to\infty}F(x,y),\quad
+ F_Y(y)=\lim_{x\to\infty}F(x,y).
+\]
+For an absolutely continuous joint law,
+$f(x,y)=\partial^2F/\partial x\partial y$ almost everywhere.
+For integer-valued variables,
+\[
+\begin{split}
+p(x,y)={}&F(x,y)-F(x-1,y)\\
+&-F(x,y-1)+F(x-1,y-1).
+\end{split}
+\]
+\mini{Rectangle from any CDF:}
+\[
+\begin{split}
+P(a<X\le b,c<Y\le d)
+={}&F(b,d)-F(a,d)\\
+&-F(b,c)+F(a,c).
+\end{split}
+\]
+For discrete inclusive lower endpoints use left limits (or $a-1,c-1$ on an integer lattice). Continuous endpoints have zero mass.
+
+\columnbreak
+\head{2\quad Events, bounds, independence}
+\mini{Region method.} Translate words $\to$ event $A$; draw $S\cap A$; select order; find outer range; then inner slice limits.
+\[
+ P((X,Y)\in A)=\sum_{(x,y)\in S\cap A}p(x,y)
+ =\iint_{S\cap A} f(x,y)\dd x\dd y.
+\]
+An empty slice contributes zero; split where a boundary changes. The inner limits may depend on the outer variable; the outer limits cannot depend on the inner variable.
+
+\mini{Common regions.} On $0<x<1,0<y<2$:
+\[
+ P(X<Y)=\int_0^1\int_x^2 f(x,y)\dd y\dd x.
+\]
+Equivalently split at $y=1$:
+\[
+ \int_0^1\int_0^y f\dd x\dd y+
+ \int_1^2\int_0^1 f\dd x\dd y.
+\]
+On $x>0,y>0,x+y<1$:
+\[
+ \iint_S f=\int_0^1\int_0^{1-x}f\dd y\dd x
+ =\int_0^1\int_0^{1-y}f\dd x\dd y.
+\]
+For $P(X+Y\le a)$, intersect $y\le a-x$ with the support. For $P(X>Y)$, use $y<x$. In a PMF list actual allowed pairs; do not integrate.
+
+\mini{Words $\to$ notation.}
+\begin{itemize}[leftmargin=10pt,itemsep=1pt,topsep=1pt]
+\item Both lifetimes exceed $t$: $X>t,Y>t$.
+\item Series device fails if either fails:
+$T=\min(X,Y)$; $P(T\le t)=1-P(X>t,Y>t)$.
+\item Parallel device fails only if both fail:
+$T=\max(X,Y)$; $P(T\le t)=P(X\le t,Y\le t)$.
+\item At least $a$ given $Y=y$: integrate $f_{X\mid Y}$ over $x\ge a$ in its slice.
+\end{itemize}
+For an event $B$ of positive probability,
+$P(A\mid B)=P(A\cap B)/P(B)$.
+For continuous conditioning $Y=y$, use the conditional density; $P(Y=y)=0$.
+
+\mini{Independence.} For all $x,y$,
+\[
+ F(x,y)=F_X(x)F_Y(y).
+\]
+Equivalent: $p(x,y)=p_X(x)p_Y(y)$ at every pair; or $f(x,y)=f_X(x)f_Y(y)$ almost everywhere, \emph{including zero regions}. One failing pair (PMF) or a positive-area failure (PDF) disproves it. Factorable formula on triangular support is insufficient. Independence makes the conditional equal its marginal and permits factorization of event probabilities and expectations of products.
+
+\columnbreak
+\head{3\quad Expectation, moments, MGFs}
+\mini{Expectation / LOTUS.}
+\[
+\E[g(X)]=\sum_x g(x)p_X(x)
+\quad\text{or}\quad\int g(x)f_X(x)\dd x.
+\]
+For $g(X,Y)$ use $\sum\sum g p$ or $\iint_S g f$.
+Finite expectation requires $\E|g(X)|<\infty$.
+\[
+\E[aX+bY+c]=a\E X+b\E Y+c.
+\]
+Linearity needs no independence. In general $\E[g(X)]\ne g(\E X)$. For an indicator, $\E[1_A]=P(A)$. If $g\ge0$, then $\E g\ge0$.
+
+\mini{Raw and central moments.}
+\[
+ \mu_r'=\E[X^r],\quad\mu=\mu_1',\quad
+ \mu_r=\E[(X-\mu)^r].
+\]
+\[
+ \mu_0'=1,\quad\mu_1=0,\quad
+ \Var X=\mu_2=\mu_2'-\mu^2.
+\]
+\[
+ \Var(aX+b)=a^2\Var X,\quad
+ \sigma_{aX+b}=|a|\sigma_X.
+\]
+For $Y=g(X)$, compute $\E g$ and $\E g^2$; then
+$\Var Y=\E[g(X)^2]-(\E g(X))^2$.
+For $Y=X^2$, variance requires $\E X^4$.
+If density/support are symmetric about zero, existing odd moments vanish; even moments need integration.
+
+\mini{MGF.} $M_X(t)=\E[e^{tX}]$.
+\[
+ M_X(t)=\sum_x e^{tx}p_X(x)
+ \quad\text{or}\quad\int e^{tx}f_X(x)\dd x.
+\]
+State the set of $t$ where it is finite. The usual moment and uniqueness results require finiteness on an open interval containing $0$.
+\[
+ M(0)=1,\quad M^{(r)}(0)=\E X^r,
+ \quad\Var X=M''(0)-[M'(0)]^2.
+\]
+Equal MGFs on a neighborhood of zero imply equal distributions. All moments existing does not guarantee such an MGF.
+\[
+ M_{aX+b}(t)=e^{bt}M_X(at).
+\]
+For independent $X_i$,
+\[
+ M_{\sum a_iX_i+b}(t)=e^{bt}\prod_i M_{X_i}(a_it).
+\]
+Intersect the transformed domains. Without independence, do not multiply marginal MGFs.
+
+\mini{Fast templates.}
+\[
+\begin{array}{c|c|c}
+\text{Law/form}&M(t)&\E X,\ \Var X\\\hline
+\lambda e^{-\lambda x},\ x>0&\frac\lambda{\lambda-t},\ t<\lambda&1/\lambda,\ 1/\lambda^2\\
+e^{\alpha t+\beta t^2}&\text{all }t&\alpha,\ 2\beta
+\end{array}
+\]
+$\int_0^\infty x^n e^{-ax}\dd x=n!/a^{n+1}$ for $a>0$, integer $n\ge0$.
+\end{multicols*}
+\newpage
+\topline{BACK: COVARIANCE + CONDITIONING + TI-84}{Use the formulas to set up exact work; use numerical commands to check arithmetic and one-dimensional integrals.}
+\begin{multicols*}{3}
+\head{4\quad Product moments + linear combinations}
+\mini{Product moments.}
+\[
+ \mu'_{rs}=\E[X^rY^s],\qquad
+ \mu_{rs}=\E[(X-\mu_X)^r(Y-\mu_Y)^s].
+\]
+Compute from the joint law, not by multiplying marginals unless independence is justified.
+\[
+ \Cov(X,Y)=\E[XY]-\mu_X\mu_Y,
+ \qquad \rho=\frac{\Cov(X,Y)}{\sigma_X\sigma_Y}.
+\]
+Correlation needs positive finite variances; $-1\le\rho\le1$.
+$|\Cov(X,Y)|\le\sigma_X\sigma_Y$.
+\[
+\begin{gathered}
+\Cov(X,Y)=\Cov(Y,X),\quad\Cov(X,X)=\Var X,\\
+\Cov(aX+b,cY+d)=ac\Cov(X,Y).
+\end{gathered}
+\]
+Independent $\Rightarrow$ zero covariance (finite second moments). Zero covariance $\not\Rightarrow$ independence.
+Example: $X$ symmetric on $(-1,1)$, $Y=X^2$;
+$\E X=\E X^3=0$, hence $\Cov(X,Y)=0$, yet $Y$ is determined by $X$. To prove dependence use events $A,B$ for which $P(A\cap B)\ne P(A)P(B)$.
+
+\mini{One combination.} $W=c+\sum_i a_iX_i$:
+\[
+\begin{split}
+ \E W&=c+\sum_i a_i\mu_i,\\
+ \Var W&=\sum_i a_i^2\sigma_i^2
+       +2\sum_{i<j}a_ia_j\sigma_{ij}.
+\end{split}
+\]
+Here $\sigma_{ij}=\Cov(X_i,X_j)$. Write each unordered covariance pair once, times $2$.
+\[
+\begin{split}
+\Var(aX+bY+cZ)={}&a^2\Var X+b^2\Var Y\\
+&+c^2\Var Z+2ab\Cov(X,Y)\\
+&+2ac\Cov(X,Z)+2bc\Cov(Y,Z).
+\end{split}
+\]
+Negative coefficients change cross-term signs; constants contribute no variance. Uncorrelated variables suffice to remove the cross terms. Independence is stronger.
+
+\mini{Two combinations.} $U=aX+bY+c$,
+$V=dX+eY+f$:
+\[
+\begin{split}
+ \Cov(U,V)={}&ad\Var X+be\Var Y\\
+ &+(ae+bd)\Cov(X,Y).
+\end{split}
+\]
+More generally $\Cov(\sum_i a_iX_i,\sum_j b_jX_j)
+=\sum_i\sum_j a_ib_j\sigma_{ij}$.
+Find $\rho_{UV}$ by dividing this covariance by
+$\sqrt{\Var U\Var V}$.
+
+\columnbreak
+\head{5\quad Conditional moments + workflows}
+\mini{Conditional expectation.} Fix the conditioned value, then average over the variable that remains random:
+\[
+\begin{split}
+ m(y)=\E[X\mid Y=y]
+ &=\sum_x x\,p_{X\mid Y}(x\mid y)\\
+ &\text{or }\int x f_{X\mid Y}(x\mid y)\dd x.
+\end{split}
+\]
+For $\E[g(X)\mid Y=y]$, replace $x$ by $g(x)$.
+\[
+\begin{split}
+ q(y)&=\E[X^2\mid Y=y],\\
+ \Var(X\mid Y=y)&=q(y)-[m(y)]^2.
+\end{split}
+\]
+Do not square before taking the conditional second moment. $\E[X\mid Y]$ is a random variable $m(Y)$; $m(y_0)$ is a number.
+
+\mini{Marginal-first recipe.}
+\begin{enumerate}[leftmargin=12pt,itemsep=1pt,topsep=1pt]
+\item Find $f_Y(y)$ or $p_Y(y)$ with its support.
+\item Divide joint by it, retaining the conditional slice.
+\item Integrate/sum $x$ and $x^2$ against that law.
+\item Evaluate at the specified $y$; subtract $m(y)^2$ for variance.
+\end{enumerate}
+\mini{Direct ratio shortcut.}
+\[
+ \E[g(X)\mid Y=y]
+ =\frac{\int g(x)f(x,y)\dd x}{f_Y(y)}
+\]
+(use sums for discrete). Denominator must be positive. Reconstruct marginal moments by averaging over $Y$:
+\[
+\begin{gathered}
+ \E X=\E[\E(X\mid Y)],\\
+ \Var X=\E[\Var(X\mid Y)]
+          +\Var[\E(X\mid Y)].
+\end{gathered}
+\]
+Independence gives $\E[g(X)\mid Y]=\E g(X)$ when integrable. A constant conditional mean alone does not prove independence.
+
+\mini{Problem-solving order.}
+\begin{enumerate}[leftmargin=12pt,itemsep=1pt,topsep=1pt]
+\item Identify PMF / PDF / CDF / MGF / supplied moments.
+\item Record support, event, and conditioning direction.
+\item Normalize if a constant is unknown.
+\item Select formula; show the sum/integral and bounds.
+\item Keep fractions through the algebra; check the result.
+\end{enumerate}
+\mini{Checks.} Probabilities in $[0,1]$; PMFs sum to $1$; PDFs integrate to $1$ (a PDF value may exceed $1$); variances nonnegative; $\E X$ inside the range of $X$ when finite; $M(0)=1$; correlation in $[-1,1]$.
+
+\mini{Useful algebra.}
+$\sum_{k=1}^{n}k=n(n+1)/2$;
+$\sum_{k=1}^{n}k^2=n(n+1)(2n+1)/6$;
+$\sum_{k=1}^{n}k^3=[n(n+1)/2]^2$.
+
+\columnbreak
+\head{6\quad TI-84 Plus CE: useful checks}
+\mini{Find commands.} \texttt{[2nd][0]} opens CATALOG. Select the actual command token. \texttt{MATH}: \texttt{nDeriv(}, \texttt{fnInt(}; \texttt{[2nd][STAT]} LIST: \texttt{OPS}\,$\to$\,\texttt{seq(}, \texttt{MATH}\,$\to$\,\texttt{sum(}. Use \texttt{MODE: CLASSIC} for the linear syntax below; MathPrint instead shows templates.
+
+\mini{Finite PMF: values in $L_1$, probabilities in $L_2$.}
+\par\cmd{sum(L2)}\quad (must be $1$)
+\par\cmd{sum(L1*L2)}\quad ($\E X$)
+\par\cmd{sum(L1\string^2*L2)-sum(L1*L2)\string^2}\quad ($\Var X$)
+\par For unnormalized nonnegative weights $w$ in $L_2$, divide each moment sum by \cmd{sum(L2)} first.
+
+\mini{Generate finite sums without lists.}
+\par\cmd{sum(seq(expression,K,first,last))}
+\par HW5-style $p(x)=(x^2+x)/40$, $x=1,\ldots,4$:
+\par\cmd{sum(seq(K*(K\string^2+K)/40,K,1,4))}
+\par gives $\E X=13/4$. For $\E X^2$, use $K^2$ instead of the leading $K$. For $\Var(X^2)$, obtain $\E X^4-(\E X^2)^2$.
+
+\mini{Joint PMF as rows of allowed pairs.}
+Put all $x$ values in $L_1$, corresponding $y$ in $L_2$, and joint probabilities in $L_3$.
+\par\cmd{sum(L1*L2*L3)}\quad ($\E XY$)
+\par\cmd{sum((L1>L2)*L3)}\quad ($P(X>Y)$)
+\par\cmd{sum((L1+L2<=3)*L3)}\quad ($P(X+Y\le3)$)
+\par Use TEST's single $\le$ token for \texttt{<=}; tokens: \texttt{[2nd][MATH]} TEST. Every joint pair needs its own row; do not pair just the distinct marginal values.
+
+\mini{One-dimensional numerical integrals.}
+\par\cmd{fnInt(expression,X,lower,upper)}
+\par HW5 check: \cmd{fnInt(X\string^2*3/4*(1-X\string^2),X,-1,1)}
+\par gives $1/5$. Replacing $X^2$ by $X^4$ gives $3/35$.
+For $f(x,y)=x+y$ on the unit square, at $y=1/2$, conditional density is $x+1/2$:
+\par\cmd{fnInt(X*(X+1/2),X,0,1)}\quad ($7/12$)
+\par\cmd{fnInt(X\string^2*(X+1/2),X,0,1)}\quad ($5/12$)
+
+\mini{MGF first-derivative check.}
+\par\cmd{nDeriv(3/(3-X),X,0)}\quad ($\approx1/3$)
+\par $X$ here is the MGF's argument $t$. Derive $M''(0)$ by hand; avoid nested numerical derivatives.
+
+\mini{Limits.} No native symbolic algebra. Do the inner integral by hand before \texttt{fnInt}; numerical output does not prove independence or MGF existence. \texttt{1-Var Stats} with weights uses $\sigma_x^2$ for population variance; \texttt{Sx\string^2} and \texttt{variance(} are sample quantities. Prefer weighted sums above. \texttt{MATH}\,$\to$\,$\blacktriangleright$\texttt{Frac} may suggest a fraction; it does not prove exactness.
+\end{multicols*}
+\end{document}

@@ -1,0 +1,157 @@
+Authored encyclopedia and homework map.
+Generated 16 input presets, no stored answers.
+wrote /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/src/M2ENC.txt (23253 bytes tokenized)
+wrote /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/src/M2HW.txt (10651 bytes tokenized)
+M2CONT: 2953 bytes, 0 errors, 0 warnings
+M2COV: 2355 bytes, 0 errors, 0 warnings
+M2DISC: 4526 bytes, 0 errors, 0 warnings
+M2ENC: 23253 bytes, 0 errors, 0 warnings
+M2FMT: 290 bytes, 0 errors, 0 warnings
+M2HW: 10651 bytes, 0 errors, 0 warnings
+M2MGF: 3537 bytes, 0 errors, 0 warnings
+M2RUN: 2984 bytes, 0 errors, 0 warnings
+M2SLICE: 1740 bytes, 0 errors, 0 warnings
+STAM2: 358 bytes, 0 errors, 0 warnings
+M2CONT: 0 errors, 0 warnings
+M2COV: 0 errors, 0 warnings
+M2DISC: 0 errors, 0 warnings
+M2ENC: 0 errors, 0 warnings
+M2FMT: 0 errors, 0 warnings
+M2HW: 0 errors, 0 warnings
+M2MGF: 0 errors, 0 warnings
+M2RUN: 0 errors, 0 warnings
+M2SLICE: 0 errors, 0 warnings
+STAM2: 0 errors, 0 warnings
+PASS HW5 Q1 normalization and moments
+PASS HW4 Q1 formula/grid input
+PASS HW5 Q1 univariate formula/grid input
+PASS HW5 Q8 formula/grid input
+PASS grid duplicate-coordinate rejection
+PASS grid pair-count guard
+PASS grid negative-weight rejection
+PASS grid zero-total rejection
+PASS HW4 Q1 marginal and conditional PMF
+PASS HW5 Q8 joint and conditional moments
+PASS HW4 Q4 event masks
+PASS joint conditional event mask
+PASS discrete function square
+PASS raw and central product moments
+PASS zeroth product moment handles zero data
+PASS zero-probability conditioning guards
+PASS full Cartesian independence check
+PASS missing-pair dependence check
+PASS HW5 Q7 continuous conditional slice
+PASS HW5 Q2 symmetric density and square
+PASS continuous interval clipped to support
+PASS continuous empty interval
+PASS continuous raw and central moments
+PASS HW4 Q5 double integral with variable bound
+PASS HW4 Q3 reliability complement rectangle
+PASS HW4 Q2 unknown normalization and product moment
+PASS triangular support skips zero-length endpoint slice
+PASS double-integration refinement comparison
+PASS reversed moving limits guard
+PASS negative density guard
+PASS zero density guard
+
+31/31 M2DISC/M2CONT cases passed
+test_exponential_evaluation_rejects_boundary (__main__.Modules.test_exponential_evaluation_rejects_boundary) ... ok
+test_generic_exponential_numeric (__main__.Modules.test_generic_exponential_numeric) ... ok
+test_generic_invalid_m0 (__main__.Modules.test_generic_invalid_m0) ... ok
+test_generic_negative_values (__main__.Modules.test_generic_negative_values) ... ok
+test_generic_negative_variance (__main__.Modules.test_generic_negative_variance) ... ok
+test_generic_quadratic_numeric (__main__.Modules.test_generic_quadratic_numeric) ... ok
+test_generic_step_size_warning (__main__.Modules.test_generic_step_size_warning) ... ok
+test_hw5_q3_exponential_rate (__main__.Modules.test_hw5_q3_exponential_rate) ... ok
+test_hw5_q4_exact_quadratic_mgf_transform (__main__.Modules.test_hw5_q4_exact_quadratic_mgf_transform) ... ok
+test_hw5_q5_insurance_variance (__main__.Modules.test_hw5_q5_insurance_variance) ... ok
+test_hw5_q6_three_variable_variance (__main__.Modules.test_hw5_q6_three_variable_variance) ... ok
+test_invalid_covariance_matrix_reentry (__main__.Modules.test_invalid_covariance_matrix_reentry) ... ok
+test_invalid_dimension_reentry (__main__.Modules.test_invalid_dimension_reentry) ... ok
+test_invalid_rate_then_reentry (__main__.Modules.test_invalid_rate_then_reentry) ... ok
+test_invalid_variance_reentry (__main__.Modules.test_invalid_variance_reentry) ... ok
+test_negative_quadratic_then_reentry (__main__.Modules.test_negative_quadratic_then_reentry) ... ok
+test_negative_scale_reverses_domain_and_eval (__main__.Modules.test_negative_scale_reverses_domain_and_eval) ... ok
+test_one_variable_affine (__main__.Modules.test_one_variable_affine) ... ok
+test_static_and_token_roundtrip (__main__.Modules.test_static_and_token_roundtrip) ... ok
+test_two_combinations_mean_variance_covariance (__main__.Modules.test_two_combinations_mean_variance_covariance) ... ok
+test_zero_scale_gives_constant (__main__.Modules.test_zero_scale_gives_constant) ... ok
+test_zero_variance_correlation_undefined (__main__.Modules.test_zero_variance_correlation_undefined) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.245s
+
+OK
+PASS 44 reference/menu navigation checks; all topic pages reachable and fit.
+test_clipped_interval (__main__.Slice.test_clipped_interval) ... ok
+test_empty_interval (__main__.Slice.test_empty_interval) ... ok
+test_hw4_q2_conditional_density_at_point (__main__.Slice.test_hw4_q2_conditional_density_at_point) ... ok
+test_hw4_q2_marginal_and_conditional_moments (__main__.Slice.test_hw4_q2_marginal_and_conditional_moments) ... ok
+test_hw4_q2_reverse_marginal (__main__.Slice.test_hw4_q2_reverse_marginal) ... ok
+test_hw5_q7_conditional_interval (__main__.Slice.test_hw5_q7_conditional_interval) ... ok
+test_hw5_q7_conditional_moments (__main__.Slice.test_hw5_q7_conditional_moments) ... ok
+test_invalid_bounds_reentry (__main__.Slice.test_invalid_bounds_reentry) ... ok
+test_invalid_multiplier_reentry (__main__.Slice.test_invalid_multiplier_reentry) ... ok
+test_negative_slice_rejected (__main__.Slice.test_negative_slice_rejected) ... ok
+test_new_given_value_recomputes_marginal (__main__.Slice.test_new_given_value_recomputes_marginal) ... ok
+test_parent_menu_entry_and_back (__main__.Slice.test_parent_menu_entry_and_back) ... ok
+test_pdf_outside_support_zero (__main__.Slice.test_pdf_outside_support_zero) ... ok
+test_reimbursement_density_at_point (__main__.Slice.test_reimbursement_density_at_point) ... ok
+test_reimbursement_marginal_conditional_probability (__main__.Slice.test_reimbursement_marginal_conditional_probability) ... ok
+test_token_and_static_lints (__main__.Slice.test_token_and_static_lints) ... ok
+test_triangle_given_x_moving_bound (__main__.Slice.test_triangle_given_x_moving_bound) ... ok
+test_triangle_given_y_moving_bound (__main__.Slice.test_triangle_given_y_moving_bound) ... ok
+test_zero_marginal_undefined (__main__.Slice.test_zero_marginal_undefined) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.157s
+
+OK
+test_631_hw4_q4_triangular_density (__main__.Presets.test_631_hw4_q4_triangular_density) ... ok
+test_631_hw4_q5_reimbursement (__main__.Presets.test_631_hw4_q5_reimbursement) ... ok
+test_631_hw5_q8_zero_covariance_reasoning_inputs (__main__.Presets.test_631_hw5_q8_zero_covariance_reasoning_inputs) ... ok
+test_hw4_q1_joint_table_conditional_and_independence (__main__.Presets.test_hw4_q1_joint_table_conditional_and_independence) ... ok
+test_hw4_q2_joint_normalization (__main__.Presets.test_hw4_q2_joint_normalization) ... ok
+test_hw4_q3_survival_region (__main__.Presets.test_hw4_q3_survival_region) ... ok
+test_hw4_q4_both_discrete_events (__main__.Presets.test_hw4_q4_both_discrete_events) ... ok
+test_hw4_q5_variable_bound_probability (__main__.Presets.test_hw4_q5_variable_bound_probability) ... ok
+test_hw5_q1_pmf_moments (__main__.Presets.test_hw5_q1_pmf_moments) ... ok
+test_hw5_q2_symmetric_density_and_transformed_square (__main__.Presets.test_hw5_q2_symmetric_density_and_transformed_square) ... ok
+test_hw5_q3_exponential_mgf (__main__.Presets.test_hw5_q3_exponential_mgf) ... ok
+test_hw5_q4_affine_mgf (__main__.Presets.test_hw5_q4_affine_mgf) ... ok
+test_hw5_q5_claim_variance (__main__.Presets.test_hw5_q5_claim_variance) ... ok
+test_hw5_q6_three_variable_variance (__main__.Presets.test_hw5_q6_three_variable_variance) ... ok
+test_hw5_q7_conditional_moments (__main__.Presets.test_hw5_q7_conditional_moments) ... ok
+test_hw5_q8_joint_moments_and_conditional (__main__.Presets.test_hw5_q8_joint_moments_and_conditional) ... ok
+test_loader_token_and_structural_lints (__main__.Presets.test_loader_token_and_structural_lints) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.396s
+
+OK
+test_dependence_witness_is_a_valid_exact_counterexample (__main__.Workflows.test_dependence_witness_is_a_valid_exact_counterexample) ... ok
+test_hw4_q1_full_marginal_tables (__main__.Workflows.test_hw4_q1_full_marginal_tables) ... ok
+test_independence_match_has_no_false_witness (__main__.Workflows.test_independence_match_has_no_false_witness) ... ok
+test_main_launcher_joint_slice_and_return (__main__.Workflows.test_main_launcher_joint_slice_and_return) ... ok
+test_main_launcher_quicksolve_and_return (__main__.Workflows.test_main_launcher_quicksolve_and_return) ... ok
+test_marginals_aggregate_unsorted_repeated_coordinates (__main__.Workflows.test_marginals_aggregate_unsorted_repeated_coordinates) ... ok
+test_quicksolve_removes_eleven_manual_covariance_inputs (__main__.Workflows.test_quicksolve_removes_eleven_manual_covariance_inputs) ... ok
+test_univariate_grid_suppresses_dummy_y_pages (__main__.Workflows.test_univariate_grid_suppresses_dummy_y_pages) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.170s
+
+OK
+built M2CONT      2953 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2CONT.8xp
+built M2COV       2355 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2COV.8xp
+built M2DISC      4526 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2DISC.8xp
+built M2ENC      23253 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2ENC.8xp
+built M2FMT        290 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2FMT.8xp
+built M2HW       10651 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2HW.8xp
+built M2MGF       3537 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2MGF.8xp
+built M2RUN       2984 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2RUN.8xp
+built M2SLICE     1740 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/M2SLICE.8xp
+built STAM2        358 bytes -> /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/midterm2_app/out/STAM2.8xp
+total program bytes: 52647
+PACKAGE READY /Users/ibrahimshahid/Downloads/academic_texts/stats_texts/STA431_TI84_App/output/STA431_Midterm_II_Calculator_Package
+PROGRAMS 10 BYTES 53407

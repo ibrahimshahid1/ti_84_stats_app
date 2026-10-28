@@ -1,0 +1,3 @@
+tivars==1.1.1
+mpmath==1.3.0
+sympy==1.14.0

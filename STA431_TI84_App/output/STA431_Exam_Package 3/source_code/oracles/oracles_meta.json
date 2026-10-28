@@ -1,0 +1,37 @@
+{
+ "generated_by": "oracles/gen_oracles.py",
+ "conventions": {
+  "expected": "exact value as string: integer, 'p/q', symbolic text for irrational (exp(-2)), 'YES'/'NO' for checks, or a message string",
+  "decimal": "float value (12+ significant digits)",
+  "display": "[Str9, Str8] that STAFMT produces for the value the calculator computes (for nDeriv values: the nDeriv approximation, h=1E-3)",
+  "inputs": "structured inputs; -1 means 'unknown' where the tool supports it",
+  "kind": "spec (SPEC.md section 4 case) | edge (extra edge case) | hw (homework answer)"
+ },
+ "discrepancies": [
+  {
+   "id": "PRB-D-S1",
+   "text": "P(+): SPEC writes 147/10000 but STAFMT cannot show that fraction (reduced denominator > 9999) -> calculator shows Str9='.0147', Str8='.0147'. Tests must expect '.0147'."
+  },
+  {
+   "id": "RV-C-S1",
+   "text": "internal: spec key F piece1 (0<x<2) x not computed"
+  }
+ ],
+ "fragile": [
+  {
+   "id": "RV-C-S2",
+   "name": "P(1<X<3)",
+   "text": "display not stable under relative error 1E-13: [35/128, .273437] / [35/128, .273438]"
+  },
+  {
+   "id": "RV-D-S2",
+   "name": "P(1<X<3)",
+   "text": "display not stable under relative error 1E-11: [35/128, .273437] / [35/128, .273438]"
+  },
+  {
+   "id": "HW3-Q4",
+   "name": "(b) P(1<=X<=3)",
+   "text": "display not stable under relative error 1E-13: [35/128, .273437] / [35/128, .273438]"
+  }
+ ]
+}
