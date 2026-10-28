@@ -42,6 +42,76 @@ nothing else, so every rule a builder needs is written here.
   intent of the acceptance criteria, and document the change under `# PLAN DEVIATIONS`.
 
 ---------------------------------------------------------------------------------------------------
+## 0A. Student-requirement amendment (MANDATORY; added after planning)
+
+The student added `STUDENT_REQUIREMENTS.md` (R1–R4) before the build. It **overrides this plan**.
+Most of it is already mapped (see §1). A requirement-by-requirement review found four gaps. They are
+closed by the items below. A package's builder MUST implement the items tagged with its package id,
+and that package's verifier checks them. All targets below were computed with sympy; tests must
+recompute them, as §0 requires.
+
+**A1 (P2, R2): a complement the student can pick.**
+* M2JNT's `MORE EVENTS` menu gains `"COMPLEMENT OF..."`, placed before BACK (7 items in total).
+  * It sets the complement flag and then opens the normal EVENT menu, so any event can be
+    complemented.
+  * The SETUP screen shows words → math as `NOT A` → `Aᶜ` → `P(Aᶜ)=1-P(A)`.
+  * The RESULT screen shows `P(Aᶜ)=1-P(A)`, then `=1-…=…`, with A's limits and pieces shown.
+* `EVENT RESULT` gains `"COMPLEMENT 1-P"`. It reuses the last event and prints
+  `P(NOT A)=1-P(A)=1-…=…`.
+* M2DISC's EVENT MENU (P6) already lists complement. Its screen must also show `1-P(A)` and the
+  pairs of A.
+* Acceptance:
+  * HW4 Q5, complement of X<Y: P(X≥Y)=5/24.
+  * Mock 4 Q4 model, complement of X+Y≤1: 1−1/8=7/8.
+  * HW4 Q4 (discrete), complement of X>Y: 29/32. Complement of X+Y≤3: 3/4.
+
+**A2 (P2, R2): the written iterated integral shows the integrand, not just the limits.**
+* Above the pieces, the first LIMITS screen shows the integral the student copies:
+  * `P=∫∫ c*q(x,y) dy dx` (or `dx dy`);
+  * `c=<fraction>` (or `c=1`);
+  * `q=` followed by Str1 (wrapped at 26 columns);
+  * `ORDER dy dx (x OUTER)`, which names the order explicitly.
+* Each piece is then written as `x: a TO b` / ` y: l(x) TO u(x)` / ` PIECE=…`.
+* For HW4 Q5 the screens must contain enough to write ∫₀¹∫ₓ² (1/4)(2x+y) dy dx. That means the
+  `c=1/4` line, the q text, and the pieces `x: 0 TO 1` / ` y: x TO 2`.
+* Acceptance: assert the `c=` and `q=` lines and the order line on the HW4 Q5 and Mock II Q2
+  screens, in both orders.
+
+**A3 (P4, R1 + R3): tails and min/max from F, so the CDF solver also solves HW region problems.**
+* M2CDF's `RECTANGLE PROB` opens a submenu: `"a<X≤b,c<Y≤d"`, `"X>a AND Y>b"`, `"MIN/MAX ≤ t"`,
+  `"BACK"`. Each result screen starts with the formula used, then the F values, then the result:
+  * `P(X>a,Y>b)=1-FX(a)-FY(b)+F(a,b)`;
+  * `P(max≤t)=F(t,t)`;
+  * `P(min≤t)=FX(t)+FY(t)-F(t,t)`;
+  * the words line `FAILS IF EITHER FAILS = min≤t`, `ONLY IF BOTH = max≤t`.
+* Every M2CDF result screen begins with its formula line, with the support end substituted. For
+  example `FX(x)=F(x,2)` when d=2, and `f=d²F/dxdy`.
+* Acceptance, through M2CDF, with the student typing F:
+  * **HW4 Q3**: F=`X*Y*(X+Y)/16` on 0<x<2, 0<y<2.
+    * Values: FX(1)=3/8, FY(1)=3/8, F(1,1)=1/8.
+    * Results: P(X>1,Y>1)=3/8 and P(min≤1)=5/8, the device-failure answer.
+    * The marginal formula is FX=x(x+2)/8, printed as `1/4x+1/8x²` or an equivalent form.
+  * **HW4 Q5**: F=`X²*Y/4+X*Y²/8` on 0<x<1, 0<y<2.
+    * PDF f FROM F gives `1/2x+1/4y`, i.e. (2x+y)/4.
+    * F(1/2,1)=1/8 through RECTANGLE with corners at the support's lower ends.
+    * FX=x(x+1)/2 and FY=y(y+2)/8.
+  * **R3 variant** x²y(x+y)/2: P(X>1/2,Y>1/2)=1/2, P(max≤1/2)=1/16, P(min≤1/2)=1/2.
+  * **R3 variant** (1−e^(−x))(1−e^(−2y)): P(min≤1)=1−e^(−3) (≈0.950212931632, within 1e-9),
+    P(max≤1)≈0.546572343960, P(X>1,Y>1)=e^(−3) (≈0.049787068368).
+
+**A4 (P3 and P6, R3): the "F from f" route is also tested on the homework models.**
+* P3 (M2JNT INDEP + CDF):
+  * F(s,t) for HW4 Q3's q=`(X+Y)/8` on RECT 0..2×0..2 gives F(1,1)=1/8, with the pieces shown.
+  * For HW4 Q5's q=`(2X+Y)/4` on RECT 0..1×0..2, F(1/2,1)=1/8.
+  * The F FORMULA for HW4 Q5 is x²y/4+xy²/8.
+* P6 (M2DISC CDF F(a,b)) for HW4 Q4's (x+y)/32:
+  * F(1,2)=5/32 and F(2,3)=21/32;
+  * FX(1)=F(1,4)=7/16.
+
+Builders: when you finish, record in `PROGRESS.md` which A-items you implemented. Verifiers: a
+package whose A-items are missing FAILS verification.
+
+---------------------------------------------------------------------------------------------------
 ## 1. Goal, scope and sources
 
 The student takes STA 431 (Intro to Probability). Midterm II covers Freund (Miller & Miller, *John E.
@@ -589,6 +659,8 @@ and the two quick numeric safety fixes.
 
 ### P2 — Exact region engine core: M2GL, M2PLY (part 1), M2JNT model + EVENTS + LIMITS (R2)
 
+> **Amendment §0A applies: A1 (complement) and A2 (integrand on the LIMITS screens) are part of this package.**
+
 **Goal.** A joint-density solver where the student types q(X,Y), picks a support from a menu and
 picks an event from a menu. The app prints the written iterated integral with the correct limits
 (split into pieces, in either order) and the words → math translation, then gives the probability.
@@ -732,6 +804,8 @@ exponential and other densities, including infinite supports.
 
 ### P3 — M2JNT analysis: FORMULAS, MOMENTS + COV, GIVEN A VALUE, INDEP + CDF; retire M2SLICE and DOUBLE INTEGRAL
 
+> **Amendment §0A applies: A4 (F(s,t) and the F FORMULA on HW4 Q3/Q5 models) is part of this package.**
+
 **Goal.** For a typed joint density, produce **symbolic** marginal and conditional density formulas
 with their supports, E(Y|X=x) as a function, every moment along with Cov and ρ in one pass,
 conditional laws at a given value, an exact independence verdict with a witness, and the joint CDF.
@@ -840,6 +914,8 @@ Polynomial models get exact output; other models get numeric values.
 ---
 
 ### P4 — M2CDF (R1, joint CDF solver + exponential pair) and M2ONE (1-D density; replaces M2CONT)
+
+> **Amendment §0A applies: A3 (tails + min/max from F; HW4 Q3/Q5 through M2CDF; formula line on every result) is part of this package.**
 
 **Files.**
 * New: src/M2CDF.txt and src/M2ONE.txt.
@@ -1014,6 +1090,8 @@ and the MGF tests in test_transfer_general.
 ---
 
 ### P6 — M2COV hub (rewrite) and M2DISC upgrades
+
+> **Amendment §0A applies: A1 (discrete complement shows 1-P(A) and the pairs) and A4 (discrete F(a,b) on HW4 Q4) are part of this package.**
 
 **M2COV spec.**
 * **ENTER MOMENTS.** Disp `VARIABLES ARE X,Y,Z,W`; `Input "HOW MANY 1-4?",N`.
@@ -1386,6 +1464,39 @@ All counts and paths must match the code; test_paths also scans START_HERE for `
 | COV-14 | discrete marginal formula | P6 |
 | COV-15 | keystroke costs | P2–P6 |
 | STUDENT R1–R4 | | P4 (+P3 F from f), P2, P2/P4/P6, P7 |
+
+**Rejected or deferred (do NOT implement):**
+* *Menus with 8–9 items / MAX_TOPICS 8.* The simulator and tilint enforce 7, and 7 is safe on
+  every CE OS. The encyclopedia is split into three unit programs instead.
+* *Trivariate PMF mode in M2DISC, and any 3-variable joint solver.* Too costly in memory and code
+  for a rare question type; the M2E4 "3 OR MORE RVS" page covers the theory.
+* *Randomised "variant drills".* Memory and complexity cost. The FREUND EXAMPLES and MOCK MIDTERM
+  II data presets give non-homework practice whose answers are in the textbook or guide.
+* *"CHECK MY FORMULA" numeric checker for a typed candidate g(x) and the like.* Superseded: the
+  exact engine prints the formulas for polynomial models. For other models, GIVEN A VALUE gives
+  point values to spot-check.
+* *Finder deep jumps into sub-tools by Z code.* They couple programs and break silently when a
+  menu changes. Leaves print a validated PATH and open the solver. The one exception is
+  Z=97 (CDF → JNT F(s,t)).
+* *General exact-form guesser (e^r, π, ln k) for decimals.* It risks false positives. Only √ forms
+  for SD and ρ are adopted.
+* *Shared "LAST RESULTS" log.* Replaced by the targeted DISC/JNT → LINEAR COMBOS handoff (P6).
+* *Dedicated tower/total-variance tool.* M2ONE's E[g] computes E[m(X)] and E[v(X)], and the TOTAL
+  LAWS page explains the formula.
+* *Discrete "PMF FROM F TABLE".* Rare; M2DISC gets CDF F(a,b) only.
+* *Gauss–Laguerre or exp-sinh rules for infinite ranges.* I tested them (exp-sinh: errors of
+  1e-5–1e-3; Laguerre needs a good scale estimate). Graded panels with a probe cutoff were more
+  robust (Appendix B).
+* *Keeping M2SLICE / the M2CONT DOUBLE INTEGRAL as fallbacks.* Memory cost, and two workflows for
+  one task would confuse the student. The CURVED (NUMERIC) support keeps the arbitrary-bounds
+  capability.
+* *A Midterm I-style "USE WHEN" intro screen before every tool.* It costs exam time; HELP > USE
+  CASES covers it.
+* *Switching the CE to Classic mode.* It changes the user's settings. The plan tells the student
+  to enter fractions with the ÷ key instead.
+* *A tisim fnInt CE-tolerance mode.* Moot, because no program uses fnInt after P4.
+* *Rewriting the LaTeX study guide and notesheets in ../output.* They are not part of the
+  calculator app. Only the superseded app-walkthrough deliverables are moved aside (P8).
 
 ---------------------------------------------------------------------------------------------------
 ## Appendix A — validated prototype code (simulator-tested by the prime agent)
