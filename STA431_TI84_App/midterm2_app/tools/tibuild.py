@@ -11,7 +11,8 @@ Source conventions (see SPEC.md):
   * file stem = program name (e.g. src/STACNT.txt -> STACNT.8xp, prgmSTACNT)
 
 CLI:
-  python tibuild.py lint  <src_dir | file.txt ...>     # lint only
+  python tibuild.py lint  <src_dir | file.txt ...>     # lint only (per-file counts + TOTAL line;
+                                                       #  NAME:LINE = line in the original .txt)
   python tibuild.py build <src_dir> <out_dir>          # lint + write .8xp (+ group)
   python tibuild.py clean <file.txt>                   # print cleaned source
 
@@ -19,7 +20,9 @@ Python API (used by the simulator / tests):
   clean_source(text) -> str
   tokenize(clean_text) -> bytes
   token_list(clean_text) -> list[TIToken]
-  lint_program(name, clean_text) -> list[str]   (messages prefixed ERROR/WARN)
+  lint_program(name, clean_text, line_map=None) -> list[str]   (messages prefixed ERROR/WARN;
+      with line_map = line_map_of(original_text) the NAME:LINE numbers are original file lines)
+  read_program(path, with_map=False) -> (name, clean_text[, line_map])
 """
 import os
 import re
@@ -104,7 +107,15 @@ def split_lines(toks):
     return lines
 
 
-def lint_program(name: str, clean_text: str):
+def line_map_of(text: str):
+    """For each line kept by clean_source, its 1-based line number in the ORIGINAL text."""
+    return [i + 1 for i, raw in enumerate(text.splitlines())
+            if raw.strip() and not raw.strip().startswith("//")]
+
+
+def lint_program(name: str, clean_text: str, line_map=None):
+    """Lint one cleaned program. line_map (from line_map_of) turns cleaned-line numbers into the
+    original src/NAME.txt line numbers in messages; without it, cleaned-line numbers are used."""
     msgs = []
     if not NAME_RE.match(name):
         msgs.append(f"ERROR {name}: invalid program name (A-Z first, <=8 chars A-Z0-9)")
@@ -117,7 +128,8 @@ def lint_program(name: str, clean_text: str):
     tok_lines = split_lines(toks)
     if len(src_lines) != len(tok_lines):
         msgs.append(f"WARN {name}: line count mismatch src={len(src_lines)} tok={len(tok_lines)}")
-    for ln, (src, tl) in enumerate(zip(src_lines, tok_lines), start=1):
+    for cl, (src, tl) in enumerate(zip(src_lines, tok_lines), start=1):
+        ln = line_map[cl - 1] if line_map and cl - 1 < len(line_map) else cl
         in_str = False
         str_toks = []
         prev = None
@@ -173,10 +185,14 @@ def display_len(s: str) -> int:
 
 
 # ---------------------------------------------------------------- build
-def read_program(path):
+def read_program(path, with_map=False):
+    """(name, cleaned text), or (name, cleaned text, line map) when with_map is true."""
     name = os.path.splitext(os.path.basename(path))[0]
     with open(path, encoding="utf-8") as f:
-        return name, clean_source(f.read())
+        raw = f.read()
+    if with_map:
+        return name, clean_source(raw), line_map_of(raw)
+    return name, clean_source(raw)
 
 
 def iter_sources(args):
@@ -194,8 +210,8 @@ def build(src_dir, out_dir):
     errors = 0
     built = []
     for path in iter_sources([src_dir]):
-        name, text = read_program(path)
-        msgs = lint_program(name, text)
+        name, text, lmap = read_program(path, with_map=True)
+        msgs = lint_program(name, text, lmap)
         for m in msgs:
             print(m)
         if any(m.startswith("ERROR") for m in msgs):
@@ -218,16 +234,24 @@ def main(argv):
         return 2
     cmd = argv[1]
     if cmd == "lint":
-        n_err = 0
+        n_err = n_warn = 0
         for path in iter_sources(argv[2:]):
-            name, text = read_program(path)
-            msgs = lint_program(name, text)
+            name, text, lmap = read_program(path, with_map=True)
+            msgs = lint_program(name, text, lmap)
             for m in msgs:
                 print(m)
-            n_err += sum(m.startswith("ERROR") for m in msgs)
-            print(f"{name}: {len(tokenize(text)) if not n_err else '?'} bytes, "
-                  f"{sum(m.startswith('ERROR') for m in msgs)} errors, "
-                  f"{sum(m.startswith('WARN') for m in msgs)} warnings")
+            e = sum(m.startswith("ERROR") for m in msgs)     # this file only
+            w = sum(m.startswith("WARN") for m in msgs)
+            n_err += e
+            n_warn += w
+            size = "?"
+            if not e:
+                try:
+                    size = len(tokenize(text))
+                except ValueError:
+                    pass
+            print(f"{name}: {size} bytes, {e} errors, {w} warnings")
+        print(f"TOTAL: {n_err} errors, {n_warn} warnings")
         return 1 if n_err else 0
     if cmd == "build":
         return 1 if build(argv[2], argv[3]) else 0

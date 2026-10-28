@@ -496,23 +496,23 @@
           "title": "ZERO NOT INDEP",
           "pages": [
             [
-              "Independent with finite",
-              "moments => Cov0. Converse",
-              "is false.",
-              "Let X uniform(-1,1), Y=X².",
-              "E[X]=E[X³]=0, so",
-              "Cov(X,Y)=0.",
-              "A=abs(X)<1/2, B=Y<1/4.",
-              "These events agree.",
-              "P(A)=P(B)=1/2, P(A and"
+              "Thm12 p134. Independent =>",
+              "E(XY)=E(X)E(Y), so σXY=0.",
+              "The converse is FALSE.",
+              "Ex17 p135. f(-1,-1)=1/6,",
+              "f(0,-1)=1/3, f(1,-1)=1/6,",
+              "f(-1,1)=1/6, f(1,1)=1/6,",
+              "all other pairs 0.",
+              "μX=0, μY=-1/3, μ'1,1=0, so",
+              "σXY=0-0*(-1/3)=0."
             ],
             [
-              "B)=1/2, product=1/4.",
-              "Therefore dependent",
-              "despite correlation0. A",
-              "deterministic nonconstant",
-              "square is not independent",
-              "of its input."
+              "But f(-1,-1)=1/6 while",
+              "g(-1)h(-1)=(1/3)(2/3)=2/9.",
+              "One failing pair =>",
+              "dependent.",
+              "Covariance measures only",
+              "LINEAR association."
             ]
           ]
         }
@@ -621,9 +621,11 @@
               "support. E[X|Y=y]=m(y) is",
               "a number; E[X|Y]=m(Y) is a",
               "random variable.",
-              "TOOL MARG/CONDITIONAL or",
-              "DENSITY/SLICE with y",
-              "stored in A."
+              "SOLVERS > DENSITY+INTEGRAL",
+              "> JOINT SLICE evaluates",
+              "marginal and conditional",
+              "quantities at any valid",
+              "given value."
             ]
           ]
         },
@@ -679,17 +681,18 @@
           "title": "CHOOSE A SOLVER",
           "pages": [
             [
-              "Finite values => DISCRETE",
-              "+ JOINT. FORMULA/GRID",
-              "takes x-list,y-list,weight",
+              "From SOLVERS, finite",
+              "values => DISCRETE TABLE.",
+              "FORMULA/GRID takes",
+              "x-list,y-list,weight",
               "formula. Use y-list{0} for",
               "one variable. No need",
               "normalize first.",
               "PDF with finite interval",
-              "or conditional slice =>",
-              "DENSITY + INTEGRAL, 1D."
+              "or conditional slice =>"
             ],
             [
+              "DENSITY+INTEGRAL, 1D.",
               "Joint PDF with explicit",
               "inner/outer bounds =>",
               "DOUBLE INTEGRAL. Split",
@@ -697,10 +700,10 @@
               "changes.",
               "Given",
               "variances/covariances =>",
-              "LINEAR COMBOS. Given MGF",
-              "=> MGF TOOLS. Derivations"
+              "LINEAR COMBOS. Given MGF"
             ],
             [
+              "=> MGF TOOLS. Derivations",
               "=> ENCYCLOPEDIA."
             ]
           ]
@@ -727,15 +730,19 @@
               "integration and derivative",
               "outputs are",
               "approximations.",
-              "HOMEWORK MAP then LOAD +",
-              "SOLVE preloads the given",
-              "models. Use BACK to exit."
+              "HELP > FIND MY SOLVER",
+              "starts with your given",
+              "data and target. SOLVERS"
             ],
             [
-              "ENTER next; LEFT previous;",
-              "CLEAR menu in reference",
-              "pages. Check your CE",
-              "before relying on it."
+              "uses your current model.",
+              "HOMEWORK PRACTICE examples",
+              "are for study only. Use",
+              "BACK to exit. ENTER next;",
+              "LEFT previous; CLEAR menu",
+              "in reference pages. Check",
+              "your CE before relying on",
+              "it."
             ]
           ]
         }

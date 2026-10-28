@@ -21,6 +21,9 @@ def m(n):
     return {"menu": n}
 
 
+BACK = m("BACK")
+
+
 def entry(value):
     s = str(value)
     if isinstance(value, (int, float, F)) and value < 0:
@@ -33,26 +36,26 @@ def values(*items):
 
 
 def grid(xs, ys, q):
-    return [m(3)] + values(xs, ys, q)
+    return [m("FORMULA/GRID")] + values(xs, ys, q)
 
 
 def rows(data):
-    out = [m(2), entry(len(data))]
+    out = [m("JOINT X,Y"), entry(len(data))]
     for row in data:
         out.extend(values(*row))
     return out
 
 
 def one_d(q, lo, hi):
-    return [m(1)] + values(q, 0, lo, hi)
+    return [m("1D PDF OR SLICE")] + values(q, 0, lo, hi)
 
 
 def double(q, lo, hi, yl, yh, g="1", n=4):
-    return [m(2)] + values(q, 0, lo, hi, yl, yh, g, n)
+    return [m("DOUBLE INTEGRAL")] + values(q, 0, lo, hi, yl, yh, g, n)
 
 
 def slice_data(direction, q, c, given, lo, hi):
-    return [m(direction)] + values(q, c, given, lo, hi)
+    return [m({1: "X GIVEN Y", 2: "Y GIVEN X"}[direction])] + values(q, c, given, lo, hi)
 
 
 def exact_moment(data, g):
@@ -103,7 +106,7 @@ class TransferGeneral(unittest.TestCase):
                                float(value), delta=tolerance)
 
     def test_nonrectangular_finite_support_raw_rows(self):
-        r = self.run_general("M2DISC", rows(NONRECT) + [m(1), m(7)])
+        r = self.run_general("M2DISC", rows(NONRECT) + [m("MOMENTS"), BACK])
         ex = exact_moment(NONRECT, lambda x, y: x)
         ey = exact_moment(NONRECT, lambda x, y: y)
         ex2 = exact_moment(NONRECT, lambda x, y: x*x)
@@ -115,7 +118,7 @@ class TransferGeneral(unittest.TestCase):
     def test_masked_grid_and_nonlinear_joint_payoff(self):
         r = self.run_general("M2DISC",
             grid("{0,1,2,3}", "{0,1,2}", "(1+X+2Y)*(X+Y≤3)") +
-            [m(4), entry("2X-Y²"), m(7)])
+            [m("FUNCTION g(X,Y)"), entry("2X-Y²"), BACK])
         mean = exact_moment(NONRECT, lambda x, y: 2*x-y*y)
         second = exact_moment(NONRECT, lambda x, y: (2*x-y*y)**2)
         self.near_vars(r, E=mean, G=second, B=second-mean*mean)
@@ -123,8 +126,8 @@ class TransferGeneral(unittest.TestCase):
     def test_conditioning_event_differs_from_conditioning_at_value(self):
         # On this support, X>=2 contains a row with X=3,Y=0 as well.
         r = self.run_general("M2DISC", rows(NONRECT) +
-            [m(3), m(2), entry("Y≥1"), entry("X≥2"),
-             m(2), entry("Y≥1"), entry("X=2"), m(3), m(7)])
+            [m("EVENT PROB"), m("P(EVENT|GIVEN)"), entry("Y≥1"), entry("X≥2"),
+             m("P(EVENT|GIVEN)"), entry("Y≥1"), entry("X=2"), BACK, BACK])
         self.assertIn("5/12", r.text)
         self.assertIn("5/8", r.text)
         self.near_vars(r, W=F(5, 8))
@@ -136,7 +139,7 @@ class TransferGeneral(unittest.TestCase):
         r = self.run_general("M2DISC",
             grid("{0,1,2,3}", "{0,1,2}",
                  "(1+X+2Y)*(X+Y≤3)*(X≥1)") +
-            [m(4), entry("X*Y+Y²"), m(7)])
+            [m("FUNCTION g(X,Y)"), entry("X*Y+Y²"), BACK])
         mean = exact_moment(conditional_rows, lambda x, y: x*y+y*y)
         second = exact_moment(conditional_rows, lambda x, y: (x*y+y*y)**2)
         self.near_vars(r, E=mean, G=second, B=second-mean*mean)
@@ -145,7 +148,7 @@ class TransferGeneral(unittest.TestCase):
         # Joint PDF3 on0<x<1,0<y<x^2; Y|X=a is uniform(0,a^2).
         r = self.run_general("M2SLICE",
             slice_data(2, "1", 3, F(3,5), 0, "X²") +
-            [m(1), entry(F(1,10)), m(2), entry(F(1,5)), entry(F(9,25)), m(6)])
+            [m("PDF AT POINT"), entry(F(1,10)), m("INTERVAL PROB"), entry(F(1,5)), entry(F(9,25)), BACK])
         self.near_vars(r, M=F(27,25), E=F(9,50), F=F(27,625),
                        H=F(27,2500), O=F(4,9), P=3)
         self.assertIn("25/9", r.text)
@@ -153,21 +156,21 @@ class TransferGeneral(unittest.TestCase):
     def test_curved_slice_reverse_requires_square_root_bound(self):
         # GivenY=1/4, x runs1/2..1, NOT0..1.
         r = self.run_general("M2SLICE",
-            slice_data(1, "1", 3, F(1,4), "√(Y)", 1) + [m(6)])
+            slice_data(1, "1", 3, F(1,4), "√(Y)", 1) + [BACK])
         self.near_vars(r, M=F(3,2), E=F(3,4), F=F(7,12), H=F(1,48))
 
     def test_continuous_event_conditioning_curved_region(self):
         # B={X>1/2}; I=P(B)=7/8 and J=E[Y1_B]=93/320.
         # Conditional mean J/I=93/280. A finerN addresses the x^4 outer term.
         r = self.run_general("M2CONT",
-            double("3", F(1,2), 1, 0, "X²", "Y", n=16) + [m(1), m(4)])
+            double("3", F(1,2), 1, 0, "X²", "Y", n=16) + [m("NORMALIZE FULL S"), BACK])
         self.near_vars(r, tolerance=2e-7, F=F(7,8), G=F(93,320), W=F(93,280))
         self.assertIn("FULL SUPPORT ONLY", r.text)
 
     def test_probability_requires_two_regions(self):
         # PDF1 on0<x<2,0<y<x/2. X+Y<=3/2 changes upperboundary atx=1.
-        first = self.run_general("M2CONT", double("1", 0, 1, 0, "X/2") + [m(4)])
-        second = self.run_general("M2CONT", double("1", 1, F(3,2), 0, "3/2-X") + [m(4)])
+        first = self.run_general("M2CONT", double("1", 0, 1, 0, "X/2") + [BACK])
+        second = self.run_general("M2CONT", double("1", 1, F(3,2), 0, "3/2-X") + [BACK])
         self.near_vars(first, F=F(1,4))
         self.near_vars(second, F=F(1,8))
         self.assertAlmostEqual(float(first.var("F"))+float(second.var("F")), F(3,8), delta=1e-7)
@@ -175,8 +178,8 @@ class TransferGeneral(unittest.TestCase):
     def test_generic_mgf_from_three_point_distribution(self):
         # M(t)=.2e^-2t+.5e^t+.3e^4t; mean13/10,var441/100.
         q = "𝑒^(⁻2X)/5+𝑒^(X)/2+3*𝑒^(4X)/10"
-        r = self.run_general("M2MGF", [m(3)] + values(q, -2, 3) +
-                             [m(1), entry(F(1,5)), m(3)])
+        r = self.run_general("M2MGF", [m("TYPE MGF NUMERIC")] + values(q, -2, 3) +
+                             [m("EVAL Mz AT t"), entry(F(1,5)), BACK])
         self.screen_value(r, "APPROX X MOMENTS", "E(X)", F(13,10), 1e-4)
         self.screen_value(r, "APPROX X MOMENTS", "VAR(X)", F(441,100), 1e-4)
         self.screen_value(r, "APPROX Z=aX+b MOMENTS", "E(Z)", F(2,5), 2e-4)
@@ -186,8 +189,8 @@ class TransferGeneral(unittest.TestCase):
 
     def test_negative_scale_reverses_new_mgf_domain(self):
         # Rate5/2, Z=7/4-3X/2 -> domain t>-5/3.
-        r = self.run_general("M2MGF", [m(1)] + values(F(5,2), F(-3,2), F(7,4)) +
-                             [m(1), entry(F(1,2)), m(3)])
+        r = self.run_general("M2MGF", [m("EXPONENTIAL RATE")] + values(F(5,2), F(-3,2), F(7,4)) +
+                             [m("EVAL Mz AT t"), entry(F(1,2)), BACK])
         self.screen_value(r, "Z=aX+b MOMENTS", "E(Z)", F(23,20))
         self.screen_value(r, "Z=aX+b MOMENTS", "VAR(Z)", F(9,25))
         self.assertIn("DOMAIN t>⁻1.666667", r.text)
@@ -198,7 +201,7 @@ class TransferGeneral(unittest.TestCase):
         # Then a=(1,-1,2) ->V+2W, b=(-2,3,1) ->U+4V+W.
         args = [3, 1, 2, -2, 5, 4, 8, 2, 0, 3,
                 1, -2, -1, 3, 2, 1, 7, -5]
-        r = self.run_general("M2COV", [m(2), m(2)] + values(*args) + [m(3)])
+        r = self.run_general("M2COV", [m("TWO COMBINATIONS"), m("MEAN+VAR/COV")] + values(*args) + [BACK])
         self.screen_value(r, "COMBINATION U", "E(U)", 18)
         self.screen_value(r, "COMBINATION U", "VAR(U)", 23)
         self.screen_value(r, "COMBINATION V", "E(V)", -9)
@@ -210,7 +213,7 @@ class TransferGeneral(unittest.TestCase):
         # Y~Uniform(1,3), X|Y=y~Uniform(0,y^2).
         # Var(E[X|Y])=Var(Y^2/2)=61/45, E[Var(X|Y)]=E[Y^4/12]=121/60.
         r = self.run_general("M2CONT", one_d("1", 1, 3) +
-            [m(3), entry("X²/2"), m(3), entry("X^4/12"), m(7)])
+            [m("FUNCTION g(X)"), entry("X²/2"), m("FUNCTION g(X)"), entry("X^4/12"), BACK])
         for value in ["13/6", "61/45", "121/60"]:
             self.assertIn(value, r.text)
         self.near_vars(r, E=F(121,60))

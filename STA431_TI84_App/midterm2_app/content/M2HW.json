@@ -12,7 +12,7 @@
           "pages": [
             [
               "p=c(X+Y²), X=1,2; Y=1,2,3.",
-              "DISCRETE+JOINT, JOINT,",
+              "DISCRETE TABLE, JOINT X,Y,",
               "enter6 rows",
               "x,y,weight=x+y².",
               "Sum weights37 => c=1/37.",
@@ -312,72 +312,6 @@
               "Show E[XY] weighted sum,",
               "then subtract product of",
               "marginal means."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "menu": "OPTIONAL 631",
-      "title": "OPTIONAL 631 EXTRAS",
-      "topics": [
-        {
-          "menu": "HW4 TRIANGLE",
-          "title": "HW4 TRIANGLE",
-          "pages": [
-            [
-              "f=24X(1-X-Y) on",
-              "X>0,Y>0,X+Y<1. DOUBLE q",
-              "asgiven,x0..1,y0..1-X,g1.",
-              "fX=12X(1-X)²; fY=4(1-Y)³",
-              "on0..1. Not independent;",
-              "triangular support omits a",
-              "positive product-density",
-              "region."
-            ]
-          ]
-        },
-        {
-          "menu": "HW4 REIMBURSE",
-          "title": "HW4 REIMBURSE",
-          "pages": [
-            [
-              "Joint q=(20-X)/(25X)",
-              "for10<X<20,X/2<Y<X.",
-              "fX=(20-X)/50.",
-              "Given X12, Y",
-              "uniform(6,12). 1D q1",
-              "lower6 upper12;",
-              "interval8..12.",
-              "Probability2/3.",
-              "Do not divide by"
-            ],
-            [
-              "P(X=12)=0. Use conditional",
-              "density1/6."
-            ]
-          ]
-        },
-        {
-          "menu": "HW5 ZERO COV",
-          "title": "HW5 ZERO COV",
-          "pages": [
-            [
-              "fX=1-abs(X), -1<X<1;Y=X².",
-              "Existing odd moments0 =>",
-              "Cov(X,Y)=0.",
-              "A=abs(X)<1/2, B=0≤Y<1/4.",
-              "Same event. Both",
-              "probabilities3/4,",
-              "intersection3/4,",
-              "product9/16.",
-              "They are dependent. The"
-            ],
-            [
-              "calculator can check the",
-              "interval integral; the",
-              "event argument supplies",
-              "the proof."
             ]
           ]
         }

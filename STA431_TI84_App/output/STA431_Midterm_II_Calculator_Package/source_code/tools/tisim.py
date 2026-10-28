@@ -27,6 +27,10 @@ PYTHON API
   Actions (consumed in order):
     {"menu": n}      answer the next Menu( with item n (1-based). Error if the next action is not a menu
                      action or n is out of range.
+    {"menu": "TEXT"} answer the next Menu( with the item whose stripped text equals TEXT exactly; if none
+                     does, the ONE item whose stripped text starts with TEXT. No match, or several
+                     exact/prefix matches, raises SIM:ACTION listing the menu's items. Prefer text in tests
+                     ({"menu": "BACK"}) so menus can grow without breaking hard-coded positions.
     {"input": "txt"} answer the next Input/Prompt. txt is what the user TYPES, tokenized like keypresses
                      (tivars expression mode): "3/16", "⁻1" (negation key!), "{1,2,3}", "1-𝑒^(⁻2X)",
                      "5ᴇ⁻3", "pi". Real vars: typed text is evaluated (so "-1" is ERR:SYNTAX, like the TI).
@@ -45,6 +49,7 @@ PYTHON API
                        "rows":  10 strings of exactly 26 chars (what the home screen shows; for "menu"
                                 it is the menu screen: title row + "1:ITEM" rows)
                        "program", "line": where it happened (line = line number in src/NAME.txt)
+                       "stack": program names on the prgm call stack, outermost first
                        "menu":  {"title", "items", "labels"}            (event == "menu")
                        "prompt", "var"                                   (event == "input")
                        "key"                                             (event == "getkey")
@@ -1567,7 +1572,8 @@ class Interp:
     def snap(self, event, rows=None, **extra):
         name, line, _ = self.where()
         s = {"event": event, "rows": rows if rows is not None else self.screen.snapshot(),
-             "program": name, "line": line, "step": self.steps}
+             "program": name, "line": line, "step": self.steps,
+             "stack": [p.name for p, _ in self.call_stack if p is not None]}
         s.update(extra)
         self.snaps.append(s)
         return s
@@ -2208,15 +2214,35 @@ class Interp:
         s = self.snap("menu", rows=menu_rows(title, texts),
                       menu={"title": title, "items": texts, "labels": labels})
         n = self.take("menu")
+        if isinstance(n, str) and not n.strip().isdigit():
+            n = self.menu_index(title, texts, n)
         try:
             n = int(n)
         except (TypeError, ValueError):
-            raise TIError("ACTION", f"menu choice must be an integer, got {n!r}", sim=True)
+            raise TIError("ACTION", f"menu choice must be an integer or item text, got {n!r}", sim=True)
         if not 1 <= n <= len(items):
             raise TIError("ACTION", f"menu choice {n} out of range 1..{len(items)} for {title!r}", sim=True)
         s["response"] = f"chose {n}: {texts[n - 1]} (label {labels[n - 1]})"
         self.last_was_expr = False
         return self.jump(prog, stack, labels[n - 1])
+
+
+    @staticmethod
+    def menu_index(title, texts, want):
+        """1-based index of the item whose stripped text equals want, else of the unique item that starts
+        with want. Raises SIM:ACTION (listing the items) when there is no match or the match is ambiguous."""
+        items = [t.strip() for t in texts]
+        listing = ", ".join(f"{k}={t}" for k, t in enumerate(items, 1))
+        exact = [k for k, t in enumerate(items, 1) if t == want]
+        if len(exact) == 1:
+            return exact[0]
+        if len(exact) > 1:
+            raise TIError("ACTION", f"menu text {want!r} matches several items of {title!r}: {listing}", sim=True)
+        pref = [k for k, t in enumerate(items, 1) if want and t.startswith(want)]
+        if len(pref) == 1:
+            return pref[0]
+        what = "is ambiguous in" if pref else "matches no item of"
+        raise TIError("ACTION", f"menu text {want!r} {what} {title!r}: {listing}", sim=True)
 
 
 def raise_at(it, prog, st, err):

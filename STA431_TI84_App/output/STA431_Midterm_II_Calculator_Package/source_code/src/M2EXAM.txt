@@ -1,0 +1,462 @@
+// M2EXAM - classify unfamiliar questions, then open a general solver.
+// No homework model, input preset, or stored result is used.
+0→Z
+Lbl M
+Menu("EXAM GIVEN DATA","FINITE PMF/TABLE",A,"JOINT PDF",B,"ONE-VARIABLE PDF",C,"MGF GIVEN",D,"MEAN/VAR/COV DATA",E,"PROOF OR FORMULA",F,"BACK",Z)
+Lbl A
+Menu("FINITE PMF ASKED?","PROBABILITY",A1,"MARGINAL/CONDL",A2,"MEAN/VAR/FUNCTION",A3,"COV/INDEPENDENCE",A4,"CDF VALUE",A5,"BACK",M)
+Lbl B
+Menu("JOINT PDF ASKED?","NORMALIZE / PROB",B1,"GIVEN VALUE",B2,"GIVEN INTERVAL",B6,"MOMENT / COV",B3,"MARGINAL FORMULA",B4,"SUPPORT / BOUNDS",B5,"BACK",M)
+Lbl C
+Menu("ONE PDF ASKED?","INTERVAL PROB",C1,"MEAN/VAR/FUNCTION",C2,"RAW/CENTRAL MOM",C3,"CDF / SYMBOLIC",C4,"BACK",M)
+Lbl D
+Menu("MGF ASKED?","MOMENTS",D1,"AFFINE TRANSFORM",D2,"DOMAIN / IDENTITY",D3,"BACK",M)
+Lbl E
+Menu("MOMENTS ASKED?","ONE COMBINATION",E1,"TWO COMBINATIONS",E2,"ZERO COV PROOF",E3,"BACK",M)
+Lbl F
+Menu("WRITTEN REASONING","DISTRIBUTION FORM",F1,"INDEPENDENCE",F2,"MGF DOMAIN",F3,"ZERO COV / DEPEND",F4,"WORDS TO EVENT",F5,"BACK",M)
+Lbl A1
+ClrHome
+Output(1,1,"FINITE EVENT PROBABILITY")
+Output(2,1,"List allowed pairs first.")
+Output(3,1,"Enter YOUR values/weights.")
+Output(4,1,"Rows for irregular S.")
+Output(5,1,"Grid only on valid inputs.")
+Output(6,1,"Then EVENT PROB; type the")
+Output(7,1,"event using X and Y.")
+Output(8,1,"For GIVEN, select the")
+Output(9,1,"conditional event option.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl A2
+ClrHome
+Output(1,1,"MARGINAL OR CONDITIONAL")
+Output(2,1,"Load YOUR joint PMF.")
+Output(3,1,"Marginal = sum other var.")
+Output(4,1,"MARG/CONDITIONAL has full")
+Output(5,1,"marginal tables and slices")
+Output(6,1,"X GIVEN Y holds Y fixed.")
+Output(7,1,"Y GIVEN X holds X fixed.")
+Output(8,1,"Given mass must be >0.")
+Output(9,1,"Write support and ratio.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl A3
+ClrHome
+Output(1,1,"EXPECTATION OR TRANSFORM")
+Output(2,1,"Load YOUR values/weights.")
+Output(3,1,"MOMENTS gives mean and var")
+Output(4,1,"FUNCTION g(X,Y) averages")
+Output(5,1,"a payoff WITHOUT finding")
+Output(6,1,"its distribution first.")
+Output(7,1,"For Var(g), need E[g^2],")
+Output(8,1,"not just E[g].")
+Output(9,1,"Linearity needs no indep.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl A4
+ClrHome
+Output(1,1,"JOINT COV OR INDEPENDENCE")
+Output(2,1,"Load YOUR joint pairs.")
+Output(3,1,"MOMENTS gives E[XY],cov,r.")
+Output(4,1,"INDEPENDENCE compares all")
+Output(5,1,"listed x by listed y.")
+Output(6,1,"A failed pair is evidence.")
+Output(7,1,"Write an exact comparison.")
+Output(8,1,"Cov=0 alone does not prove")
+Output(9,1,"independence.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl A5
+ClrHome
+Output(1,1,"CDF FROM A FINITE PMF")
+Output(2,1,"F(a,b)=P(X≤a,Y≤b).")
+Output(3,1,"Load YOUR joint model.")
+Output(4,1,"EVENT PROB with expression")
+Output(5,1,"(X≤a)*(Y≤b) selects cells.")
+Output(6,1,"Replace a,b by the numbers")
+Output(7,1,"from YOUR question.")
+Output(8,1,"Check inclusive endpoints.")
+Output(9,1,"Weights may differ.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2DISC
+0→Z
+Goto A
+Lbl B1
+ClrHome
+Output(1,1,"JOINT NORMALIZER OR PROB")
+Output(2,1,"Draw support AND event.")
+Output(3,1,"Choose x outer, y inner.")
+Output(4,1,"Split at changing bounds.")
+Output(5,1,"DOUBLE INTEGRAL takes YOUR")
+Output(6,1,"q, x range, y limits(X).")
+Output(7,1,"Full support c=1/RAW I.")
+Output(8,1,"Normalized f on an event")
+Output(9,1,"probability is RAW I.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CONT
+0→Z
+Goto B
+Lbl B2
+ClrHome
+Output(1,1,"A GIVEN VALUE IN A PDF")
+Output(2,1,"Given Y=y fixes a VALUE.")
+Output(3,1,"It is not the event Y>y.")
+Output(4,1,"JOINT SLICE uses X,Y names")
+Output(5,1,"Enter YOUR q and known c.")
+Output(6,1,"Get a marginal value and")
+Output(7,1,"cond PDF and moments.")
+Output(8,1,"If c unknown, normalize")
+Output(9,1,"the full support first.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2SLICE
+0→Z
+Goto B
+Lbl B3
+ClrHome
+Output(1,1,"JOINT PRODUCT OR MOMENT")
+Output(2,1,"Use FULL SUPPORT bounds.")
+Output(3,1,"DOUBLE INTEGRAL multiplier")
+Output(4,1,"g=X^r*Y^s, or YOUR payoff.")
+Output(5,1,"For unnormalized q use")
+Output(6,1,"E[g]=RAW J/RAW I.")
+Output(7,1,"Cov needs E[X],E[Y],E[XY].")
+Output(8,1,"Var(g) needs E[g^2].")
+Output(9,1,"Do not multiply marginals.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CONT
+0→Z
+Goto B
+Lbl B4
+ClrHome
+Output(1,1,"A DENSITY FUNCTION ANSWER")
+Output(2,1,"Numerical values are not")
+Output(3,1,"a marginal formula.")
+Output(4,1,"Integrate out the other RV")
+Output(5,1,"with support-based limits.")
+Output(6,1,"Conditional=joint/marginal")
+Output(7,1,"of the GIVEN variable.")
+Output(8,1,"Give all support branches.")
+Output(9,1,"Read derivation rules.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto B
+Lbl B5
+ClrHome
+Output(1,1,"SUPPORT SETS THE LIMITS")
+Output(2,1,"Draw S and event A.")
+Output(3,1,"Integrate on intersection.")
+Output(4,1,"Triangle => moving limits.")
+Output(5,1,"Curves may need a split.")
+Output(6,1,"At fixed x find allowed y.")
+Output(7,1,"Outer limits must not use")
+Output(8,1,"the inner variable.")
+Output(9,1,"Choose order to simplify.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto B
+Lbl C1
+ClrHome
+Output(1,1,"ONE-DIMENSION PROBABILITY")
+Output(2,1,"Enter YOUR q and support.")
+Output(3,1,"Use a PDF or shape q.")
+Output(4,1,"The 1D tool normalizes q.")
+Output(5,1,"INTERVAL PROB clips bounds")
+Output(6,1,"and divides by total mass.")
+Output(7,1,"Infinite bounds need math,")
+Output(8,1,"not a guessed cutoff.")
+Output(9,1,"Use your actual formula.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CONT
+0→Z
+Goto C
+Lbl C2
+ClrHome
+Output(1,1,"ONE-PDF MEAN OR PAYOFF")
+Output(2,1,"Enter YOUR q and support.")
+Output(3,1,"MEAN+VARIANCE averages X.")
+Output(4,1,"FUNCTION g(X) averages any")
+Output(5,1,"entered payoff g and g^2.")
+Output(6,1,"Var(g)=E[g^2]-E[g]^2.")
+Output(7,1,"Var(X^2) needs E[X^4].")
+Output(8,1,"Do not find a new density")
+Output(9,1,"unless it is asked for.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CONT
+0→Z
+Goto C
+Lbl C3
+ClrHome
+Output(1,1,"WHICH MOMENT IS ASKED?")
+Output(2,1,"Raw order r means E[X^r].")
+Output(3,1,"Central order r means")
+Output(4,1,"E[(X-E[X])^r].")
+Output(5,1,"Use RAW/CENTRAL MOM with")
+Output(6,1,"YOUR nonnegative density.")
+Output(7,1,"Second central = variance.")
+Output(8,1,"Check moment existence for")
+Output(9,1,"an unbounded support.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CONT
+0→Z
+Goto C
+Lbl C4
+ClrHome
+Output(1,1,"CDF OR SYMBOLIC ANSWER")
+Output(2,1,"F(x)=integral f up to x.")
+Output(3,1,"Intersect with support.")
+Output(4,1,"Give outside-S pieces.")
+Output(5,1,"Differentiate F for a PDF")
+Output(6,1,"for an abs-continuous law.")
+Output(7,1,"A function answer needs")
+Output(8,1,"algebra, not one decimal.")
+Output(9,1,"Read the general rules.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto C
+Lbl D1
+ClrHome
+Output(1,1,"MOMENTS FROM YOUR MGF")
+Output(2,1,"Mprime(0)=E[X].")
+Output(3,1,"Msecond(0)=E[X^2].")
+Output(4,1,"Variance=Msecond-mean^2.")
+Output(5,1,"Choose a matching template")
+Output(6,1,"or TYPE MGF NUMERIC.")
+Output(7,1,"Generic derivatives are")
+Output(8,1,"approximate; compare steps")
+Output(9,1,"State convergence domain.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2MGF
+0→Z
+Goto D
+Lbl D2
+ClrHome
+Output(1,1,"AFFINE MGF TRANSFORMATION")
+Output(2,1,"First rewrite Z=aX+b.")
+Output(3,1,"Enter YOUR original MGF,")
+Output(4,1,"then scale a and shift b.")
+Output(5,1,"Mz(t)=e^(bt)*Mx(a*t).")
+Output(6,1,"New domain requires a*t")
+Output(7,1,"inside original domain.")
+Output(8,1,"Negative a reverses bounds")
+Output(9,1,"Simplify the formula.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2MGF
+0→Z
+Goto D
+Lbl D3
+ClrHome
+Output(1,1,"MGF DOMAIN OR UNIQUENESS")
+Output(2,1,"M(0)=1 is necessary only.")
+Output(3,1,"Show finiteness on an open")
+Output(4,1,"interval containing zero.")
+Output(5,1,"Equal MGFs there imply")
+Output(6,1,"equal distributions.")
+Output(7,1,"Two matching moments")
+Output(8,1,"cannot identify the law.")
+Output(9,1,"A cutoff is not a proof.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto D
+Lbl E1
+ClrHome
+Output(1,1,"ONE LINEAR COMBINATION")
+Output(2,1,"Write W=c+sum ai*Xi.")
+Output(3,1,"Enter YOUR variances and")
+Output(4,1,"covariances, then ai,c.")
+Output(5,1,"Means are optional.")
+Output(6,1,"Keep cross-term signs.")
+Output(7,1,"Offsets add no variance.")
+Output(8,1,"Drop covariance terms only")
+Output(9,1,"when justified.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2COV
+0→Z
+Goto E
+Lbl E2
+ClrHome
+Output(1,1,"TWO LINEAR COMBINATIONS")
+Output(2,1,"Write coefficient rows.")
+Output(3,1,"Enter YOUR moments and")
+Output(4,1,"choose TWO COMBINATIONS.")
+Output(5,1,"The tool gives VarU,VarV,")
+Output(6,1,"Cov(U,V), and correlation.")
+Output(7,1,"Shared input variables can")
+Output(8,1,"create covariance when")
+Output(9,1,"inputs are independent.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2COV
+0→Z
+Goto E
+Lbl E3
+ClrHome
+Output(1,1,"ZERO COV IS NOT ENOUGH")
+Output(2,1,"Cov=E[XY]-E[X]E[Y].")
+Output(3,1,"Independent => Cov=0, but")
+Output(4,1,"Cov=0 does not prove it.")
+Output(5,1,"To show dependence give")
+Output(6,1,"one (x,y) with")
+Output(7,1,"f(x,y)≠g(x)h(y), or show")
+Output(8,1,"the support is not a")
+Output(9,1,"product set.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto E
+Lbl F1
+ClrHome
+Output(1,1,"CDF GIVEN CONVERT FIRST")
+Output(2,1,"Joint CDF rectangle uses")
+Output(3,1,"four corners with signs")
+Output(4,1,"+F(b,d)-F(a,d)-F(b,c)")
+Output(5,1,"+F(a,c), for (a,b]x(c,d].")
+Output(6,1,"Marginals are CDF limits.")
+Output(7,1,"Differentiate twice for")
+Output(8,1,"a joint PDF where valid.")
+Output(9,1,"Enter the derived PDF.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto F
+Lbl F2
+ClrHome
+Output(1,1,"INDEPENDENCE JUSTIFICATION")
+Output(2,1,"Compare joint with product")
+Output(3,1,"of marginals over full S.")
+Output(4,1,"Include missing crosspairs")
+Output(5,1,"or zero-density regions.")
+Output(6,1,"One agreeing point proves")
+Output(7,1,"nothing; a PMF failure")
+Output(8,1,"is a counterexample. PDFs")
+Output(9,1,"need positive-area failure")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto F
+Lbl F3
+ClrHome
+Output(1,1,"CONVERGENCE IS ANALYTIC")
+Output(2,1,"Write MGF integral/sum.")
+Output(3,1,"Combine exponents or apply")
+Output(4,1,"series convergence rule.")
+Output(5,1,"Solve the condition on t.")
+Output(6,1,"State finiteness near zero")
+Output(7,1,"Numerical samples cannot")
+Output(8,1,"prove the whole domain.")
+Output(9,1,"Read definition/examples.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto F
+Lbl F4
+ClrHome
+Output(1,1,"DEPENDENCE WITH ZERO COV")
+Output(2,1,"Compute Cov from the law,")
+Output(3,1,"then test independence.")
+Output(4,1,"To show dependence give")
+Output(5,1,"one (x,y) with")
+Output(6,1,"f(x,y)≠g(x)h(y), or show")
+Output(7,1,"the support is not a")
+Output(8,1,"product set.")
+Output(9,1,"Cov=0 alone proves nothing")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto F
+Lbl F5
+ClrHome
+Output(1,1,"TRANSLATE BEFORE COMPUTING")
+Output(2,1,"Both means intersection.")
+Output(3,1,"At least one means union.")
+Output(4,1,"Either-fails lifetime=min.")
+Output(5,1,"Both-fail lifetime=max.")
+Output(6,1,"Given an interval is not")
+Output(7,1,"given an exact value.")
+Output(8,1,"Draw the support/event,")
+Output(9,1,"then choose a solver.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2ENC
+0→Z
+Goto F
+Lbl B6
+ClrHome
+Output(1,1,"CONDITION ON AN EVENT")
+Output(2,1,"Given Y>k is an EVENT.")
+Output(3,1,"P(A|B)=INT(A and B)q")
+Output(4,1,"divided by INT(B)q.")
+Output(5,1,"Use one joint shape q.")
+Output(6,1,"Its scale cancels.")
+Output(7,1,"Intersect support with B")
+Output(8,1,"and with A and B; split")
+Output(9,1,"where limits change.")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CONT
+0→Z
+Goto B
+Lbl Z
+0→Z
+Return

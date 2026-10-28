@@ -30,6 +30,8 @@ Disp "BOUNDS OF REMAINING VAR","USE ITS CONDITIONAL SLICE"
 Input "LOWER BOUND?",B
 Input "UPPER BOUND?",C
 If C≤B:Goto BB
+// Finite values only (PLAN 4.4: |v|<1E5); ᴇ99 would overflow the sampling below.
+If abs(A)≥1ᴇ5 or abs(B)≥1ᴇ5 or abs(C)≥1ᴇ5:Goto BF
 0→K
 For(I,0,20)
 B+(C-B)*(I+.5)/21→J
@@ -149,6 +151,11 @@ Goto A0
 Lbl BB
 ClrHome
 Disp "UPPER MUST EXCEED LOWER"
+Pause
+Goto V
+Lbl BF
+ClrHome
+Disp "FINITE VALUES ONLY","NO ᴇ99, ABS MUST BE <1ᴇ5","FOR AN INFINITE END TYPE A","CUTOFF T WITH q NEAR 0","E.G. T=40 FOR 𝑒^(⁻X)","RERUN AT 2T, SAME = OK"
 Pause
 Goto V
 Lbl BQ

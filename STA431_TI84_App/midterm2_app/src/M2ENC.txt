@@ -579,15 +579,15 @@ Goto 4
 Lbl BB
 ClrHome
 Output(1,1,"ZERO NOT INDEP         1/2")
-Output(2,1,"Independent with finite")
-Output(3,1,"moments => Cov0. Converse")
-Output(4,1,"is false.")
-Output(5,1,"Let X uniform(-1,1), Y=X².")
-Output(6,1,"E[X]=E[X³]=0, so")
-Output(7,1,"Cov(X,Y)=0.")
-Output(8,1,"A=abs(X)<1/2, B=Y<1/4.")
-Output(9,1,"These events agree.")
-Output(10,1,"P(A)=P(B)=1/2, P(A and")
+Output(2,1,"Thm12 p134. Independent =>")
+Output(3,1,"E(XY)=E(X)E(Y), so σXY=0.")
+Output(4,1,"The converse is FALSE.")
+Output(5,1,"Ex17 p135. f(-1,-1)=1/6,")
+Output(6,1,"f(0,-1)=1/3, f(1,-1)=1/6,")
+Output(7,1,"f(-1,1)=1/6, f(1,1)=1/6,")
+Output(8,1,"all other pairs 0.")
+Output(9,1,"μX=0, μY=-1/3, μ'1,1=0, so")
+Output(10,1,"σXY=0-0*(-1/3)=0.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
@@ -595,12 +595,12 @@ If K=24:Goto 4
 Lbl BC
 ClrHome
 Output(1,1,"ZERO NOT INDEP         2/2")
-Output(2,1,"B)=1/2, product=1/4.")
-Output(3,1,"Therefore dependent")
-Output(4,1,"despite correlation0. A")
-Output(5,1,"deterministic nonconstant")
-Output(6,1,"square is not independent")
-Output(7,1,"of its input.")
+Output(2,1,"But f(-1,-1)=1/6 while")
+Output(3,1,"g(-1)h(-1)=(1/3)(2/3)=2/9.")
+Output(4,1,"One failing pair =>")
+Output(5,1,"dependent.")
+Output(6,1,"Covariance measures only")
+Output(7,1,"LINEAR association.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
@@ -721,10 +721,11 @@ Output(1,1,"CONDITIONAL MEAN       2/2")
 Output(2,1,"support. E[X|Y=y]=m(y) is")
 Output(3,1,"a number; E[X|Y]=m(Y) is a")
 Output(4,1,"random variable.")
-Output(5,1,"GENERAL SOLVERS then JOINT")
-Output(6,1,"SLICE evaluates marginal")
-Output(7,1,"and conditional quantities")
-Output(8,1,"at any valid given value.")
+Output(5,1,"SOLVERS > DENSITY+INTEGRAL")
+Output(6,1,"> JOINT SLICE evaluates")
+Output(7,1,"marginal and conditional")
+Output(8,1,"quantities at any valid")
+Output(9,1,"given value.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
@@ -790,10 +791,10 @@ Goto 6
 Lbl BP
 ClrHome
 Output(1,1,"CHOOSE A SOLVER        1/3")
-Output(2,1,"From GENERAL SOLVERS,")
-Output(3,1,"finite values => DISCRETE")
-Output(4,1,"+ JOINT. FORMULA/GRID")
-Output(5,1,"takes x-list,y-list,weight")
+Output(2,1,"From SOLVERS, finite")
+Output(3,1,"values => DISCRETE TABLE.")
+Output(4,1,"FORMULA/GRID takes")
+Output(5,1,"x-list,y-list,weight")
 Output(6,1,"formula. Use y-list{0} for")
 Output(7,1,"one variable. No need")
 Output(8,1,"normalize first.")
@@ -806,7 +807,7 @@ If K=24:Goto 6
 Lbl BQ
 ClrHome
 Output(1,1,"CHOOSE A SOLVER        2/3")
-Output(2,1,"DENSITY + INTEGRAL, 1D.")
+Output(2,1,"DENSITY+INTEGRAL, 1D.")
 Output(3,1,"Joint PDF with explicit")
 Output(4,1,"inner/outer bounds =>")
 Output(5,1,"DOUBLE INTEGRAL. Split")
@@ -854,9 +855,9 @@ Output(4,1,"engine. Numerical")
 Output(5,1,"integration and derivative")
 Output(6,1,"outputs are")
 Output(7,1,"approximations.")
-Output(8,1,"EXAM ASSISTANT starts with")
-Output(9,1,"your given data and")
-Output(10,1,"target. GENERAL SOLVERS")
+Output(8,1,"HELP > FIND MY SOLVER")
+Output(9,1,"starts with your given")
+Output(10,1,"data and target. SOLVERS")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
@@ -865,11 +866,11 @@ Lbl BU
 ClrHome
 Output(1,1,"INPUT AND LIMITS       3/3")
 Output(2,1,"uses your current model.")
-Output(3,1,"PRACTICE + HW examples are")
-Output(4,1,"for study only. Use BACK")
-Output(5,1,"to exit. ENTER next; LEFT")
-Output(6,1,"previous; CLEAR menu in")
-Output(7,1,"reference pages. Check")
+Output(3,1,"HOMEWORK PRACTICE examples")
+Output(4,1,"are for study only. Use")
+Output(5,1,"BACK to exit. ENTER next;")
+Output(6,1,"LEFT previous; CLEAR menu")
+Output(7,1,"in reference pages. Check")
 Output(8,1,"your CE before relying on")
 Output(9,1,"it.")
 Repeat Ans:getKey:End

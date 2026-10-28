@@ -1,8 +1,8 @@
 // M2CONT: finite-bound 1D q(X) or conditional slice q(X;A).
 // Double integrals: one fnInt in Y per outer Simpson X node, never nested fnInt.
 // Fixed A, bounds B,C, mass D survive M2FMT scratch Q..V.
-If Z=12 or Z=17 or Z=22 or Z=23:Goto AP
-If Z=2 or Z=3 or Z=5 or Z=21:Goto JP
+If Z=12 or Z=17:Goto AP
+If Z=2 or Z=3 or Z=5:Goto JP
 0→Z
 Lbl T
 Menu("CONTINUOUS TOOLS","1D PDF OR SLICE",A0,"DOUBLE INTEGRAL",J0,"JOINT SLICE",JS,"BACK",Z)
@@ -20,6 +20,8 @@ Input "UPPER X?",C
 Lbl AP
 0→Z
 If C≤B:Goto BA
+// Finite bounds only (PLAN 4.4: |v|<1E5). ᴇ99 here would overflow or give a silent 0.
+If abs(B)≥1ᴇ5 or abs(C)≥1ᴇ5:Goto BF
 0→H
 For(I,0,20)
 B+(C-B)*(I+.5)/21→X
@@ -113,15 +115,19 @@ Disp "RAW I=DOUBLE INT q","RAW J=DOUBLE INT(q*g)","USE FULL SUPPORT FOR c","USE 
 Pause
 Input "q(X,Y)?",Str1
 Input "FIXED A?",A
+Lbl J2
 Input "LOWER X?",B
 Input "UPPER X?",C
 If C≤B:Goto BJ
+If abs(B)≥1ᴇ5 or abs(C)≥1ᴇ5:Goto BI
 Input "LOWER Y(X)?",Str2
 Input "UPPER Y(X)?",Str3
 Input "g(X,Y),1=AREA?",Str4
 Lbl JP
 0→Z
 Lbl J1
+ClrHome
+Disp "SIMPSON NEEDS AN EVEN N","START WITH 8, THEN 16, 32","MAX 100; TIME GROWS WITH N"
 Input "EVEN N 4-100?",N
 If N<4 or N>100 or fPart(N/2):Goto BN
 0→P
@@ -137,9 +143,12 @@ expr(Str2)→H
 expr(Str3)→J
 0→Q
 0→R
-If J<H
+// P=2: a y limit is infinite or huge at this node (ᴇ99 typed); skip fnInt, report after the loop.
+If abs(H)≥1ᴇ5 or abs(J)≥1ᴇ5
+2→P
+If J<H and P<2
 1→P
-If J>H
+If J>H and P<2
 Then
 (H+J)/2→Y
 If expr(Str1)<0
@@ -169,48 +178,85 @@ M*L/3→F
 T*L/3→G
 End
 End
+If P=2:Goto BY
 If P:Goto BL
 If θ:Goto BQ
+// Convergence gate (P1 interim fix): P=1 when N and 2N disagree beyond 1E-9 (relative).
+// Then every RAW I/RAW J/NORMALIZE value is shown as the decimal Str8, never a fraction,
+// with the row Str0: RAISE N; at the cap N=100 USE DECIMAL; or, when the change is already
+// below 1E-6 (a quartic or higher outer integrand never meets 1E-9), USE DECIMAL.
+(abs(F-D)>1ᴇ⁻9*max(1,abs(F)) or abs(G-E)>1ᴇ⁻9*max(1,abs(G)))→P
+"NOT CONVERGED - RAISE N"→Str0
+If N=100
+"N=100 IS MAX - USE DECIMAL"→Str0
+If abs(F-D)<1ᴇ⁻6*max(1,abs(F)) and abs(G-E)<1ᴇ⁻6*max(1,abs(G))
+"CHANGE<1ᴇ⁻6 - USE DECIMAL"→Str0
 ClrHome
 Disp "SIMPSON N="+toString(N)
 D→W
 prgmM2FMT
+If P:Str8→Str9
 Disp "RAW I=INT q APPROX=",Str9
 E→W
 prgmM2FMT
+If P:Str8→Str9
 Disp "RAW J=INT(q*g) APPROX=",Str9
+If P:Disp Str0
+If F=0:Disp "I=0 - CHECK q AND BOUNDS"
 Disp "ENTER FOR REFINED RESULT"
 Pause
 ClrHome
 Disp "REFINED N="+toString(2*N)
 F→W
 prgmM2FMT
+If P:Str8→Str9
 Disp "RAW I=INT q APPROX=",Str9
 G→W
 prgmM2FMT
+If P:Str8→Str9
 Disp "RAW J=INT(q*g) APPROX=",Str9
 Disp "CHANGE IN I=",abs(F-D)
 Disp "CHANGE IN J=",abs(G-E)
+If P:Disp Str0
 Pause
 Lbl JM
-Menu("DOUBLE INTEGRAL","NORMALIZE FULL S",JN,"NEW REGION",J0,"TOOLS MENU",T,"BACK",Z)
+Menu("DOUBLE INTEGRAL","NORMALIZE FULL S",JN,"NEW N",J1,"NEW REGION",J0,"TOOLS MENU",T,"BACK",Z)
 Lbl JN
 If F≤0:Goto BQ
 ClrHome
 Disp "FULL SUPPORT ONLY","c=1/RAW I APPROX="
 1/F→W
 prgmM2FMT
+If P:Str8→Str9
 Disp Str9
 G/F→W
 prgmM2FMT
+If P:Str8→Str9
 Disp "E[g]=RAW J/RAW I APPROX",Str9
 Disp "FOR EVENT PROB USE RAW I","q MUST ALREADY BE A PDF"
+If P:Disp Str0
 Pause
 Goto JM
 Lbl BA
 ClrHome
 Disp "UPPER MUST EXCEED LOWER"
 Pause
+Goto A1
+// Bad-bound message shared by 1D (O=0, back to A1), DOUBLE x (O=1) and DOUBLE y (O=2, back to J2).
+Lbl BF
+0→O
+Goto BE
+Lbl BI
+1→O
+Goto BE
+Lbl BY
+2→O
+Lbl BE
+ClrHome
+Disp "BOUNDS MUST BE FINITE","NO ᴇ99, ABS MUST BE <1ᴇ5","FOR AN INFINITE END TYPE A","CUTOFF T WITH q NEAR 0","E.G. T=20 FOR 𝑒^(⁻X)","RERUN AT 2T, SAME = OK"
+If O=2:Disp "(A Y LIMIT IS INFINITE)"
+Pause
+If O:Goto J2
 Goto A1
 Lbl BQ
 ClrHome
@@ -221,7 +267,7 @@ Lbl BJ
 ClrHome
 Disp "UPPER MUST EXCEED LOWER"
 Pause
-Goto J0
+Goto J2
 Lbl BL
 ClrHome
 Disp "Y LIMITS REVERSED","SPLIT REGION CORRECTLY"

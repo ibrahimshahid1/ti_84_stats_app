@@ -18,11 +18,12 @@ Checks (SPEC sections 2, 3 and 6)
   ERROR  Output(: literal row not in 1..10 / column not in 1..26; string literal (or the literal parts of a
          "lit"+... concatenation) does not fit in the row from its column (26-col+1 chars, SPEC rule 18)
   ERROR  Disp string literal > 26 chars;  Input prompt literal > 16 chars
-  WARN   formatter misuse: after prgmSTAFMT, Q R S T U V are read before being re-assigned (STAFMT clobbers
-         them), including reads that happen on the next pass of a loop that contains the call and a For(
+  WARN   formatter misuse: after prgmM2FMT (FORMATTER), Q R S T U V are read before being re-assigned (the
+         formatter clobbers them), including reads that happen on the next pass of a loop that contains the call and a For(
          loop whose counter is one of Q..V
   WARN   one-line If controlling a block statement (Then/For/While/Repeat/End/Else/Lbl); Stop (subprograms
-         must end with Return); subprogram with no Return; empty string literal "" (SPEC rule 13)
+         must end with Return); subprogram with no Return; empty string literal "" (SPEC rule 13; allowed only
+         as the last line of MAIN_PROGRAM = STAM2)
 
 Python API:   lint_source(name, text) -> list[str]     lint_file(path) -> list[str]
 CLI:          $PY tools/tilint.py src/STACNT.txt [more files or directories ...]   (exit 1 on any ERROR)
@@ -60,8 +61,8 @@ FMT_SCRATCH = {B("51"): "Q", B("52"): "R", B("53"): "S", B("54"): "T", B("55"): 
 ROWS, COLS = 10, 26
 MENU_MAX_ITEMS, MENU_TITLE_MAX, MENU_ITEM_MAX = 7, 22, 18
 DISP_MAX, INPUT_PROMPT_MAX = 26, 16
-FORMATTER = "STAFMT"
-MAIN_PROGRAM = "STA431"
+FORMATTER = "M2FMT"      # Midterm II number formatter (clobbers Q R S T U V)
+MAIN_PROGRAM = "STAM2"    # launcher: the only program allowed a final "" line and no Return
 
 
 # ------------------------------------------------------------------------------------------ parsing
@@ -411,7 +412,7 @@ class Linter:
     # --- formatter misuse ------------------------------------------------------------------
     @staticmethod
     def scratch_events(st):
-        """Ordered ('r'|'w', var) events for the STAFMT scratch vars Q..V in one statement."""
+        """Ordered ('r'|'w', var) events for the formatter scratch vars Q..V in one statement."""
         toks, k = st.toks, st.kind
         if k in (LBL, GOTO, MENU, PRGM, None):
             return []
@@ -472,7 +473,7 @@ class Linter:
         for ci, call in enumerate(stmts):
             if not self.is_fmt_call(call):
                 continue
-            live = set(FMT_SCRATCH.values())      # clobbered by STAFMT and not re-assigned yet
+            live = set(FMT_SCRATCH.values())      # clobbered by the formatter and not re-assigned yet
             reported = set()
             loops = [o for o in self.parents[ci] if stmts[o].kind in (FOR, WHILE, REPEAT)]
             loop = loops[-1] if loops else None
@@ -485,7 +486,7 @@ class Linter:
                         reported.add(v)
                         where = f" ({note})" if note else ""
                         self.warn(st, f"reads {v} after prgm{FORMATTER} (line {call.line}){where} before "
-                                      f"re-assigning it; STAFMT clobbers Q R S T U V")
+                                      f"re-assigning it; {FORMATTER} clobbers Q R S T U V")
 
             j = ci + 1
             wrap = False
@@ -512,7 +513,7 @@ class Linter:
             if op.kind == FOR and len(op.toks) > 1 and op.toks[1].bits in FMT_SCRATCH:
                 v = FMT_SCRATCH[op.toks[1].bits]
                 if v in live:
-                    self.warn(call, f"prgm{FORMATTER} inside For({v},...) (line {op.line}): STAFMT "
+                    self.warn(call, f"prgm{FORMATTER} inside For({v},...) (line {op.line}): {FORMATTER} "
                                     f"clobbers the loop counter {v}")
                     reported.add(v)
             if op.kind in (WHILE, REPEAT):
@@ -537,7 +538,7 @@ class Linter:
                 if a == QUOTE and b == QUOTE:
                     last = st is self.stmts[-1]
                     if not (self.name == MAIN_PROGRAM and last):
-                        self.warn(st, 'empty string literal "" (SPEC rule 13: only as the last line of STA431)')
+                        self.warn(st, f'empty string literal "" (SPEC rule 13: only as the last line of {MAIN_PROGRAM})')
                     break
         if not has_return and self.name not in (MAIN_PROGRAM,):
             self.warn(len(self.stmts) and self.stmts[-1].line or 0,

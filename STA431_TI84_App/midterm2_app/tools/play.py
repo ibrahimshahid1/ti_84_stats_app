@@ -13,6 +13,8 @@ start of the program (the simulator is deterministic) and shows what is on scree
 
 KEY syntax
   m3            choose item 3 of the menu on screen
+  m:TEXT        choose the menu item whose text is TEXT (or the one item starting with TEXT),
+                e.g. m:SOLVERS  m:BACK  "m:HOMEWORK PRACTICE" (quote texts that contain spaces)
   i:TEXT        type TEXT at an input prompt and press ENTER, e.g. i:{1,2,3}  i:3/4
   k105          a getKey code (105 ENTER, 45 CLEAR, 24 LEFT, 26 RIGHT, 25 UP, 34 DOWN)
 
@@ -35,17 +37,21 @@ STORE = Path(os.environ.get("PLAY_DIR", ROOT / ".play"))
 def parse_key(k):
     if k.startswith("i:"):
         return {"input": k[2:]}
+    if k.startswith("m:") and len(k) > 2:
+        return {"menu": k[2:]}
     if k.startswith("m") and k[1:].isdigit():
         return {"menu": int(k[1:])}
     if k.startswith("k") and k[1:].isdigit():
         return {"key": int(k[1:])}
-    raise SystemExit(f"bad key {k!r}: use m<n>, i:<text>, or k<code>")
+    raise SystemExit(f"bad key {k!r}: use m<n>, m:<item text>, i:<text>, or k<code>")
 
 
 def key_text(a):
     if "input" in a:
         return "i:" + a["input"]
     if "menu" in a:
+        if isinstance(a["menu"], str):
+            return "m:" + a["menu"]
         return f"m{a['menu']}"
     return f"k{a['key']}"
 

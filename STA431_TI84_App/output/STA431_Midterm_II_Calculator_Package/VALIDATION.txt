@@ -1,3 +1,4 @@
-All included simulator checks passed.
-141 checks; 10 exported programs.
-Token/static lints passed. Physical-device execution remains untested.
+All 10 simulator test files passed (200 checks).
+11 programs, 67563 bytes of .8xp files (budget 118000).
+Token and structure lints: 0 errors, 0 warnings.
+Tested off-device in the token-stream simulator; physical-calculator execution is untested.
