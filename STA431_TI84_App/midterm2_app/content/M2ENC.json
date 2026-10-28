@@ -621,9 +621,10 @@
               "support. E[X|Y=y]=m(y) is",
               "a number; E[X|Y]=m(Y) is a",
               "random variable.",
-              "TOOL MARG/CONDITIONAL or",
-              "DENSITY/SLICE with y",
-              "stored in A."
+              "GENERAL SOLVERS then JOINT",
+              "SLICE evaluates marginal",
+              "and conditional quantities",
+              "at any valid given value."
             ]
           ]
         },
@@ -679,17 +680,18 @@
           "title": "CHOOSE A SOLVER",
           "pages": [
             [
-              "Finite values => DISCRETE",
+              "From GENERAL SOLVERS,",
+              "finite values => DISCRETE",
               "+ JOINT. FORMULA/GRID",
               "takes x-list,y-list,weight",
               "formula. Use y-list{0} for",
               "one variable. No need",
               "normalize first.",
               "PDF with finite interval",
-              "or conditional slice =>",
-              "DENSITY + INTEGRAL, 1D."
+              "or conditional slice =>"
             ],
             [
+              "DENSITY + INTEGRAL, 1D.",
               "Joint PDF with explicit",
               "inner/outer bounds =>",
               "DOUBLE INTEGRAL. Split",
@@ -697,10 +699,10 @@
               "changes.",
               "Given",
               "variances/covariances =>",
-              "LINEAR COMBOS. Given MGF",
-              "=> MGF TOOLS. Derivations"
+              "LINEAR COMBOS. Given MGF"
             ],
             [
+              "=> MGF TOOLS. Derivations",
               "=> ENCYCLOPEDIA."
             ]
           ]
@@ -727,15 +729,19 @@
               "integration and derivative",
               "outputs are",
               "approximations.",
-              "HOMEWORK MAP then LOAD +",
-              "SOLVE preloads the given",
-              "models. Use BACK to exit."
+              "EXAM ASSISTANT starts with",
+              "your given data and",
+              "target. GENERAL SOLVERS"
             ],
             [
-              "ENTER next; LEFT previous;",
-              "CLEAR menu in reference",
-              "pages. Check your CE",
-              "before relying on it."
+              "uses your current model.",
+              "PRACTICE + HW examples are",
+              "for study only. Use BACK",
+              "to exit. ENTER next; LEFT",
+              "previous; CLEAR menu in",
+              "reference pages. Check",
+              "your CE before relying on",
+              "it."
             ]
           ]
         }
