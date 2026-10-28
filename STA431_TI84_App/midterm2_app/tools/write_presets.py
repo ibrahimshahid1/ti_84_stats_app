@@ -7,10 +7,11 @@ GRID={
  'A4':('HW4 Q4','{1,2}','{1,2,3,4}','X+Y',4,'A'),
  'B1':('HW5 Q1','{1,2,3,4}','{0}','X²+X',11,'B'),
  'C4':('HW5 Q8','{1,2,3}','{1,2,3}','X+Y',18,'C')}
-DOUBLE={
- 'A2':('HW4 Q2','2X+Y',0,1,'0','2',2,'A'),
- 'A3':('HW4 Q3 SURVIVAL','(X+Y)/8',1,2,'1','2',3,'A'),
- 'A5':('HW4 Q5','(2X+Y)/4',0,1,'X','2',5,'A')}
+# P2: the joint-density presets load q and the support record into M2JNT (Z=99, PLAN 4.3).
+JOINT={
+ 'A2':('HW4 Q2','2X+Y','{1,0,1,0,2}',['RECT 0<x<1, 0<y<2','c IS COMPUTED']),
+ 'A3':('HW4 Q3','(X+Y)/8','{1,0,2,0,2}',['RECT 0<x<2, 0<y<2','FAILS IF EITHER FAILS','USE EVENTS > MIN/MAX']),
+ 'A5':('HW4 Q5','(2X+Y)/4','{1,0,1,0,2}',['RECT 0<x<1, 0<y<2','USE EVENTS > X<Y'])}
 ONE={
  'B2':('HW5 Q2','3/4*(1-X²)','0','⁻1','1',12,'B'),
  'C3':('HW5 Q7 Y=1/2','X+A','1/2','0','1',17,'C')}
@@ -26,11 +27,10 @@ for lab,(title,xs,ys,q,code,back) in GRID.items():
  intro(lab,title,['PRELOAD x AND y GRID','q='+q,'GENERAL SOLVER COMPUTES'])
  L.extend([xs+'→ʟM2AX',ys+'→ʟM2AY','"'+q+'"→Str1'])
  call(code,'M2DISC',back)
-for lab,(title,q,lo,hi,yl,yh,code,back) in DOUBLE.items():
- intro(lab,title,['PRELOAD JOINT INTEGRAL','START WITH EVEN N=8','RAISE N IF NOT CONVERGED','READ RAW INTEGRAL I'])
- if code==3:L.extend(['Disp "THIS IS SURVIVAL PROB","FAILURE IS 1-RAW I"','Pause'])
- L.extend(['"'+q+'"→Str1','0→A',str(lo)+'→B',str(hi)+'→C','"'+yl+'"→Str2','"'+yh+'"→Str3','"1"→Str4'])
- call(code,'M2CONT',back)
+for lab,(title,q,rec,lines) in JOINT.items():
+ intro(lab,title,['PRELOAD JOINT DENSITY','q='+q]+lines)
+ L.extend(['"'+q+'"→Str1',rec+'→ʟM2JM'])
+ call(99,'M2JNT','A')
 for lab,(title,q,a,lo,hi,code,back) in ONE.items():
  intro(lab,title,['PRELOAD 1D DENSITY/SLICE','q='+q,'USE MOMENTS OR INTERVAL'])
  L.extend(['"'+q+'"→Str1',a+'→A',lo+'→B',hi+'→C'])

@@ -1,0 +1,904 @@
+// M2JNT - JOINT DENSITY solver (P2: NEW MODEL, EVENTS + LIMITS; P3 fills FORMULAS, MOMENTS,
+// GIVEN A VALUE, INDEP + CDF). f(x,y)=c*q(x,y) on a support from a menu. The support and every event
+// are half-planes aX+bY≤c (triples): RG turns support ∩ event into vertical strips (lower/upper lines
+// between consecutive breakpoints) and integrates them with prgmM2GL. EXACT for a polynomial q on a
+// finite straight-edged support; NUMERIC (2 passes, PLAN 4.6) otherwise.
+// Z=99: Str1=q and ʟM2JM=support record are preloaded (Str2,Str3 too for code 8); no prompts.
+// Record ʟM2JM (∞ stored as ±1ᴇ6): {1,a,b,c,d} rect, {2,a,b} a<y<x<b, {3,a,b} a<x<y<b, {4,k}
+//   x,y>0 x+y<k, {5} quadrant, {6,a,b,l0,l1,u0,u1} a<x<b l(x)<y<u(x), {7,c,d,l0,l1,u0,u1}
+//   c<y<d l(y)<x<u(y), {8,a,b} curved a<x<b, Str2<y<Str3 (numeric only).
+// Every code becomes ʟM2JG={x0,x1,l0,l1,u0,u1} and the support half-planes ʟM2JS (code 7: X,Y swapped).
+// Registers (they survive M2FMT/M2GL/M2PLY): A,B inputs, after an event A = last probability;
+// C = RG return code; D = return code of the pager PG and of VK; E = show fractions; F = built-in
+// complement (min≤t, max>t, |X-Y|>k); G = COMPLEMENT OF… flag (route after NEW MODEL while a model is
+// entered); H = piece loop; L = 0 plain event, 1 picking A, 2 picking B, 3 last result P(A|B);
+// M = c; N = support code (0 = no model); P = order (0 dy dx, 1 dx dy).
+// ʟM2JC={exact,total ∫∫q,c is a fraction,F of A,G of A}; ʟM2JR={P(A∩B),P(B),P(A) regions,max change,
+// heavy}. Text: Str0 = "θ" + sections "TITLEθlineθ...θθ" paged by PG (q never contains θ).
+{0,0,0,0,0}→ʟM2JR
+If Z=99:Goto ZP
+0→Z
+0→N
+Lbl T
+Menu("JOINT DENSITY","NEW MODEL",N0,"EVENTS + LIMITS",E,"FORMULAS",F,"MOMENTS + COV",F,"GIVEN A VALUE",F,"INDEP + CDF",F,"BACK",Z)
+Lbl E
+1→G
+If not(N):Goto N
+Goto EN
+Lbl F
+2→G
+If not(N):Goto N
+Lbl F1
+ClrHome
+Disp "COMING IN THIS VERSION","USE EVENTS + LIMITS"
+Pause
+Goto T
+Lbl ZP
+0→Z
+0→G
+Goto NB
+// ---------------------------------------------------------------- NEW MODEL
+Lbl N0
+0→G
+Lbl N
+0→N
+ClrHome
+Disp "f(x,y)=c*q(x,y)","TYPE q WITH X AND Y","OMIT c IF UNKNOWN","X=X,T,θ,n  Y=ALPHA 1"
+Input "q(X,Y)?",Str1
+"XY"→Str6
+8→θ
+prgmM2PLY
+If θ:Goto NS
+ClrHome
+Disp "q MAY USE ONLY X AND Y"
+Pause
+Goto N
+Lbl NS
+0→N
+Menu("SUPPORT","RECT a<X<b,c<Y<d",S1,"TRI a<Y<X<b",S2,"TRI a<X<Y<b",S3,"X,Y>0 AND X+Y<k",S4,"QUADRANT X,Y>0",S5,"CUSTOM BOUNDS",S6,"BACK",T)
+Lbl S1
+ClrHome
+Disp "RECT a<X<b AND c<Y<d","INFINITY=ᴇ99 (2ND , 9 9)"
+Input "a=LOWER X?",A
+Input "b=UPPER X?",B
+Input "c=LOWER Y?",C
+Input "d=UPPER Y?",D
+{1,A,B,C,D}→ʟM2JM
+Goto NB
+Lbl S2
+1→D
+Goto S7
+Lbl S3
+2→D
+Lbl S7
+ClrHome
+Disp sub("TRI a<Y<X<bTRI a<X<Y<b",11*D-10,11),"INFINITY=ᴇ99 (2ND , 9 9)"
+Input "a=LOWER END?",A
+Input "b=UPPER END?",B
+{D+1,A,B}→ʟM2JM
+Goto NB
+Lbl S4
+ClrHome
+Disp "X>0, Y>0 AND X+Y<k"
+Input "k=SUM BOUND?",A
+{4,A}→ʟM2JM
+Goto NB
+Lbl S5
+{5}→ʟM2JM
+Goto NB
+Lbl S6
+Menu("CUSTOM","X OUTER, Y(X)",C1,"Y OUTER, X(Y)",C2,"CURVED (NUMERIC)",C3,"BACK",NS)
+Lbl C1
+6→D
+Goto C5
+Lbl C2
+7→D
+Goto C5
+Lbl C3
+8→D
+Lbl C5
+ClrHome
+Disp sub("a<X<b, Y FROMc<Y<d, X FROMa<X<b, Y FROM",13*D-77,13),"LOWER TO UPPER BOUND",sub("LINEAR IN X, EG X/2LINEAR IN Y, EG Y/2ANY FORMULA IN X   ",19*D-113,19),"ᴇ99 FOR INFINITY"
+Input "LOWER END?",A
+Input "UPPER END?",B
+Input "LOWER BOUND?",Str2
+Input "UPPER BOUND?",Str3
+sub("XYX",D-5,1)→Str6
+D→C
+1→D
+Goto VK
+Lbl K1
+C→D
+If not(E):Goto CV
+{8,A,B}→ʟM2JM
+If D=8:Goto NB
+// linear test at .37,1.37,2.37 (both letters set; only the outer one is used)
+{0,0,0}→ʟM2JL
+{0,0,0}→ʟM2JU
+For(I,1,3)
+I-.63→X
+X→Y
+expr(Str2)→ʟM2JL(I)
+expr(Str3)→ʟM2JU(I)
+End
+If abs(ʟM2JL(3)-2*ʟM2JL(2)+ʟM2JL(1))>1ᴇ⁻9*(1+max(abs(ʟM2JL))) or abs(ʟM2JU(3)-2*ʟM2JU(2)+ʟM2JU(1))>1ᴇ⁻9*(1+max(abs(ʟM2JU))):Goto CN
+{D,A,B,ʟM2JL(1)-.37*(ʟM2JL(2)-ʟM2JL(1)),ʟM2JL(2)-ʟM2JL(1),ʟM2JU(1)-.37*(ʟM2JU(2)-ʟM2JU(1)),ʟM2JU(2)-ʟM2JU(1)}→ʟM2JM
+// ------------------------------- check the support, its half-planes, then total ∫∫q and c=1/total
+Lbl NB
+ʟM2JM*(abs(ʟM2JM)<1ᴇ50)+1ᴇ6*((ʟM2JM≥1ᴇ50)-(ʟM2JM≤⁻1ᴇ50))→ʟM2JM
+If max((abs(ʟM2JM)≥1ᴇ5)*(abs(ʟM2JM)≠1ᴇ6)):Goto NF
+ʟM2JM(1)→N
+augment(ʟM2JM,{0,0,0,0,0,0})→ʟM2JL
+ʟM2JL(2)→A
+ʟM2JL(3)→B
+ʟM2JL(4)→C
+ʟM2JL(5)→D
+{0,1ᴇ6,0,0,1ᴇ6,0}→ʟM2JG
+If N=1
+{A,B,C,0,D,0}→ʟM2JG
+If N=2
+{A,B,A,0,0,1}→ʟM2JG
+If N=3
+{A,B,0,1,B,0}→ʟM2JG
+If N=4
+{0,A,0,0,A,⁻1}→ʟM2JG
+If N=6 or N=7
+seq(ʟM2JL(I),I,2,7)→ʟM2JG
+If N=8
+{A,B,0,0,0,0}→ʟM2JG
+// A,B = x0,x1; L,E = lower line; F,H = upper line (they stay set until the summary)
+ʟM2JG(1)→A
+ʟM2JG(2)→B
+ʟM2JG(3)→L
+ʟM2JG(4)→E
+ʟM2JG(5)→F
+ʟM2JG(6)→H
+If N=8 and max(abs(A),abs(B))≥5ᴇ5:Goto NF
+F+H*A-L-E*A→C
+F+H*B-L-E*B→D
+If N=8
+Then
+// curved: compare the curves just inside both ends
+A+(B-A)/1000→X
+expr(Str3)-expr(Str2)→C
+B-(B-A)/1000→X
+expr(Str3)-expr(Str2)→D
+End
+If B≤A or min(C,D)<0 or max(C,D)≤0:Goto NU
+{⁻1,0,⁻A,1,0,B,E,⁻1,⁻L,⁻H,1,F}→ʟM2JS
+If N=7
+seq(ʟM2JS(I+(remainder(I,3)=1)-(remainder(I,3)=2)),I,1,12)→ʟM2JS
+1→θ
+prgmM2PLY
+If θ and max(abs({A,B,L,F}))≥5ᴇ5:Goto NP
+{θ*(N≠8),1,1,0,0}→ʟM2JC
+1→M
+0→P
+{0,0,1}→ʟM2JE
+{A,B}→ʟM2JK
+{0,0,0,0,0}→ʟM2JR
+"θ"→Str0
+1→C
+Goto RG
+Lbl NT
+If ʟM2JT(1)≤0:Goto NZ
+ʟM2JT(1)→ʟM2JC(2)
+1/ʟM2JT(1)→M
+"θMODEL f=c*qθq="+Str1+"θSUPPORTθ"→Str0
+If N=8:Goto NK
+sub("xyx",1+(N=7),1)→Str6
+{A,0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"<"+Str6+"<"→Str0
+{B,0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"θ"→Str0
+{L,E}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"<"+sub("yxy",1+(N=7),1)+"<"→Str0
+{F,H}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"θ"→Str0
+Goto NL
+Lbl NK
+A→W
+prgmM2FMT
+Str0+Str9+"<x<"→Str0
+B→W
+prgmM2FMT
+Str0+Str9+"θy FROM "+Str2+"θ  TO "+Str3+"θ"→Str0
+Lbl NL
+ʟM2JC(1) or ʟM2JR(4)≤1ᴇ⁻8*max(1,ʟM2JT(1))→E
+E→ʟM2JC(3)
+ʟM2JT(1)→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+"TOTAL ∫∫q="+Str9+"θc="→Str0
+M→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+Str9+"θ"→Str0
+If abs(W-1)<1ᴇ⁻9
+Str0+"q IS ALREADY A PDFθ"→Str0
+If ʟM2JT(5)<⁻1ᴇ⁻12
+Str0+"q<0 SOMEWHEREθNOT A VALID PDFθ"→Str0
+2→D
+Goto VL
+Lbl NR
+G→K
+0→G
+If K=1:Goto EN
+If K=2:Goto F1
+Goto T
+Lbl NF
+ClrHome
+Disp "A FINITE BOUND NEEDS","ABS(BOUND)<1ᴇ5","INFINITY IS ᴇ99","CURVED NEEDS FINITE ENDS"
+Pause
+Goto NS
+Lbl NU
+ClrHome
+Disp "UPPER BELOW LOWER","SPLIT THE REGION"
+Pause
+Goto NS
+Lbl NP
+ClrHome
+Disp "A POLYNOMIAL CANNOT BE","A PDF ON AN INFINITE","REGION"
+Pause
+Goto NS
+Lbl NZ
+ClrHome
+Disp "TOTAL ∫∫q≤0","NOT A DENSITY, CHECK q"
+Pause
+Goto N
+Lbl CN
+ClrHome
+Disp "BOUNDS MUST BE LINEAR","USE CURVED OR SPLIT"
+Pause
+Goto S6
+Lbl CV
+ClrHome
+Disp "A BOUND USES A LETTER","IT MAY NOT USE"
+Pause
+If D=2:Goto EM
+Goto S6
+// VK: Str2 and Str3 may use only the letters in Str6 -> E (q waits in Str7); back by D
+Lbl VK
+Str1→Str7
+Str2→Str1
+8→θ
+prgmM2PLY
+θ→E
+Str3→Str1
+8→θ
+prgmM2PLY
+E*θ→E
+Str7→Str1
+If D=1:Goto K1
+Goto K2
+// ---------------------------------------------------------------- EVENTS
+Lbl EN
+0→G
+0→L
+Lbl EM
+If N=8:Goto VM
+Menu("EVENT","X<Y OR X>Y",EA,"X+Y≤k OR X+Y≥k",EB,"MIN/MAX VS t",EC,"X>a AND Y>b",ED,"MORE EVENTS",EE,"P(A|B)",EF,"BACK",T)
+Lbl EA
+Menu("X VS Y","X<Y",A1,"X>Y",A2,"BACK",EM)
+Lbl A1
+{1,⁻1,0}→ʟM2JE
+"X<Y"→Str4
+"FIRST BEFORE SECONDθ=> X<Yθ"→Str0
+Goto E0
+Lbl A2
+{⁻1,1,0}→ʟM2JE
+"X>Y"→Str4
+"FIRST AFTER SECONDθ=> X>Yθ"→Str0
+Lbl E0
+0→F
+Goto ES
+Lbl EB
+Menu("X+Y VS k","X+Y≤k",B1,"X+Y≥k",B2,"BACK",EM)
+Lbl B1
+1→F
+Goto B3
+Lbl B2
+⁻1→F
+Lbl B3
+ClrHome
+Disp "k=THE TOTAL"
+Input "k?",A
+{F,F,F*A}→ʟM2JE
+A→W
+prgmM2FMT
+"X+Y"+sub("≤ ≥",2-F,1)+Str9→Str4
+"TOTAL AT "+sub("MOST LEAST ",3.5-2.5*F,5.5-.5*F)+Str9+"θ=> "+Str4+"θy"+sub("≤ ≥",2-F,1)+Str9+"-xθ"→Str0
+Goto E0
+Lbl EC
+Menu("MIN/MAX","min(X,Y)≤t",M1,"min(X,Y)>t",M2,"max(X,Y)≤t",M3,"max(X,Y)>t",M4,"BACK",EM)
+Lbl M1
+1→F
+Goto MT
+Lbl M2
+2→F
+Goto MT
+Lbl M3
+3→F
+Goto MT
+Lbl M4
+4→F
+Lbl MT
+ClrHome
+Disp "t=THE TIME OR VALUE"
+Input "t?",A
+(2*(F≥3)-1)*{1,0,A,0,1,A}→ʟM2JE
+A→W
+prgmM2FMT
+sub("minminmaxmax",3*F-2,3)+"(X,Y)"+sub("≤>≤>",F,1)+Str9→Str4
+"X"+sub(">>≤≤",F,1)+Str9+",Y"+sub(">>≤≤",F,1)+Str9→Str3
+sub("FAILS IF EITHER FAILS  BOTH STILL WORK AT t   FAILS ONLY IF BOTH FAILAT LEAST ONE WORKS     ",23*F-22,23)+"θ=> "+Str4+"θ"+sub("=1-P(X>t,Y>t)     =P(X>t,Y>t)       =P(X≤t,Y≤t)=F(t,t)=1-F(t,t)         ",18*F-17,18)+"θ"→Str0
+If F=1 or F=4
+Str0+"=1-P("+Str3+")θ"→Str0
+F=1 or F=4→F
+Goto ES
+Lbl ED
+ClrHome
+Disp "X>a AND Y>b  BOTH EXCEED"
+Input "a?",A
+Input "b?",B
+{⁻1,0,⁻A,0,⁻1,⁻B}→ʟM2JE
+A→W
+prgmM2FMT
+"X>"+Str9+",Y>"→Str4
+B→W
+prgmM2FMT
+Str4+Str9→Str4
+"BOTH EXCEEDθ=> "+Str4+"θ"→Str0
+Goto E0
+Lbl EE
+Menu("MORE EVENTS","aX+bY≤c",G1,"|X-Y|≤k OR >k",G2,"X≤s AND Y≤t",G3,"RECTANGLE a,b,c,d",G4,"a<X<b ONLY",G5,"COMPLEMENT OF…",G6,"BACK",EM)
+Lbl G1
+ClrHome
+Disp "aX+bY≤c  A LINEAR EVENT","EG X-2Y≤0 IS a=1,b=⁻2,c=0"
+Input "a?",A
+Input "b?",B
+Input "c?",C
+If A=0 and B=0:Goto EX
+{A,B,C}→ʟM2JE
+"X"→Str6
+{0,A}→ʟM2QS
+2→θ
+prgmM2PLY
+Str7→Str4
+"Y"→Str6
+{0,B}→ʟM2QS
+2→θ
+prgmM2PLY
+If A=0
+" "→Str4
+If B>0
+"+"+Str7→Str7
+If B
+Str4+Str7→Str4
+If A=0
+sub(Str4,2,length(Str4)-1)→Str4
+If sub(Str4,1,1)="+"
+sub(Str4,2,length(Str4)-1)→Str4
+{C,0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str4+"≤"+Str7→Str4
+"A LINEAR EVENTθ=> "+Str4+"θ"→Str0
+Goto E0
+Lbl G2
+Menu("|X-Y| VS k","|X-Y|≤k",H1,"|X-Y| >k",H2,"BACK",EE)
+Lbl H1
+0→F
+Goto HT
+Lbl H2
+1→F
+Lbl HT
+ClrHome
+Disp "k=THE ALLOWED GAP"
+Input "k?",A
+{1,⁻1,A,⁻1,1,A}→ʟM2JE
+A→W
+prgmM2FMT
+"|X-Y|≤"+Str9→Str3
+"|X-Y|"+sub("≤>",F+1,1)+Str9→Str4
+"MEET WITHIN "+Str9+"θ=> "+Str3+"θx-"+Str9+"<y<x+"+Str9+"θ"→Str0
+If F
+"MISS BY MORE THAN "+Str9+"θ=> "+Str4+"θ=1-P("+Str3+")θ"→Str0
+Goto ES
+Lbl G3
+ClrHome
+Disp "X≤s AND Y≤t","JOINT CDF F(s,t)"
+Input "s?",A
+Input "t?",B
+{1,0,A,0,1,B}→ʟM2JE
+A→W
+prgmM2FMT
+"X≤"+Str9+",Y≤"→Str4
+B→W
+prgmM2FMT
+Str4+Str9→Str4
+"JOINT CDF F(s,t)θ=> "+Str4+"θ"→Str0
+Goto E0
+Lbl G4
+ClrHome
+Disp "a<X<b AND c<Y<d"
+Input "a?",A
+Input "b?",B
+Input "c?",C
+Input "d?",D
+{⁻1,0,⁻A,1,0,B,0,⁻1,⁻C,0,1,D}→ʟM2JE
+A→W
+prgmM2FMT
+Str9+"<X<"→Str4
+B→W
+prgmM2FMT
+Str4+Str9+","→Str4
+C→W
+prgmM2FMT
+Str4+Str9+"<Y<"→Str4
+D→W
+prgmM2FMT
+Str4+Str9→Str4
+"A BOXθ=> "+Str4+"θ"→Str0
+Goto E0
+Lbl G5
+ClrHome
+Disp "a<X<b, Y IS FREE"
+Input "a?",A
+Input "b?",B
+{⁻1,0,⁻A,1,0,B}→ʟM2JE
+A→W
+prgmM2FMT
+Str9+"<X<"→Str4
+B→W
+prgmM2FMT
+Str4+Str9→Str4
+"X IN AN INTERVALθ=> "+Str4+"θY IS FREEθ"→Str0
+Goto E0
+Lbl G6
+1→G
+ClrHome
+Disp "NOW PICK THE EVENT A","YOU GET P(A')=1-P(A)"
+Pause
+Goto EM
+Lbl EF
+If L:Goto EM
+1→L
+"θP(A|B) SETUPθGIVEN AN EVENT Bθ=> P(A AND B)/P(B)θB IS AN EVENT, NOT X=xθNOW PICK EVENT Aθθ"→Str0
+3→D
+Goto PG
+Lbl EX
+ClrHome
+Disp "EVENT NUMBERS MUST BE","FINITE, ABS<1ᴇ5","a AND b NOT BOTH 0"
+Pause
+Goto EM
+// ES: event in ʟM2JE, F, label Str4 (Str3 = region of a built-in complement), lines in Str0
+Lbl ES
+If max(abs(ʟM2JE))≥1ᴇ5:Goto EX
+If G
+Str0+"NOT A => A'θP(A')=1-P(A)θA="+Str4+"θ"→Str0
+"θEVENT "+sub("A SETUPB SETUP",3-2*(L=1)+5*(L=2),5+2*(L≥1))+"θ"+Str0+"θ"→Str0
+If L=1:Goto SA
+If L=2:Goto SB
+// ------------------------------------------- EV: integrate the last event (P = order)
+Lbl EV
+0→P
+Lbl EW
+{0,0,0,0,0}→ʟM2JR
+If L=3:Goto VC
+2→C
+Goto RG
+Lbl V4
+M*ʟM2JT(1)→B
+F+(1-2*F)*B→A
+ʟM2JC(1) or ʟM2JR(4)≤1ᴇ⁻8*max(1,abs(A))→E
+Str0+"RESULTθ"→Str0
+If G:Goto VG
+If F:Goto VF
+Str0+"P("+Str4+")="→Str0
+Goto VD
+Lbl VF
+B→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+"P("+Str4+")θ=1-P("+Str3+")θ=1-"+Str9+"θ="→Str0
+Goto VD
+Lbl VG
+A→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+"A="+Str4+"θP(A)="+Str9+"θP(A')=1-P(A)θ=1-"+Str9+"θ="→Str0
+1-A→A
+Lbl VD
+A→W
+Goto VE
+// P(A|B): regions A∩B, B and (B complemented) A, then inclusion-exclusion
+Lbl SA
+ʟM2JE→ʟM2JA
+F→ʟM2JC(4)
+G→ʟM2JC(5)
+Str4→Str2
+If G
+"NOT("+Str4+")"→Str2
+2→L
+0→G
+3→D
+Goto PG
+Lbl SB
+Str4→Str3
+If G
+"NOT("+Str4+")"→Str3
+ʟM2JE→ʟM2JB
+3→L
+Goto EV
+Lbl VC
+augment(ʟM2JA,ʟM2JB)→ʟM2JE
+3→C
+Goto RG
+Lbl V1
+M*ʟM2JT(1)→ʟM2JR(1)
+ʟM2JB→ʟM2JE
+4→C
+Goto RG
+Lbl V2
+M*ʟM2JT(1)→ʟM2JR(2)
+If F=G:Goto V5
+ʟM2JA→ʟM2JE
+5→C
+Goto RG
+Lbl V3
+M*ʟM2JT(1)→ʟM2JR(3)
+Lbl V5
+ʟM2JC(4)≠ʟM2JC(5)→C
+F≠G→D
+// P(A AND B) for complement flags C (of A), D (of B): ±I ± (b or a) (+1 when both)
+(1-2*C)*(1-2*D)*ʟM2JR(1)+C*(1-2*D)*ʟM2JR(2)+D*(1-2*C)*ʟM2JR(3)+C*D→B
+D+(1-2*D)*ʟM2JR(2)→ʟM2JR(2)
+B/max(1ᴇ⁻99,ʟM2JR(2))→A
+ʟM2JC(1) or ʟM2JR(4)≤1ᴇ⁻8*max(1,A)→E
+B→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+"RESULTθP(A|B)=P(A AND B)/P(B)θA="+Str2+"θB="+Str3+"θP(A AND B)="+Str9+"θP(B)="→Str0
+ʟM2JR(2)→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+Str9+"θ"→Str0
+1→D
+If ʟM2JR(2)≤1ᴇ⁻12
+Str0+"P(B)=0 - UNDEFINEDθ"→Str0
+If ʟM2JR(2)≤1ᴇ⁻12:Goto VL
+Str0+"P(A|B)="→Str0
+A→W
+Lbl VE
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+Str9+"θ"→Str0
+If Str8≠Str9
+Str0+" "+Str8+"θ"→Str0
+1→D
+// mode lines, then page the text (D = where to go next)
+Lbl VL
+If ʟM2JC(1)
+Str0+"EXACT (POLYNOMIAL)θ"→Str0
+If not(ʟM2JC(1)) and E
+Str0+"NUMERIC, 2 PASSES AGREEθ"→Str0
+If not(E)
+Str0+"APPROX - NOT CONVERGEDθCHANGE="+toString(ʟM2JR(4))+"θ"→Str0
+If ʟM2JR(5)
+Str0+"TAIL MAY BE HEAVYθ"→Str0
+Str0+"θ"→Str0
+Goto PG
+Lbl ER
+If N=8:Goto EQ
+Menu("EVENT RESULT","REVERSE ORDER",RV,"COMPLEMENT 1-P",CP,"NEW EVENT",EN,"BACK",T)
+Lbl EQ
+Menu("EVENT RESULT","COMPLEMENT 1-P",CP,"NEW EVENT",EN,"BACK",T)
+Lbl RV
+not(P)→P
+"θ"→Str0
+Goto EW
+// COMPLEMENT 1-P of the last result A
+Lbl CP
+If L=3 and ʟM2JR(2)≤1ᴇ⁻12:Goto ER
+"θCOMPLEMENTθP(NOT A|B)=1-P(A|B)θ"→Str0
+If L≠3 and G
+"θCOMPLEMENTθA=NOT("+Str4+")θP(NOT A)=1-P(A)θ"→Str0
+If L≠3 and not(G)
+"θCOMPLEMENTθA="+Str4+"θP(NOT A)=1-P(A)θ"→Str0
+A→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+"=1-"+Str9+"θ="→Str0
+1-A→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+Str9+"θθ"→Str0
+1→D
+Goto PG
+// curved support: one numeric sub-region, clipped to the support (larger lower, smaller upper)
+Lbl VM
+Menu("EVENT","CURVED SUB-REGION",VR,"BACK",T)
+Lbl VR
+ClrHome
+Disp "a<X<b, y FROM LOWER(X)","TO UPPER(X), FORMULAS IN X"
+Input "a?",A
+Input "b?",B
+If max(abs(A),abs(B))≥1ᴇ5:Goto EX
+{max(A,ʟM2JG(1)),min(B,ʟM2JG(2))}→ʟM2JK
+If ʟM2JK(2)<ʟM2JK(1)
+{ʟM2JK(1),ʟM2JK(1)}→ʟM2JK
+M→W
+prgmM2FMT
+If not(ʟM2JC(3))
+Str8→Str9
+"θLIMITSθP=∫∫ c*q(x,y) dy dxθc="+Str9+"θq="+Str1+"θORDER dy dx (x OUTER)θx FROM "→Str0
+ʟM2JK(1)→W
+prgmM2FMT
+Str0+Str9+" TO "→Str0
+ʟM2JK(2)→W
+prgmM2FMT
+Str0+Str9+"θ"→Str0
+Str2→Str8
+Str3→Str9
+Input "LOWER BOUND?",Str2
+Input "UPPER BOUND?",Str3
+"X"→Str6
+2→D
+Goto VK
+Lbl K2
+If not(E)
+Str8→Str2
+If not(E)
+Str9→Str3
+If not(E):Goto CV
+Str0+" y FROM "+Str2+"θ  TO "+Str3+"θ INSIDE THE SUPPORTθ PIECE="→Str0
+// max( and min( typed in a string literal would be letters: compare instead
+"("+Str8+")*(("+Str8+")≥("+Str2+"))+("+Str2+")*(("+Str8+")<("+Str2+"))"→Str2
+"("+Str9+")*(("+Str9+")≤("+Str3+"))+("+Str3+")*(("+Str9+")>("+Str3+"))"→Str3
+"SUB-REGION"→Str4
+{0,0,0,0,0}→ʟM2JR
+0→F
+0→G
+0→L
+6→C
+Goto RG
+Lbl VX
+Str8→Str2
+Str9→Str3
+ʟM2JC(1) or ʟM2JR(4)≤1ᴇ⁻8*max(1,abs(M*ʟM2JT(1)))→E
+M*ʟM2JT(1)→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+Str9+"θθ"→Str0
+Goto V4
+// ----------------------------------- RG: integrate q over support ∩ ʟM2JE (P = order, C = return)
+// OUT ʟM2JT={∫∫q,pass 2-pass 1,misses,heavy,min q}, ʟM2KS strips, ʟM2KP pieces; LIMITS appended to
+// Str0 unless C=1 (model total) or C=6 (curved: ʟM2JK={a,b}, limits Str2,Str3).
+Lbl RG
+{0,0,0,0,1}→ʟM2JT
+If N≠8:Goto RA
+{ʟM2JK(1),ʟM2JK(2),0,0,0,0,1}→ʟM2KS
+Goto RK
+Lbl RA
+// half-planes a*s+b*t≤c in (outer s, inner t): b=0 bounds s, b<0 is a lower line, b>0 an upper one
+augment(ʟM2JS,ʟM2JE)→ʟM2JH
+dim(ʟM2JH)/3→K
+seq(ʟM2JH(3*I-2+P),I,1,K)→ʟM2JU
+seq(ʟM2JH(3*I-1-P),I,1,K)→ʟM2JV
+seq(ʟM2JH(3*I),I,1,K)→ʟM2JW
+If max((ʟM2JU=0)*(ʟM2JV=0)*(ʟM2JW<0)):Goto RZ
+(ʟM2JV=0)*ʟM2JW/(ʟM2JU+(ʟM2JU=0))→ʟM2JZ
+max(⁻1ᴇ6,max(ʟM2JZ-1ᴇ7*((ʟM2JV≠0)+(ʟM2JU≥0))))→Q
+min(1ᴇ6,min(ʟM2JZ+1ᴇ7*((ʟM2JV≠0)+(ʟM2JU≤0))))→R
+If Q≥R:Goto RZ
+⁻ʟM2JU/(ʟM2JV+(ʟM2JV=0))→ʟM2JD
+ʟM2JW/(ʟM2JV+(ʟM2JV=0))→ʟM2JN
+// breakpoints: both ends and every crossing of two lines inside them
+{Q,R}→ʟM2JL
+For(J,1,K-1)
+For(O,J+1,K)
+If ʟM2JV(J)≠0 and ʟM2JV(O)≠0 and ʟM2JD(J)≠ʟM2JD(O)
+augment(ʟM2JL,{max(Q,min(R,(ʟM2JN(O)-ʟM2JN(J))/(ʟM2JD(J)-ʟM2JD(O))))})→ʟM2JL
+End
+End
+SortA(ʟM2JL)
+// each gap: highest lower and lowest upper line at its midpoint; keep it when upper>lower
+0→T
+For(J,1,dim(ʟM2JL)-1)
+ʟM2JL(J)→Q
+ʟM2JL(J+1)→R
+(Q+R)/2→S
+ʟM2JN+ʟM2JD*S-1ᴇ50*(ʟM2JV≥0)→ʟM2JZ
+ʟM2JZ=max(ʟM2JZ)→ʟM2JZ
+ʟM2JN+ʟM2JD*S+1ᴇ50*(ʟM2JV≤0)→ʟM2JP
+ʟM2JP=min(ʟM2JP)→ʟM2JP
+{Q,R,sum(ʟM2JZ*ʟM2JN)/sum(ʟM2JZ),sum(ʟM2JZ*ʟM2JD)/sum(ʟM2JZ),sum(ʟM2JP*ʟM2JN)/sum(ʟM2JP),sum(ʟM2JP*ʟM2JD)/sum(ʟM2JP),0}→ʟM2JQ
+If R-Q>1ᴇ⁻10*(1+abs(Q)+abs(R)) and Q<5ᴇ5 and R>⁻5ᴇ5 and ʟM2JQ(5)+ʟM2JQ(6)*S-ʟM2JQ(3)-ʟM2JQ(4)*S>1ᴇ⁻12*(1+abs(S))
+Then
+If T
+Then
+// same lines as the strip before: extend it
+If max(abs(seq(ʟM2KS(7*T-5+I),I,1,4)-seq(ʟM2JQ(I),I,3,6)))<1ᴇ⁻12 and ʟM2KS(7*T-5)=Q
+Then
+R→ʟM2KS(7*T-5)
+Else
+augment(ʟM2KS,ʟM2JQ)→ʟM2KS
+T+1→T
+End
+Else
+ʟM2JQ→ʟM2KS
+1→T
+End
+End
+End
+If not(T):Goto RZ
+Lbl RK
+ClrHome
+Disp "COMPUTING…"
+{P,2-ʟM2JC(1)}→ʟM2KO
+"1"→Str5
+1→θ
+prgmM2GL
+θ-1→ʟM2JT(4)
+ʟM2KR(1)→ʟM2JT(1)
+If not(ʟM2JC(1))
+Then
+3→ʟM2KO(2)
+1→θ
+prgmM2GL
+max(ʟM2JT(4),θ-1)→ʟM2JT(4)
+ʟM2KR(1)-ʟM2JT(1)→ʟM2JT(2)
+ʟM2KR(1)→ʟM2JT(1)
+End
+ʟM2KR(9)→ʟM2JT(5)
+max(ʟM2JR(4),abs(M*ʟM2JT(2)))→ʟM2JR(4)
+max(ʟM2JR(5),ʟM2JT(4))→ʟM2JR(5)
+Goto RT
+Lbl RZ
+1→ʟM2JT(3)
+// LIMITS: the integral to copy, c, q, the order, then every piece (x FROM a TO b / y FROM l TO u)
+Lbl RT
+If C=1 or C=6:Goto RR
+If length(Str0)≤500:Goto RQ
+4→D
+Goto PG
+Lbl RW
+"θ"→Str0
+Lbl RQ
+ʟM2JC(1) or abs(M*ʟM2JT(2))≤1ᴇ⁻8*max(1,abs(M*ʟM2JT(1)))→E
+M→W
+prgmM2FMT
+If not(ʟM2JC(3))
+Str8→Str9
+sub("xyx",1+P,1)→Str6
+sub("yxy",1+P,1)→Str7
+Str0+"LIMITSθ"→Str0
+If C=3
+Str0+"REGION A AND Bθ"→Str0
+If C=4
+Str0+"REGION Bθ"→Str0
+If C=5
+Str0+"REGION Aθ"→Str0
+If C=2 and (F or G)
+Str0+"P(A)"→Str0
+If C≠2 or not(F or G)
+Str0+"P"→Str0
+Str0+"=∫∫ c*q(x,y) d"+Str7+" d"+Str6+"θc="+Str9+"θq="+Str1+"θORDER d"+Str7+" d"+Str6+" ("+Str6+" OUTER)θ"→Str0
+If ʟM2JT(3)
+Str0+"EVENT MISSES SUPPORTθTHE REGION IS EMPTY, P=0θ"→Str0
+For(H,1,(1-ʟM2JT(3))*dim(ʟM2KS)/7)
+{ʟM2KS(7*H-6),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str6+" FROM "+Str7+" TO "→Str0
+{ʟM2KS(7*H-5),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"θ "+sub("yxy",1+P,1)+" FROM "→Str0
+{ʟM2KS(7*H-4),ʟM2KS(7*H-3)}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+" TO "→Str0
+{ʟM2KS(7*H-2),ʟM2KS(7*H-1)}→ʟM2QS
+2→θ
+prgmM2PLY
+M*ʟM2KP(H)→W
+prgmM2FMT
+If not(E)
+Str8→Str9
+Str0+Str7+"θ PIECE="+Str9+"θ"→Str0
+End
+Str0+"θ"→Str0
+Lbl RR
+If C=1:Goto NT
+If C=2:Goto V4
+If C=3:Goto V1
+If C=4:Goto V2
+If C=5:Goto V3
+Goto VX
+// ------------------------------- PG: page Str0 = "θ" + sections "TITLEθlinesθθ" (width-aware)
+Lbl PG
+augment({0},cumSum(seq(1+5*not(inString("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdfiklmnqstxy+-*/()²³^.⁻ᴇ,=<>≤≥≠ ∫'…|θ",sub(Str0,I,1))),I,1,length(Str0))))→ʟM2JW
+2→I
+1→K
+While I≤length(Str0)
+inString(Str0,"θ",I)→J
+If J=I
+Then
+Pause
+1→K
+I+1→I
+Else
+If K=1
+Then
+sub(Str0,I,J-I)→Str9
+ClrHome
+Output(1,1,Str9)
+2→K
+J+1→I
+Else
+If K>10 or K>8 and inString("xy",sub(Str0,I,1))
+Then
+Pause
+ClrHome
+Output(1,1,Str9)
+2→K
+End
+min(J,sum(ʟM2JW≤ʟM2JW(I)+26))-I→O
+Output(K,1,sub(Str0,I,O))
+K+1→K
+I+O+(I+O=J)→I
+End
+End
+End
+If D=1:Goto ER
+If D=2:Goto NR
+If D=4:Goto RW
+Goto EM
+// ---------------------------------------------------------------- BACK
+Lbl Z
+DelVar ʟM2JR
+DelVar ʟM2JM
+DelVar ʟM2JL
+DelVar ʟM2JG
+DelVar ʟM2JS
+DelVar ʟM2JU
+DelVar ʟM2JC
+DelVar ʟM2JE
+DelVar ʟM2JK
+DelVar ʟM2JT
+DelVar ʟM2JA
+DelVar ʟM2JB
+DelVar ʟM2JH
+DelVar ʟM2JV
+DelVar ʟM2JW
+DelVar ʟM2JZ
+DelVar ʟM2JD
+DelVar ʟM2JN
+DelVar ʟM2JP
+DelVar ʟM2JQ
+9→θ
+prgmM2GL
+9→θ
+prgmM2PLY
+0→Z
+Return

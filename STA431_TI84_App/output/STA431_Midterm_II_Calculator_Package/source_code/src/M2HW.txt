@@ -38,9 +38,9 @@ Lbl AC
 ClrHome
 Output(1,1,"Q2 JOINT PDF           1/2")
 Output(2,1,"q=2X+Y on x0..1,y0..2.")
-Output(3,1,"DOUBLE INTEGRAL with q,")
-Output(4,1,"xlo0,xhi1, ylo0,yhi2, g1")
-Output(5,1,"gives total4 => c1/4.")
+Output(3,1,"JOINT DENSITY with q and")
+Output(4,1,"RECT 0,1,0,2 gives total4")
+Output(5,1,"=> c1/4.")
 Output(6,1,"fY(y)=(1+y)/4 on0<y<2. For")
 Output(7,1,"fixed y=A, q(X)=2X+A")
 Output(8,1,"on0..1. DENSITY/SLICE")
@@ -68,12 +68,12 @@ Output(1,1,"Q3 SERIES LIFE         1/2")
 Output(2,1,"f=(X+Y)/8 on0<X<2,0<Y<2.")
 Output(3,1,"Failure if either")
 Output(4,1,"lifetime≤1, T=min(X,Y).")
-Output(5,1,"Compute survivor integral")
-Output(6,1,"with q=(X+Y)/8,")
-Output(7,1,"x1..2,y1..2,g1. The PDF is")
-Output(8,1,"already normalized.")
-Output(9,1,"Survival3/8;")
-Output(10,1,"failure1-3/8=5/8. Do NOT")
+Output(5,1,"JOINT DENSITY q=(X+Y)/8,")
+Output(6,1,"RECT 0,2,0,2, EVENTS >")
+Output(7,1,"MIN/MAX > min(X,Y)≤t with")
+Output(8,1,"t=1. The PDF is already")
+Output(9,1,"normalized.")
+Output(10,1,"Survival3/8;")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
@@ -81,12 +81,13 @@ If K=24:Goto 1
 Lbl AF
 ClrHome
 Output(1,1,"Q3 SERIES LIFE         2/2")
-Output(2,1,"normalize the survivor")
-Output(3,1,"region to1 before taking")
-Output(4,1,"its probability.")
-Output(5,1,"Use raw integral output")
-Output(6,1,"here. Write event and")
-Output(7,1,"complement first.")
+Output(2,1,"failure1-3/8=5/8. Do NOT")
+Output(3,1,"normalize the survivor")
+Output(4,1,"region to1 before taking")
+Output(5,1,"its probability.")
+Output(6,1,"Write the event and its")
+Output(7,1,"complement first; the app")
+Output(8,1,"prints both.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
@@ -126,12 +127,12 @@ Output(1,1,"Q5 X LESS Y            1/2")
 Output(2,1,"f=(2X+Y)/4 on0<X<1,0<Y<2.")
 Output(3,1,"Event region X<Y means")
 Output(4,1,"x0..1,y=X..2.")
-Output(5,1,"DOUBLE INTEGRAL")
-Output(6,1,"q=(2X+Y)/4, xlo0,xhi1,")
-Output(7,1,"yloX,yhi2,g1. Use RAW")
-Output(8,1,"integral, not conditional")
-Output(9,1,"normalization.")
-Output(10,1,"Result19/24. Reverse order")
+Output(5,1,"JOINT DENSITY q=(2X+Y)/4")
+Output(6,1,"on RECT 0,1,0,2, EVENTS >")
+Output(7,1,"X<Y OR X>Y > X<Y prints")
+Output(8,1,"the limits.")
+Output(9,1,"Result19/24. Reverse order")
+Output(10,1,"requires split at y1.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
@@ -139,12 +140,11 @@ If K=24:Goto 1
 Lbl AJ
 ClrHome
 Output(1,1,"Q5 X LESS Y            2/2")
-Output(2,1,"requires split at y1.")
-Output(3,1,"Exact setup is integral")
-Output(4,1,"x0..1 integral yx..2 f.")
-Output(5,1,"N and2N Simpson results")
-Output(6,1,"should agree for this")
-Output(7,1,"polynomial.")
+Output(2,1,"Exact setup is integral")
+Output(3,1,"x0..1 integral yx..2 f.")
+Output(4,1,"EXACT (POLYNOMIAL) means")
+Output(5,1,"no N to choose. REVERSE")
+Output(6,1,"ORDER shows the split.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1

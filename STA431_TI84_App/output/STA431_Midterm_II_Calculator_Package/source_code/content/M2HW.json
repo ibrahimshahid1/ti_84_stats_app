@@ -38,9 +38,9 @@
           "pages": [
             [
               "q=2X+Y on x0..1,y0..2.",
-              "DOUBLE INTEGRAL with q,",
-              "xlo0,xhi1, ylo0,yhi2, g1",
-              "gives total4 => c1/4.",
+              "JOINT DENSITY with q and",
+              "RECT 0,1,0,2 gives total4",
+              "=> c1/4.",
               "fY(y)=(1+y)/4 on0<y<2. For",
               "fixed y=A, q(X)=2X+A",
               "on0..1. DENSITY/SLICE",
@@ -63,20 +63,21 @@
               "f=(X+Y)/8 on0<X<2,0<Y<2.",
               "Failure if either",
               "lifetime≤1, T=min(X,Y).",
-              "Compute survivor integral",
-              "with q=(X+Y)/8,",
-              "x1..2,y1..2,g1. The PDF is",
-              "already normalized.",
-              "Survival3/8;",
-              "failure1-3/8=5/8. Do NOT"
+              "JOINT DENSITY q=(X+Y)/8,",
+              "RECT 0,2,0,2, EVENTS >",
+              "MIN/MAX > min(X,Y)≤t with",
+              "t=1. The PDF is already",
+              "normalized.",
+              "Survival3/8;"
             ],
             [
+              "failure1-3/8=5/8. Do NOT",
               "normalize the survivor",
               "region to1 before taking",
               "its probability.",
-              "Use raw integral output",
-              "here. Write event and",
-              "complement first."
+              "Write the event and its",
+              "complement first; the app",
+              "prints both."
             ]
           ]
         },
@@ -111,20 +112,19 @@
               "f=(2X+Y)/4 on0<X<1,0<Y<2.",
               "Event region X<Y means",
               "x0..1,y=X..2.",
-              "DOUBLE INTEGRAL",
-              "q=(2X+Y)/4, xlo0,xhi1,",
-              "yloX,yhi2,g1. Use RAW",
-              "integral, not conditional",
-              "normalization.",
-              "Result19/24. Reverse order"
+              "JOINT DENSITY q=(2X+Y)/4",
+              "on RECT 0,1,0,2, EVENTS >",
+              "X<Y OR X>Y > X<Y prints",
+              "the limits.",
+              "Result19/24. Reverse order",
+              "requires split at y1."
             ],
             [
-              "requires split at y1.",
               "Exact setup is integral",
               "x0..1 integral yx..2 f.",
-              "N and2N Simpson results",
-              "should agree for this",
-              "polynomial."
+              "EXACT (POLYNOMIAL) means",
+              "no N to choose. REVERSE",
+              "ORDER shows the split."
             ]
           ]
         }

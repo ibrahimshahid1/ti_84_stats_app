@@ -103,18 +103,18 @@ Goto A
 Lbl B1
 ClrHome
 Output(1,1,"JOINT NORMALIZER OR PROB")
-Output(2,1,"Draw support AND event.")
-Output(3,1,"Choose x outer, y inner.")
-Output(4,1,"Split at changing bounds.")
-Output(5,1,"DOUBLE INTEGRAL takes YOUR")
-Output(6,1,"q, x range, y limits(X).")
-Output(7,1,"Full support c=1/RAW I.")
-Output(8,1,"Normalized f on an event")
-Output(9,1,"probability is RAW I.")
+Output(2,1,"JOINT DENSITY takes YOUR")
+Output(3,1,"q and a support shape.")
+Output(4,1,"It shows c=1/TOTAL.")
+Output(5,1,"EVENTS + LIMITS writes the")
+Output(6,1,"limits, each piece and P.")
+Output(7,1,"min/max, X<Y, X+Y, P(A|B).")
+Output(8,1,"Infinity is ᴇ99.")
+Output(9,1,"REVERSE ORDER checks it.")
 Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
-prgmM2CONT
+prgmM2JNT
 0→Z
 Goto B
 Lbl B2
@@ -173,16 +173,16 @@ ClrHome
 Output(1,1,"SUPPORT SETS THE LIMITS")
 Output(2,1,"Draw S and event A.")
 Output(3,1,"Integrate on intersection.")
-Output(4,1,"Triangle => moving limits.")
-Output(5,1,"Curves may need a split.")
-Output(6,1,"At fixed x find allowed y.")
-Output(7,1,"Outer limits must not use")
-Output(8,1,"the inner variable.")
-Output(9,1,"Choose order to simplify.")
+Output(4,1,"At fixed x find allowed y.")
+Output(5,1,"Outer limits are numbers.")
+Output(6,1,"JOINT DENSITY > EVENTS")
+Output(7,1,"prints every piece; its")
+Output(8,1,"REVERSE ORDER shows the")
+Output(9,1,"split for the other order.")
 Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
-prgmM2ENC
+prgmM2JNT
 0→Z
 Goto B
 Lbl C1
@@ -444,17 +444,17 @@ Lbl B6
 ClrHome
 Output(1,1,"CONDITION ON AN EVENT")
 Output(2,1,"Given Y>k is an EVENT.")
-Output(3,1,"P(A|B)=INT(A and B)q")
-Output(4,1,"divided by INT(B)q.")
-Output(5,1,"Use one joint shape q.")
-Output(6,1,"Its scale cancels.")
-Output(7,1,"Intersect support with B")
-Output(8,1,"and with A and B; split")
-Output(9,1,"where limits change.")
+Output(3,1,"P(A|B)=P(A and B)/P(B).")
+Output(4,1,"JOINT DENSITY > EVENTS >")
+Output(5,1,"P(A|B) asks for A, then B")
+Output(6,1,"and shows both integrals.")
+Output(7,1,"Its scale cancels.")
+Output(8,1,"Given a VALUE Y=y is a")
+Output(9,1,"slice, not an event.")
 Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
-prgmM2CONT
+prgmM2JNT
 0→Z
 Goto B
 Lbl Z

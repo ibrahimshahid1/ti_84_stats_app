@@ -164,3 +164,132 @@ All critical, high and medium issues fixed; the low ones too (details at the top
   before numbers ("enter6 rows") — P7/P8 rewrite those programs; M2CONT/M2SLICE still use fnInt(
   (removed by P3/P4); M2EXAM is replaced by M2FIND in P8.
 * tilint's formatter check now runs against M2FMT; keep Q–V dead across `prgmM2FMT` calls.
+
+## P2
+
+**Status: done** (all acceptance items, A1 and A2). One open risk for P3: M2JNT is already 12,283
+tokenized bytes (plan budget 12,000 for P2+P3, hard cap +15% = 13,800); see "Notes for P3".
+
+### What was built
+* **M2GL** (3,328 B) integration kernel, PLAN 4.3/4.6. θ=1 2-D over strips ʟM2KS (7 numbers each,
+  kind 1 = curved via expr(Str2)/expr(Str3) at X=s, finite outer range only), ʟM2KO={orient,mode};
+  θ=2 1-D over ʟM2KS={a,b} with ʟM2KO={var,mode}, the other variable held; θ=9 deletes every ʟM2K*.
+  Mode 1 EXACT = one GL7×GL7 panel per strip; mode 2/3 NUMERIC = 5/7 graded panels (1:2:4:…) per
+  direction with GL7, probed cutoffs for semi-infinite ranges (first probe <1ᴇ⁻13·running peak,
+  else 4096 and θ=2 "heavy"), (-∞,U] probed downward, (-∞,∞) split at 0. |v|≥5ᴇ5 = infinite.
+  Speed trick: q and g are rewritten once per call with X→(ʟM2KX), Y→(ʟM2KY) into Str6/Str7, so one
+  expr( evaluates a whole node list (per outer node in 2-D). OUT ʟM2KR (9 numbers, true X,Y) and
+  ʟM2KP (∫q per strip); θ=1 OK / 2 heavy tail. Clobbers I J K O Q–W X Y θ, Str6, Str7 (only when
+  Str5≠"1"), ʟM2K*. Never touches Str0, Str8, Str9, A–H, L–P.
+* **M2PLY part 1** (1,698 B): θ=1 RECOVER2 (whitelist pre-screen, 25 samples, inverse Vandermonde,
+  1ᴇ⁻11 zeroing, 2 off-grid checks; uses Str7 as scratch), θ=2 LINESTR, θ=3 POLYSTR, θ=8 VARCHECK
+  (also rejects lowercase letters), θ=9 deletes every ʟM2Q*. θ=8 touches only θ (callers park q in
+  Str0/Str7 while checking other strings).
+* **M2JNT** (12,283 B): top menu (NEW MODEL, EVENTS + LIMITS, FORMULAS/MOMENTS + COV/GIVEN A
+  VALUE/INDEP + CDF = "COMING IN THIS VERSION"/"USE EVENTS + LIMITS", BACK); an analysis item without
+  a model runs NEW MODEL first and then continues to it. NEW MODEL: q prompt + VARCHECK "XY", SUPPORT
+  menu (7 items) and CUSTOM menu (X OUTER, Y OUTER, CURVED), ᴇ99 = ∞, |finite|<1ᴇ5, linear-bound
+  test, UPPER BELOW LOWER, polynomial-on-infinite refusal, total ≤0 refusal, q<0 warning, summary
+  screen. Z=99 preload (Str1 + ʟM2JM, Str2/Str3 for code 8) skips the prompts and lands on the menu.
+  EVENTS: every menu of PLAN 7 P2 item 4 plus A1's COMPLEMENT OF… (7th MORE EVENTS item); SETUP
+  (words → math table), LIMITS (A2 header P=∫∫ c*q(x,y) dy dx, c=, q=, ORDER …, then pieces),
+  RESULT (complement arithmetic, EXACT / NUMERIC, 2 PASSES AGREE / APPROX - NOT CONVERGED +
+  CHANGE=, TAIL MAY BE HEAVY); EVENT RESULT menu REVERSE ORDER, COMPLEMENT 1-P, NEW EVENT, BACK;
+  P(A|B) with inclusion–exclusion for complemented A and/or B; curved support → CURVED SUB-REGION
+  (numeric, clipped to the support). BACK deletes ʟM2J* and runs M2GL/M2PLY θ=9.
+* **Integration:** STAM2 SOLVERS = DISCRETE TABLE, JOINT DENSITY, DENSITY+INTEGRAL, MGF TOOLS,
+  LINEAR COMBOS, BACK (HOW TO ENTER row "(JOINT DENSITY ONLY)", LIMITS row "DENSITY+INTEGRAL
+  FINITE"). M2EXAM B1, B5, B6 open M2JNT (texts rewritten). write_presets.py: HW4 Q2/Q3/Q5 →
+  `99→Z:prgmM2JNT` with {1,0,1,0,2}/{1,0,2,0,2}/{1,0,1,0,2} (M2CONT's codes 2/3/5 hooks are now
+  dead; P3 deletes them). write_content.py tool routes (CHOOSE A SOLVER, HW4 Q2/Q3/Q5) name JOINT
+  DENSITY. START_HERE: 14 programs, ~85 KB, JOINT DENSITY table row + "Joint densities" section,
+  practice-data note, device checks 10–13 (Mock II Q2, Mock 4 Q5, 2e^(-x-2y) quadrant, Mock 4 Q4/Q3).
+
+### Files
+* New: src/M2GL.txt, src/M2PLY.txt, src/M2JNT.txt, tests/test_kernel.py, tests/test_joint_events.py
+  (main P2 test file; holds `# PLAN DEVIATIONS / EXTRA FIXES`).
+* Changed: src/STAM2.txt, src/M2EXAM.txt, tools/write_presets.py (→ src/M2RUN.txt),
+  tools/write_content.py (→ content/*.json, src/M2ENC.txt, src/M2HW.txt), tests/test_presets.py,
+  tests/test_exam_assistant.py, tests/test_menu_tree.py, tests/test_reference_navigation.py,
+  START_HERE.md, PROGRESS.md; out/ and ../output/STA431_Midterm_II_Calculator_Package (+ .zip).
+
+### Tests (expected values from sympy/Fraction inside the tests)
+* test_kernel (13): 12 random degree-≤4 polynomials on random triangles (both orients) vs sympy,
+  error < 1e-11 for all 6 moments; g-moments; min q; numeric quadrant targets (pass 1 ≤5e-9, pass 2
+  ≤4e-10: total, P(X>Y), P(Y>X), P(X+Y<1), E(XY)); x e^(-x(1+y)), e^(-x) on 0<y<x, 4xy e^(-x²-y²);
+  e^(x+y), 1/x, curved 0<y<x², negative inner range → 0; 1-D exact/semi-/doubly-infinite; heavy-tail
+  flag; cleanup modes; RECOVER2 (random + typed forms + rejections), LINESTR, POLYSTR, VARCHECK.
+* test_joint_events (33): HW4 Q3 (=1-P(X>t,Y>t), 3/8, 5/8), HW4 Q5 (19/24 both orders, pieces
+  x 0..1 / y x..2 and y 0..1 / x 0..y + y 1..2 / x 0..1), HW4 Q2 (c=1/4), HW4 Q4 via M2DISC
+  (3/32, 1/4, complements 29/32, 3/4); Mock II Q2 (c=3, 3/8, 2 pieces, reverse 1 piece, A2 header
+  in both orders), Mock 4 Q3 (8, 1/6), Mock 4 Q4 (1/4, 5/24, 1/8), Mock 4 Q5 (5/8, 1/8 and the other
+  two MIN/MAX items), meeting 7/16 and its complement, P(X<1/2|Y>1/2)=2/5 (3/8, 15/16, COMPLEMENT 1-P
+  3/5), P(A|B) with a built-in-complement A and a COMPLEMENT OF B (both orders), custom X-outer
+  (c=1/2, P(Y>1)=1/2, both orders) and Y-outer supports, rectangle/CDF/interval/both-exceed/X+Y≥k,
+  6 random custom supports × random half-plane events vs an independent Python Sutherland–Hodgman +
+  sympy reference (both orders); numeric 2e^(-x-2y) (T=1, 2/3 shown as a fraction in both orders,
+  1/3, .399576400894), |X-Y|≤1/4 on the quadrant (far-tail strip dropped), e^(-x) on 0<y<x<∞
+  (P(X<2Y)=1/2), curved q=3 on 0<y<x² (T=1, sub-region 1/16 and its complement, a kinked sub-region
+  shows APPROX), heavy-tail and q<0 warnings, a long q wraps without display warnings; A1 menu
+  shape, HW4 Q5 complement 5/24, Mock 4 Q4 complement 7/8, COMPLEMENT 1-P (also after COMPLEMENT
+  OF); A2 header lines; rejections (NOT LINEAR X², VARCHECK 2X+T, a Y in an X bound, UPPER BELOW
+  LOWER ×2, polynomial on the quadrant, |bound|≥1ᴇ5, total ≤0), EVENT MISSES SUPPORT → 0, event
+  number guard; top menu, no-model flow, COMING items, Z=99, list cleanup; step budgets.
+* Step counts (simulator): EXACT model entry ≈1,540 (<3,000); EXACT events 1,655 (X<Y), 1,910
+  (min≤t), 2,490 (X+Y≤k, 2 pieces), 3,659 (|X-Y|≤k, 3 pieces), reverse ≤3,455 (<5,000); numeric
+  quadrant model 8,171 and event 8,430 (<80,000).
+* Updated: test_presets (HW4 Q2/Q3/Q5 through M2JNT), test_exam_assistant (B1 text; conditioning case
+  via M2JNT P(A|B)), test_menu_tree (SOLVERS shape, CANNED inputs for 19 M2JNT prompts, M2JNT in
+  the module list, new SOLVERS > JOINT DENSITY > BACK route; 2,623 runs, 299 menus, every Menu( line
+  reached, 0 errors/leaks/warnings, ~37 s), test_reference_navigation (walk includes JOINT DENSITY).
+* Totals: 12 test files, 247 counted checks, all green; build_package succeeded (14 programs, 84,854
+  .8xp bytes; 83,790 tokenized; limit 118,000); both linters 0 errors / 0 warnings.
+
+### §0A amendment items
+* **A1 done**: COMPLEMENT OF… (7 MORE EVENTS items), SETUP `NOT A => A'` / `P(A')=1-P(A)` / `A=…`,
+  RESULT `A=…`, `P(A)=…`, `P(A')=1-P(A)`, `=1-…`, `=…` with A's LIMITS shown; EVENT RESULT >
+  COMPLEMENT 1-P prints `P(NOT A)=1-P(A)`, `=1-…`, `=…` (or `P(NOT A|B)=1-P(A|B)`). Acceptance values
+  5/24, 7/8, 29/32, 3/4 tested. (The M2DISC EVENT MENU complement display remains P6.)
+* **A2 done**: first LIMITS page `P=∫∫ c*q(x,y) dy dx` (dx dy), `c=…`, `q=…` (wrapped), `ORDER dy dx
+  (x OUTER)` (or dx dy (y OUTER)), then the pieces; asserted on HW4 Q5 (typed 2X+Y, c=1/4) and Mock
+  II Q2 in both orders.
+
+### Deviations (also at the top of tests/test_joint_events.py)
+* Pieces are `x FROM a TO b` / ` y FROM l TO u` / ` PIECE=v` (a colon ends a TI string); messages
+  with colons are split or use " - ". A' instead of Aᶜ (no ᶜ glyph). "COMPLEMENT OF…" (… token),
+  "|X-Y| >k" ("|>" tokenizes as ►), "CURVED SUB-REGION" (18-character menu limit).
+* Geometry from half-planes and line breakpoints instead of polygon clipping (same strips, less
+  code); strips beyond |x|≥5ᴇ5 dropped; adjacent identical strips merged.
+* M2GL: 5ᴇ5 infinity threshold; GL7×GL7 EXACT; Str6/Str7 scratch (not Str0); interior probe points;
+  zero probes give zero-length segments; negative inner ranges contribute 0. θ=9 cleanup modes.
+* RECOVER2 uses a token whitelist (function tokens cannot be written in TI string literals); the
+  curved clip uses comparisons instead of max(/min( for the same reason.
+* Custom linear bounds sampled at .37, 1.37, 2.37. Summary support text is outer/inner ranges.
+* SETUP/LIMITS/RESULT are one paged text shown after computing (A's SETUP right after picking A).
+* Curved supports need finite a,b.
+
+### Notes for P3 (and later)
+* **Memory.** M2JNT is 12,283 B. P3 must stay ≤13,800 B for M2JNT (plan budget 12,000 +15%), i.e.
+  ≤ ~1.5 KB more, which is too little for FORMULAS/MOMENTS/GIVEN/INDEP. Options: put the heavy lifting
+  in M2PLY modes 4–7 (planned anyway), keep M2JNT's new code to menus + display, and if needed move
+  one analysis area into a new helper program (document it as a deviation; total limit 118,000,
+  current estimate 85,258). Compaction ideas not yet done: G1 label building (~350 B), the curved
+  event text (~800 B), the custom-bound Disp texts.
+* **Calling RG.** Put half-planes in ʟM2JE ({0,0,1} = whole support), the order in P (0 dy dx,
+  1 dx dy), a new return code in C, and `Goto RG`. RG fills ʟM2JT={∫∫q, pass2-pass1, misses,
+  heavy, min q}, ʟM2KS (strips in (outer,inner) coordinates) and ʟM2KP; RT appends LIMITS text unless
+  C=1 or C=6 (add new silent codes there) and RR dispatches on C (codes 1–6 used; add yours before
+  the final `Goto VX`). For moments call M2GL yourself on ʟM2KS with Str5=g. The support half-planes
+  are in ʟM2JS, the tuple in ʟM2JG={x0,x1,l0,l1,u0,u1} (code 7 transposed: y outer), c in M,
+  exact flag ʟM2JC(1), "c is a fraction" ʟM2JC(3).
+* **Registers.** A–H, L–P are M2JNT's (meanings in the M2JNT header); M = c and N = support code
+  (0 = no model) must survive; P is the order. G doubles as the post-NEW-MODEL route (1 events,
+  2 the analysis items → currently F1; P3 should route each item).
+* **Text.** Build Str0 = "θ" + sections "TITLEθlineθ...θθ" and `Goto PG` with a return code in D
+  (1 ER, 2 NR, 3 EM, 4 RW); PG pages it with 9 rows per page, repeats the title, wraps by display width
+  (the whitelist inside PG must contain every 1-character token you print; other tokens count 6),
+  and starts a new page before a line beginning with x or y when fewer than 3 rows remain.
+* **M2PLY** callers: θ=8 needs the checked string in Str1 (park q in Str0 or Str7); RECOVER2 clobbers
+  Str7. Add any new ʟM2Q* names to M2PLY's θ=9 cleanup, and new ʟM2K* names to M2GL's.
+* M2CONT still has the dead preset hooks for codes 2, 3, 5 (now unused); P3 deletes them with the
+  DOUBLE INTEGRAL. The test_menu_tree CANNED table has the M2JNT prompts; add new ones there.

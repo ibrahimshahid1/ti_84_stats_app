@@ -1,0 +1,208 @@
+// M2GL - integration kernel library (P2; PLAN 4.3 and 4.6). Called as prgmM2GL, never calls M2FMT.
+// θ=1 (2-D): strips in ʟM2KS, 7 numbers each: x0,x1,l0,l1,u0,u1,kind. The outer variable s runs over
+//   [x0,x1]; the inner one from l0+l1*s to u0+u1*s. kind 1 = curved: limits expr(Str2), expr(Str3) at X=s
+//   (X outer, finite x0,x1 only). ʟM2KO={orient,mode}: orient 0 = outer X; 1 = outer Y, inner X (strips
+//   then in (y,x) coordinates). OUT ʟM2KR={∫q,∫Xq,∫Yq,∫X²q,∫Y²q,∫XYq,∫gq,∫g²q,min q} in TRUE X,Y and
+//   ʟM2KP = ∫q per strip.
+// θ=2 (1-D): ʟM2KS={a,b}; ʟM2KO={var,mode}: var 0 integrates in X, 1 in Y; the other variable keeps its
+//   current value. OUT ʟM2KR={∫q,∫vq,∫v²q,∫v³q,∫v⁴q,∫gq,∫g²q,min q}.
+// mode 1 EXACT: one GL7 panel per direction (finite ranges; exact for degree ≤13 per variable).
+// mode 2 NUMERIC pass 1 (5 graded panels 1:2:4:.. per direction), mode 3 pass 2 (7 panels).
+// |v|≥5ᴇ5 means infinite (callers store ±1ᴇ6). A semi-infinite range probes base+2^k, k=⁻3..12, and cuts
+//   at the first probe (k>⁻3) below 1ᴇ⁻13 of the running peak; none -> 4096 and θ=2 (TAIL MAY BE HEAVY).
+//   (-INF,U] probes downward from U; (-INF,INF) is split at 0. Outer probe = max |q| at 3 inner points.
+// Integrand expr(Str1); g = expr(Str5) when Str5≠"1". OUT θ=1 OK, θ=2 heavy tail.
+// CLOBBERS I J K O Q R S T U V W X Y θ, Str6 (q with node-list names), Str7 (g, only when Str5≠"1"),
+//   every ʟM2K* list except the inputs ʟM2KS, ʟM2KO. Str0 and Str8, Str9 are left alone.
+// θ=9 deletes every ʟM2K* list (callers run it when they exit).
+If θ=9:Goto Z
+{X,Y}→ʟM2KL
+// q and g (Str6, Str7) with X,Y replaced by the node lists: one expr( evaluates every node
+"("→Str6
+For(I,1,length(Str1)+1+length(Str5))
+sub(Str1+"θ"+Str5,I,1)
+Str6+sub("(ʟM2KX)(ʟM2KY))θ("+Ans,18-17*(Ans="X")-10*(Ans="Y")-3*(Ans="θ"),1+6*(Ans="X" or Ans="Y")+2*(Ans="θ"))→Str6
+End
+inString(Str6,"θ")→I
+sub(Str6,I+1,length(Str6)-I)+")"→Str7
+sub(Str6,1,I-1)→Str6
+{.025446043828621,.12923440720030,.29707742431130,.5,.70292257568870,.87076559279970,.97455395617138}→ʟM2KT
+{.064742483084435,.13985269574464,.19091502525256,.20897959183673,.19091502525256,.13985269574464,.064742483084435}→ʟM2KW
+// W = panels per direction; graded panel k covers [2^(k-1)-1,2^k-1] in units of H=length/(2^W-1)
+1+4*(ʟM2KO(2)=2)+6*(ʟM2KO(2)=3)→W
+seq(2^int(I/7)-1+2^int(I/7)*ʟM2KT(I-7*int(I/7)+1),I,0,7*W-1)→ʟM2KG
+seq(2^int(I/7)*ʟM2KW(I-7*int(I/7)+1),I,0,7*W-1)→ʟM2KH
+seq(2^I,I,⁻3,12)→ʟM2KE
+{1/64,.5,63/64,1/64,1,2}→ʟM2KU
+{0,0,0,0,0,0,0,0,ᴇ99}→ʟM2KR
+seq(0,I,1,max(1,int(dim(ʟM2KS)/7)))→ʟM2KP
+0→V
+For(O,1,max(1,int(dim(ʟM2KS)/7)))
+If W>1
+Output(10,1,"WORKING "+toString(O)+"/"+toString(max(1,int(dim(ʟM2KS)/7))))
+// outer range -> segments {base,sign,length}; length ⁻1 = probe a cutoff
+ʟM2KS(7*O-6)→Q
+ʟM2KS(7*O-5)→R
+(abs(Q)<5ᴇ5)+2*(abs(R)<5ᴇ5)→T
+{(T=1 or T=3)*Q+(T=2)*R,1-2*(T=2),(T=3)*max(0,R-Q)-(T≠3)}→ʟM2KD
+If T=0
+augment(ʟM2KD,{0,⁻1,⁻1})→ʟM2KD
+For(J,1,dim(ʟM2KD)/3)
+ʟM2KD(3*J)→T
+If T<0
+Then
+ʟM2KD(3*J-2)+ʟM2KD(3*J-1)*ʟM2KE→ʟM2KN
+If θ=2
+Then
+(1-ʟM2KO(1))*ʟM2KN+ʟM2KO(1)*ʟM2KL(1)→ʟM2KX
+ʟM2KO(1)*ʟM2KN+(1-ʟM2KO(1))*ʟM2KL(2)→ʟM2KY
+abs(expr(Str6)+0*ʟM2KN)→ʟM2KV
+Else
+// 2-D outer probe: max |q| at 3 inner points, times the inner length when it is finite
+ʟM2KS(7*O-4)+ʟM2KS(7*O-3)*ʟM2KN→ʟM2KC
+ʟM2KS(7*O-2)+ʟM2KS(7*O-1)*ʟM2KN→ʟM2KM
+abs(ʟM2KC)<5ᴇ5→ʟM2KF
+abs(ʟM2KM)<5ᴇ5→ʟM2KZ
+0*ʟM2KN→ʟM2KV
+For(K,1,3)
+ʟM2KF*ʟM2KZ*(ʟM2KC+(ʟM2KM-ʟM2KC)*ʟM2KU(K))+ʟM2KF*(1-ʟM2KZ)*(ʟM2KC+ʟM2KU(K+3))+(1-ʟM2KF)*ʟM2KZ*(ʟM2KM-ʟM2KU(K+3))+(1-ʟM2KF)*(1-ʟM2KZ)*(ʟM2KU(K+3)-1)→ʟM2KQ
+(1-ʟM2KO(1))*ʟM2KN+ʟM2KO(1)*ʟM2KQ→ʟM2KX
+ʟM2KO(1)*ʟM2KN+(1-ʟM2KO(1))*ʟM2KQ→ʟM2KY
+max(ʟM2KV,abs(expr(Str6)+0*ʟM2KN))→ʟM2KV
+End
+ʟM2KV*(ʟM2KF*ʟM2KZ*(ʟM2KM-ʟM2KC)+1-ʟM2KF*ʟM2KZ)→ʟM2KV
+End
+0→T
+0→U
+1→K
+Repeat T or K>16
+max(U,ʟM2KV(K))→U
+If K>1 and ʟM2KV(K)<1ᴇ⁻13*U
+ʟM2KE(K)→T
+K+1→K
+End
+If T=0 and U>0
+Then
+4096→T
+1→V
+End
+End
+ʟM2KD(3*J-2)+ʟM2KD(3*J-1)*T/(2^W-1)*ʟM2KG→ʟM2KN
+T/(2^W-1)*ʟM2KH→ʟM2KF
+If J=1
+Then
+ʟM2KN→ʟM2KA
+ʟM2KF→ʟM2KB
+Else
+augment(ʟM2KA,ʟM2KN)→ʟM2KA
+augment(ʟM2KB,ʟM2KF)→ʟM2KB
+End
+End
+If θ=2
+Then
+// 1-D: every node in one evaluation
+(1-ʟM2KO(1))*ʟM2KA+ʟM2KO(1)*ʟM2KL(1)→ʟM2KX
+ʟM2KO(1)*ʟM2KA+(1-ʟM2KO(1))*ʟM2KL(2)→ʟM2KY
+expr(Str6)+0*ʟM2KA→ʟM2KQ
+ʟM2KB*ʟM2KQ→ʟM2KZ
+{sum(ʟM2KZ),sum(ʟM2KZ*ʟM2KA),sum(ʟM2KZ*ʟM2KA²),sum(ʟM2KZ*ʟM2KA³),sum(ʟM2KZ*ʟM2KA^4),0,0,min(ʟM2KQ)}→ʟM2KR
+If Str5≠"1"
+Then
+expr(Str7)+0*ʟM2KA→ʟM2KV
+sum(ʟM2KZ*ʟM2KV)→ʟM2KR(6)
+sum(ʟM2KZ*ʟM2KV²)→ʟM2KR(7)
+End
+Else
+// 2-D: inner segments at every outer node S
+For(I,1,dim(ʟM2KA))
+ʟM2KA(I)→S
+If ʟM2KS(7*O)
+Then
+S→X
+expr(Str2)→Q
+expr(Str3)→R
+Else
+ʟM2KS(7*O-4)+ʟM2KS(7*O-3)*S→Q
+ʟM2KS(7*O-2)+ʟM2KS(7*O-1)*S→R
+End
+(abs(Q)<5ᴇ5)+2*(abs(R)<5ᴇ5)→T
+{(T=1 or T=3)*Q+(T=2)*R,1-2*(T=2),(T=3)*max(0,R-Q)-(T≠3)}→ʟM2KD
+If T=0
+augment(ʟM2KD,{0,⁻1,⁻1})→ʟM2KD
+For(J,1,dim(ʟM2KD)/3)
+ʟM2KD(3*J)→T
+If T<0
+Then
+ʟM2KD(3*J-2)+ʟM2KD(3*J-1)*ʟM2KE→ʟM2KN
+(1-ʟM2KO(1))*S+ʟM2KO(1)*ʟM2KN→ʟM2KX
+ʟM2KO(1)*S+(1-ʟM2KO(1))*ʟM2KN→ʟM2KY
+abs(expr(Str6)+0*ʟM2KN)→ʟM2KV
+0→T
+0→U
+1→K
+Repeat T or K>16
+max(U,ʟM2KV(K))→U
+If K>1 and ʟM2KV(K)<1ᴇ⁻13*U
+ʟM2KE(K)→T
+K+1→K
+End
+If T=0 and U>0
+Then
+4096→T
+1→V
+End
+End
+ʟM2KD(3*J-2)+ʟM2KD(3*J-1)*T/(2^W-1)*ʟM2KG→ʟM2KN
+T/(2^W-1)*ʟM2KH→ʟM2KF
+If J=1
+Then
+ʟM2KN→ʟM2KC
+ʟM2KF→ʟM2KM
+Else
+augment(ʟM2KC,ʟM2KN)→ʟM2KC
+augment(ʟM2KM,ʟM2KF)→ʟM2KM
+End
+End
+(1-ʟM2KO(1))*S+ʟM2KO(1)*ʟM2KC→ʟM2KX
+ʟM2KO(1)*S+(1-ʟM2KO(1))*ʟM2KC→ʟM2KY
+expr(Str6)+0*ʟM2KC→ʟM2KQ
+ʟM2KB(I)*ʟM2KM*ʟM2KQ→ʟM2KZ
+ʟM2KR+{sum(ʟM2KZ),sum(ʟM2KZ*ʟM2KX),sum(ʟM2KZ*ʟM2KY),sum(ʟM2KZ*ʟM2KX²),sum(ʟM2KZ*ʟM2KY²),sum(ʟM2KZ*ʟM2KX*ʟM2KY),0,0,0}→ʟM2KR
+min(ʟM2KR(9),min(ʟM2KQ))→ʟM2KR(9)
+ʟM2KP(O)+sum(ʟM2KZ)→ʟM2KP(O)
+If Str5≠"1"
+Then
+expr(Str7)+0*ʟM2KC→ʟM2KV
+ʟM2KR(7)+sum(ʟM2KZ*ʟM2KV)→ʟM2KR(7)
+ʟM2KR(8)+sum(ʟM2KZ*ʟM2KV²)→ʟM2KR(8)
+End
+End
+End
+End
+1+V→θ
+Return
+Lbl Z
+DelVar ʟM2KL
+DelVar ʟM2KT
+DelVar ʟM2KW
+DelVar ʟM2KG
+DelVar ʟM2KH
+DelVar ʟM2KE
+DelVar ʟM2KU
+DelVar ʟM2KR
+DelVar ʟM2KP
+DelVar ʟM2KD
+DelVar ʟM2KN
+DelVar ʟM2KC
+DelVar ʟM2KM
+DelVar ʟM2KF
+DelVar ʟM2KZ
+DelVar ʟM2KV
+DelVar ʟM2KQ
+DelVar ʟM2KX
+DelVar ʟM2KY
+DelVar ʟM2KA
+DelVar ʟM2KB
+DelVar ʟM2KS
+DelVar ʟM2KO
+Return

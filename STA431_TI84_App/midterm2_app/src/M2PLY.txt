@@ -1,0 +1,143 @@
+// M2PLY - polynomial library (P2 part 1: modes 1,2,3,8; P3 adds 4-7). Called as prgmM2PLY.
+// Mode in θ; OUT θ=1 OK, θ=0 failure. CLOBBERS I J K O Q R S T U V W X Y θ (M2FMT is called by
+// modes 2 and 3), Str7, Str8, Str9 and ʟM2Q* temporaries. Never touches Str0..Str6 or A-H, L-P.
+// θ=1 RECOVER2  Str1=q(X,Y) -> ʟM2QA (25 numbers; element 5i+j+1 = coefficient of X^i*Y^j, i,j=0..4).
+//   θ=0 when q is not a polynomial of degree ≤4 in each variable. Screen first: every token must be
+//   one of 0-9 X Y + - * / ( ) ² ³ ^ . ⁻ ᴇ, a ^ must be followed by ONE digit, and no /( (so √(, 𝑒^(,
+//   ln(, 1/(X-Y) never reach the sampling nodes). Samples at X,Y in {⁻3/2,⁻1/2,1/2,3/2,5/2}, inverse
+//   Vandermonde, coefficients below 1ᴇ⁻11*max set to 0, verified at (.37,.61) and (1.27,⁻.69).
+// θ=2 LINESTR   ʟM2QS={l0,l1}, Str6="x" or "y" -> Str7 such as 1-x, (1/2)x, 2, -1+2x, INF, -INF
+//   (|l0|≥5ᴇ5 = infinite; values below 1ᴇ⁻9 count as 0; negatives use -, never ⁻).
+// θ=3 POLYSTR   ʟM2QC = coefficients of powers 0..n of Str6 -> Str7 such as 3/2-3/2y², 4x-4x³, 0.
+// θ=8 VARCHECK  θ=0 when Str1 holds a letter (A-Z, θ, a-z) that is not in Str6 (for example "XY").
+//   Touches only θ.
+// θ=9 deletes every ʟM2Q* list (callers run it when they exit).
+If θ=1:Goto R1
+If θ=2:Goto LA
+If θ=3:Goto P3
+If θ=8:Goto V8
+If θ=9:Goto Z
+0→θ
+Return
+Lbl R1
+0→θ
+Str1+"++"→Str7
+If max(seq(not(inString("0123456789XY+-*/()²³^.⁻ᴇ",sub(Str7,I,1))) or (sub(Str7,I,1)="^" and (not(inString("0123456789",sub(Str7,I+1,1))) or inString("0123456789.",sub(Str7,I+2,1)))) or sub(Str7,I,2)="/(",I,1,length(Str1)))
+Return
+{⁻3/2,⁻1/2,1/2,3/2,5/2}→ʟM2QN
+{⁻5/128,15/32,45/64,⁻5/32,3/128,1/24,⁻9/8,9/8,⁻1/24,0,7/48,1/6,⁻7/8,2/3,⁻5/48,⁻1/6,1/2,⁻1/2,1/6,0,1/24,⁻1/6,1/4,⁻1/6,1/24}→ʟM2QV
+25→dim(ʟM2QT)
+For(I,1,5)
+ʟM2QN(I)→X
+For(J,1,5)
+ʟM2QN(J)→Y
+expr(Str1)→ʟM2QT(5*I+J-5)
+End
+End
+// B = V*S (rows), then A = B*V transposed
+25→dim(ʟM2QB)
+For(K,1,5)
+seq(ʟM2QV(5*K-5+I),I,1,5)→ʟM2QW
+For(J,1,5)
+sum(ʟM2QW*seq(ʟM2QT(5*I+J-5),I,1,5))→ʟM2QB(5*K+J-5)
+End
+End
+25→dim(ʟM2QA)
+For(K,1,5)
+seq(ʟM2QB(5*K-5+I),I,1,5)→ʟM2QW
+For(J,1,5)
+sum(ʟM2QW*seq(ʟM2QV(5*J-5+I),I,1,5))→ʟM2QA(5*K+J-5)
+End
+End
+max(abs(ʟM2QA))→T
+ʟM2QA*(abs(ʟM2QA)>1ᴇ⁻11*T)→ʟM2QA
+1→θ
+For(K,1,2)
+.37+.9*(K=2)→X
+.61-1.3*(K=2)→Y
+If abs(sum(ʟM2QA*seq(X^int(I/5)*Y^(I-5*int(I/5)),I,0,24))-expr(Str1))>1ᴇ⁻9*(1+abs(expr(Str1)))
+0→θ
+End
+Return
+// LINESTR: l0+l1*v as text
+Lbl LA
+ʟM2QS(1)*(abs(ʟM2QS(1))≥1ᴇ⁻9)→ʟM2QS(1)
+ʟM2QS(2)*(abs(ʟM2QS(2))≥1ᴇ⁻9)→ʟM2QS(2)
+If abs(ʟM2QS(1))≥5ᴇ5:Goto LI
+" "→Str7
+If ʟM2QS(1)=0:Goto LB
+If ʟM2QS(1)<0
+Str7+"-"→Str7
+abs(ʟM2QS(1))→W
+prgmM2FMT
+Str7+Str9→Str7
+Lbl LB
+If ʟM2QS(2)=0:Goto LC
+If ʟM2QS(2)<0
+Str7+"-"→Str7
+If ʟM2QS(2)>0 and ʟM2QS(1)≠0
+Str7+"+"→Str7
+If abs(ʟM2QS(2))≠1
+Then
+abs(ʟM2QS(2))→W
+prgmM2FMT
+If inString(Str9,"/")
+"("+Str9+")"→Str9
+Str7+Str9→Str7
+End
+Str7+Str6→Str7
+Lbl LC
+If Str7=" "
+" 0"→Str7
+sub(Str7,2,length(Str7)-1)→Str7
+1→θ
+Return
+Lbl LI
+"INF"→Str7
+If ʟM2QS(1)<0
+"-INF"→Str7
+1→θ
+Return
+// POLYSTR: c0+c1*v+c2*v²+... as text, zero terms skipped
+Lbl P3
+" "→Str7
+For(K,1,dim(ʟM2QC))
+If abs(ʟM2QC(K))>1ᴇ⁻10*max(abs(ʟM2QC))
+Then
+If ʟM2QC(K)<0
+Str7+"-"→Str7
+If ʟM2QC(K)>0 and Str7≠" "
+Str7+"+"→Str7
+abs(ʟM2QC(K))→W
+prgmM2FMT
+If Str9≠"1" or K=1
+Str7+Str9→Str7
+If K>1
+Str7+Str6→Str7
+If K=3
+Str7+"²"→Str7
+If K=4
+Str7+"³"→Str7
+If K>4
+Str7+"^"+toString(K-1)→Str7
+End
+End
+If Str7=" "
+" 0"→Str7
+sub(Str7,2,length(Str7)-1)→Str7
+1→θ
+Return
+// VARCHECK: letters outside Str6 -> θ=0
+Lbl V8
+not(max(seq(inString("ABCDEFGHIJKLMNOPQRSTUVWXYZθabcdefghijklmnopqrstuvwxyz",sub(Str1,I,1)) and not(inString(Str6,sub(Str1,I,1))),I,1,length(Str1))))→θ
+Return
+Lbl Z
+DelVar ʟM2QN
+DelVar ʟM2QV
+DelVar ʟM2QT
+DelVar ʟM2QB
+DelVar ʟM2QW
+DelVar ʟM2QA
+DelVar ʟM2QS
+DelVar ʟM2QC
+Return

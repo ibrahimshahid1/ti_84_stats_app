@@ -70,14 +70,19 @@ class Presets(unittest.TestCase):
                                 'NUMERIC FACTORIZATION FAIL'])
 
     def test_hw4_q2_joint_normalization(self):
+        # P2: JOINT DENSITY (Z=99) normalizes the typed shape 2X+Y on the preloaded rectangle.
         total = F(sp.integrate(2 * x + y, (y, 0, 2), (x, 0, 1)))
-        self.run_case(HW4, 'Q2 JOINT PDF', [i(8), m('NORMALIZE FULL S'), m('BACK')],
-                      {'F': total}, [fs(1 / total)])
+        r = self.run_case(HW4, 'Q2 JOINT PDF', [m('BACK')], {'M': 1 / total},
+                          ['TOTAL ∫∫q=' + fs(total), 'c=' + fs(1 / total), 'EXACT (POLYNOMIAL)'])
+        self.assertFalse([s for s in r.screens if s['event'] == 'input'])      # no prompts at Z=99
 
-    def test_hw4_q3_survival_region(self):
+    def test_hw4_q3_series_lifetime(self):
+        # The device fails if either component fails: P(min(X,Y)≤1) = 1 - P(X>1,Y>1).
         surv = F(sp.integrate((x + y) / 8, (y, 1, 2), (x, 1, 2)))
-        self.run_case(HW4, 'Q3 SERIES LIFETIME', [i(8), m('BACK')], {'F': surv},
-                      ['FAILURE IS 1-RAW I', fs(surv)])
+        self.run_case(HW4, 'Q3 SERIES LIFETIME', [m('EVENTS + LIMITS'), m('MIN/MAX'), m('min(X,Y)≤t'), i(1),
+                                                  m('BACK'), m('BACK')],
+                      {'A': 1 - surv}, ['FAILS IF EITHER FAILS', '=1-P(X>t,Y>t)', '=1-' + fs(surv),
+                                        '=' + fs(1 - surv)])
 
     def test_hw4_q4_both_discrete_events(self):
         p, _ = pmf({(a, b): a + b for a in (1, 2) for b in (1, 2, 3, 4)})
@@ -90,7 +95,9 @@ class Presets(unittest.TestCase):
 
     def test_hw4_q5_variable_bound_probability(self):
         target = F(sp.integrate((2 * x + y) / 4, (y, x, 2), (x, 0, 1)))
-        self.run_case(HW4, 'Q5 X LESS Y', [i(8), m('BACK')], {'F': target}, [fs(target)])
+        self.run_case(HW4, 'Q5 X LESS Y', [m('EVENTS + LIMITS'), m('X<Y OR X>Y'), m('X<Y'), m('REVERSE ORDER'),
+                                           m('BACK'), m('BACK')],
+                      {'A': target}, ['P(X<Y)=' + fs(target), 'y FROM x TO 2', 'x FROM 0 TO y'])
 
     def test_hw5_q1_pmf_moments(self):
         p, tot = pmf({a: a * a + a for a in (1, 2, 3, 4)})

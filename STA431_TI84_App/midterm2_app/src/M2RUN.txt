@@ -66,60 +66,44 @@ Goto C
 Lbl A2
 ClrHome
 Disp "HW4 Q2"
-Disp "PRELOAD JOINT INTEGRAL"
-Disp "START WITH EVEN N=8"
-Disp "RAISE N IF NOT CONVERGED"
-Disp "READ RAW INTEGRAL I"
+Disp "PRELOAD JOINT DENSITY"
+Disp "q=2X+Y"
+Disp "RECT 0<x<1, 0<y<2"
+Disp "c IS COMPUTED"
 Pause
 "2X+Y"→Str1
-0→A
-0→B
-1→C
-"0"→Str2
-"2"→Str3
-"1"→Str4
-2→Z
-prgmM2CONT
+{1,0,1,0,2}→ʟM2JM
+99→Z
+prgmM2JNT
 0→Z
 Goto A
 Lbl A3
 ClrHome
-Disp "HW4 Q3 SURVIVAL"
-Disp "PRELOAD JOINT INTEGRAL"
-Disp "START WITH EVEN N=8"
-Disp "RAISE N IF NOT CONVERGED"
-Disp "READ RAW INTEGRAL I"
-Pause
-Disp "THIS IS SURVIVAL PROB","FAILURE IS 1-RAW I"
+Disp "HW4 Q3"
+Disp "PRELOAD JOINT DENSITY"
+Disp "q=(X+Y)/8"
+Disp "RECT 0<x<2, 0<y<2"
+Disp "FAILS IF EITHER FAILS"
+Disp "USE EVENTS > MIN/MAX"
 Pause
 "(X+Y)/8"→Str1
-0→A
-1→B
-2→C
-"1"→Str2
-"2"→Str3
-"1"→Str4
-3→Z
-prgmM2CONT
+{1,0,2,0,2}→ʟM2JM
+99→Z
+prgmM2JNT
 0→Z
 Goto A
 Lbl A5
 ClrHome
 Disp "HW4 Q5"
-Disp "PRELOAD JOINT INTEGRAL"
-Disp "START WITH EVEN N=8"
-Disp "RAISE N IF NOT CONVERGED"
-Disp "READ RAW INTEGRAL I"
+Disp "PRELOAD JOINT DENSITY"
+Disp "q=(2X+Y)/4"
+Disp "RECT 0<x<1, 0<y<2"
+Disp "USE EVENTS > X<Y"
 Pause
 "(2X+Y)/4"→Str1
-0→A
-0→B
-1→C
-"X"→Str2
-"2"→Str3
-"1"→Str4
-5→Z
-prgmM2CONT
+{1,0,1,0,2}→ʟM2JM
+99→Z
+prgmM2JNT
 0→Z
 Goto A
 Lbl B2

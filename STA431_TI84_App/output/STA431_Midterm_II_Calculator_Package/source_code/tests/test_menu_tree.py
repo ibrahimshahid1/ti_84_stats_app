@@ -43,6 +43,13 @@ CANNED = {
     ('M2DISC', 'GIVEN Y=?'): ['1'], ('M2DISC', 'GIVEN X=?'): ['1'], ('M2DISC', 'EVENT X,Y?'): ['X<Y'],
     ('M2DISC', 'GIVEN X,Y?'): ['X≥0'], ('M2DISC', 'g(X,Y)?'): ['X*Y'],
     ('M2DISC', 'r POWER 0-10?'): ['1'], ('M2DISC', 's POWER 0-10?'): ['1'],
+    # P2 JOINT DENSITY: a polynomial model, so every event is EXACT (the curved support is numeric)
+    ('M2JNT', 'q(X,Y)?'): ['X+Y'], ('M2JNT', 'a=LOWER X?'): ['0'], ('M2JNT', 'b=UPPER X?'): ['1'],
+    ('M2JNT', 'c=LOWER Y?'): ['0'], ('M2JNT', 'd=UPPER Y?'): ['1'], ('M2JNT', 'a=LOWER END?'): ['0'],
+    ('M2JNT', 'b=UPPER END?'): ['1'], ('M2JNT', 'k=SUM BOUND?'): ['1'], ('M2JNT', 'LOWER END?'): ['0'],
+    ('M2JNT', 'UPPER END?'): ['1'], ('M2JNT', 'LOWER BOUND?'): ['0'], ('M2JNT', 'UPPER BOUND?'): ['1'],
+    ('M2JNT', 'k?'): ['1/2'], ('M2JNT', 't?'): ['1/2'], ('M2JNT', 'a?'): ['1/4'], ('M2JNT', 'b?'): ['3/4'],
+    ('M2JNT', 'c?'): ['1'], ('M2JNT', 'd?'): ['1'], ('M2JNT', 's?'): ['1/2'],
 }
 
 
@@ -157,7 +164,7 @@ class MenuTree(unittest.TestCase):
 
     def test_explorer_reached_every_module(self):
         for prog in ['STAM2', 'M2ENC', 'M2HW', 'M2RUN', 'M2EXAM', 'M2DISC', 'M2CONT', 'M2SLICE',
-                     'M2MGF', 'M2COV']:
+                     'M2MGF', 'M2COV', 'M2JNT']:
             self.assertIn(prog, self.programs)
         self.assertGreater(self.stats['menus'], 50)
         self.assertGreater(self.stats['ends'], 0)        # QUIT reached
@@ -171,7 +178,8 @@ class MenuTree(unittest.TestCase):
         for item in ['SOLVERS', 'HELP', 'HOMEWORK PRACTICE']:
             rr = run('STAM2', [m(item), m('BACK'), m('QUIT')])
             subs[item] = rr.screens[1]['menu']['items']
-        self.assertEqual(subs['SOLVERS'], ['DISCRETE TABLE', 'DENSITY+INTEGRAL', 'MGF TOOLS', 'LINEAR COMBOS', 'BACK'])
+        self.assertEqual(subs['SOLVERS'], ['DISCRETE TABLE', 'JOINT DENSITY', 'DENSITY+INTEGRAL', 'MGF TOOLS',
+                                           'LINEAR COMBOS', 'BACK'])
         self.assertEqual(subs['HELP'], ['FIND MY SOLVER', 'HOW TO ENTER', 'LIMITS + CAVEATS', 'BACK'])
         self.assertEqual(subs['HOMEWORK PRACTICE'], ['WALKTHROUGHS', 'LOAD PRACTICE DATA', 'BACK'])
 
@@ -196,6 +204,14 @@ class MenuTree(unittest.TestCase):
         self.assertEqual(end['event'], 'end')
         self.assertTrue(all(not row.strip() for row in end['rows']), end['rows'])   # no "Done"
 
+    def test_route_solvers_joint_density_back(self):
+        # P2: SOLVERS > JOINT DENSITY > BACK returns to SOLVERS with every private list deleted
+        r = run('STAM2', [m('SOLVERS'), m('JOINT DENSITY'), m('BACK'), m('BACK'), m('QUIT')], init={'Z': 7})
+        titles = [s['menu']['title'] for s in r.screens if s['event'] == 'menu']
+        self.assertEqual(titles, ['STA431 MIDTERM II', 'SOLVERS', 'JOINT DENSITY', 'SOLVERS', 'STA431 MIDTERM II'])
+        jnt = next(s for s in r.screens if s['event'] == 'menu' and s['menu']['title'] == 'JOINT DENSITY')
+        self.assertEqual(jnt['stack'], ['STAM2', 'M2JNT'])
+
     def test_route_solvers_back_quit(self):
         r = run('STAM2', [m('SOLVERS'), m('BACK'), m('QUIT')])
         self.assertEqual([s['menu']['title'] for s in r.screens if s['event'] == 'menu'],
@@ -209,7 +225,7 @@ class MenuTree(unittest.TestCase):
         pages = [s for s in r.screens if s['event'] == 'getkey']
         page1, page2 = '\n'.join(pages[0]['rows']), '\n'.join(pages[1]['rows'])
         for needle in ['X,T,θ,n(FUNC)', 'ALPHA 1', '2ND MATH TEST', '𝑒^(', '√(', '(-) KEY', 'DIVIDE',
-                       '{ }', 'ᴇ99', '(NOT IN DENSITY+INTEGRAL)', 'ON ERR CHOOSE 1 QUIT',
+                       '{ }', 'ᴇ99', '(JOINT DENSITY ONLY)', 'ON ERR CHOOSE 1 QUIT',
                        'CLEAR OR LEFT=HELP MENU']:
             self.assertIn(needle, page1)
         self.assertIn('ENTER=MENU  LEFT=PAGE 1', page2)
@@ -229,7 +245,7 @@ class MenuTree(unittest.TestCase):
     def test_limits_page_rows(self):
         r = run('STAM2', [m('HELP'), m('LIMITS + CAVEATS'), m('BACK'), m('QUIT')])
         rows = [row.strip() for s in r.screens if s['event'] == 'pause' for row in s['rows']]
-        for needle in ['TABLE ROWS ≤30', 'LINEAR COMBOS ≤3 VARIABLES', 'INTEGRALS FINITE BOUNDS']:
+        for needle in ['TABLE ROWS ≤30', 'LINEAR COMBOS ≤3 VARIABLES', 'DENSITY+INTEGRAL FINITE']:
             self.assertIn(needle, rows)
 
     def test_practice_notice_before_presets(self):

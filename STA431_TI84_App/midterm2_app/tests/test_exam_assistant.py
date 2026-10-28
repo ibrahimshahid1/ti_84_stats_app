@@ -74,9 +74,11 @@ class ExamAssistant(unittest.TestCase):
         self.assertNotIn('HW5', r.text)
 
     def test_probability_setup_preserves_event_normalization_distinction(self):
+        # P2: the route page now opens JOINT DENSITY (c=1/TOTAL, then EVENTS + LIMITS).
         r = self.run_assistant([m('JOINT PDF'), m('NORMALIZE / PROB'), m('BACK'), m('BACK'), m('BACK')])
-        self.assertIn('Full support c=1/RAW I.', r.text)
-        self.assertIn('probability is RAW I.', r.text)
+        self.assertIn('It shows c=1/TOTAL.', r.text)
+        self.assertIn('limits, each piece and P.', r.text)
+        self.assertTrue(any(s['event'] == 'menu' and s['menu']['title'] == 'JOINT DENSITY' for s in r.screens))
 
     def test_symbolic_route_explains_numeric_limit(self):
         r = self.run_assistant([m('JOINT PDF'), m('MARGINAL FORMULA'), m('BACK'), m('BACK'), m('BACK')])
@@ -84,26 +86,23 @@ class ExamAssistant(unittest.TestCase):
         self.assertIn('Give all support branches.', r.text)
 
     def test_event_conditioning_uses_two_region_integrals(self):
-        # New triangle 0<Y<X<3. Given X>1, find P(Y<1/2): a ratio of two region integrals.
+        # New triangle 0<Y<X<3 with q=1. Given X>1, find P(Y<1/2): a ratio of two region integrals,
+        # now through JOINT DENSITY > EVENTS + LIMITS > P(A|B) (P2).
         base = sp.integrate(1, (y, 0, x), (x, 1, 3))
         both = sp.integrate(1, (y, 0, sp.Rational(1, 2)), (x, 1, 3))
-        a = [m('JOINT PDF'), m('GIVEN INTERVAL'), m('DOUBLE INTEGRAL')] + [i(v) for v in ['1', 0, 1, 3, 0, 'X', '1', 4]]
-        a += [m('NEW REGION')] + [i(v) for v in ['1', 0, 1, 3, 0, '1/2', '1', 4]]
-        a += [m('BACK'), m('BACK'), m('BACK')]
+        a = [m('JOINT PDF'), m('GIVEN INTERVAL'), m('NEW MODEL'), i('1'), m('TRI a<Y<X<b'), i(0), i(3),
+             m('EVENTS + LIMITS'), m('P(A|B)'), m('MORE EVENTS'), m('aX+bY≤c'), i(0), i(1), i('1/2'),
+             m('MORE EVENTS'), m('a<X<b ONLY'), i(1), i(3), m('BACK'), m('BACK'), m('BACK'), m('BACK')]
         r = self.run_assistant(a, z=17)
         self.assertIn('Given Y>k is an EVENT.', r.text)
         self.assertIn('Its scale cancels.', r.text)
-        raw = []
-        for s in r.screens:
-            if s['event'] == 'pause':
-                rows = s.get('rows', [])
-                for j, row in enumerate(rows):
-                    if 'RAW I=INT q APPROX=' in row:
-                        raw.append(float(Fraction(rows[j + 1].strip())))
-        self.assertEqual(len(raw), 4, r.text)  # each run reports base and refined N
-        for actual, expected in zip(raw, [base, base, both, both]):
-            self.assertAlmostEqual(actual, float(expected), delta=1e-8)
-        self.assertAlmostEqual(raw[3] / raw[1], float(both / base), delta=1e-8)
+        res = [row.strip() for s in r.screens if s['event'] == 'pause' and s['rows'][0].strip() == 'RESULT'
+               for row in s['rows']]
+        frac = lambda e: str(sp.nsimplify(e))                                  # noqa: E731
+        self.assertIn('P(A AND B)=' + frac(both / sp.Rational(9, 2)), res)     # c = 1/area = 2/9
+        self.assertIn('P(B)=' + frac(base / sp.Rational(9, 2)), res)
+        self.assertIn('P(A|B)=' + frac(both / base), res)
+        self.assertAlmostEqual(float(r.var('A')), float(both / base), delta=1e-9)
 
     def test_cdf_route_teaches_rectangle_and_density_conversion(self):
         r = self.run_assistant([m('PROOF OR FORMULA'), m('DISTRIBUTION FORM'), m('BACK'), m('BACK'), m('BACK')])

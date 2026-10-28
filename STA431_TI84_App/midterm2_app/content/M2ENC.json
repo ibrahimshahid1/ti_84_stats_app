@@ -693,11 +693,11 @@
             ],
             [
               "DENSITY+INTEGRAL, 1D.",
-              "Joint PDF with explicit",
-              "inner/outer bounds =>",
-              "DOUBLE INTEGRAL. Split",
-              "regions at boundary",
-              "changes.",
+              "Joint PDF => JOINT",
+              "DENSITY. Type q, pick the",
+              "support and the event; it",
+              "writes the limits and",
+              "pieces.",
               "Given",
               "variances/covariances =>",
               "LINEAR COMBOS. Given MGF"
