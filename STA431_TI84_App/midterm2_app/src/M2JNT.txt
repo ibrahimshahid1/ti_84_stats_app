@@ -1,9 +1,10 @@
-// M2JNT - JOINT DENSITY solver (P2: NEW MODEL, EVENTS + LIMITS; P3 fills FORMULAS, MOMENTS,
-// GIVEN A VALUE, INDEP + CDF). f(x,y)=c*q(x,y) on a support from a menu. The support and every event
+// M2JNT - JOINT DENSITY solver (P2: NEW MODEL, EVENTS + LIMITS; LEAN-B: FORMULAS, MOMENTS,
+// GIVEN A VALUE, INDEP + CDF live in the helper prgmM2JAN). f(x,y)=c*q(x,y) on a support from a menu. The support and every event
 // are half-planes aX+bY≤c (triples): RG turns support ∩ event into vertical strips (lower/upper lines
 // between consecutive breakpoints) and integrates them with prgmM2GL. EXACT for a polynomial q on a
 // finite straight-edged support; NUMERIC (2 passes, PLAN 4.6) otherwise.
 // Z=99: Str1=q and ʟM2JM=support record are preloaded (Str2,Str3 too for code 8); no prompts.
+// Z=97 (from M2CDF): NEW MODEL, then straight to EVENTS > X≤s AND Y≤t (the joint CDF F(s,t)).
 // Record ʟM2JM (∞ stored as ±1ᴇ6): {1,a,b,c,d} rect, {2,a,b} a<y<x<b, {3,a,b} a<x<y<b, {4,k}
 //   x,y>0 x+y<k, {5} quadrant, {6,a,b,l0,l1,u0,u1} a<x<b l(x)<y<u(x), {7,c,d,l0,l1,u0,u1}
 //   c<y<d l(y)<x<u(y), {8,a,b} curved a<x<b, Str2<y<Str3 (numeric only).
@@ -17,21 +18,52 @@
 // heavy}. Text: Str0 = "θ" + sections "TITLEθlineθ...θθ" paged by PG (q never contains θ).
 {0,0,0,0,0}→ʟM2JR
 If Z=99:Goto ZP
+3*(Z=97)→G
 0→Z
 0→N
+If G:Goto N
 Lbl T
-Menu("JOINT DENSITY","NEW MODEL",N0,"EVENTS + LIMITS",E,"FORMULAS",F,"MOMENTS + COV",F,"GIVEN A VALUE",F,"INDEP + CDF",F,"BACK",Z)
+Menu("JOINT DENSITY","NEW MODEL",N0,"EVENTS + LIMITS",E,"FORMULAS",J1,"MOMENTS + COV",J2,"GIVEN A VALUE",J3,"INDEP + CDF",J4,"BACK",Z)
 Lbl E
 1→G
 If not(N):Goto N
 Goto EN
-Lbl F
-2→G
+// analysis items (G=11..14): support strips in both orders, then prgmM2JAN (H=5 back: F(s,t))
+Lbl J1
+11→G
+Goto JG
+Lbl J2
+12→G
+Goto JG
+Lbl J3
+13→G
+Goto JG
+Lbl J4
+14→G
+Lbl JG
 If not(N):Goto N
+G→K
+0→G
 Lbl F1
-ClrHome
-Disp "COMING IN THIS VERSION","USE EVENTS + LIMITS"
-Pause
+K-10→H
+{ʟM2JK(1),ʟM2JK(2),0,0,0,0,1}→ʟM2JX
+{0}→ʟM2JY
+If N=8:Goto JA
+{0,0,1}→ʟM2JE
+0→P
+7→C
+Goto RG
+Lbl JX
+If P:Goto JY
+ʟM2KS→ʟM2JX
+1→P
+Goto RG
+Lbl JY
+ʟM2KS→ʟM2JY
+Lbl JA
+prgmM2JAN
+0→G
+If H=5:Goto GQ
 Goto T
 Lbl ZP
 0→Z
@@ -234,7 +266,8 @@ Lbl NR
 G→K
 0→G
 If K=1:Goto EN
-If K=2:Goto F1
+If K>10:Goto F1
+If K=3:Goto GQ
 Goto T
 Lbl NF
 ClrHome
@@ -415,6 +448,9 @@ prgmM2FMT
 If F
 "MISS BY MORE THAN "+Str9+"θ=> "+Str4+"θ=1-P("+Str3+")θ"→Str0
 Goto ES
+// Z=97 (M2CDF F FROM A PDF f): after NEW MODEL go straight to F(s,t)
+Lbl GQ
+0→L
 Lbl G3
 ClrHome
 Disp "X≤s AND Y≤t","JOINT CDF F(s,t)"
@@ -751,6 +787,7 @@ End
 End
 End
 If not(T):Goto RZ
+If C=7:Goto RR
 Lbl RK
 ClrHome
 Disp "COMPUTING…"
@@ -829,6 +866,7 @@ Str0+Str7+"θ PIECE="+Str9+"θ"→Str0
 End
 Str0+"θ"→Str0
 Lbl RR
+If C=7:Goto JX
 If C=1:Goto NT
 If C=2:Goto V4
 If C=3:Goto V1
@@ -896,6 +934,8 @@ DelVar ʟM2JD
 DelVar ʟM2JN
 DelVar ʟM2JP
 DelVar ʟM2JQ
+DelVar ʟM2JX
+DelVar ʟM2JY
 9→θ
 prgmM2GL
 9→θ

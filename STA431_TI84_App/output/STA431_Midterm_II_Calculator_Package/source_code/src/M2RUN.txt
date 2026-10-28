@@ -106,6 +106,21 @@ Pause
 prgmM2JNT
 0→Z
 Goto A
+Lbl C3
+ClrHome
+Disp "HW5 Q7"
+Disp "PRELOAD JOINT DENSITY"
+Disp "q=X+Y"
+Disp "UNIT SQUARE"
+Disp "USE GIVEN A VALUE"
+Disp "THEN GIVEN Y=y"
+Pause
+"X+Y"→Str1
+{1,0,1,0,1}→ʟM2JM
+99→Z
+prgmM2JNT
+0→Z
+Goto C
 Lbl B2
 ClrHome
 Disp "HW5 Q2"
@@ -121,21 +136,6 @@ Pause
 prgmM2CONT
 0→Z
 Goto B
-Lbl C3
-ClrHome
-Disp "HW5 Q7 Y=1/2"
-Disp "PRELOAD 1D DENSITY/SLICE"
-Disp "q=X+A"
-Disp "USE MOMENTS OR INTERVAL"
-Pause
-"X+A"→Str1
-1/2→A
-0→B
-1→C
-17→Z
-prgmM2CONT
-0→Z
-Goto C
 Lbl B3
 ClrHome
 Disp "HW5 Q3"

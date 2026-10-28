@@ -1,0 +1,407 @@
+// M2CDF - JOINT CDF solver (R1, PLAN 7 P4 + 0A A3). The student types F(X,Y)=P(X≤x,Y≤y) and its
+// rectangular support a<x<b, c<y<d (ᴇ99 = infinity). EXACT fractions and formula strings when F is a
+// polynomial (prgmM2PLY RECOVER2/POLYSTR/POLY2STR) on a finite box, decimals otherwise.
+// Z=99: Str1=F(X,Y) and ʟM2FM={a,b,c,d} are preloaded (no prompts). F FROM A PDF f hands off with
+// 97→Z:prgmM2JNT (NEW MODEL, then straight to X≤s AND Y≤t); the F model is then cleared (N=0).
+// Registers (they survive M2FMT/M2PLY): A-D inputs; E = F is a polynomial (exact); F = return code of
+// CL, FD and PG; G = route after NEW F; H = h; L = loop; M = last result (P(min≤t) for MIN/MAX,
+// the numeric f(x,y) for PDF f); N = 1 when a model is entered; P = P(max≤t).
+// Lists: ʟM2FM support (∞ stored as ±1ᴇ6), ʟM2FA coefficients of F (5x5, element 5i+j+1 for x^i*y^j),
+// ʟM2FC/ʟM2FD point lists, ʟM2FX/ʟM2FY/ʟM2FZ evaluation, ʟM2FV/ʟM2FP/ʟM2FG scratch, ʟM2FW pager.
+// Str2 = F with X,Y replaced by (ʟM2FX),(ʟM2FY): one expr( evaluates F at every point of the lists.
+If Z=99:Goto ZP
+0→Z
+0→N
+Lbl T
+Menu("JOINT CDF","NEW F(X,Y)",N0,"RECTANGLE PROB",R,"MARGINAL CDFs",MG,"PDF f FROM F",PD,"F FROM A PDF f",J,"BACK",Z)
+Lbl ZP
+0→Z
+0→G
+Goto NB
+// ---------------------------------------------------------------- NEW F(X,Y)
+Lbl N0
+0→G
+Lbl N
+0→N
+ClrHome
+Disp "TYPE F(X,Y) ON ITS","SUPPORT a<x<b,c<y<d","ᴇ99 = INFINITY","X=X,T,θ,n  Y=ALPHA 1"
+Input "F(X,Y)?",Str1
+"XY"→Str6
+8→θ
+prgmM2PLY
+If θ:Goto N1
+ClrHome
+Disp "F MAY USE ONLY X AND Y"
+Pause
+Goto N
+Lbl N1
+ClrHome
+Disp "SUPPORT a<x<b,c<y<d","ᴇ99 = INFINITY","⁻ᴇ99 = MINUS INFINITY"
+Input "a=LOWER X?",A
+Input "b=UPPER X?",B
+Input "c=LOWER Y?",C
+Input "d=UPPER Y?",D
+{A,B,C,D}→ʟM2FM
+Lbl NB
+If max((abs(ʟM2FM)≥1ᴇ5)*(abs(ʟM2FM)<1ᴇ50)):Goto NF
+ʟM2FM*(abs(ʟM2FM)<1ᴇ50)+1ᴇ6*((ʟM2FM≥1ᴇ50)-(ʟM2FM≤⁻1ᴇ50))→ʟM2FM
+If ʟM2FM(2)≤ʟM2FM(1) or ʟM2FM(4)≤ʟM2FM(3):Goto NU
+"("→Str2
+For(I,1,length(Str1))
+sub(Str1,I,1)
+Str2+sub("(ʟM2FX)(ʟM2FY)"+Ans,15-14*(Ans="X")-7*(Ans="Y"),1+6*(Ans="X" or Ans="Y"))→Str2
+End
+Str2+")"→Str2
+1→θ
+prgmM2PLY
+θ and max(abs(ʟM2FM))<5ᴇ5→E
+If E
+ʟM2QA→ʟM2FA
+{ʟM2FM(1),ʟM2FM(2)}→ʟM2FX
+{ʟM2FM(3),ʟM2FM(4)}→ʟM2FY
+expr(Str2)+0*ʟM2FX→ʟM2FZ
+ʟM2FZ(1)→A
+ʟM2FZ(2)→B
+// f≥0 test at a 3x3 grid inside the support (1/4,1/2,3/4 of a finite range; near the finite end
+// of a half-infinite range; ⁻1,0,1 for a doubly infinite range)
+For(L,0,1)
+ʟM2FM(2L+1)→P
+ʟM2FM(2L+2)→H
+(abs(P)<5ᴇ5)*(abs(H)<5ᴇ5)*(P+(H-P)*{1,2,3}/4)+(abs(P)<5ᴇ5)*(abs(H)≥5ᴇ5)*(P+{.5,1,2})+(abs(P)≥5ᴇ5)*(abs(H)<5ᴇ5)*(H-{2,1,.5})+(abs(P)≥5ᴇ5)*(abs(H)≥5ᴇ5)*{⁻1,0,1}→ʟM2FV
+If not(L)
+ʟM2FV→ʟM2FG
+If L
+augment(ʟM2FG,ʟM2FV)→ʟM2FG
+End
+seq(ʟM2FG(1+int(I/3)),I,0,8)→ʟM2FC
+seq(ʟM2FG(4+I-3*int(I/3)),I,0,8)→ʟM2FD
+5→F
+Goto FD
+Lbl NC
+1→N
+A→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+"θCHECK FθF(a,c)="+Str9+" MUST BE 0θ"→Str0
+B→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+Str0+"F(b,d)="+Str9+" MUST BE 1θ"→Str0
+If abs(A)>1ᴇ⁻6 or abs(B-1)>1ᴇ⁻6
+Str0+"CHECK F AND ITS SUPPORTθ"→Str0
+If min(ʟM2FZ)≥⁻1ᴇ⁻7
+Str0+"f≥0 AT 9 TEST POINTSθ"→Str0
+If min(ʟM2FZ)<⁻1ᴇ⁻7
+Str0+"f<0 AT A TEST POINTθNOT A VALID CDFθ"→Str0
+If E
+Str0+"EXACT (POLYNOMIAL)θ"→Str0
+If not(E)
+Str0+"NUMERIC (NOT POLYNOMIAL)θ"→Str0
+Goto PG
+Lbl NR
+If G=1:Goto R
+If G=2:Goto MG
+If G=3:Goto PD
+Goto T
+Lbl NF
+ClrHome
+Disp "A FINITE BOUND NEEDS","ABS(BOUND)<1ᴇ5","INFINITY IS ᴇ99"
+Pause
+Goto N1
+Lbl NU
+ClrHome
+Disp "UPPER BELOW LOWER","NEED a<b AND c<d"
+Pause
+Goto N1
+// ---------------------------------------------------------------- RECTANGLE PROB
+Lbl R
+1→G
+If not(N):Goto N
+Lbl RM
+Menu("RECTANGLE PROB","a<X≤b,c<Y≤d",R1,"X>a AND Y>b",R2,"MIN/MAX ≤ t",R3,"BACK",T)
+Lbl R1
+ClrHome
+Disp "P(a<X≤b,c<Y≤d)","ᴇ99 = INFINITY"
+Input "a?",A
+Input "b?",B
+Input "c?",C
+Input "d?",D
+If B<A or D<C:Goto RU
+{B,A,B,A}→ʟM2FC
+{D,D,C,C}→ʟM2FD
+"θRECTANGLE RULEθP(a<X≤b,c<Y≤d)θ=F(b,d)-F(a,d)θ -F(b,c)+F(a,c)θ"→Str0
+1→F
+Goto CL
+Lbl C1
+ʟM2FZ(1)-ʟM2FZ(2)-ʟM2FZ(3)+ʟM2FZ(4)→M
+M→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+Str0+"P="+Str9+"θINTEGER X,Y - FOR a≤X ORθc≤Y TYPE a-1 OR c-1θ"→Str0
+Goto PG
+Lbl RU
+ClrHome
+Disp "UPPER BELOW LOWER"
+Pause
+Goto R1
+Lbl R2
+ClrHome
+Disp "X>a AND Y>b  BOTH EXCEED"
+Input "a?",A
+Input "b?",B
+{A,A,ʟM2FM(2)}→ʟM2FC
+{B,ʟM2FM(4),B}→ʟM2FD
+{ʟM2FM(4),0}→ʟM2QS
+2→θ
+prgmM2PLY
+"θBOTH EXCEEDθP(X>a,Y>b)=1-FX(a)θ -FY(b)+F(a,b)θFX(a)=F(a,"+Str7+")θ"→Str0
+{ʟM2FM(2),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+"FY(b)=F("+Str7+",b)θ"→Str0
+2→F
+Goto CL
+Lbl C2
+1-ʟM2FZ(2)-ʟM2FZ(3)+ʟM2FZ(1)→M
+M→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+Str0+"P(X>a,Y>b)="+Str9+"θ"→Str0
+Goto PG
+Lbl R3
+ClrHome
+Disp "max(X,Y)≤t ONLY IF BOTH","min(X,Y)≤t IF EITHER"
+Input "t?",A
+{A,A,ʟM2FM(2)}→ʟM2FC
+{A,ʟM2FM(4),A}→ʟM2FD
+{ʟM2FM(4),0}→ʟM2QS
+2→θ
+prgmM2PLY
+"θMIN/MAXθP(max≤t)=F(t,t)θONLY IF BOTH = max≤tθP(min≤t)=FX(t)+FY(t)θ -F(t,t)θFAILS IF EITHER FAILSθ= min≤t =1-P(X>t,Y>t)θFX(t)=F(t,"+Str7+")θ"→Str0
+{ʟM2FM(2),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+"FY(t)=F("+Str7+",t)θ"→Str0
+3→F
+Goto CL
+Lbl C3
+ʟM2FZ(1)→P
+ʟM2FZ(2)+ʟM2FZ(3)-ʟM2FZ(1)→M
+P→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+Str0+"P(max≤t)="+Str9+"θ"→Str0
+M→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+Str0+"P(min≤t)="+Str9+"θ"→Str0
+Goto PG
+// ---------------------------------------------------------------- MARGINAL CDFs
+Lbl MG
+2→G
+If not(N):Goto N
+ClrHome
+Disp "FX(x)=F(x,d)","FY(y)=F(b,y)","d,b = TOP OF THE SUPPORT","VALUES AT x AND AT y"
+Input "x?",A
+Input "y?",B
+{A,ʟM2FM(2)}→ʟM2FC
+{ʟM2FM(4),B}→ʟM2FD
+{ʟM2FM(4),0}→ʟM2QS
+2→θ
+prgmM2PLY
+"θMARGINAL CDFsθFX(x)=F(x,"+Str7+")θ"→Str0
+If not(E):Goto M1
+ʟM2FM(4)→H
+{1,H,H²,H³,(H²)²}→ʟM2FP
+5→dim(ʟM2QC)
+For(L,1,5)
+sum(ʟM2FP*seq(ʟM2FA(5*L-5+J),J,1,5))→ʟM2QC(L)
+End
+"x"→Str6
+3→θ
+prgmM2PLY
+Str0+"FX(x)="+Str7+"θ"→Str0
+Lbl M1
+{ʟM2FM(2),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+"FY(y)=F("+Str7+",y)θ"→Str0
+If not(E):Goto M2
+ʟM2FM(2)→H
+{1,H,H²,H³,(H²)²}→ʟM2FP
+5→dim(ʟM2QC)
+For(L,1,5)
+sum(ʟM2FP*seq(ʟM2FA(5*J-5+L),J,1,5))→ʟM2QC(L)
+End
+"y"→Str6
+3→θ
+prgmM2PLY
+Str0+"FY(y)="+Str7+"θ"→Str0
+Lbl M2
+4→F
+Goto CL
+Lbl C4
+Goto PG
+// ---------------------------------------------------------------- PDF f FROM F
+Lbl PD
+3→G
+If not(N):Goto N
+"θPDF f FROM Fθf=d²F/dxdyθ"→Str0
+If not(E):Goto PN
+16→dim(ʟM2QA)
+For(K,0,3)
+For(L,0,3)
+(K+1)*(L+1)*ʟM2FA(5*K+L+7)→ʟM2QA(4*K+L+1)
+End
+End
+{0,0,4}→ʟM2QS
+4→θ
+prgmM2PLY
+Str0+"f(x,y)="+Str7+"θEXACT (POLYNOMIAL)θ"→Str0
+6→F
+Goto PG
+Lbl PN
+ClrHome
+Disp "NOT A POLYNOMIAL","NUMERIC f AT A POINT","AT LEAST .01 INSIDE S"
+Input "x?",A
+Input "y?",B
+If A-.01<ʟM2FM(1) or A+.01>ʟM2FM(2) or B-.01<ʟM2FM(3) or B+.01>ʟM2FM(4):Goto PO
+{A}→ʟM2FC
+{B}→ʟM2FD
+6→F
+Goto FD
+Lbl P2
+ʟM2FZ(1)→M
+Str0+"D(h)=(F(x+h,y+h)θ -F(x+h,y-h)-F(x-h,y+h)θ +F(x-h,y-h))/(4h²)θf=(4D(h/2)-D(h))/3θh=.01  NUMERICθ"→Str0
+A→W
+prgmM2FMT
+Str0+"f("+Str9+","→Str0
+B→W
+prgmM2FMT
+Str0+Str9+")="+toString(M)+"θ"→Str0
+Goto PG
+Lbl PO
+ClrHome
+Disp "POINT MUST BE .01","INSIDE THE SUPPORT"
+Pause
+Goto PN
+// ---------------------------------------------------------------- F FROM A PDF f
+Lbl J
+ClrHome
+Disp "F FROM A PDF f","F(s,t)=P(X≤s,Y≤t)","=∫∫ f OVER x≤s,y≤t IN S","NEXT JOINT DENSITY","TYPE q AND ITS SUPPORT","THEN s AND t","(EVENT X≤s AND Y≤t)","IT WRITES THE LIMITS"
+Pause
+97→Z
+prgmM2JNT
+0→Z
+0→N
+Goto T
+// ---------------------------------------------------------------- CL: clipped F at the points
+// ʟM2FC,ʟM2FD -> ʟM2FZ = 0 left of or below S, else F(min(x,b),min(y,d)); a line F(x,y)=v per point
+Lbl CL
+min(ʟM2FM(2),max(ʟM2FM(1),ʟM2FC))→ʟM2FX
+min(ʟM2FM(4),max(ʟM2FM(3),ʟM2FD))→ʟM2FY
+(expr(Str2)+0*ʟM2FX)*(ʟM2FC>ʟM2FM(1))*(ʟM2FD>ʟM2FM(3))→ʟM2FZ
+For(L,1,dim(ʟM2FC))
+{ʟM2FC(L),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+"F("+Str7+","→Str0
+{ʟM2FD(L),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+")="→Str0
+ʟM2FZ(L)→W
+prgmM2FMT
+If not(E)
+toString(W)→Str9
+Str0+Str9+"θ"→Str0
+End
+If F=1:Goto C1
+If F=2:Goto C2
+If F=3:Goto C3
+Goto C4
+// ---------------------------------------------------------------- FD: numeric f at the points
+// ʟM2FC,ʟM2FD -> ʟM2FZ = Richardson (4D(h/2)-D(h))/3 of the central mixed difference, h=.01
+Lbl FD
+For(K,1,2)
+.01/K→H
+ʟM2FC+H→ʟM2FX
+ʟM2FD+H→ʟM2FY
+expr(Str2)+0*ʟM2FX→ʟM2FZ
+ʟM2FD-H→ʟM2FY
+ʟM2FZ-expr(Str2)→ʟM2FZ
+ʟM2FC-H→ʟM2FX
+ʟM2FZ+expr(Str2)→ʟM2FZ
+ʟM2FD+H→ʟM2FY
+(ʟM2FZ-expr(Str2))/(4*H²)→ʟM2FZ
+If K=1
+ʟM2FZ→ʟM2FV
+End
+(4*ʟM2FZ-ʟM2FV)/3→ʟM2FZ
+If F=5:Goto NC
+Goto P2
+// ---------------------------------------------------------------- PG: pager
+// Str0 = "θTITLEθlineθ...θ"; 9 rows under the title per page, long lines wrap at 26 columns
+Lbl PG
+Str0+"θ"→Str0
+augment({0},cumSum(seq(1+5*not(inString("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+-*/()²³^.⁻ᴇ,=<>≤≥≠ ∫'…|θ",sub(Str0,I,1))),I,1,length(Str0))))→ʟM2FW
+2→I
+1→K
+While I≤length(Str0)
+inString(Str0,"θ",I)→J
+If J=I
+Then
+Pause
+1→K
+I+1→I
+Else
+If K=1
+Then
+sub(Str0,I,J-I)→Str9
+ClrHome
+Output(1,1,Str9)
+2→K
+J+1→I
+Else
+If K>10
+Then
+Pause
+ClrHome
+Output(1,1,Str9)
+2→K
+End
+min(J,sum(ʟM2FW≤ʟM2FW(I)+26))-I→O
+Output(K,1,sub(Str0,I,O))
+K+1→K
+I+O+(I+O=J)→I
+End
+End
+End
+If F≤3:Goto RM
+If F=5:Goto NR
+Goto T
+// ---------------------------------------------------------------- BACK
+Lbl Z
+DelVar ʟM2FM
+DelVar ʟM2FA
+DelVar ʟM2FC
+DelVar ʟM2FD
+DelVar ʟM2FX
+DelVar ʟM2FY
+DelVar ʟM2FZ
+DelVar ʟM2FV
+DelVar ʟM2FP
+DelVar ʟM2FG
+DelVar ʟM2FW
+9→θ
+prgmM2PLY
+9→θ
+prgmM2GL
+0→Z
+Return

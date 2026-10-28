@@ -20,6 +20,7 @@ walk = [m('ENCYCLOPEDIA'), m('BACK'),
         m('SOLVERS'),
         m('DISCRETE TABLE'), m('BACK'),
         m('JOINT DENSITY'), m('BACK'),
+        m('CDF OF X AND Y'), m('BACK'),
         m('DENSITY+INTEGRAL'), m('BACK'),
         m('MGF TOOLS'), m('BACK'),
         m('LINEAR COMBOS'), m('BACK'),
@@ -39,7 +40,7 @@ r = run('STAM2', walk, max_steps=300_000, init={'Y1': 'X²', 'Y9': 'X+1'})
 assert r.var('Y1') == 'X²' and r.var('Y9') == 'X+1', 'graph changed'
 titles = [s['menu']['title'] for s in r.screens if s['event'] == 'menu']
 for t in ['STA431 MIDTERM II', 'SOLVERS', 'HELP', 'HOMEWORK PRACTICE', 'MIDTERM II REFERENCE',
-          'DISCRETE TABLE', 'JOINT DENSITY', 'CONTINUOUS TOOLS', 'MOMENT GENERATING FN', 'LINEAR COMBINATIONS',
+          'DISCRETE TABLE', 'JOINT DENSITY', 'JOINT CDF', 'CONTINUOUS TOOLS', 'MOMENT GENERATING FN', 'LINEAR COMBINATIONS',
           'EXAM GIVEN DATA', 'HOMEWORK 4 AND 5', 'HOMEWORK QUICK SOLVE']:
     assert t in titles, ('menu never shown', t)
 pages = [s['rows'][0].strip() for s in r.screens if s['event'] == 'getkey']

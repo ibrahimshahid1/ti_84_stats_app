@@ -26,7 +26,7 @@ class ExamAssistant(unittest.TestCase):
         self.assertEqual(float(r.var('Z')), 0)
         return r
 
-    def test_all_twenty_six_guidance_routes_return(self):
+    def test_all_twenty_seven_guidance_routes_return(self):
         top = run('M2EXAM', [m('BACK')])
         self.assertEqual(top.screens[0]['menu']['items'], CATEGORIES + ['BACK'])
         count = 0
@@ -42,7 +42,7 @@ class ExamAssistant(unittest.TestCase):
                     self.assertTrue(any(sc['event'] == 'menu' and len(sc.get('stack', [])) >= 2
                                         for sc in r.screens), r.text[-2000:])
                     count += 1
-        self.assertEqual(count, 26)
+        self.assertEqual(count, 27)
 
     def test_changed_finite_model_and_event(self):
         # New support/weights/event, not a homework fixture or preset.
@@ -64,13 +64,14 @@ class ExamAssistant(unittest.TestCase):
         mass = sp.integrate(1, (y, 0, a0))
         e1 = sp.integrate(y, (y, 0, a0)) / mass
         var = sp.integrate((y - e1) ** 2, (y, 0, a0)) / mass
-        a = [m('JOINT PDF'), m('GIVEN VALUE'), m('Y GIVEN X'), i('1'), i('2/9'), i(2), i(0), i('X'),
-             m('BACK'), m('BACK'), m('BACK')]
-        r = self.run_assistant(a, z=17)
-        self.assertIn('NUMERIC JOINT SLICE', r.text)
-        self.assertAlmostEqual(float(r.var('M')), float(c * mass), delta=1e-8)
-        self.assertAlmostEqual(float(r.var('E')), float(e1), delta=1e-8)
-        self.assertAlmostEqual(float(r.var('H')), float(var), delta=1e-8)
+        # LEAN-B: the GIVEN VALUE route opens JOINT DENSITY > GIVEN A VALUE (exact, c computed)
+        a = [m('JOINT PDF'), m('GIVEN VALUE'), m('NEW MODEL'), i('1'), m('TRI a<Y<X<b'), i(0), i(3),
+             m('GIVEN A VALUE'), m('GIVEN X=x'), i(a0), m('BACK'), m('BACK'), m('BACK'), m('BACK'), m('BACK')]
+        r = self.run_assistant(a)
+        self.assertIn('JOINT DENSITY > GIVEN A', r.text)
+        self.assertIn('g(2)=' + str(c * mass), r.text)
+        self.assertAlmostEqual(float(r.var('A')), float(e1), delta=1e-8)
+        self.assertIn('Var(Y|X=2)=' + str(var), r.text)
         self.assertNotIn('HW5', r.text)
 
     def test_probability_setup_preserves_event_normalization_distinction(self):
@@ -83,7 +84,7 @@ class ExamAssistant(unittest.TestCase):
     def test_symbolic_route_explains_numeric_limit(self):
         r = self.run_assistant([m('JOINT PDF'), m('MARGINAL FORMULA'), m('BACK'), m('BACK'), m('BACK')])
         self.assertIn('a marginal formula.', r.text)
-        self.assertIn('Give all support branches.', r.text)
+        self.assertIn('limits and every piece.', r.text)
 
     def test_event_conditioning_uses_two_region_integrals(self):
         # New triangle 0<Y<X<3 with q=1. Given X>1, find P(Y<1/2): a ratio of two region integrals,

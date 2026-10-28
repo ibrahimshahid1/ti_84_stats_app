@@ -11,10 +11,10 @@ GRID={
 JOINT={
  'A2':('HW4 Q2','2X+Y','{1,0,1,0,2}',['RECT 0<x<1, 0<y<2','c IS COMPUTED']),
  'A3':('HW4 Q3','(X+Y)/8','{1,0,2,0,2}',['RECT 0<x<2, 0<y<2','FAILS IF EITHER FAILS','USE EVENTS > MIN/MAX']),
- 'A5':('HW4 Q5','(2X+Y)/4','{1,0,1,0,2}',['RECT 0<x<1, 0<y<2','USE EVENTS > X<Y'])}
+ 'A5':('HW4 Q5','(2X+Y)/4','{1,0,1,0,2}',['RECT 0<x<1, 0<y<2','USE EVENTS > X<Y']),
+ 'C3':('HW5 Q7','X+Y','{1,0,1,0,1}',['UNIT SQUARE','USE GIVEN A VALUE','THEN GIVEN Y=y'])}
 ONE={
- 'B2':('HW5 Q2','3/4*(1-X²)','0','⁻1','1',12,'B'),
- 'C3':('HW5 Q7 Y=1/2','X+A','1/2','0','1',17,'C')}
+ 'B2':('HW5 Q2','3/4*(1-X²)','0','⁻1','1',12,'B')}
 L=['// M2RUN - supplied-homework input presets; general solvers compute every result.',
 'Lbl M','Menu("HOMEWORK QUICK SOLVE","HW4 COMMON +431",A,"HW5 Q1 TO Q4",B,"HW5 Q5 TO Q8",C,"BACK",Z)',
 'Lbl A','Menu("HW4 LOAD + SOLVE","Q1 JOINT PMF",A1,"Q2 JOINT PDF",A2,"Q3 SERIES LIFETIME",A3,"Q4 PMF EVENTS",A4,"Q5 X LESS Y",A5,"BACK",M)',
@@ -30,7 +30,7 @@ for lab,(title,xs,ys,q,code,back) in GRID.items():
 for lab,(title,q,rec,lines) in JOINT.items():
  intro(lab,title,['PRELOAD JOINT DENSITY','q='+q]+lines)
  L.extend(['"'+q+'"→Str1',rec+'→ʟM2JM'])
- call(99,'M2JNT','A')
+ call(99,'M2JNT',lab[0])
 for lab,(title,q,a,lo,hi,code,back) in ONE.items():
  intro(lab,title,['PRELOAD 1D DENSITY/SLICE','q='+q,'USE MOMENTS OR INTERVAL'])
  L.extend(['"'+q+'"→Str1',a+'→A',lo+'→B',hi+'→C'])

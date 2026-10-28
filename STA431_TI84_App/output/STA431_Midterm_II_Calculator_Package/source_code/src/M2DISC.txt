@@ -335,7 +335,12 @@ If D≤0:Goto PZ
 B/D→W
 prgmM2FMT
 ClrHome
+If Str2="1"
+Then
+Disp "P(EVENT)=",Str9
+Else
 Disp "P(EVENT | GIVEN)=",Str9
+End
 Pause
 Goto P0
 Lbl PZ

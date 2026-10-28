@@ -1,0 +1,836 @@
+// M2JAN - JOINT DENSITY analysis helper, called by M2JNT for FORMULAS, MOMENTS + COV, GIVEN A VALUE
+// and INDEP + CDF (LEAN-B, reduced PLAN 7 P3). IN: H = item 1-4 and the M2JNT model: Str1=q, M=c,
+// N=support code, ʟM2JC={exact,...}, ʟM2JS support half-planes, ʟM2JG tuple, Str2/Str3 (curved), the
+// support strips ʟM2JX (x outer) and ʟM2JY (y outer; {0} when curved), 7 numbers each as in M2GL.
+// OUT: H=5 asks M2JNT for F(s,t) (EVENTS X≤s AND Y≤t), else H=0; A = last result (Cov, E(.|.), P).
+// Never changes M, N, Str1-Str3 or any ʟM2J* list. Own lists ʟM2N* are deleted on return.
+// EXACT (polynomial q, straight-edged finite support): marginals by integrating the coefficient table
+// over each strip (powers of the limit lines by augment shifts), conditionals and E(.|.) as ratios with
+// common linear factors cancelled (candidate roots 0, 1, -1, piece ends, where the limits meet).
+// NUMERIC otherwise: M2GL 1-D/2-D kernel, 2 passes (PLAN 4.6).
+// Registers: F item, E exact, D direction (0 = x outer / given X, 1 = y outer / given Y), L kind or
+// slice total, C piece / loop / fraction flag, A s-power / result, B return code, G given value,
+// H change or check sum, P exact flag / candidate. Text Str0 = "θ" + sections, paged by PG.
+H→F
+ʟM2JC(1)→E
+"1"→Str5
+If E
+Then
+1→θ
+prgmM2PLY
+M*ʟM2QA→ʟM2NA
+End
+If F=1:Goto F0
+If F=2:Goto M0
+If F=3:Goto G0
+Goto I0
+// ---------------------------------------------------------------- FORMULAS
+Lbl F0
+If E:Goto FM
+ClrHome
+Disp "FORMULAS NEED A","POLYNOMIAL q ON A","STRAIGHT-EDGED SUPPORT","USE GIVEN A VALUE"
+Pause
+Goto Z
+Lbl FM
+Menu("FORMULAS","g(x) MARGINAL",F1,"h(y) MARGINAL",F2,"w(y|x) CONDITIONAL",F3,"f(x|y) CONDITIONAL",F4,"E(Y|X=x) FORMULA",F5,"E(X|Y=y) FORMULA",F6,"BACK",Z)
+Lbl F1
+1→L
+Goto FX
+Lbl F2
+1→L
+Goto FY
+Lbl F3
+2→L
+Goto FX
+Lbl F4
+2→L
+Goto FY
+Lbl F5
+3→L
+Goto FX
+Lbl F6
+3→L
+Lbl FY
+1→D
+Goto FS
+Lbl FX
+0→D
+// orient: strips and coefficient table in (outer,inner) coordinates
+Lbl FS
+ClrHome
+Disp "COMPUTING…"
+ʟM2JX→ʟM2NX
+ʟM2NA→ʟM2NB
+If D
+Then
+ʟM2JY→ʟM2NX
+seq(ʟM2NA(5*I-24*int(I/5)+1),I,0,24)→ʟM2NB
+End
+sub("g(x)h(y)",4D+1,4)→Str4
+If L=1
+"θ"+Str4+" MARGINALθ"+Str4+"="+sub("fX(x)fY(y)",5D+1,5)+"θ=∫f(x,y) d"+sub("yx",D+1,1)+"θFREUND DEF11 p93θ"→Str0
+sub("w(y|x)f(x|y)",6D+1,6)→Str5
+If L=2
+"θ"+Str5+" CONDITIONALθ"+Str5+"="+sub("fY|X(y|x)fX|Y(x|y)",9D+1,9)+"θ=f(x,y)/"+Str4+"θFREUND DEF13 p96θ"→Str0
+If L=3
+"θ"+sub("E(Y|X=x)E(X|Y=y)",8D+1,8)+" FORMULAθ"+sub("E(Y|X=x)E(X|Y=y)",8D+1,8)+"=∫"+sub("yx",D+1,1)+" "+Str5+" d"+sub("yx",D+1,1)+"θ=(∫"+sub("yx",D+1,1)+" f d"+sub("yx",D+1,1)+")/"+Str4+"θFREUND CH4 DEF10 p138θ"→Str0
+If L=2
+Str5+"="→Str5
+If L=3
+sub("E(Y|X=x)E(X|Y=y)",8D+1,8)+"="→Str5
+If L=1
+Str4+"="→Str5
+0→H
+1→C
+// one piece per strip
+Lbl FP
+0→A
+1→B
+Goto MG
+Lbl FA
+If L=1:Goto FC
+ʟM2NG→ʟM2ND
+If L=2:Goto FB
+1→A
+2→B
+Goto MG
+Lbl FD
+seq(ʟM2NG(int(I/5)+1)*(5*int(I/5)=I),I,0,59)→ʟM2NN
+Goto FE
+Lbl FB
+augment(ʟM2NB,seq(0,I,1,35))→ʟM2NN
+// cancel every common factor (outer-r): numerator ʟM2NN (12 rows x 5 inner powers), denominator ʟM2ND
+Lbl FE
+{0,1,⁻1,ʟM2NX(7C-6),ʟM2NX(7C-5)}→ʟM2NR
+ʟM2NX(7C-1)-ʟM2NX(7C-3)→R
+If R≠0
+augment(ʟM2NR,{(ʟM2NX(7C-4)-ʟM2NX(7C-2))/R})→ʟM2NR
+1→P
+Lbl CA
+ʟM2NR(P)→R
+augment({1},seq(R^I,I,1,11))→ʟM2NE
+1ᴇ⁻9*max(1,abs(R))^11→S
+{0,0,0,0,0}→ʟM2NV
+For(I,0,11)
+ʟM2NV+ʟM2NE(I+1)*seq(ʟM2NN(5I+J),J,1,5)→ʟM2NV
+End
+If abs(sum(ʟM2NE*ʟM2ND))>S*max(abs(ʟM2ND)) or max(abs(ʟM2NV))>S*max(abs(ʟM2NN)):Goto CB
+ʟM2ND→ʟM2NE
+0→ʟM2ND(12)
+For(I,11,1,⁻1)
+ʟM2NE(I+1)+R*ʟM2ND(I+1)→ʟM2ND(I)
+End
+ʟM2NN→ʟM2NE
+For(I,56,60)
+0→ʟM2NN(I)
+End
+For(I,55,1,⁻1)
+ʟM2NE(I+5)+R*ʟM2NN(I+5)→ʟM2NN(I)
+End
+Goto CA
+Lbl CB
+P+1→P
+If P≤dim(ʟM2NR):Goto CA
+// divide by the lowest nonzero coefficient of the denominator
+1→I
+While abs(ʟM2ND(I))≤1ᴇ⁻10*max(abs(ʟM2ND))
+I+1→I
+End
+ʟM2ND(I)→R
+ʟM2ND/R→ʟM2ND
+ʟM2NN/R→ʟM2NN
+ʟM2ND*(abs(ʟM2ND)>1ᴇ⁻10)→ʟM2ND
+ʟM2NN*(abs(ʟM2NN)>1ᴇ⁻10*max(abs(ʟM2NN)))→ʟM2NN
+// piece text: outer range, inner limits (or the conditional's support), then the formula
+Lbl FC
+sub("xy",D+1,1)→Str6
+{ʟM2NX(7C-6),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+"FOR "+Str7+"<"+Str6+"<"→Str0
+{ʟM2NX(7C-5),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"θ"→Str0
+{ʟM2NX(7C-4),ʟM2NX(7C-3)}→ʟM2QS
+2→θ
+prgmM2PLY
+Str7→Str4
+{ʟM2NX(7C-2),ʟM2NX(7C-1)}→ʟM2QS
+2→θ
+prgmM2PLY
+If L=2
+Str0+"AND "+Str4+"<"+sub("yx",D+1,1)+"<"+Str7+"θ"→Str0
+If L≠2
+Str0+sub("yx",D+1,1)+" FROM "+Str4+" TO "+Str7+"θ"→Str0
+If L≠1:Goto FR
+H+sum(ʟM2NG*seq((ʟM2NX(7C-5)^I-ʟM2NX(7C-6)^I)/I,I,1,12))→H
+ʟM2NG*(abs(ʟM2NG)>1ᴇ⁻10*max(abs(ʟM2NG)))→ʟM2QC
+3→θ
+prgmM2PLY
+Str0+Str5+Str7+"θ"→Str0
+Goto FN
+Lbl FR
+ʟM2ND→ʟM2QC
+3→θ
+prgmM2PLY
+Str7→Str4
+If L=3
+Then
+seq(ʟM2NN(5I+1),I,0,11)→ʟM2QC
+3→θ
+prgmM2PLY
+Else
+seq(ʟM2NN(I+1)*not(D)+ʟM2NN(5*I-24*int(I/5)+1)*D,I,0,24)→ʟM2QA
+{0,0,5}→ʟM2QS
+4→θ
+prgmM2PLY
+End
+If Str4="1"
+Str0+Str5+Str7+"θ"→Str0
+If Str4≠"1"
+Str0+Str5+"("+Str7+")/("+Str4+")θ"→Str0
+Lbl FN
+C+1→C
+If C≤dim(ʟM2NX)/7:Goto FP
+If L=1
+Then
+H→W
+prgmM2FMT
+Str0+"0 ELSEWHEREθCHECK ∫"+sub("gh",D+1,1)+" d"+sub("xy",D+1,1)+"="+Str9+"θ"→Str0
+Else
+Str0+"ONLY WHERE "+sub("g(x)h(y)",4D+1,4)+">0θ"→Str0
+End
+Str0+"EXACT (POLYNOMIAL)θθ"→Str0
+Goto PG
+// MG: ∫ inner^A * f over strip C as a polynomial in the outer variable -> ʟM2NG (12); back by B
+Lbl MG
+{1}→ʟM2NU
+{1}→ʟM2NL
+seq(0,I,1,12)→ʟM2NG
+For(K,0,4+A)
+ʟM2NX(7C-2)*augment(ʟM2NU,{0})+ʟM2NX(7C-1)*augment({0},ʟM2NU)→ʟM2NU
+ʟM2NX(7C-4)*augment(ʟM2NL,{0})+ʟM2NX(7C-3)*augment({0},ʟM2NL)→ʟM2NL
+If K≥A
+Then
+(ʟM2NU-ʟM2NL)/(K+1)→ʟM2NE
+For(J,0,4)
+If ʟM2NB(5J+K-A+1)
+ʟM2NG+ʟM2NB(5J+K-A+1)*seq(ʟM2NE(max(1,min(K+2,I-J+1)))*(I≥J and I-J≤K+1),I,0,11)→ʟM2NG
+End
+End
+End
+If B=1:Goto FA
+Goto FD
+// ---------------------------------------------------------------- MOMENTS + COV
+Lbl M0
+Menu("MOMENTS + COV","MEANS VARS COV ρ",MA,"E[g(X,Y)]",MB,"BACK",Z)
+Lbl MA
+E→P
+1→B
+Goto MK
+Lbl MR
+"θMOMENTSθE(X)=∫∫x f(x,y) dy dxθ"→Str0
+If G
+Str0+"TAIL MAY BE HEAVYθ"→Str0
+P or H≤1ᴇ⁻8→C
+ʟM2NV/ʟM2NV(1)→ʟM2NV
+augment(ʟM2NV,{ʟM2NV(4)-ʟM2NV(2)²,ʟM2NV(5)-ʟM2NV(3)²,ʟM2NV(6)-ʟM2NV(2)*ʟM2NV(3)})→ʟM2NV
+For(I,1,5)
+ʟM2NV(I+1)→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+Str0+sub("E(X)=E(Y)=E(X²)=E(Y²)=E(XY)=",5I-4+max(0,I-3),5+(I≥3))+Str9+"θ"→Str0
+End
+For(I,1,2)
+ʟM2NV(I+9)→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+Str0+sub("Var(X)=E(X²)-E(X)²Var(Y)=E(Y²)-E(Y)²",18I-17,18)+"θ="+Str9+"θ"→Str0
+End
+Str0+"Cov=E(XY)-E(X)E(Y)θ="→Str0
+For(I,1,4)
+ʟM2NV(6*(I=1)+2*(I=2)+3*(I=3)+12*(I=4))→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+Str0+Str9+sub("-()()θ=θ",2I-1+(I=4),2+(I=3)-(I=4))→Str0
+End
+ʟM2NV(12)→A
+If ʟM2NV(10)*ʟM2NV(11)≤0:Goto MF
+ʟM2NV(12)/√(ʟM2NV(10)*ʟM2NV(11))→G
+Str0+"ρ=Cov/(SD(X)SD(Y))θ"→Str0
+G→W
+prgmM2FMT
+If C and not(inString(Str9,"."))
+Str0+"="+Str9+"θ"→Str0
+If C and not(inString(Str9,".")):Goto MF
+G²→W
+prgmM2FMT
+If C and not(inString(Str9,"."))
+Then
+Str0+"="→Str0
+If G<0
+Str0+"⁻"→Str0
+Str0+"√("+Str9+")θ"→Str0
+End
+G→W
+prgmM2FMT
+Str0+"="+Str8+"θ"→Str0
+// MF: the mode line (P exact flag, H change), then page
+Lbl MF
+If P
+Str0+"EXACT (POLYNOMIAL)θ"→Str0
+If not(P) and H≤1ᴇ⁻8
+Str0+"NUMERIC, 2 PASSES AGREEθ"→Str0
+If not(P) and H>1ᴇ⁻8
+Str0+"APPROX - NOT CONVERGEDθCHANGE="+toString(H)+"θ"→Str0
+Str0+"θ"→Str0
+Goto PG
+Lbl MB
+ClrHome
+Disp "E[g(X,Y)]","TYPE g WITH X AND Y","EG X*Y OR (X-Y)²"
+Input "g(X,Y)?",Str5
+Str1→Str4
+Str5→Str1
+"XY"→Str6
+8→θ
+prgmM2PLY
+θ→A
+Str4→Str1
+If A:Goto MC
+ClrHome
+Disp "g MAY USE ONLY X AND Y"
+Pause
+Goto MB
+Lbl MC
+E→P
+If not(E):Goto MD
+Str5→Str1
+1→θ
+prgmM2PLY
+θ→P
+Str4→Str1
+If P
+2*max((ʟM2QA≠0)*seq(int(I/5)+I-5*int(I/5),I,0,24))+max((ʟM2NA≠0)*seq(int(I/5)+I-5*int(I/5),I,0,24))≤12→P
+Lbl MD
+2→B
+Goto MK
+Lbl MS
+"θE(g(X,Y))θg="+Str5+"θE(g)=∫∫g f dy dxθ"→Str0
+If G
+Str0+"TAIL MAY BE HEAVYθ"→Str0
+P or H≤1ᴇ⁻8→C
+ʟM2NV(7)/ʟM2NV(1)→A
+ʟM2NV(8)/ʟM2NV(1)→D
+For(I,1,3)
+A*(I=1)+D*(I=2)+(D-A²)*(I=3)→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+Str0+sub("E(g)=E(g²)=Var(g)=E(g²)-E(g)²θ=",1+5*(I≥2)+6*(I=3),5+(I=2)+15*(I=3))→Str0
+Str0+Str9+"θ"→Str0
+End
+Goto MF
+// MK: 2-D kernel over the support strips (Str5 = multiplier, P exact) -> ʟM2NV, H change, G heavy
+Lbl MK
+ClrHome
+Disp "COMPUTING…"
+ʟM2JX→ʟM2KS
+{0,2-P}→ʟM2KO
+1→θ
+prgmM2GL
+θ-1→G
+ʟM2KR→ʟM2NV
+0→H
+If not(P)
+Then
+3→ʟM2KO(2)
+1→θ
+prgmM2GL
+max(G,θ-1)→G
+max(seq(abs(ʟM2KR(I)-ʟM2NV(I))/max(1,abs(ʟM2KR(I))),I,1,8))→H
+ʟM2KR→ʟM2NV
+End
+If B=1:Goto MR
+Goto MS
+// ---------------------------------------------------------------- GIVEN A VALUE
+Lbl G0
+Menu("GIVEN A VALUE","GIVEN X=x",GX,"GIVEN Y=y",GY,"BACK",Z)
+Lbl GX
+0→D
+Goto GV
+Lbl GY
+1→D
+If N≠8:Goto GV
+ClrHome
+Disp "CURVED SUPPORT","USE GIVEN X=x"
+Pause
+Goto G0
+Lbl GV
+ClrHome
+Disp sub("GIVEN X=x, w(y|x)GIVEN Y=y, f(x|y)",17D+1,17),"TYPE THE GIVEN VALUE","FRACTIONS OK, EG 1/2"
+If D
+Input "GIVEN y=?",G
+If not(D)
+Input "GIVEN x=?",G
+If abs(G)≥1ᴇ5:Goto GV
+{⁻1ᴇ6,1ᴇ6}→ʟM2NC
+1→B
+Goto SL
+Lbl GR
+G→W
+prgmM2FMT
+Str9→Str4
+sub("g(h(",2D+1,2)+Str4+")"→Str5
+If ʟM2NV(6):Goto GW
+ClrHome
+Disp Str5+"=0","OUTSIDE THE SUPPORT","CONDITIONAL UNDEFINED"
+Pause
+Goto G0
+Lbl GW
+ʟM2NV(1)→L
+M*L→A
+E or ʟM2NV(7)≤1ᴇ⁻8→C
+"θGIVEN "+sub("XY",D+1,1)+"="+Str4+"θ"+Str5+"=∫f("→Str0
+If D
+Str0+"x,"+Str4→Str0
+If not(D)
+Str0+Str4+",y"→Str0
+Str0+") d"+sub("yx",D+1,1)+"θ"+sub("yx",D+1,1)+" FROM "→Str0
+{ʟM2NV(4),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+" TO "→Str0
+{ʟM2NV(5),0}→ʟM2QS
+2→θ
+prgmM2PLY
+A→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+Str0+Str7+"θ"+Str5+"="+Str9+"θDENSITY, NOT A POINT PROBθ"+sub("w(y|f(x|",4D+1,4)+Str4+")="+"f("→Str0
+If D
+Str0+"x,"+Str4→Str0
+If not(D)
+Str0+Str4+",y"→Str0
+Str0+")/"+Str5+"θ"→Str0
+If E
+Then
+augment({1},seq(G^I,I,1,4))→ʟM2NE
+{0,0,0,0,0}→ʟM2QC
+For(I,0,4)
+ʟM2QC+ʟM2NE(I+1)*seq(ʟM2NA(5I+J+1)*not(D)+ʟM2NA(5J+I+1)*D,J,0,4)→ʟM2QC
+End
+ʟM2QC/A→ʟM2QC
+ʟM2QC*(abs(ʟM2QC)>1ᴇ⁻10*max(abs(ʟM2QC)))→ʟM2QC
+sub("yx",D+1,1)→Str6
+3→θ
+prgmM2PLY
+Str0+"="+Str7+"θ"→Str0
+End
+{ʟM2NV(4),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+"FOR "+Str7+"<"+sub("yx",D+1,1)+"<"→Str0
+{ʟM2NV(5),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"θ"→Str0
+"|"+sub("XY",D+1,1)+"="+Str4+")="→Str5
+ʟM2NV(2)/L→A
+ʟM2NV(3)/L→P
+For(I,1,3)
+A*(I=1)+P*(I=2)+(P-A²)*(I=3)→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+If I=3
+Str0+"Var("→Str0
+If I<3
+Str0+"E("→Str0
+Str0+sub("YX",D+1,1)→Str0
+If I=2
+Str0+"²"→Str0
+Str0+Str5+Str9+"θ"→Str0
+End
+Str0+"=E("+sub("YX",D+1,1)+"²|"+sub("xy",D+1,1)+")-E("+sub("YX",D+1,1)+"|"+sub("xy",D+1,1)+")²θ"→Str0
+E→P
+ʟM2NV(7)→H
+Goto MF
+Lbl GS
+If D:Goto GT
+Menu("GIVEN X=x","P(a<Y<b | X=x)",GP,"NEW VALUE",GV,"BACK",G0)
+Lbl GT
+Menu("GIVEN Y=y","P(a<X<b | Y=y)",GP,"NEW VALUE",GV,"BACK",G0)
+Lbl GP
+ClrHome
+Disp sub("P(a<Y<b | X=x)P(a<X<b | Y=y)",14D+1,14),"ᴇ99 FOR INFINITY"
+Input "a?",A
+Input "b?",P
+A*(abs(A)<1ᴇ50)+1ᴇ6*((A≥1ᴇ50)-(A≤⁻1ᴇ50))→A
+P*(abs(P)<1ᴇ50)+1ᴇ6*((P≥1ᴇ50)-(P≤⁻1ᴇ50))→P
+If P>A:Goto GA
+ClrHome
+Disp "b MUST EXCEED a"
+Pause
+Goto GP
+Lbl GA
+{A,P}→ʟM2NC
+2→B
+Goto SL
+Lbl GQ
+ʟM2NV(1)/L→A
+E or ʟM2NV(7)≤1ᴇ⁻8→C
+{ʟM2NC(1),0}→ʟM2QS
+2→θ
+prgmM2PLY
+"θCONDITIONAL PROBθP("+Str7+"<"+sub("YX",D+1,1)+"<"→Str0
+{ʟM2NC(2),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+" | "+sub("XY",D+1,1)+"="+Str4+")θ=∫"+sub("w(y|f(x|",4D+1,4)+Str4+") d"+sub("yx",D+1,1)+"θ"→Str0
+If not(ʟM2NV(6))
+Str0+"NO OVERLAP WITH THE SLICEθ"→Str0
+If not(ʟM2NV(6)):Goto GZ
+{ʟM2NV(4),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+sub("yx",D+1,1)+" FROM "+Str7+" TO "→Str0
+{ʟM2NV(5),0}→ʟM2QS
+2→θ
+prgmM2PLY
+Str0+Str7+"θ"→Str0
+Lbl GZ
+A→W
+prgmM2FMT
+If not(C)
+Str8→Str9
+Str0+"P="+Str9+"θ"→Str0
+E→P
+ʟM2NV(7)→H
+Goto MF
+// SL: slice at G (D=0 given X, integrate in y; D=1 given Y), clipped to ʟM2NC -> ʟM2NV=
+// {∫q,∫vq,∫v²q,lo,hi,ok,change}; back by B
+Lbl SL
+"1"→Str5
+ʟM2JX→ʟM2NX
+If D
+ʟM2JY→ʟM2NX
+0→O
+For(I,dim(ʟM2NX)/7,1,⁻1)
+If G≥ʟM2NX(7I-6) and G≤ʟM2NX(7I-5)
+I→O
+End
+{0,0,0,0,0,0,0}→ʟM2NV
+If not(O):Goto SR
+ʟM2NX(7O-4)+ʟM2NX(7O-3)*G→Q
+ʟM2NX(7O-2)+ʟM2NX(7O-1)*G→R
+If N=8
+Then
+G→X
+expr(Str2)→Q
+expr(Str3)→R
+End
+max(Q,ʟM2NC(1))→Q
+min(R,ʟM2NC(2))→R
+If Q≥R:Goto SR
+{Q,R}→ʟM2KS
+{1-D,2-E}→ʟM2KO
+G→X
+G→Y
+2→θ
+prgmM2GL
+augment(seq(ʟM2KR(I),I,1,3),{ʟM2KS(1),ʟM2KS(2),1,0})→ʟM2NV
+If not(E)
+Then
+3→ʟM2KO(2)
+G→X
+G→Y
+2→θ
+prgmM2GL
+max(seq(abs(ʟM2KR(I)-ʟM2NV(I)),I,1,3))/max(1ᴇ⁻10,abs(ʟM2KR(1)))→ʟM2NV(7)
+augment(seq(ʟM2KR(I),I,1,3),seq(ʟM2NV(I),I,4,7))→ʟM2NV
+End
+Lbl SR
+If B=1:Goto GR
+If B=2:Goto GQ
+Goto IR
+// ---------------------------------------------------------------- INDEP + CDF
+Lbl I0
+Menu("INDEP + CDF","INDEPENDENCE TEST",IA,"F(s,t) AT A POINT",ZF,"F(x,y) FORMULA",FF,"BACK",Z)
+Lbl IA
+ClrHome
+Disp "COMPUTING…"
+"θINDEPENDENCEθINDEPENDENT IFFθf(x,y)=g(x)h(y) FOR ALLθx AND y, FREUND DEF14 p98θ"→Str0
+N=1 or N=5 or (N=6 or N=7) and ʟM2JG(4)=0 and ʟM2JG(6)=0→A
+0→P
+If N=8:Goto IC
+// a 3x3 grid inside the bounding box (1/4,1/2,3/4; .5,1,2 from a finite end of an infinite side)
+ʟM2JX(1)→Q
+ʟM2JX(dim(ʟM2JX)-5)→R
+(abs(Q)<5ᴇ5)*(abs(R)<5ᴇ5)*(Q+(R-Q)*{.25,.5,.75})+(abs(Q)<5ᴇ5)*(abs(R)≥5ᴇ5)*(Q+{.5,1,2})+(abs(Q)≥5ᴇ5)*(abs(R)<5ᴇ5)*(R-{2,1,.5})+(abs(Q)≥5ᴇ5)*(abs(R)≥5ᴇ5)*{⁻1,0,1}→ʟM2NP
+ʟM2JY(1)→Q
+ʟM2JY(dim(ʟM2JY)-5)→R
+(abs(Q)<5ᴇ5)*(abs(R)<5ᴇ5)*(Q+(R-Q)*{.25,.5,.75})+(abs(Q)<5ᴇ5)*(abs(R)≥5ᴇ5)*(Q+{.5,1,2})+(abs(Q)≥5ᴇ5)*(abs(R)<5ᴇ5)*(R-{2,1,.5})+(abs(Q)≥5ᴇ5)*(abs(R)≥5ᴇ5)*{⁻1,0,1}→ʟM2NQ
+// g at the 3 x values, h at the 3 y values (slices)
+seq(0,I,1,6)→ʟM2NF
+0→H
+1→C
+Lbl IL
+C>3→D
+If D
+ʟM2NQ(C-3)→G
+If not(D)
+ʟM2NP(C)→G
+{⁻1ᴇ6,1ᴇ6}→ʟM2NC
+3→B
+Goto SL
+Lbl IR
+M*ʟM2NV(1)→ʟM2NF(C)
+max(H,ʟM2NV(7))→H
+C+1→C
+If C≤6:Goto IL
+E or H≤1ᴇ⁻8→B
+1→C
+1→L
+If A:Goto IP
+// not a product set: a grid point outside the support where g>0 and h>0
+For(I,1,3)
+For(J,1,3)
+ʟM2NP(I)→X
+ʟM2NQ(J)→Y
+If not(P) and min(ʟM2NF(I),ʟM2NF(J+3))>1ᴇ⁻12 and max(seq(ʟM2JS(3K-2)*X+ʟM2JS(3K-1)*Y-ʟM2JS(3K),K,1,dim(ʟM2JS)/3))>1ᴇ⁻9
+Then
+1→P
+I→C
+J→L
+End
+End
+End
+Lbl IC
+Str0+"SUPPORT IS NOT A PRODUCTθSET (A RECTANGLE)θ"→Str0
+If not(P)
+Str0+"f=0 WHERE g(x)h(y)>0θ"→Str0
+If P:Goto IW
+Lbl IE
+If not(E)
+Str0+"(NUMERIC EVIDENCE)θ"→Str0
+Str0+"=> DEPENDENTθθ"→Str0
+Goto PG
+Lbl IP
+Str0+"SUPPORT IS A PRODUCT SETθ"→Str0
+If not(E):Goto IG
+// rank 1 test: T(i,j)T(i0,j0)=T(i,j0)T(i0,j) at the largest coefficient T(i0,j0)
+max(abs(ʟM2NA))→Q
+1→I
+While abs(ʟM2NA(I))<Q
+I+1→I
+End
+I-1→I
+int(I/5)→R
+I-5R→S
+max(abs(seq(ʟM2NA(K+1)*ʟM2NA(I+1)-ʟM2NA(5*int(K/5)+S+1)*ʟM2NA(5R+K-5*int(K/5)+1),K,0,24)))≤1ᴇ⁻10*Q²→P
+If not(P):Goto IG
+seq((ʟM2JX(2)^(I+1)-ʟM2JX(1)^(I+1))/(I+1),I,0,4)→ʟM2NU
+seq((ʟM2JX(5)^(I+1)-ʟM2JX(3)^(I+1))/(I+1),I,0,4)→ʟM2NL
+{0,0,0,0,0}→ʟM2NE
+{0,0,0,0,0}→ʟM2NG
+For(I,0,4)
+ʟM2NE+ʟM2NU(I+1)*seq(ʟM2NA(5I+J+1),J,0,4)→ʟM2NE
+sum(ʟM2NL*seq(ʟM2NA(5I+J+1),J,0,4))→ʟM2NG(I+1)
+End
+Str0+"COEFFICIENT TABLE HASθRANK 1, SO f=g(x)h(y)θg(x)="→Str0
+ʟM2NG*(abs(ʟM2NG)>1ᴇ⁻10*max(abs(ʟM2NG)))→ʟM2QC
+"x"→Str6
+3→θ
+prgmM2PLY
+Str0+Str7+"θh(y)="→Str0
+ʟM2NE*(abs(ʟM2NE)>1ᴇ⁻10*max(abs(ʟM2NE)))→ʟM2QC
+"y"→Str6
+3→θ
+prgmM2PLY
+Str0+Str7+"θ=> INDEPENDENTθ"→Str0
+Goto MF
+// worst grid point |f-g*h|
+Lbl IG
+0→Q
+For(I,1,3)
+For(J,1,3)
+ʟM2NP(I)→X
+ʟM2NQ(J)→Y
+abs(M*expr(Str1)-ʟM2NF(I)*ʟM2NF(J+3))→R
+If R>Q
+Then
+R→Q
+I→C
+J→L
+End
+End
+End
+If E or Q>1ᴇ⁻7*max(1,max(ʟM2NF)²):Goto IW
+Str0+"f=g(x)h(y) ON A 3X3 GRIDθ(NUMERIC EVIDENCE)θ=> INDEPENDENTθ"→Str0
+Goto MF
+// witness at grid point (C,L): f there vs g*h
+Lbl IW
+ʟM2NP(C)→W
+prgmM2FMT
+If not(B)
+Str8→Str9
+Str9→Str4
+ʟM2NQ(L)→W
+prgmM2FMT
+If not(B)
+Str8→Str9
+Str9→Str5
+0→W
+ʟM2NP(C)→X
+ʟM2NQ(L)→Y
+If A
+M*expr(Str1)→W
+prgmM2FMT
+If not(B)
+Str8→Str9
+Str0+"f("+Str4+","+Str5+")="+Str9+"θBUT g("+Str4+")h("+Str5+")="→Str0
+ʟM2NF(C)*ʟM2NF(L+3)→W
+prgmM2FMT
+If not(B)
+Str8→Str9
+Str0+Str9+"θ"→Str0
+Goto IE
+// F(x,y) FORMULA: rectangle a<x<b, c<y<d and polynomial q
+Lbl FF
+If E and (N=1 or N=6 and ʟM2JG(4)=0 and ʟM2JG(6)=0):Goto FG
+ClrHome
+Disp "F FORMULA NEEDS A","POLYNOMIAL q ON A","RECTANGLE","USE F(s,t) AT A POINT"
+Pause
+Goto I0
+Lbl FG
+ʟM2JG(1)→A
+ʟM2JG(2)→B
+ʟM2JG(3)→C
+ʟM2JG(5)→D
+// F=Σ aij (x^(i+1)-a^(i+1))/(i+1)*(y^(j+1)-c^(j+1))/(j+1): 6x6 table, element 6i+j+1
+seq(0,I,1,36)→ʟM2NT
+For(I,0,4)
+For(J,0,4)
+ʟM2NA(5I+J+1)/((I+1)(J+1))→Q
+If Q
+Then
+ʟM2NT(6I+J+8)+Q→ʟM2NT(6I+J+8)
+ʟM2NT(6I+7)-Q*C^(J+1)→ʟM2NT(6I+7)
+ʟM2NT(J+2)-Q*A^(I+1)→ʟM2NT(J+2)
+ʟM2NT(1)+Q*A^(I+1)*C^(J+1)→ʟM2NT(1)
+End
+End
+End
+ʟM2NT*(abs(ʟM2NT)>1ᴇ⁻10*max(abs(ʟM2NT)))→ʟM2NT
+"θF(x,y) FORMULAθF(x,y)=P(X≤x,Y≤y)θ=∫∫f(u,v) dv duθu FROM "→Str0
+A→W
+prgmM2FMT
+Str9→Str4
+C→W
+prgmM2FMT
+Str9→Str5
+Str0+Str4+" TO x, v FROM "+Str5+" TO yθFOR "+Str4+"<x<"→Str0
+B→W
+prgmM2FMT
+Str0+Str9+", "+Str5+"<y<"→Str0
+D→W
+prgmM2FMT
+Str0+Str9+"θF="→Str0
+ʟM2NT→ʟM2QA
+{0,0,6}→ʟM2QS
+4→θ
+prgmM2PLY
+Str0+Str7+"θ"→Str0
+augment({1},seq(D^I,I,1,5))→ʟM2NE
+seq(0,I,1,6)→ʟM2QC
+For(I,0,5)
+sum(ʟM2NE*seq(ʟM2NT(6I+J),J,1,6))→ʟM2QC(I+1)
+End
+"x"→Str6
+3→θ
+prgmM2PLY
+D→W
+prgmM2FMT
+Str0+"y≥"+Str9+", F=F(x,"+Str9+")θ="+Str7+"θ"→Str0
+augment({1},seq(B^I,I,1,5))→ʟM2NE
+For(J,0,5)
+sum(ʟM2NE*seq(ʟM2NT(6I+J+1),I,0,5))→ʟM2QC(J+1)
+End
+"y"→Str6
+3→θ
+prgmM2PLY
+B→W
+prgmM2FMT
+Str0+"x≥"+Str9+", F=F("+Str9+",y)θ="+Str7+"θF=1 WHEN BOTH HOLDθ"→Str0
+Str0+"F=0 IF x≤"+Str4+" OR y≤"+Str5+"θFREUND DEF9 p86θEXACT (POLYNOMIAL)θθ"→Str0
+Goto PG
+// ------------------------------- PG: page Str0 = "θ" + sections "TITLEθlinesθθ" (width-aware)
+Lbl PG
+augment({0},cumSum(seq(1+5*not(inString("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+-*/()²³^.⁻ᴇ,=<>≤≥≠ ∫'…|θ",sub(Str0,I,1))),I,1,length(Str0))))→ʟM2NW
+2→I
+1→K
+While I≤length(Str0)
+inString(Str0,"θ",I)→J
+If J=I
+Then
+Pause
+1→K
+I+1→I
+Else
+If K=1
+Then
+sub(Str0,I,J-I)→Str9
+ClrHome
+Output(1,1,Str9)
+2→K
+J+1→I
+Else
+If K>10 or K>8 and inString("xy",sub(Str0,I,1))
+Then
+Pause
+ClrHome
+Output(1,1,Str9)
+2→K
+End
+min(J,sum(ʟM2NW≤ʟM2NW(I)+26))-I→O
+Output(K,1,sub(Str0,I,O))
+K+1→K
+I+O+(I+O=J)→I
+End
+End
+End
+If F=1:Goto FM
+If F=2:Goto M0
+If F=4:Goto I0
+Goto GS
+// ---------------------------------------------------------------- back to M2JNT
+Lbl ZF
+5→H
+Goto Z1
+Lbl Z
+0→H
+Lbl Z1
+"1"→Str5
+DelVar ʟM2NA
+DelVar ʟM2NB
+DelVar ʟM2NX
+DelVar ʟM2NG
+DelVar ʟM2NU
+DelVar ʟM2NL
+DelVar ʟM2NE
+DelVar ʟM2ND
+DelVar ʟM2NN
+DelVar ʟM2NR
+DelVar ʟM2NV
+DelVar ʟM2NC
+DelVar ʟM2NF
+DelVar ʟM2NP
+DelVar ʟM2NQ
+DelVar ʟM2NT
+DelVar ʟM2NW
+Return

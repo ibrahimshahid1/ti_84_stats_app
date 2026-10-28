@@ -2,7 +2,7 @@
 Lbl M
 Menu("MIDTERM II REFERENCE","JOINT LAWS",1,"EXPECT + MOMENTS",2,"MGFS",3,"PRODUCT + CORR",4,"LINEAR COMBOS",5,"CONDITION + HELP",6,"BACK",Z)
 Lbl 1
-Menu("JOINT DISTRIBUTIONS","PMF AND PDF",AA,"MARGINALS",AC,"CONDITIONAL LAWS",AE,"CDF CONVERSIONS",AG,"INDEPENDENCE",AJ,"BOUNDS AND WORDS",AM,"BACK",M)
+Menu("JOINT DISTRIBUTIONS","PMF AND PDF",AA,"MARGINALS",AC,"CONDITIONAL LAWS",AE,"JOINT CDF F",AG,"INDEPENDENCE",AK,"SKETCH + LIMITS",AN,"BACK",M)
 Lbl AA
 ClrHome
 Output(1,1,"PMF AND PDF            1/2")
@@ -95,47 +95,70 @@ If K=24:Goto AE
 Goto 1
 Lbl AG
 ClrHome
-Output(1,1,"CDF CONVERSIONS        1/3")
-Output(2,1,"F(x,y)=P(X≤x,Y≤y). Sum")
-Output(3,1,"masses or integrate")
-Output(4,1,"density over the")
-Output(5,1,"lower-left rectangle")
-Output(6,1,"intersected with support.")
-Output(7,1,"f(x,y)=mixed derivative of")
-Output(8,1,"F for an absolutely")
-Output(9,1,"continuous law.")
-Output(10,1,"FX(x)=limit of F(x,y) as y")
+Output(1,1,"JOINT CDF F            1/4")
+Output(2,1,"F(x,y)=P(X≤x,Y≤y)")
+Output(3,1,"F FROM f - integrate f")
+Output(4,1,"(s,t) over s≤x, t≤y in S.")
+Output(5,1,"Discrete - sum the masses.")
+Output(6,1,"Ex16 f=x+y, unit square")
+Output(7,1,"gives F=xy(x+y)/2 in S,")
+Output(8,1,"F=0 left of or below S.")
+Output(9,1,"Freund Def7 p84, Def9 p86")
+Output(10,1,"TOOL SOLV>CDF OF X AND Y")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
 If K=24:Goto 1
 Lbl AH
 ClrHome
-Output(1,1,"CDF CONVERSIONS        2/3")
-Output(2,1,"grows.")
-Output(3,1,"Rectangle probability =")
-Output(4,1,"F(b,d) - F(a,d) - F(b,c) +")
-Output(5,1,"F(a,c).")
-Output(6,1,"Integer-inclusive lower")
-Output(7,1,"endpoints a,c need")
-Output(8,1,"a-1,c-1. Noninteger")
-Output(9,1,"supports use left limits.")
-Output(10,1,"Give all CDF branches;")
+Output(1,1,"JOINT CDF F            2/4")
+Output(2,1,"f FROM F - mixed partial")
+Output(3,1,"f=d²F/dxdy where it exists")
+Output(4,1,"FX(x)=F(x,d), d=top of y")
+Output(5,1,"FY(y)=F(b,y), b=top of x")
+Output(6,1,"Ex16 F=xy(x+y)/2 in S")
+Output(7,1,"gives f=x+y, FX=x(x+1)/2.")
+Output(8,1,"Not a polynomial - numeric")
+Output(9,1,"Freund Ch3 p86, Ex16 p86")
+Output(10,1,"TOOL SOLV>CDF OF X AND Y")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
 If K=24:Goto AG
 Lbl AI
 ClrHome
-Output(1,1,"CDF CONVERSIONS        3/3")
-Output(2,1,"stop integrating at")
-Output(3,1,"support edges.")
+Output(1,1,"JOINT CDF F            3/4")
+Output(2,1,"P(a<X≤b,c<Y≤d)=")
+Output(3,1,"F(b,d)-F(a,d)-F(b,c)")
+Output(4,1,"+F(a,c). Corner (a,c) is")
+Output(5,1,"cut twice, so add it back.")
+Output(6,1,"Ex16 a=c=1/2, b=d=1 -")
+Output(7,1,"1-3/8-3/8+1/8=3/8.")
+Output(8,1,"Integer X - a≤X uses a-1.")
+Output(9,1,"Freund Exercise58 p91")
+Output(10,1,"TOOL SOLV>CDF OF X AND Y")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
 If K=24:Goto AH
-Goto 1
 Lbl AJ
+ClrHome
+Output(1,1,"JOINT CDF F            4/4")
+Output(2,1,"TAILS AND MIN/MAX")
+Output(3,1,"P(X>a,Y>b)=1-FX(a)")
+Output(4,1," -FY(b)+F(a,b)")
+Output(5,1,"max(X,Y)≤t - both ≤t")
+Output(6,1," P(max≤t)=F(t,t)")
+Output(7,1,"min(X,Y)≤t - either ≤t")
+Output(8,1," P=FX(t)+FY(t)-F(t,t)")
+Output(9,1,"Freund Ch3 Def7 p84")
+Output(10,1,"TOOL SOLV>CDF>RECTANGLE")
+Repeat Ans:getKey:End
+Ans→K
+If K=45:Goto 1
+If K=24:Goto AI
+Goto 1
+Lbl AK
 ClrHome
 Output(1,1,"INDEPENDENCE           1/3")
 Output(2,1,"Independent iff")
@@ -151,7 +174,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
 If K=24:Goto 1
-Lbl AK
+Lbl AL
 ClrHome
 Output(1,1,"INDEPENDENCE           2/3")
 Output(2,1,"independence.")
@@ -166,51 +189,84 @@ Output(10,1,"not establish a density")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
-If K=24:Goto AJ
-Lbl AL
+If K=24:Goto AK
+Lbl AM
 ClrHome
 Output(1,1,"INDEPENDENCE           3/3")
 Output(2,1,"identity.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
-If K=24:Goto AK
+If K=24:Goto AL
 Goto 1
-Lbl AM
+Lbl AN
 ClrHome
-Output(1,1,"BOUNDS AND WORDS       1/2")
-Output(2,1,"Draw support S and event")
-Output(3,1,"A. Integrate on S")
-Output(4,1,"intersect A. Outer limits")
-Output(5,1,"are constants; inner")
-Output(6,1,"limits may depend on outer")
-Output(7,1,"variable.")
-Output(8,1,"X<Y means y>x. X+Y≤b means")
-Output(9,1,"y≤b-x. Split wherever a")
-Output(10,1,"boundary changes.")
+Output(1,1,"SKETCH + LIMITS        1/4")
+Output(2,1,"Sketch S and the event A.")
+Output(3,1,"Integrate f over S and A.")
+Output(4,1,"Outer limits are numbers.")
+Output(5,1,"Inner limits may use the")
+Output(6,1,"outer variable. dy dx -")
+Output(7,1,"fix x, y runs from the")
+Output(8,1,"lower edge to the upper.")
+Output(9,1,"Freund Ch3 Def8 p85,Ex15")
+Output(10,1,"TOOL SOLV>JOINT DENSITY")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
 If K=24:Goto 1
-Lbl AN
+Lbl AO
 ClrHome
-Output(1,1,"BOUNDS AND WORDS       2/2")
-Output(2,1,"Series device fails if")
-Output(3,1,"either fails. T=min(X,Y).")
-Output(4,1,"P(T≤t)=1-P(X>t,Y>t).")
-Output(5,1,"Parallel device fails")
-Output(6,1,"after both fail.")
-Output(7,1,"T=max(X,Y). P(T≤t)=F(t,t).")
-Output(8,1,"Independence is needed to")
-Output(9,1,"multiply survivals.")
+Output(1,1,"SKETCH + LIMITS        2/4")
+Output(2,1,"Ex f=6x on 0<x<y<1.")
+Output(3,1,"Fixed x - y runs x..1.")
+Output(4,1,"Fixed y - x runs 0..y.")
+Output(5,1,"P(X+Y<1) needs x<y<1-x,")
+Output(6,1,"so x<1/2. Result 1/4.")
+Output(7,1,"Split the region where an")
+Output(8,1,"edge changes formula.")
+Output(9,1,"Guide Ex4.3 p36")
+Output(10,1,"TOOL SOLV>JOINT DENSITY")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 1
-If K=24:Goto AM
+If K=24:Goto AN
+Lbl AP
+ClrHome
+Output(1,1,"SKETCH + LIMITS        3/4")
+Output(2,1,"Complement - P(A)=1-P(A')")
+Output(3,1,"if A' has fewer pieces.")
+Output(4,1,"Infinite support - type")
+Output(5,1,"2nd EE 99; tail numeric.")
+Output(6,1,"Reverse order to check;")
+Output(7,1,"each marginal must")
+Output(8,1,"integrate to 1.")
+Output(9,1,"Freund Ch3 Def10 p92")
+Output(10,1,"TOOL SOLV>JOINT DENSITY")
+Repeat Ans:getKey:End
+Ans→K
+If K=45:Goto 1
+If K=24:Goto AO
+Lbl AQ
+ClrHome
+Output(1,1,"SKETCH + LIMITS        4/4")
+Output(2,1,"X<Y means y>x. X+Y≤b")
+Output(3,1,"means y≤b-x.")
+Output(4,1,"Series device fails if")
+Output(5,1,"either fails. T=min(X,Y).")
+Output(6,1,"P(T≤t)=1-P(X>t,Y>t).")
+Output(7,1,"Parallel fails after both")
+Output(8,1,"fail. T=max(X,Y).")
+Output(9,1,"P(T≤t)=F(t,t).")
+Output(10,1,"Guide 4.2.4 p35, Ex27 p99")
+Repeat Ans:getKey:End
+Ans→K
+If K=45:Goto 1
+If K=24:Goto AP
 Goto 1
 Lbl 2
-Menu("EXPECT AND MOMENTS","EXPECTATION",AO,"LOTUS g(X,Y)",AQ,"LINEARITY",AS,"RAW MOMENTS",AU,"CENTRAL MOMENTS",AW,"SHIFT SCALE",AY,"BACK",M)
-Lbl AO
+Menu("EXPECT AND MOMENTS","EXPECTATION",AR,"LOTUS g(X,Y)",AT,"LINEARITY",AV,"RAW MOMENTS",AX,"CENTRAL MOMENTS",AZ,"SHIFT SCALE",A1,"BACK",M)
+Lbl AR
 ClrHome
 Output(1,1,"EXPECTATION            1/2")
 Output(2,1,"E[X]=sum x*p(x), or")
@@ -226,7 +282,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
 If K=24:Goto 2
-Lbl AP
+Lbl AS
 ClrHome
 Output(1,1,"EXPECTATION            2/2")
 Output(2,1,"The calculator averages")
@@ -237,9 +293,9 @@ Output(6,1,"Freund Ch4 S2 pp113-121.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
-If K=24:Goto AO
+If K=24:Goto AR
 Goto 2
-Lbl AQ
+Lbl AT
 ClrHome
 Output(1,1,"LOTUS g(X,Y)           1/2")
 Output(2,1,"E[g(X)]=sum g(x)p(x), or")
@@ -255,7 +311,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
 If K=24:Goto 2
-Lbl AR
+Lbl AU
 ClrHome
 Output(1,1,"LOTUS g(X,Y)           2/2")
 Output(2,1,"determine general")
@@ -268,9 +324,9 @@ Output(8,1,"FUNCTION g(X).")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
-If K=24:Goto AQ
+If K=24:Goto AT
 Goto 2
-Lbl AS
+Lbl AV
 ClrHome
 Output(1,1,"LINEARITY              1/2")
 Output(2,1,"E[aX+bY+c]=aE[X]+bE[Y]+c.")
@@ -286,7 +342,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
 If K=24:Goto 2
-Lbl AT
+Lbl AW
 ClrHome
 Output(1,1,"LINEARITY              2/2")
 Output(2,1,"E[1_EVENT]=P(EVENT).")
@@ -298,9 +354,9 @@ Output(7,1,"taking expectations.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
-If K=24:Goto AS
+If K=24:Goto AV
 Goto 2
-Lbl AU
+Lbl AX
 ClrHome
 Output(1,1,"RAW MOMENTS            1/2")
 Output(2,1,"Raw rth moment mR=E[X^r].")
@@ -316,7 +372,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
 If K=24:Goto 2
-Lbl AV
+Lbl AY
 ClrHome
 Output(1,1,"RAW MOMENTS            2/2")
 Output(2,1,"moment. Variance needs")
@@ -328,9 +384,9 @@ Output(7,1,"in DENSITY.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
-If K=24:Goto AU
+If K=24:Goto AX
 Goto 2
-Lbl AW
+Lbl AZ
 ClrHome
 Output(1,1,"CENTRAL MOMENTS        1/2")
 Output(2,1,"Central rth")
@@ -346,7 +402,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
 If K=24:Goto 2
-Lbl AX
+Lbl A0
 ClrHome
 Output(1,1,"CENTRAL MOMENTS        2/2")
 Output(2,1,"mu3=m3-3*M*m2+2*M³. mu4 =")
@@ -358,9 +414,9 @@ Output(7,1,"units.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
-If K=24:Goto AW
+If K=24:Goto AZ
 Goto 2
-Lbl AY
+Lbl A1
 ClrHome
 Output(1,1,"SHIFT SCALE            1/2")
 Output(2,1,"E[aX+b]=aM+b.")
@@ -376,7 +432,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
 If K=24:Goto 2
-Lbl AZ
+Lbl A2
 ClrHome
 Output(1,1,"SHIFT SCALE            2/2")
 Output(2,1,"Standardizing alone does")
@@ -385,11 +441,11 @@ Output(4,1,"Freund Ch4 S3 pp121-125.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 2
-If K=24:Goto AY
+If K=24:Goto A1
 Goto 2
 Lbl 3
-Menu("MOMENT GENERATING","DEF AND DOMAIN",A0,"MOMENT DERIVS",A2,"AFFINE AND SUMS",A4,"UNIQUENESS",A6,"BACK",M)
-Lbl A0
+Menu("MOMENT GENERATING","DEF AND DOMAIN",A3,"MOMENT DERIVS",A5,"AFFINE AND SUMS",A7,"UNIQUENESS",A9,"BACK",M)
+Lbl A3
 ClrHome
 Output(1,1,"DEF AND DOMAIN         1/2")
 Output(2,1,"M(t)=E[e^(tX)]. Discrete")
@@ -405,7 +461,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
 If K=24:Goto 3
-Lbl A1
+Lbl A4
 ClrHome
 Output(1,1,"DEF AND DOMAIN         2/2")
 Output(2,1,"density L*e^(-Lx),")
@@ -417,9 +473,9 @@ Output(7,1,"Freund Ch4 S5 pp127-131.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
-If K=24:Goto A0
+If K=24:Goto A3
 Goto 3
-Lbl A2
+Lbl A5
 ClrHome
 Output(1,1,"MOMENT DERIVS          1/2")
 Output(2,1,"M^(r)(0)=E[X^r].")
@@ -435,7 +491,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
 If K=24:Goto 3
-Lbl A3
+Lbl A6
 ClrHome
 Output(1,1,"MOMENT DERIVS          2/2")
 Output(2,1,"K(t)=ln M(t).")
@@ -450,9 +506,9 @@ Output(10,1,"answers by hand.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
-If K=24:Goto A2
+If K=24:Goto A5
 Goto 3
-Lbl A4
+Lbl A7
 ClrHome
 Output(1,1,"AFFINE AND SUMS        1/2")
 Output(2,1,"For Z=aX+b,")
@@ -468,7 +524,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
 If K=24:Goto 3
-Lbl A5
+Lbl A8
 ClrHome
 Output(1,1,"AFFINE AND SUMS        2/2")
 Output(2,1,"Negative a reverses")
@@ -480,9 +536,9 @@ Output(7,1,"e^(bt) for offset.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
-If K=24:Goto A4
+If K=24:Goto A7
 Goto 3
-Lbl A6
+Lbl A9
 ClrHome
 Output(1,1,"UNIQUENESS             1/2")
 Output(2,1,"Equal finite MGFs on a")
@@ -498,7 +554,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
 If K=24:Goto 3
-Lbl A7
+Lbl Aθ
 ClrHome
 Output(1,1,"UNIQUENESS             2/2")
 Output(2,1,"and variance2B for B≥0. If")
@@ -510,11 +566,11 @@ Output(7,1,"moment2/L², variance1/L².")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 3
-If K=24:Goto A6
+If K=24:Goto A9
 Goto 3
 Lbl 4
-Menu("PRODUCT MOMENTS","COVARIANCE",A8,"CORRELATION",Aθ,"ZERO NOT INDEP",BB,"BACK",M)
-Lbl A8
+Menu("PRODUCT MOMENTS","COVARIANCE",BA,"CORRELATION",BC,"ZERO NOT INDEP",BE,"BACK",M)
+Lbl BA
 ClrHome
 Output(1,1,"COVARIANCE             1/2")
 Output(2,1,"Raw product moment")
@@ -530,7 +586,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
 If K=24:Goto 4
-Lbl A9
+Lbl BB
 ClrHome
 Output(1,1,"COVARIANCE             2/2")
 Output(2,1,"a*c*Cov(X,Y). Added")
@@ -541,9 +597,9 @@ Output(6,1,"Freund Ch4 S6 pp131-135.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
-If K=24:Goto A8
+If K=24:Goto BA
 Goto 4
-Lbl Aθ
+Lbl BC
 ClrHome
 Output(1,1,"CORRELATION            1/2")
 Output(2,1,"rho = Cov(X,Y) /")
@@ -559,7 +615,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
 If K=24:Goto 4
-Lbl BA
+Lbl BD
 ClrHome
 Output(1,1,"CORRELATION            2/2")
 Output(2,1,"a,c. Positive scale")
@@ -574,9 +630,9 @@ Output(10,1,"S7.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
-If K=24:Goto Aθ
+If K=24:Goto BC
 Goto 4
-Lbl BB
+Lbl BE
 ClrHome
 Output(1,1,"ZERO NOT INDEP         1/2")
 Output(2,1,"Thm12 p134. Independent =>")
@@ -592,7 +648,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
 If K=24:Goto 4
-Lbl BC
+Lbl BF
 ClrHome
 Output(1,1,"ZERO NOT INDEP         2/2")
 Output(2,1,"But f(-1,-1)=1/6 while")
@@ -604,11 +660,11 @@ Output(7,1,"LINEAR association.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 4
-If K=24:Goto BB
+If K=24:Goto BE
 Goto 4
 Lbl 5
-Menu("ONE AND TWO COMBOS","ONE COMBINATION",BD,"TWO COMBINATIONS",BF,"MATRIX SHORTCUT",BH,"BACK",M)
-Lbl BD
+Menu("ONE AND TWO COMBOS","ONE COMBINATION",BG,"TWO COMBINATIONS",BI,"MATRIX SHORTCUT",BK,"BACK",M)
+Lbl BG
 ClrHome
 Output(1,1,"ONE COMBINATION        1/2")
 Output(2,1,"W=c+sum ai*Xi. Mean=c+sum")
@@ -624,7 +680,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 5
 If K=24:Goto 5
-Lbl BE
+Lbl BH
 ClrHome
 Output(1,1,"ONE COMBINATION        2/2")
 Output(2,1,"pairwise covariances")
@@ -634,9 +690,9 @@ Output(5,1,"Freund Ch4 S7 pp136-138.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 5
-If K=24:Goto BD
+If K=24:Goto BG
 Goto 5
-Lbl BF
+Lbl BI
 ClrHome
 Output(1,1,"TWO COMBINATIONS       1/2")
 Output(2,1,"U=sum ai*Xi+c, V=sum")
@@ -652,7 +708,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 5
 If K=24:Goto 5
-Lbl BG
+Lbl BJ
 ClrHome
 Output(1,1,"TWO COMBINATIONS       2/2")
 Output(2,1,"are independent.")
@@ -662,9 +718,9 @@ Output(5,1,"LINEAR COMBOS.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 5
-If K=24:Goto BF
+If K=24:Goto BI
 Goto 5
-Lbl BH
+Lbl BK
 ClrHome
 Output(1,1,"MATRIX SHORTCUT        1/2")
 Output(2,1,"Put variances on")
@@ -680,7 +736,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 5
 If K=24:Goto 5
-Lbl BI
+Lbl BL
 ClrHome
 Output(1,1,"MATRIX SHORTCUT        2/2")
 Output(2,1,"[B]*[A]*transpose([B])")
@@ -695,11 +751,11 @@ Output(10,1,"the guided app.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 5
-If K=24:Goto BH
+If K=24:Goto BK
 Goto 5
 Lbl 6
-Menu("CONDITIONING AND HELP","CONDITIONAL MEAN",BJ,"CONDITIONAL VAR",BL,"TOTAL LAWS",BN,"CHOOSE A SOLVER",BP,"INPUT AND LIMITS",BS,"BACK",M)
-Lbl BJ
+Menu("CONDITIONING AND HELP","CONDITIONAL MEAN",BM,"CONDITIONAL VAR",BO,"TOTAL LAWS",BQ,"CHOOSE A SOLVER",BS,"INPUT AND LIMITS",BV,"BACK",M)
+Lbl BM
 ClrHome
 Output(1,1,"CONDITIONAL MEAN       1/2")
 Output(2,1,"E[g(X)|Y=y] averages g")
@@ -715,7 +771,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
 If K=24:Goto 6
-Lbl BK
+Lbl BN
 ClrHome
 Output(1,1,"CONDITIONAL MEAN       2/2")
 Output(2,1,"support. E[X|Y=y]=m(y) is")
@@ -729,9 +785,9 @@ Output(9,1,"given value.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BJ
+If K=24:Goto BM
 Goto 6
-Lbl BL
+Lbl BO
 ClrHome
 Output(1,1,"CONDITIONAL VAR        1/2")
 Output(2,1,"Let m=E[X|Y=y] and")
@@ -747,7 +803,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
 If K=24:Goto 6
-Lbl BM
+Lbl BP
 ClrHome
 Output(1,1,"CONDITIONAL VAR        2/2")
 Output(2,1,"marginal. A constant")
@@ -758,9 +814,9 @@ Output(6,1,"Freund Ch4 S8 pp138-140.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BL
+If K=24:Goto BO
 Goto 6
-Lbl BN
+Lbl BQ
 ClrHome
 Output(1,1,"TOTAL LAWS             1/2")
 Output(2,1,"Supplement from BT S4.3.")
@@ -776,7 +832,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
 If K=24:Goto 6
-Lbl BO
+Lbl BR
 ClrHome
 Output(1,1,"TOTAL LAWS             2/2")
 Output(2,1,"recover marginal moments")
@@ -786,9 +842,9 @@ Output(5,1,"direct normalization step.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BN
+If K=24:Goto BQ
 Goto 6
-Lbl BP
+Lbl BS
 ClrHome
 Output(1,1,"CHOOSE A SOLVER        1/3")
 Output(2,1,"From SOLVERS, finite")
@@ -804,7 +860,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
 If K=24:Goto 6
-Lbl BQ
+Lbl BT
 ClrHome
 Output(1,1,"CHOOSE A SOLVER        2/3")
 Output(2,1,"DENSITY+INTEGRAL, 1D.")
@@ -819,8 +875,8 @@ Output(10,1,"LINEAR COMBOS. Given MGF")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BP
-Lbl BR
+If K=24:Goto BS
+Lbl BU
 ClrHome
 Output(1,1,"CHOOSE A SOLVER        3/3")
 Output(2,1,"=> MGF TOOLS. Derivations")
@@ -828,9 +884,9 @@ Output(3,1,"=> ENCYCLOPEDIA.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BQ
+If K=24:Goto BT
 Goto 6
-Lbl BS
+Lbl BV
 ClrHome
 Output(1,1,"INPUT AND LIMITS       1/3")
 Output(2,1,"Programs use A-Z, theta,")
@@ -846,7 +902,7 @@ Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
 If K=24:Goto 6
-Lbl BT
+Lbl BW
 ClrHome
 Output(1,1,"INPUT AND LIMITS       2/3")
 Output(2,1,"parameter in 1D slices.")
@@ -861,8 +917,8 @@ Output(10,1,"data and target. SOLVERS")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BS
-Lbl BU
+If K=24:Goto BV
+Lbl BX
 ClrHome
 Output(1,1,"INPUT AND LIMITS       3/3")
 Output(2,1,"uses your current model.")
@@ -876,7 +932,7 @@ Output(9,1,"it.")
 Repeat Ans:getKey:End
 Ans→K
 If K=45:Goto 6
-If K=24:Goto BT
+If K=24:Goto BW
 Goto 6
 Lbl Z
 ClrHome

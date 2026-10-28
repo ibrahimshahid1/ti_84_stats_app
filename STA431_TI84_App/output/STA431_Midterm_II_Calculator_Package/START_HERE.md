@@ -1,6 +1,6 @@
 # STA 431 Midterm II calculator suite
 
-Start with **PRGM > STAM2 > ENTER** after transferring all 14 programs.
+Start with **PRGM > STAM2 > ENTER** after transferring all 16 programs.
 This is a TI-BASIC suite for the TI-84 Plus CE. It runs from PRGM, not APPS.
 It follows the Midterm I suite's menu and encyclopedia style, with separate program names,
 and it covers STA 431 material only.
@@ -8,24 +8,25 @@ and it covers STA 431 material only.
 ## Transfer
 
 1. Open TI Connect CE on your computer and connect your calculator by USB.
-2. Open Calculator Explorer. Drag **all 14 `.8xp` files** from `calculator_files` onto the
+2. Open Calculator Explorer. Drag **all 16 `.8xp` files** from `calculator_files` onto the
    connected calculator. Send them as programs; do not send the Python or text source files.
 3. Archive the Midterm I programs first (see **Memory** below), then run STAM2 from PRGM.
-   Keep all 14 programs together, because STAM2 calls the helper programs.
+   Keep all 16 programs together, because STAM2 calls the helper programs.
 4. Run the device checks below before the exam.
 
 Official TI Connect CE software: https://education.ti.com/en/products/computer-software/ti-connect-ce-sw
 
-The 14 programs: STAM2 (launcher), M2DISC (finite tables), M2JNT (joint densities: support,
-events and written limits), M2GL (integration library used by M2JNT), M2PLY (polynomial and
-text library used by M2JNT), M2CONT (densities and numeric integrals), M2SLICE (joint
+The 16 programs: STAM2 (launcher), M2DISC (finite tables), M2JNT (joint densities: support,
+events and written limits), M2JAN (joint-density formulas, moments, given-value and independence
+helper called by M2JNT), M2CDF (joint CDF F(x,y) solver), M2GL (integration library used by M2JNT), M2PLY (polynomial and
+text library used by M2JNT and M2CDF), M2CONT (densities and numeric integrals), M2SLICE (joint
 conditional slices), M2MGF (MGFs), M2COV (linear combinations), M2ENC (encyclopedia), M2EXAM
 (FIND MY SOLVER question finder), M2HW (homework walkthroughs), M2RUN (homework practice data)
 and M2FMT (number formatting).
 
 ## Memory
 
-The Midterm I suite takes about 139 KB and this suite about 85 KB, but the CE has only about
+The Midterm I suite takes about 139 KB and this suite about 105 KB, but the CE has only about
 154 KB of user RAM. Archive the Midterm I programs (STA431, STAE1, STAE2, STAE3, STAHNT, STACNT,
 STAPRB, STARV, STAFMT) so they move to archive memory:
 
@@ -53,12 +54,13 @@ types T, θ or n). HOW TO ENTER shows this as `X=X,T,θ,n(FUNC)`.
 |---|---|---|
 | ENCYCLOPEDIA | (topic menus) | Definitions, method choice, derivation outlines, support rules, formulas and cautions, with Freund citations. Keys: ENTER next page, LEFT previous, CLEAR topic menu. |
 | SOLVERS | DISCRETE TABLE | Finite PMFs and joint tables: manual rows or FORMULA/GRID entry, raw weights, c, means, variances, covariance, correlation, marginals, conditionals, events, functions, raw and central product moments. Up to 30 rows; each (x,y) pair distinct. |
-| SOLVERS | JOINT DENSITY | A joint PDF f = c·q(x,y): type q, pick the support (rectangle, the two triangles, x+y<k, the quadrant, custom linear bounds or a curved region), and it prints the total and c. EVENTS + LIMITS then gives any event's probability with the words → math step, the written iterated integral (c, q, the order, every piece's limits and value), both orders of integration, complements and P(A\|B). Exact fractions for a polynomial q on a straight-edged finite support. `ᴇ99` means infinity. See **Joint densities** below. |
+| SOLVERS | JOINT DENSITY | A joint PDF f = c·q(x,y): type q, pick the support (rectangle, the two triangles, x+y<k, the quadrant, custom linear bounds or a curved region), and it prints the total and c. EVENTS + LIMITS then gives any event's probability with the words → math step, the written iterated integral (c, q, the order, every piece's limits and value), both orders of integration, complements and P(A\|B). FORMULAS prints g(x), h(y), w(y\|x), f(x\|y), E(Y\|X=x) and E(X\|Y=y) with their supports; MOMENTS + COV gives the means, variances, Cov, ρ and E[g(X,Y)]; GIVEN A VALUE gives the conditional density, mean, variance and P(a<X<b\|Y=y) at a typed value; INDEP + CDF tests independence (with a witness point) and gives F(s,t) and the F(x,y) formula. Exact fractions for a polynomial q on a straight-edged finite support. `ᴇ99` means infinity. See **Joint densities** below. |
+| SOLVERS | CDF OF X AND Y | A joint CDF F(x,y): type F and its rectangular support a<x<b, c<y<d (`ᴇ99` = infinity). RECTANGLE PROB (a<X≤b,c<Y≤d by the four-corner rule, X>a AND Y>b, MIN/MAX ≤ t), MARGINAL CDFs FX(x)=F(x,d) and FY(y)=F(b,y), PDF f FROM F (f=d²F/dxdy, an exact formula for a polynomial F), and F FROM A PDF f (opens JOINT DENSITY at X≤s AND Y≤t). Every result screen starts with the formula. See **Joint CDF** below. |
 | SOLVERS | DENSITY+INTEGRAL | Finite-bound densities and conditional slices: mean and variance, interval probability, E[g(X)], raw/central moments; DOUBLE INTEGRAL with explicit bounds and outer Simpson quadrature (NEW N reruns the same region with another N); JOINT SLICE for numeric marginal and conditional values. Every bound must be finite (see **Finite bounds** below). |
 | SOLVERS | MGF TOOLS | Exponential-rate and quadratic-log MGF templates with Z=aX+b; numeric moments for a typed M(t); transformed MGF values. |
 | SOLVERS | LINEAR COMBOS | One or two linear combinations of up to 3 variables, means optional, with covariance and correlation. |
 | HELP | FIND MY SOLVER | Describe the given data and what is asked; it shows the recipe and opens the matching solver. |
-| HELP | HOW TO ENTER | Two pages: the keys (X in FUNC mode, Y = ALPHA 1, TEST menu, `𝑒^(`, `√(`, the (-) key, fractions, lists, `ᴇ99` for infinity, which only JOINT DENSITY accepts in this version, what to do on an error) and Freund notation (g(x), h(y), f(x\|y), w(y\|x), μ'r, μr, σXY, ρ). ENTER goes to the next page; CLEAR or LEFT on page 1 goes back to HELP. |
+| HELP | HOW TO ENTER | Two pages: the keys (X in FUNC mode, Y = ALPHA 1, TEST menu, `𝑒^(`, `√(`, the (-) key, fractions, lists, `ᴇ99` for infinity, which only JOINT DENSITY and CDF OF X AND Y accept in this version, what to do on an error) and Freund notation (g(x), h(y), f(x\|y), w(y\|x), μ'r, μr, σXY, ρ). ENTER goes to the next page; CLEAR or LEFT on page 1 goes back to HELP. |
 | HELP | LIMITS + CAVEATS | What still needs your own reasoning, and the size limits: table rows ≤ 30, linear combinations of ≤ 3 variables, finite bounds in DENSITY+INTEGRAL. |
 | HOMEWORK PRACTICE | WALKTHROUGHS | The STA 431 Homework 4 and 5 problems: model and input strategy. |
 | HOMEWORK PRACTICE | LOAD PRACTICE DATA | Loads a homework problem's data into a solver (13 presets). The solver computes every number; no answers are stored. |
@@ -76,7 +78,8 @@ Choose the homework group and question. All 13 STA 431 problem models (HW4 Q1 to
 Q8) are supplied as input presets. The general solvers compute the results; the loader stores no
 answers. HW4 Q2, Q3 and Q5 load the density and its rectangle into JOINT DENSITY: you land on
 its menu with the model summary already shown, so pick EVENTS + LIMITS and the event (MIN/MAX VS t
-for Q3, X<Y for Q5). For a changed exam problem, enter your own data in SOLVERS instead of loading a
+for Q3, X<Y for Q5). HW5 Q7 loads q=X+Y on the unit square into JOINT DENSITY: pick GIVEN A VALUE >
+GIVEN Y=y and type the value. For a changed exam problem, enter your own data in SOLVERS instead of loading a
 preset.
 
 ## Fastest table entry: FORMULA/GRID
@@ -133,8 +136,52 @@ expression and hope a zero mask will repair it.
 6. **Curved supports** offer one event, `CURVED SUB-REGION`: a<x<b with lower and upper y formulas
    in X, clipped to the support.
 
-FORMULAS, MOMENTS + COV, GIVEN A VALUE and INDEP + CDF arrive with the next update; for now they show
-`COMING IN THIS VERSION` and return to the menu.
+7. **FORMULAS** (polynomial q on a straight-edged support only; otherwise use GIVEN A VALUE).
+   `g(x) MARGINAL` / `h(y) MARGINAL` show the definition (`g(x)=fX(x)`, `=∫f(x,y) dy`, Freund Def11
+   p93), then one piece per strip: `FOR 0<x<1`, `y FROM 0 TO x`, `g(x)=3x²`, then `0 ELSEWHERE` and
+   `CHECK ∫g dx=1`. `w(y|x)` / `f(x|y) CONDITIONAL` divide f by the marginal (Def13 p96) and cancel
+   common factors: `f(x|y)=(2x+y)/(1+y)`, with `FOR 0<y<2` / `AND 0<x<1` and `ONLY WHERE h(y)>0`.
+   `E(Y|X=x)` / `E(X|Y=y) FORMULA` print the conditional mean as a function (Ch4 Def10 p138), for
+   example `(2/3+2/3x+2/3x²)/(1+x)`.
+8. **MOMENTS + COV.** `MEANS VARS COV ρ` lists E(X), E(Y), E(X²), E(Y²), E(XY), the variances,
+   `Cov=E(XY)-E(X)E(Y)` with the numbers plugged in, and ρ (a fraction, or `√(p/q)` with the
+   decimal). `E[g(X,Y)]` takes a typed g (for example `X*Y` or `(X-Y)²`) and gives E(g), E(g²) and
+   Var(g). Exact for polynomials, numeric (2 passes) otherwise.
+9. **GIVEN A VALUE.** `GIVEN X=x` or `GIVEN Y=y`, then type the value: the marginal value with its
+   integral and limits (`h(1/2)=∫f(x,1/2) dx`, `x FROM 0 TO 1`), the conditional density
+   (`f(x|1/2)=f(x,1/2)/h(1/2)`, `=1/2+x`, `FOR 0<x<1` for a polynomial q), E, E of the square and
+   Var. Then `P(a<X<b | Y=y)` (ᴇ99 = infinity) or `NEW VALUE`. A value outside the support shows
+   `CONDITIONAL UNDEFINED`. Curved supports allow GIVEN X=x only.
+10. **INDEP + CDF.** `INDEPENDENCE TEST`: a support that is not a rectangle gives DEPENDENT with a
+   point where f=0 but g·h>0 (`f(1/4,1/2)=0`, `BUT g(1/4)h(1/2)=27/128`); on a rectangle a
+   polynomial q is tested exactly (`RANK 1, SO f=g(x)h(y)` with g and h, or a point where f≠g·h);
+   other models are compared on a 3×3 grid (`NUMERIC EVIDENCE`). `F(s,t) AT A POINT` runs the event
+   X≤s AND Y≤t (limits and pieces shown). `F(x,y) FORMULA` (polynomial q on a rectangle) prints
+   F inside the rectangle (Freund Ex16: `1/2x²y+1/2xy²`), F(x,d) above it, F(b,y) to its right, 1
+   beyond both and 0 below or left.
+
+## Joint CDF: SOLVERS > CDF OF X AND Y
+
+1. **NEW F(X,Y).** Type F with X and Y (for example `X*Y*(X+Y)/2` or `(1-𝑒^(⁻X))*(1-𝑒^(⁻2Y))`),
+   then a, b, c, d of the support a<x<b, c<y<d (`ᴇ99` = infinity, `⁻ᴇ99` = minus infinity).
+   CHECK F shows F(a,c) (must be 0), F(b,d) (must be 1), whether f≥0 at 9 test points, and
+   `EXACT (POLYNOMIAL)` (a polynomial F on a finite box: fractions and formulas) or
+   `NUMERIC (NOT POLYNOMIAL)` (decimals). The F stays loaded for every item until NEW F(X,Y).
+2. **RECTANGLE PROB** asks which event:
+   * `a<X≤b,c<Y≤d`: `P=F(b,d)-F(a,d)-F(b,c)+F(a,c)` with the four corner values. A corner left of
+     or below S counts 0; a corner past the top is cut back to b or d (type `ᴇ99` for "no upper
+     limit"). For integer-valued X,Y and a≤X type a-1 (same for c).
+   * `X>a AND Y>b`: `P(X>a,Y>b)=1-FX(a)-FY(b)+F(a,b)`, with FX(a)=F(a,d) and FY(b)=F(top of x,b)
+     written with the support ends.
+   * `MIN/MAX ≤ t`: `P(max≤t)=F(t,t)` (ONLY IF BOTH) and `P(min≤t)=FX(t)+FY(t)-F(t,t)`
+     (FAILS IF EITHER FAILS, =1-P(X>t,Y>t)).
+3. **MARGINAL CDFs** asks for x and y: FX(x)=F(x,d) and FY(y)=F(b,y) with the ends substituted, the
+   formula (polynomial F, e.g. `1/4x+1/8x²`) and the values.
+4. **PDF f FROM F**: f=d²F/dxdy. Polynomial F gives the formula (e.g. `3/2x²+2xy`); otherwise type a
+   point at least .01 inside S and it prints the Richardson mixed difference (4D(h/2)-D(h))/3, h=.01.
+5. **F FROM A PDF f** shows F(s,t)=P(X≤s,Y≤t)=∫∫ f over x≤s, y≤t in S, then opens JOINT DENSITY:
+   type q and its support, then s and t; it writes the limits and pieces of F(s,t). After BACK the
+   CDF solver asks for a new F (JOINT DENSITY reuses its strings).
 
 ## Full tables and joint slices
 
@@ -146,8 +193,9 @@ SOLVERS > DENSITY+INTEGRAL > JOINT SLICE handles X GIVEN Y or Y GIVEN X. Enter a
 q(X,Y), its known positive multiplier c (use 1 if q is already the joint PDF), the given value,
 and the remaining variable's slice limits. It reports the numeric marginal density value and the
 conditional moments. PDF AT POINT and INTERVAL PROB answer further conditional questions; NEW
-GIVEN VALUE reuses the model. A marginal density value is not P(Y=y), and this version does not
-give a symbolic marginal-density formula.
+GIVEN VALUE reuses the model. A marginal density value is not P(Y=y). For a symbolic marginal or
+conditional formula, or exact fractions for a polynomial q, use SOLVERS > JOINT DENSITY > FORMULAS
+or GIVEN A VALUE instead (it computes c itself).
 
 ## Device checks
 
@@ -200,6 +248,16 @@ expected value can be checked by hand.
    EVENTS > COMPLEMENT OF… > X+Y≤k with k 1 shows `P(A')=1-P(A)`, `=1-1/8`, `=7/8`. For q = `X*Y` on
    TRI a<X<Y<b with 0, 1 (c=8): P(A|B) with A = a<X<b ONLY 0, 1/2 and B = aX+bY≤c with a 0, b -1,
    c -1/2 (that is Y≥1/2) gives P(A AND B)=3/8, P(B)=15/16 and P(A|B)=2/5.
+14. **Joint CDF, Freund Ex16.** SOLVERS > CDF OF X AND Y > NEW F(X,Y), F = `X*Y*(X+Y)/2`, support
+   0, 1, 0, 1: CHECK F shows F(a,c)=0, F(b,d)=1 and `EXACT (POLYNOMIAL)`. PDF f FROM F gives
+   `f(x,y)=x+y`. RECTANGLE PROB > a<X≤b,c<Y≤d with 1/2, 1, 1/2, 1 gives P=3/8. MARGINAL CDFs shows
+   `FX(x)=1/2x+1/2x²`. With F = `(1-𝑒^(⁻X))*(1-𝑒^(⁻Y))` on 0, ᴇ99, 0, ᴇ99 (Ex17), PDF f FROM F at
+   1, 1 gives about .135335 (e^(-2)).
+15. **Joint formulas and moments, Mock 4 Q3 / Freund Ex20.** JOINT DENSITY, q = `X*Y` on TRI
+   a<X<Y<b with 0, 1: FORMULAS > `f(x|y) CONDITIONAL` shows `(2x)/(y²)`; GIVEN A VALUE > GIVEN Y=y
+   3/4, then P(a<X<b | Y=y) with 0, 1/2 gives P=4/9. q = `2/3*(X+2Y)` on RECT 0, 1, 0, 1: GIVEN Y=y
+   1/2 shows E(X|Y=1/2)=5/9 and Var(X|Y=1/2)=13/162. q = `4X*Y` on RECT 0, 1, 0, 1: INDEP + CDF >
+   INDEPENDENCE TEST shows `g(x)=2x`, `h(y)=2y`, `=> INDEPENDENT`.
 
 ## What the numeric tools mean
 
@@ -268,6 +326,6 @@ physical-calculator qualification. Test the transferred programs with the cases 
 
 Inside `source_code`, install `requirements.txt` into a Python environment, then run
 `python3 tools/build_package.py /path/to/new/package`. It regenerates the generated programs,
-runs both linters and every test, rebuilds the 14 `.8xp` files, checks the memory budget
+runs both linters and every test, rebuilds the 16 `.8xp` files, checks the memory budget
 (118,000 bytes) and writes the package and its .zip. `python3 tools/play.py` drives the suite key
 by key in the simulator (for example `play.py add S m:SOLVERS m:BACK m:QUIT`).

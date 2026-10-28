@@ -3,7 +3,7 @@
 # * Pieces read "x FROM a TO b" / " y FROM l TO u" / " PIECE=v" (the plan wrote "x: a TO b"): a colon
 #   ends a TI string (tibuild lint WARN). Messages with a colon are split or use " - ":
 #   "BOUNDS MUST BE LINEAR"/"USE CURVED OR SPLIT", "UPPER BELOW LOWER"/"SPLIT THE REGION",
-#   "COMING IN THIS VERSION"/"USE EVENTS + LIMITS", "P(B)=0 - UNDEFINED", "q<0 SOMEWHERE"/"NOT A VALID PDF".
+#   (P2 stub texts for the analysis items, replaced in LEAN-B by M2JAN), "P(B)=0 - UNDEFINED", "q<0 SOMEWHERE"/"NOT A VALID PDF".
 # * A1: the complement is written A' (Freund's notation; the CE font has no ᶜ). The menu item is
 #   "COMPLEMENT OF…" (the … token: tivars turns "..." into it). The |X-Y| submenu item ">k" reads
 #   "|X-Y| >k" ("|>" would tokenize as ►). The curved event item is "CURVED SUB-REGION" (the plan's
@@ -191,7 +191,8 @@ class Regions(unittest.TestCase):
         acts = [m('FORMULA/GRID'), i('{1,2}'), i('{1,2,3,4}'), i('X+Y'), m('EVENT PROB')]
         for event, want in [('X>Y', gt), ('X+Y≤3', le3), ('X≤Y', 1 - gt), ('X+Y>3', 1 - le3)]:
             r = run('M2DISC', acts + [m('P(EVENT)'), i(event), BACK, BACK, BACK])
-            self.assertIn('P(EVENT | GIVEN)=', r.text)
+            self.assertIn('P(EVENT)=', r.text)
+            self.assertNotIn('GIVEN)=', r.text)
             self.assertAlmostEqual(float(r.var('W')), float(want), delta=1e-12)
             self.assertIn(fs(want), r.text)
         self.assertEqual((1 - gt, 1 - le3), (Fr(29, 32), Fr(3, 4)))
@@ -655,12 +656,15 @@ class ModelEntry(unittest.TestCase):
         r = joint([m('EVENTS + LIMITS'), i('X+Y'), m('RECT'), i(0), i(1), i(0), i(1), BACK])
         titles = [s['menu']['title'] for s in r.screens if s['event'] == 'menu']
         self.assertEqual(titles[:4], ['JOINT DENSITY', 'SUPPORT', 'EVENT', 'JOINT DENSITY'])
-        # P3 items: a short note, then the top menu again (the model is kept)
-        for item in ['FORMULAS', 'MOMENTS + COV', 'GIVEN A VALUE', 'INDEP + CDF']:
-            r = joint(rect('X+Y', 0, 1, 0, 1) + [m(item)])
-            self.assertIn('COMING IN THIS VERSION', r.text)
-        r = joint([m('FORMULAS'), i('X+Y'), m('RECT'), i(0), i(1), i(0), i(1)])
-        self.assertIn('COMING IN THIS VERSION', r.text)
+        # LEAN-B: each analysis item opens its own menu in the helper M2JAN (the model is kept)
+        for item, title in [('FORMULAS', 'FORMULAS'), ('MOMENTS + COV', 'MOMENTS + COV'),
+                            ('GIVEN A VALUE', 'GIVEN A VALUE'), ('INDEP + CDF', 'INDEP + CDF')]:
+            r = joint(rect('X+Y', 0, 1, 0, 1) + [m(item), BACK])
+            self.assertNotIn('COMING IN THIS VERSION', r.text)
+            self.assertIn(title, [s['menu']['title'] for s in r.screens if s['event'] == 'menu'])
+        r = joint([m('FORMULAS'), i('X+Y'), m('RECT'), i(0), i(1), i(0), i(1), BACK])
+        self.assertEqual([s['menu']['title'] for s in r.screens if s['event'] == 'menu'][:3],
+                         ['JOINT DENSITY', 'SUPPORT', 'FORMULAS'])
         self.assertEqual(r.var('Z'), 0)
 
     def test_z99_preload_lands_on_the_analysis_menu(self):

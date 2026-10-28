@@ -293,3 +293,113 @@ tokenized bytes (plan budget 12,000 for P2+P3, hard cap +15% = 13,800); see "Not
   Str7. Add any new ʟM2Q* names to M2PLY's θ=9 cleanup, and new ʟM2K* names to M2GL's.
 * M2CONT still has the dead preset hooks for codes 2, 3, 5 (now unused); P3 deletes them with the
   DOUBLE INTEGRAL. The test_menu_tree CANNED table has the M2JNT prompts; add new ones there.
+
+## LEAN-A
+
+**Status: done** (reduced P4, budget mode: M2CDF only; no EXP PAIR TEMPLATE, no M2ONE; M2CONT stays).
+§0A **A3 implemented** (tails + min/max from F, formula line first on every result, HW4 Q3/Q5 and
+both R3 variants through M2CDF). R1, R3 (CDF half), R4 pages done.
+
+### What was built
+* **src/M2CDF.txt** (new, SOLVERS > CDF OF X AND Y). Top menu `JOINT CDF`: NEW F(X,Y), RECTANGLE
+  PROB (submenu `a<X≤b,c<Y≤d`, `X>a AND Y>b`, `MIN/MAX ≤ t`, BACK), MARGINAL CDFs, PDF f FROM F,
+  F FROM A PDF f, BACK. An item chosen without a model runs NEW F first, then continues (route G).
+  * NEW F: Input `F(X,Y)?` (VARCHECK "XY"), `a=LOWER X?` … `d=UPPER Y?` (ᴇ99 = ∞, |finite|<1ᴇ5,
+    a<b and c<d). Str2 = F with X,Y → (ʟM2FX),(ʟM2FY), so one expr( evaluates F on point lists.
+    RECOVER2 → E=1 (EXACT) when F is a polynomial on a finite box; ʟM2FA keeps the 5×5 table.
+    CHECK F screen: F(a,c) MUST BE 0, F(b,d) MUST BE 1 (+ `CHECK F AND ITS SUPPORT`), f≥0 at a 3×3
+    grid (numeric mixed difference), EXACT (POLYNOMIAL) / NUMERIC (NOT POLYNOMIAL).
+  * CL (clipped corners): F̃=0 left of/below S, else F(min(x,b),min(y,d)); one `F(x,y)=v` row each.
+  * RECTANGLE RULE / BOTH EXCEED / MIN/MAX screens start with the formula (`=F(b,d)-F(a,d)`,
+    `P(X>a,Y>b)=1-FX(a)`, `FX(a)=F(a,2)`, `P(max≤t)=F(t,t)`, `ONLY IF BOTH = max≤t`,
+    `FAILS IF EITHER FAILS`, `= min≤t =1-P(X>t,Y>t)`), then corner values, then the result.
+  * MARGINAL CDFs: `FX(x)=F(x,d)` / `FY(y)=F(b,y)` with ends substituted, POLYSTR formula when
+    exact, values at a typed x and y. PDF f FROM F: `f=d²F/dxdy`; exact → POLY2STR of
+    a_ij=(i+1)(j+1)b_(i+1,j+1); else Richardson (4D(h/2)-D(h))/3, h=.01, point ≥.01 inside S.
+  * F FROM A PDF f: recipe screen, then `97→Z:prgmM2JNT`; afterwards N=0 (F must be re-entered).
+  * Pager PG copied from M2JNT (Str0 = "θTITLEθline…θ", wraps at 26 display columns).
+* **M2PLY θ=4 POLY2STR** (the planned P3 interface): ʟM2QA n×n, n=ʟM2QS(3) → Str7.
+* **M2JNT Z=97**: NEW MODEL, then straight to EVENTS > X≤s AND Y≤t (Lbl GQ sets L=0).
+* STAM2 SOLVERS: DISCRETE TABLE, JOINT DENSITY, CDF OF X AND Y, DENSITY+INTEGRAL, MGF TOOLS, LINEAR
+  COMBOS, BACK (7). HOW TO ENTER row `(JOINT DENSITY AND CDF)`. M2EXAM WRITTEN REASONING gains
+  `JOINT CDF GIVEN` (F6) → recipe page → prgmM2CDF (27 routes).
+* Encyclopedia (write_content.py, JOINT LAWS section, `pt()` helper for hand-laid pages): topic
+  `JOINT CDF F` (F from f, f from F, rectangle rule, tails/min/max) replaces CDF CONVERSIONS;
+  `SKETCH + LIMITS` (sketch/inner-outer, Guide Ex4.3 order + splitting, complement/infinite,
+  words) replaces BOUNDS AND WORDS. Each page has a Freund Ch3 (or Guide) citation and a TOOL line.
+* START_HERE: 15 programs, ~92 KB, SOLVERS row, `## Joint CDF` section, device check 14.
+
+### M2CDF interface
+* Z=0 normal; **Z=99**: Str1=F(X,Y), ʟM2FM={a,b,c,d} (±ᴇ99 = ±∞) preloaded, no prompts.
+* Results: M = last probability (P(min≤t) for MIN/MAX, P(X>a,Y>b), rectangle P, numeric f(x,y));
+  P = P(max≤t). E = exact flag, N = model loaded.
+* Uses ʟM2F* (FM FA FC FD FX FY FZ FV FP FG FW), Str0, Str2, Str6–Str9; BACK deletes ʟM2F* and runs
+  M2PLY/M2GL θ=9. Registers A–H, L–P local (G route, F return code of CL/FD/PG).
+
+### Tests
+* NEW tests/test_cdf.py (12): R3 polynomial (f, FX, FY, 25/256, 1/2, 1/16, 1/2), HW4 Q3 (1/8, FX(1)
+  3/8, 3/8, 5/8, `1/4x+1/8x²`), HW4 Q5 (`1/2x+1/4y`, F(1/2,1)=1/8, FX, FY), Freund Ex16 with an ᴇ99
+  corner (3/8, f=x+y), exponential pair (.546572343960, e^-3, 1-e^-3, f(1,1)≈2e^-3), a non-HW
+  numeric f point + edge guard, F FROM A PDF f handoffs (1/8 for (X+Y)/8 and (2X+Y)/4), model
+  cleared after handoff, finder route, R4 page checks, VARCHECK/UPPER BELOW LOWER/|bound| guards,
+  Z=99, step budget. All expected values from sympy/Fraction in the test.
+* Updated: test_menu_tree (SOLVERS shape, CANNED M2CDF prompts, M2CDF module, new route test),
+  test_reference_navigation (walk + JOINT CDF title), test_exam_assistant (27 routes).
+* Totals: 14 test files green (test_cdf 12, test_menu_tree 15 incl. the M2CDF/M2JNT handoff paths);
+  build_package succeeded: 15 programs, 92,948 bytes (limit 118,000), 260 checks; both linters
+  0 errors / 0 warnings. M2ENC 25,079 B tokenized, M2JNT 12,317 B.
+
+## LEAN-B
+
+**Status: done** (reduced P3, budget mode). §0A **A4 implemented** (F(s,t) through INDEP + CDF for
+HW4 Q3's (X+Y)/8 and HW4 Q5's (2X+Y)/4, and the F FORMULA x²y/4+xy²/8). Not done (budget):
+retiring M2SLICE / M2CONT DOUBLE INTEGRAL, PRODUCT MOMENT r,s, VAR(aX+bY+c), E[g(Y)] GIVEN.
+
+### What was built
+* **src/M2JAN.txt** (new, 11,848 B tokenized): analysis helper called by M2JNT with the item in H.
+  * FORMULAS (polynomial q, straight-edged finite support; else "FORMULAS NEED A POLYNOMIAL…USE
+    GIVEN A VALUE"): g(x)/h(y) per strip (definition line, Freund Def11 p93, `FOR a<x<b`,
+    `y FROM l TO u`, formula, `0 ELSEWHERE`, `CHECK ∫g dx=1`); w(y|x)/f(x|y) (Def13 p96) and
+    E(Y|X=x)/E(X|Y=y) (Ch4 Def10 p138) as `(N)/(D)` after cancelling common linear factors
+    (candidates 0, ±1, piece ends, where the limits meet; synthetic division), normalised by D's
+    lowest coefficient; `ONLY WHERE g(x)>0`.
+  * MOMENTS + COV: MEANS VARS COV ρ (E X, E Y, E X², E Y², E XY, Var with formula, Cov with the
+    numbers plugged in, ρ as fraction or ±√(p/q) + decimal) and E[g(X,Y)] (E g, E g², Var g).
+    One M2GL 2-D pass (EXACT) or two (NUMERIC, §4.5 labels). A = Cov.
+  * GIVEN A VALUE: GIVEN X=x / Y=y → marginal value with its integral and limits, "DENSITY, NOT A
+    POINT PROB", conditional density formula with the value substituted (polynomial) and its
+    support, E, E of the square, Var; slice menu P(a<Y<b | X=x) (clipped, ᴇ99 = ∞) / NEW VALUE.
+    Outside the support: `CONDITIONAL UNDEFINED`. M2GL 1-D kernel, exact or 2 passes. A = last
+    E(.|.) or conditional P.
+  * INDEP + CDF: INDEPENDENCE TEST (non-product support → witness f(x*,y*)=0 BUT g h>0 from a
+    3x3 grid; product + polynomial → rank-1 coefficient test with g, h or a worst-grid witness;
+    numeric → grid with numeric marginals, NUMERIC EVIDENCE), F(s,t) AT A POINT (returns H=5;
+    M2JNT runs EVENTS > X≤s AND Y≤t with pieces), F(x,y) FORMULA (rectangle + polynomial: interior
+    6x6 antiderivative table via POLY2STR, F(x,d), F(b,y), 1 / 0 branches, Freund Def9 p86).
+* **M2JNT** (12,516 B): top-menu items J1–J4 → route G=11..14 (also after NEW MODEL), F1 builds
+  ʟM2JX/ʟM2JY with RG code C=7 (strips only, no integration; curved: one kind-1 strip, ʟM2JY={0}),
+  calls prgmM2JAN, then GQ when H=5. BACK deletes ʟM2JX/ʟM2JY. "COMING IN THIS VERSION" removed.
+* M2EXAM JOINT PDF routes GIVEN VALUE, MOMENT / COV, MARGINAL FORMULA now open M2JNT with texts
+  naming GIVEN A VALUE / MOMENTS + COV / FORMULAS. write_presets.py: HW5 Q7 → `99→Z:prgmM2JNT` with
+  q=X+Y, {1,0,1,0,1} (back to the HW5 Q5-Q8 menu). START_HERE: 16 programs, ~105 KB, JOINT DENSITY
+  row, Joint densities items 7–10, HW5 Q7 practice-data note, JOINT SLICE pointer, device check 15.
+
+### Tests
+* NEW tests/test_joint_analysis.py (23, holds `# PLAN DEVIATIONS / EXTRA FIXES`): HW4 Q2 (c=1/4,
+  h=`1/4+1/4y`, f(x|y)=`(2x+y)/(1+y)`, g, w), HW5 Q7 (h=`1/2+y`, E(X|Y=1/2)=7/12, Var=11/144),
+  q=X on 0<y<x<1 (g=`3x²`, h=`3/2-3/2y²`, w, E(Y|X=x)=x/2, E(X|Y=y)), q=XY on 0<x<y<1 (c=8, g, h,
+  `(2x)/(y²)`, E(Y|X=x) with cancelled factors), X+Y<k marginal, Freund Ex20 given + P(X<1/2|Y=1/2),
+  Mock 4 Q3 P(X<1/2|Y=3/4)=4/9 + outside support, numeric x e^(-x(1+y)) given Y=1, X+Y moments
+  (E X=7/12, Cov=-1/144, ρ=-1/11, E[XY], E[(XY)²]), √ form of ρ for q=X on the triangle, numeric
+  2e^(-x-2y) (E X=1, E Y=1/2, Cov≈0, <120,000 steps), 4XY INDEPENDENT (g=2x, h=2y), X+Y DEPENDENT and
+  triangle DEPENDENT witnesses checked against sympy, numeric independence evidence, A4 F(s,t) and
+  F formulas (HW4 Q5, Freund Ex16 `1/2x²y+1/2xy²`, branches), refusals, step budgets (formula
+  <6,000, given <2,500, exact moments <3,000), per-program caps (M2JNT ≤13,800, M2JAN ≤13,000,
+  total ≤118,000). Formula strings are parsed back into sympy and compared symbolically.
+* Updated: test_joint_events (stub test → four analysis menus), test_exam_assistant (conditional
+  slice via GIVEN A VALUE; route text), test_presets (HW5 Q7 via M2JNT), test_menu_tree (CANNED
+  M2JAN prompts, M2JAN module; ~100 s now).
+* build_package succeeded: 16 programs, 104,983 bytes (limit 118,000), 283 checks; both linters
+  0 errors / 0 warnings.
+* Note: tests/test_exam_assistant.py was briefly reverted to HEAD by mistake and restored to the
+  LEAN-A state (27 routes) plus the LEAN-B edits; no other LEAN-A file was touched.

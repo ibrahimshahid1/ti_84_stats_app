@@ -1,4 +1,4 @@
-All 12 simulator test files passed (247 checks).
-14 programs, 84854 bytes of .8xp files (budget 118000).
+All 14 simulator test files passed (283 checks).
+16 programs, 105013 bytes of .8xp files (budget 118000).
 Token and structure lints: 0 errors, 0 warnings.
 Tested off-device in the token-stream simulator; physical-calculator execution is untested.

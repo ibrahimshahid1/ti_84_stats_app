@@ -50,6 +50,14 @@ CANNED = {
     ('M2JNT', 'UPPER END?'): ['1'], ('M2JNT', 'LOWER BOUND?'): ['0'], ('M2JNT', 'UPPER BOUND?'): ['1'],
     ('M2JNT', 'k?'): ['1/2'], ('M2JNT', 't?'): ['1/2'], ('M2JNT', 'a?'): ['1/4'], ('M2JNT', 'b?'): ['3/4'],
     ('M2JNT', 'c?'): ['1'], ('M2JNT', 'd?'): ['1'], ('M2JNT', 's?'): ['1/2'],
+    # LEAN-B joint analysis helper (called by M2JNT): given values, a typed g, a slice interval
+    ('M2JAN', 'GIVEN x=?'): ['1/2'], ('M2JAN', 'GIVEN y=?'): ['1/2'], ('M2JAN', 'g(X,Y)?'): ['X*Y'],
+    ('M2JAN', 'a?'): ['0'], ('M2JAN', 'b?'): ['1/2'],
+    # LEAN-A JOINT CDF: a polynomial F on the unit square (the F FROM A PDF f handoff opens M2JNT)
+    ('M2CDF', 'F(X,Y)?'): ['X*Y'], ('M2CDF', 'a=LOWER X?'): ['0'], ('M2CDF', 'b=UPPER X?'): ['1'],
+    ('M2CDF', 'c=LOWER Y?'): ['0'], ('M2CDF', 'd=UPPER Y?'): ['1'], ('M2CDF', 'a?'): ['1/4'],
+    ('M2CDF', 'b?'): ['3/4'], ('M2CDF', 'c?'): ['1/4'], ('M2CDF', 'd?'): ['3/4'], ('M2CDF', 't?'): ['1/2'],
+    ('M2CDF', 'x?'): ['1/2'], ('M2CDF', 'y?'): ['1/2'],
 }
 
 
@@ -164,7 +172,7 @@ class MenuTree(unittest.TestCase):
 
     def test_explorer_reached_every_module(self):
         for prog in ['STAM2', 'M2ENC', 'M2HW', 'M2RUN', 'M2EXAM', 'M2DISC', 'M2CONT', 'M2SLICE',
-                     'M2MGF', 'M2COV', 'M2JNT']:
+                     'M2MGF', 'M2COV', 'M2JNT', 'M2CDF', 'M2JAN']:
             self.assertIn(prog, self.programs)
         self.assertGreater(self.stats['menus'], 50)
         self.assertGreater(self.stats['ends'], 0)        # QUIT reached
@@ -178,7 +186,7 @@ class MenuTree(unittest.TestCase):
         for item in ['SOLVERS', 'HELP', 'HOMEWORK PRACTICE']:
             rr = run('STAM2', [m(item), m('BACK'), m('QUIT')])
             subs[item] = rr.screens[1]['menu']['items']
-        self.assertEqual(subs['SOLVERS'], ['DISCRETE TABLE', 'JOINT DENSITY', 'DENSITY+INTEGRAL', 'MGF TOOLS',
+        self.assertEqual(subs['SOLVERS'], ['DISCRETE TABLE', 'JOINT DENSITY', 'CDF OF X AND Y', 'DENSITY+INTEGRAL', 'MGF TOOLS',
                                            'LINEAR COMBOS', 'BACK'])
         self.assertEqual(subs['HELP'], ['FIND MY SOLVER', 'HOW TO ENTER', 'LIMITS + CAVEATS', 'BACK'])
         self.assertEqual(subs['HOMEWORK PRACTICE'], ['WALKTHROUGHS', 'LOAD PRACTICE DATA', 'BACK'])
@@ -212,6 +220,16 @@ class MenuTree(unittest.TestCase):
         jnt = next(s for s in r.screens if s['event'] == 'menu' and s['menu']['title'] == 'JOINT DENSITY')
         self.assertEqual(jnt['stack'], ['STAM2', 'M2JNT'])
 
+    def test_route_solvers_cdf_back(self):
+        # LEAN-A: SOLVERS > CDF OF X AND Y > BACK returns to SOLVERS with every private list deleted
+        r = run('STAM2', [m('SOLVERS'), m('CDF OF X AND Y'), m('BACK'), m('BACK'), m('QUIT')], init={'Z': 7})
+        titles = [s['menu']['title'] for s in r.screens if s['event'] == 'menu']
+        self.assertEqual(titles, ['STA431 MIDTERM II', 'SOLVERS', 'JOINT CDF', 'SOLVERS', 'STA431 MIDTERM II'])
+        cdf = [s for s in r.screens if s['event'] == 'menu' and s['menu']['title'] == 'JOINT CDF'][0]
+        self.assertEqual(cdf['stack'], ['STAM2', 'M2CDF'])
+        self.assertEqual(cdf['menu']['items'], ['NEW F(X,Y)', 'RECTANGLE PROB', 'MARGINAL CDFs', 'PDF f FROM F',
+                                                'F FROM A PDF f', 'BACK'])
+
     def test_route_solvers_back_quit(self):
         r = run('STAM2', [m('SOLVERS'), m('BACK'), m('QUIT')])
         self.assertEqual([s['menu']['title'] for s in r.screens if s['event'] == 'menu'],
@@ -225,7 +243,7 @@ class MenuTree(unittest.TestCase):
         pages = [s for s in r.screens if s['event'] == 'getkey']
         page1, page2 = '\n'.join(pages[0]['rows']), '\n'.join(pages[1]['rows'])
         for needle in ['X,T,θ,n(FUNC)', 'ALPHA 1', '2ND MATH TEST', '𝑒^(', '√(', '(-) KEY', 'DIVIDE',
-                       '{ }', 'ᴇ99', '(JOINT DENSITY ONLY)', 'ON ERR CHOOSE 1 QUIT',
+                       '{ }', 'ᴇ99', '(JOINT DENSITY AND CDF)', 'ON ERR CHOOSE 1 QUIT',
                        'CLEAR OR LEFT=HELP MENU']:
             self.assertIn(needle, page1)
         self.assertIn('ENTER=MENU  LEFT=PAGE 1', page2)

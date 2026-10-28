@@ -9,12 +9,15 @@
 // θ=2 LINESTR   ʟM2QS={l0,l1}, Str6="x" or "y" -> Str7 such as 1-x, (1/2)x, 2, -1+2x, INF, -INF
 //   (|l0|≥5ᴇ5 = infinite; values below 1ᴇ⁻9 count as 0; negatives use -, never ⁻).
 // θ=3 POLYSTR   ʟM2QC = coefficients of powers 0..n of Str6 -> Str7 such as 3/2-3/2y², 4x-4x³, 0.
+// θ=4 POLY2STR  ʟM2QA (n x n, n=ʟM2QS(3), element n*i+j+1 = coefficient of x^i*y^j) -> Str7 in x
+//   and y, by total degree then x-power descending, such as 1/2x²y+1/2xy², 3/2x²+2xy, 0.
 // θ=8 VARCHECK  θ=0 when Str1 holds a letter (A-Z, θ, a-z) that is not in Str6 (for example "XY").
 //   Touches only θ.
 // θ=9 deletes every ʟM2Q* list (callers run it when they exit).
 If θ=1:Goto R1
 If θ=2:Goto LA
 If θ=3:Goto P3
+If θ=4:Goto P4
 If θ=8:Goto V8
 If θ=9:Goto Z
 0→θ
@@ -120,6 +123,41 @@ If K=4
 Str7+"³"→Str7
 If K>4
 Str7+"^"+toString(K-1)→Str7
+End
+End
+If Str7=" "
+" 0"→Str7
+sub(Str7,2,length(Str7)-1)→Str7
+1→θ
+Return
+// POLY2STR: sum of c*x^i*y^j as text, zero terms skipped
+Lbl P4
+" "→Str7
+For(O,0,2*ʟM2QS(3)-2)
+For(I,min(O,ʟM2QS(3)-1),max(0,O-ʟM2QS(3)+1),⁻1)
+ʟM2QA(ʟM2QS(3)*I+O-I+1)→W
+If abs(W)>1ᴇ⁻10*max(abs(ʟM2QA))
+Then
+If W<0
+Str7+"-"→Str7
+If W>0 and Str7≠" "
+Str7+"+"→Str7
+abs(W)→W
+prgmM2FMT
+If Str9≠"1" or not(O)
+Str7+Str9→Str7
+For(J,1,2)
+I*(J=1)+(O-I)*(J=2)→K
+If K
+Str7+sub("xy",J,1)→Str7
+If K=2
+Str7+"²"→Str7
+If K=3
+Str7+"³"→Str7
+If K>3
+Str7+"^"+toString(K)→Str7
+End
+End
 End
 End
 If Str7=" "

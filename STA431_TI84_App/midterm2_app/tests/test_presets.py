@@ -139,11 +139,14 @@ class Presets(unittest.TestCase):
         self.run_case(HW5B, 'Q6 THREE VARIABLES', [m('BACK')], required=[fs(var), 'MEAN NOT PROVIDED'])
 
     def test_hw5_q7_conditional_moments(self):
-        f = x + sp.Rational(1, 2)
+        # LEAN-B: the preset loads q=X+Y on the unit square into JOINT DENSITY (Z=99)
+        joint = x + y
+        f = joint.subs(y, sp.Rational(1, 2)) / sp.integrate(joint, (x, 0, 1)).subs(y, sp.Rational(1, 2))
         e1 = F(sp.integrate(x * f, (x, 0, 1)))
         e2 = F(sp.integrate(x**2 * f, (x, 0, 1)))
-        self.run_case(HW5B, 'Q7 CONDITIONAL', [m('MEAN+VARIANCE'), m('BACK')],
-                      {'E': e1, 'F': e2, 'G': e2 - e1 * e1}, [fs(e1), fs(e2 - e1 * e1)])
+        self.run_case(HW5B, 'Q7 CONDITIONAL',
+                      [m('GIVEN A VALUE'), m('GIVEN Y=y'), i('1/2'), m('BACK'), m('BACK'), m('BACK')],
+                      {'A': e1}, [fs(e1), fs(e2), fs(e2 - e1 * e1), '=1/2+x'])
 
     def test_hw5_q8_joint_moments_and_conditional(self):
         p, _ = pmf({(a, b): a + b for a in (1, 2, 3) for b in (1, 2, 3)})

@@ -14,7 +14,7 @@ Menu("MGF ASKED?","MOMENTS",D1,"AFFINE TRANSFORM",D2,"DOMAIN / IDENTITY",D3,"BAC
 Lbl E
 Menu("MOMENTS ASKED?","ONE COMBINATION",E1,"TWO COMBINATIONS",E2,"ZERO COV PROOF",E3,"BACK",M)
 Lbl F
-Menu("WRITTEN REASONING","DISTRIBUTION FORM",F1,"INDEPENDENCE",F2,"MGF DOMAIN",F3,"ZERO COV / DEPEND",F4,"WORDS TO EVENT",F5,"BACK",M)
+Menu("WRITTEN REASONING","DISTRIBUTION FORM",F1,"INDEPENDENCE",F2,"MGF DOMAIN",F3,"ZERO COV / DEPEND",F4,"WORDS TO EVENT",F5,"JOINT CDF GIVEN",F6,"BACK",M)
 Lbl A1
 ClrHome
 Output(1,1,"FINITE EVENT PROBABILITY")
@@ -119,53 +119,53 @@ prgmM2JNT
 Goto B
 Lbl B2
 ClrHome
-Output(1,1,"A GIVEN VALUE IN A PDF")
+Output(1,1,"COND MEAN/VAR AT A VALUE")
 Output(2,1,"Given Y=y fixes a VALUE.")
 Output(3,1,"It is not the event Y>y.")
-Output(4,1,"JOINT SLICE uses X,Y names")
-Output(5,1,"Enter YOUR q and known c.")
-Output(6,1,"Get a marginal value and")
-Output(7,1,"cond PDF and moments.")
-Output(8,1,"If c unknown, normalize")
-Output(9,1,"the full support first.")
+Output(4,1,"JOINT DENSITY > GIVEN A")
+Output(5,1,"VALUE > GIVEN Y=y (or X)")
+Output(6,1,"shows h(y), f(x|y), its")
+Output(7,1,"support, E, E(X²), Var and")
+Output(8,1,"P(a<X<b | Y=y).")
+Output(9,1,"Type q; c is computed.")
 Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
-prgmM2SLICE
+prgmM2JNT
 0→Z
 Goto B
 Lbl B3
 ClrHome
 Output(1,1,"JOINT PRODUCT OR MOMENT")
-Output(2,1,"Use FULL SUPPORT bounds.")
-Output(3,1,"DOUBLE INTEGRAL multiplier")
-Output(4,1,"g=X^r*Y^s, or YOUR payoff.")
-Output(5,1,"For unnormalized q use")
-Output(6,1,"E[g]=RAW J/RAW I.")
-Output(7,1,"Cov needs E[X],E[Y],E[XY].")
-Output(8,1,"Var(g) needs E[g^2].")
-Output(9,1,"Do not multiply marginals.")
+Output(2,1,"JOINT DENSITY > MOMENTS")
+Output(3,1,"+ COV gives EX, EY, EXY,")
+Output(4,1,"Var, Cov=E XY-E X E Y, ρ.")
+Output(5,1,"E[g(X,Y)] for YOUR g")
+Output(6,1,"also gives E[g²], Var(g).")
+Output(7,1,"Uses the FULL support.")
+Output(8,1,"Do not multiply marginals")
+Output(9,1,"unless independent.")
 Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
-prgmM2CONT
+prgmM2JNT
 0→Z
 Goto B
 Lbl B4
 ClrHome
-Output(1,1,"A DENSITY FUNCTION ANSWER")
+Output(1,1,"MARGINAL/COND FORMULA")
 Output(2,1,"Numerical values are not")
 Output(3,1,"a marginal formula.")
-Output(4,1,"Integrate out the other RV")
-Output(5,1,"with support-based limits.")
-Output(6,1,"Conditional=joint/marginal")
-Output(7,1,"of the GIVEN variable.")
-Output(8,1,"Give all support branches.")
-Output(9,1,"Read derivation rules.")
+Output(4,1,"JOINT DENSITY > FORMULAS")
+Output(5,1,"g(x), h(y), w(y|x), f(x|y)")
+Output(6,1,"E(Y|X=x), E(X|Y=y) with")
+Output(7,1,"limits and every piece.")
+Output(8,1,"Needs a polynomial q on")
+Output(9,1,"a straight-edged support.")
 Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
-prgmM2ENC
+prgmM2JNT
 0→Z
 Goto B
 Lbl B5
@@ -370,6 +370,23 @@ Output(10,1,"ENTER=GENERAL TOOL")
 Pause
 0→Z
 prgmM2ENC
+0→Z
+Goto F
+Lbl F6
+ClrHome
+Output(1,1,"JOINT CDF F(x,y) GIVEN")
+Output(2,1,"SOLVERS>CDF OF X AND Y")
+Output(3,1,"Type F and its support.")
+Output(4,1,"RECTANGLE PROB uses")
+Output(5,1,"F(b,d)-F(a,d)-F(b,c)")
+Output(6,1,"+F(a,c); X>a,Y>b; min/max")
+Output(7,1,"MARGINAL CDFs FX=F(x,d).")
+Output(8,1,"PDF f FROM F = d²F/dxdy")
+Output(9,1,"Given f - F FROM A PDF f")
+Output(10,1,"ENTER=GENERAL TOOL")
+Pause
+0→Z
+prgmM2CDF
 0→Z
 Goto F
 Lbl F2

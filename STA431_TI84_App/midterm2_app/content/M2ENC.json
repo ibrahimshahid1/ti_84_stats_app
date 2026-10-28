@@ -82,34 +82,52 @@
           ]
         },
         {
-          "menu": "CDF CONVERSIONS",
-          "title": "CDF CONVERSIONS",
+          "menu": "JOINT CDF F",
+          "title": "JOINT CDF F",
           "pages": [
             [
-              "F(x,y)=P(X≤x,Y≤y). Sum",
-              "masses or integrate",
-              "density over the",
-              "lower-left rectangle",
-              "intersected with support.",
-              "f(x,y)=mixed derivative of",
-              "F for an absolutely",
-              "continuous law.",
-              "FX(x)=limit of F(x,y) as y"
+              "F(x,y)=P(X≤x,Y≤y)",
+              "F FROM f - integrate f",
+              "(s,t) over s≤x, t≤y in S.",
+              "Discrete - sum the masses.",
+              "Ex16 f=x+y, unit square",
+              "gives F=xy(x+y)/2 in S,",
+              "F=0 left of or below S.",
+              "Freund Def7 p84, Def9 p86",
+              "TOOL SOLV>CDF OF X AND Y"
             ],
             [
-              "grows.",
-              "Rectangle probability =",
-              "F(b,d) - F(a,d) - F(b,c) +",
-              "F(a,c).",
-              "Integer-inclusive lower",
-              "endpoints a,c need",
-              "a-1,c-1. Noninteger",
-              "supports use left limits.",
-              "Give all CDF branches;"
+              "f FROM F - mixed partial",
+              "f=d²F/dxdy where it exists",
+              "FX(x)=F(x,d), d=top of y",
+              "FY(y)=F(b,y), b=top of x",
+              "Ex16 F=xy(x+y)/2 in S",
+              "gives f=x+y, FX=x(x+1)/2.",
+              "Not a polynomial - numeric",
+              "Freund Ch3 p86, Ex16 p86",
+              "TOOL SOLV>CDF OF X AND Y"
             ],
             [
-              "stop integrating at",
-              "support edges."
+              "P(a<X≤b,c<Y≤d)=",
+              "F(b,d)-F(a,d)-F(b,c)",
+              "+F(a,c). Corner (a,c) is",
+              "cut twice, so add it back.",
+              "Ex16 a=c=1/2, b=d=1 -",
+              "1-3/8-3/8+1/8=3/8.",
+              "Integer X - a≤X uses a-1.",
+              "Freund Exercise58 p91",
+              "TOOL SOLV>CDF OF X AND Y"
+            ],
+            [
+              "TAILS AND MIN/MAX",
+              "P(X>a,Y>b)=1-FX(a)",
+              " -FY(b)+F(a,b)",
+              "max(X,Y)≤t - both ≤t",
+              " P(max≤t)=F(t,t)",
+              "min(X,Y)≤t - either ≤t",
+              " P=FX(t)+FY(t)-F(t,t)",
+              "Freund Ch3 Def7 p84",
+              "TOOL SOLV>CDF>RECTANGLE"
             ]
           ]
         },
@@ -145,29 +163,52 @@
           ]
         },
         {
-          "menu": "BOUNDS AND WORDS",
-          "title": "BOUNDS AND WORDS",
+          "menu": "SKETCH + LIMITS",
+          "title": "SKETCH + LIMITS",
           "pages": [
             [
-              "Draw support S and event",
-              "A. Integrate on S",
-              "intersect A. Outer limits",
-              "are constants; inner",
-              "limits may depend on outer",
-              "variable.",
-              "X<Y means y>x. X+Y≤b means",
-              "y≤b-x. Split wherever a",
-              "boundary changes."
+              "Sketch S and the event A.",
+              "Integrate f over S and A.",
+              "Outer limits are numbers.",
+              "Inner limits may use the",
+              "outer variable. dy dx -",
+              "fix x, y runs from the",
+              "lower edge to the upper.",
+              "Freund Ch3 Def8 p85,Ex15",
+              "TOOL SOLV>JOINT DENSITY"
             ],
             [
+              "Ex f=6x on 0<x<y<1.",
+              "Fixed x - y runs x..1.",
+              "Fixed y - x runs 0..y.",
+              "P(X+Y<1) needs x<y<1-x,",
+              "so x<1/2. Result 1/4.",
+              "Split the region where an",
+              "edge changes formula.",
+              "Guide Ex4.3 p36",
+              "TOOL SOLV>JOINT DENSITY"
+            ],
+            [
+              "Complement - P(A)=1-P(A')",
+              "if A' has fewer pieces.",
+              "Infinite support - type",
+              "2nd EE 99; tail numeric.",
+              "Reverse order to check;",
+              "each marginal must",
+              "integrate to 1.",
+              "Freund Ch3 Def10 p92",
+              "TOOL SOLV>JOINT DENSITY"
+            ],
+            [
+              "X<Y means y>x. X+Y≤b",
+              "means y≤b-x.",
               "Series device fails if",
               "either fails. T=min(X,Y).",
               "P(T≤t)=1-P(X>t,Y>t).",
-              "Parallel device fails",
-              "after both fail.",
-              "T=max(X,Y). P(T≤t)=F(t,t).",
-              "Independence is needed to",
-              "multiply survivals."
+              "Parallel fails after both",
+              "fail. T=max(X,Y).",
+              "P(T≤t)=F(t,t).",
+              "Guide 4.2.4 p35, Ex27 p99"
             ]
           ]
         }
